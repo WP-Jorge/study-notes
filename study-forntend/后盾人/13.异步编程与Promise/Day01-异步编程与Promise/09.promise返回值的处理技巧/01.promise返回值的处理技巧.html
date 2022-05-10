@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.在成功的执行函数内返回结果，在下一个成功执行函数中使用
+			let p1 = new Promise((resolve, reject) => {
+				resolve('成功')
+			})
+				.then(
+					res => {
+						// 在前面的成功执行函数内return 返回数据后可以在后面的then 处理
+						return '乔治'
+					},
+					err => {
+						console.log(err)
+					}
+				)
+				.then(res => {
+					console.log(res) // 乔治
+				})
+
+			// 2.在成功的执行函数内返回一个新的promise会在下一个相应的执行函数内使用、处理
+			let p2 = new Promise((resolve, reject) => {
+				resolve('成功2')
+			})
+				.then(res => {
+					return new Promise((resolve, reject) => {
+						resolve('p2成功')
+					})
+				})
+				.then(
+					res => {
+						console.log(res) // p2成功
+					},
+					err => {
+						console.log(err)
+					}
+				)
+		</script>
+	</body>
+</html>

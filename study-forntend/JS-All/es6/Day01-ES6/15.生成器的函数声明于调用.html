@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 生成器就是一个特殊的函数
+			// 异步编程，纯回调函数
+			function* gen() {
+				// console.log('111')
+				yield '大' // yield 相当于代码分隔符，只有调用一次next()方法才会进行下一步代码的执行
+				// console.log('222')
+				yield '懒'
+				// console.log('333')
+				yield '蕉'
+				// console.log('444')
+			}
+			let iterator = gen()
+			console.log(iterator)
+			iterator.next()
+			iterator.next()
+			iterator.next()
+			iterator.next()
+
+			// 遍历
+			for (let item of gen()) {
+				console.log(item)
+			}
+		</script>
+	</body>
+</html>

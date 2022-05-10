@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		
+		<style>
+			
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="div01">
+			<input type="button" value="get" @click="getInfo"/>
+			<input type="button" value="post" @click="postInfo"/>
+		</div>
+
+		
+		<script>
+			//http://www.liulongbin.top:3005/api/getlunbo
+			//http://www.liulongbin.top:3005/api/post
+			//http://www.liulongbin.top:3005/api/jsonp
+			//新的接口http://api.cms.liulongbin.top
+			//获取列表地址:  http://www.liulongbin.top:3005/api/getprodlist/
+			//添加地址:  http://www.liulongbin.top:3005/api/addproduct/
+			//删除地址:  http://www.liulongbin.top:3005/api/delproduct/
+			
+			// axios.defaults.baseURL='http://www.liulongbin.top:3005' // 设置默认根url
+			// axios.defaults.timeout : 5 设置超时时间 5ms
+			// axios.defaults.headers.post['Content-Type']='application/x-www-form-urlencoded'
+			
+			var nv = new Vue({
+				el:'#div01',
+				data:{
+					
+				},
+				methods:{
+					getInfo(){
+						//当发起get请求后，通过.then来设置成功的回调函数
+						axios.get('http://www.liulongbin.top:3005/api/getlunbo').then(result=>{
+						//控制台输出返回的内容
+							console.log(result)
+						}).catch(error=>{
+							console.log('1')
+							console.log(error)
+						})
+					},
+					postInfo(){
+						axios.post('http://www.liulongbin.top:3005/api/post').then(resule=>{
+							console.log(resule)
+						}).catch(error=>{
+							console.log(error)
+						})
+					}
+				}
+			})
+			
+		</script>
+	</body>
+	
+</html>

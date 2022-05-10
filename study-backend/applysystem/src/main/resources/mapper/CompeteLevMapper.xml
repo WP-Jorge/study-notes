@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cslg.applysystem.mapper.CompeteLevMapper">
+    <cache-ref namespace="cn.cslg.applysystem.mapper.CompeteLevMapper"/>
+    <select id="getAllCompeteLevsWithPage" resultType="cn.cslg.applysystem.pojo.vo.CompeteLevVO">
+        select * from compete_lev
+    </select>
+    <select id="getCompeteLevsByCompeteLevsNameWithPage" resultType="cn.cslg.applysystem.pojo.vo.CompeteLevVO">
+        select * from compete_lev where compete_lev_name like concat('%', #{competeLevName}, '%')
+    </select>
+</mapper>

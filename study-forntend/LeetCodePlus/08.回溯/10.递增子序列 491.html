@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @return {number[][]}
+			 * 回溯 + 剪枝
+			 */
+			var findSubsequences = function (nums) {
+				let res = [];
+				let path = [];
+				function backtracking(num) {
+					if (path.length >= 2) {
+						res.push([...path]);
+					}
+					let useSet = [];
+					for (let i = num; i < nums.length; i++) {
+						if ((path.length && nums[i] < path[path.length - 1]) || useSet[nums[i]]) {
+							continue;
+						}
+						useSet[nums[i]] = true;
+						path.push(nums[i]);
+						backtracking(i + 1);
+						path.pop();
+					}
+				}
+				backtracking(0);
+				return res;
+			};
+		</script>
+	</body>
+</html>

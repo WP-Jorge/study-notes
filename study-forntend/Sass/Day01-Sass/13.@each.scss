@@ -1,0 +1,9 @@
+// @each $var in $list {}
+
+$icons: success error warning;
+
+@each $var in $icons {
+	.icon-#{$var} {
+		padding: 100px;
+	}
+}

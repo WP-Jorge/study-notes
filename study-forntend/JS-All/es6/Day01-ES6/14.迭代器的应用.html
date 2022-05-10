@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 迭代器的应用 使用for...of 遍历clazz对象中的studenets数组
+			let clazz = {
+				name: '终极一班',
+				students: ['张三', '李四', '王五', '赵六'],
+				[Symbol.iterator]() {
+					// 索引对象
+					let index = 0
+					let _this = this
+					return {
+						next() {
+							if (index < _this.students.length) {
+								let result = {
+									value: _this.students[index],
+									done: false
+								}
+								// 下标自增
+								index++
+								return result
+							} else {
+								return {
+									value: undefined,
+									done: true
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// 遍历对象
+			for (let item of clazz) {
+				console.log(item)
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let hd = {
+				data: [1, 2, 3, 4, 5]
+			}
+			Object.setPrototypeOf(hd, {
+				max() {
+					return this.data.sort((a, b) => {
+						return b - a
+					})[0]
+				}
+			})
+			console.log(hd.max()) // 5
+
+			let xj = {
+				lessons: { js: 87, php: 63, node: 99, linux: 88 },
+				get data() {
+					return Object.values(this.lessons)
+				}
+			}
+			// 1.使用apply改变xj的this指向
+			console.log(hd.max.apply(xj)) // 99
+		</script>
+	</body>
+</html>

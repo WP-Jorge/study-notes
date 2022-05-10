@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+
+	<style type="text/css">
+		div {
+			height: 132px;
+			width: 176px;
+			margin: 100px auto;
+		}
+
+		li {
+			float: left;
+			height: 24px;
+			width: 24px;
+			list-style-type: none;
+			background: url(imgs/sprite.png);
+			margin: 10px;
+		}
+	</style>
+
+	<body>
+		<div>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</div>
+
+		<script type="text/javascript">
+			var lis = document.querySelectorAll('li')
+			for (var i = 0; i < lis.length; i++) {
+				var index = i * 44
+				lis[i].style.backgroundPosition = '0 -' + index + 'px' // backgroundPositiony 一张图片上的坐标
+			}
+		</script>
+	</body>
+</html>

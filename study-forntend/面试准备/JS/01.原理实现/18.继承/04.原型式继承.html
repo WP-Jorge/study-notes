@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=2.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * 原型式继承
+			 * 缺点：
+			 * 		① 同样存在在子实例中修改应用数据类型属性会相互影响
+			 * 		② 无法给子类添加自定义属性
+			 */ 
+			function getSuperObj(obj) {
+				function NewObj() {}
+				NewObj.prototype = obj;
+				return new NewObj();
+			}
+			let animal = {
+				name: 'animal',
+				food: ['草']
+			}
+			let cat1 = getSuperObj(animal);
+			cat1.food.push('鱼');
+			console.log(cat1.food); // ['草', '鱼']
+
+			let cat2 = getSuperObj(animal);
+			console.log(cat2.food); // ['草', '鱼']
+		</script>
+	</body>
+</html>

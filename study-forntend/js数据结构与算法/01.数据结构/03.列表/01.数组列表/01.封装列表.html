@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 创建列表
+			class ArrayList {
+				// 属性
+				#array = []
+
+				// 方法
+				// 1.插入数据
+				add(item) {
+					this.#array.push(item)
+				}
+
+				// 2.toString 方法
+				toString() {
+					return this.#array.join(' ')
+				}
+
+				// 排序
+				// 交换两个位置的数据
+				#swap(m, n) {
+					let temp = this.#array[m]
+					this.#array[m] = this.#array[n]
+					this.#array[n] = temp
+				}
+
+				// 3.冒泡排序
+				bubbleSort() {
+					let length = this.#array.length
+					for (let i = length - 1; i >= 0; i--) {
+						for (let j = 0; j < i; j++) {
+							if (this.#array[j] > this.#array[j + 1]) {
+								this.#swap(j, j + 1)
+							}
+						}
+					}
+				}
+
+				// 4.选择排序
+				selectionSort() {
+					let length = this.#array.length
+					for (let i = 0; i < length - 1; i++) {
+						let min = i
+						for (let j = i + 1; j < length; j++) {
+							if (this.#array[j] < this.#array[min]) {
+								min = j
+							}
+						}
+						this.#swap(i, min)
+					}
+				}
+
+				// 5.插入排序
+				insertionSort() {
+					// 1.获取数组的长度
+					let length = this.#array.length
+
+					// 2.外层循环：从第一个位置开始获取数据，向前面局部有序进行插入
+					for (let i = 1; i < length; i++) {
+						// 3.内层循环：获取i位置的元素，和前面的数据进行比较
+						let temp = this.#array[i]
+						let j = i
+						while (this.#array[j - 1] > temp && j > 0) {
+							// 4.元素往后移
+							this.#array[j] = this.#array[j - 1]
+							j--
+						}
+						this.#array[j] = temp
+						// let temp = this.#array[i]
+						// let j = i
+						// for (; j > 0; j--) {
+						// 	if (this.#array[j - 1] > temp) {
+						// 		this.#array[j] = this.#array[j - 1]
+						// 	} else {
+						// 		break
+						// 	}
+						// }
+						// this.#array[j] = temp
+					}
+				}
+
+				// 6.希尔排序
+				shellSprt() {
+					// 1.获取数组长度
+					let length = this.#array.length
+
+					// 2.初始化增量（gap -> 间隔间隙）
+					let gap = Math.floor(length / 2)
+
+					// 3.进新循环
+					while (gap >= 1) {
+						// 4.以gap为间隔进行分组，对分组进行插入排序
+						for (let i = gap; i < length; i++) {
+							let temp = this.#array[i]
+							let j = i
+							while (this.#array[j - gap] > temp && j > gap - 1) {
+								this.#array[j] = this.#array[j - gap]
+								j -= gap
+							}
+
+							// 5.将j位置的元素赋值给temp
+							this.#array[j] = temp
+						}
+
+						// 6.增量变化
+						gap = Math.floor(gap / 2)
+					}
+				}
+
+				// // 7.快速排序（方式一）
+				quickSort() {
+					let length = this.#array.length
+					this.#quick(0, length - 1)
+				}
+
+				#quick(left, right) {
+					// 1.结束条件
+					if (left >= right) {
+						return
+					}
+
+					// 2.获取枢纽
+					let pivot = this.#median(left, right)
+
+					// *由于获取枢纽的时候进行了一次换位，所以在 left + 1 >= right 的时候就要退出
+					if (left + 1 >= right) {
+						return
+					}
+
+					// 3.定义变量，用于记录找到的位置
+					let i = left
+					let j = right - 1
+
+					// 4.开始进行交换
+					while (true) {
+						while (this.#array[++i] < pivot) {}
+						while (this.#array[--j] > pivot) {}
+						if (i < j) {
+							this.#swap(i, j)
+							console.log(this.#array)
+						} else {
+							break
+						}
+					}
+
+					// 5.将枢纽放置在正确的位置 i 的位置
+					this.#swap(i, right - 1)
+					console.log(this.#array)
+
+					// 6.分而治之
+					this.#quick(left, i - 1)
+					this.#quick(i + 1, right)
+				}
+
+				#median(left, right) {
+					// 1.取出中间的位置
+					let center = Math.floor((left + right) / 2)
+
+					// 2，判断大小，并交换位置
+					if (this.#array[left] > this.#array[center]) {
+						this.#swap(left, center)
+						console.log(this.#array)
+					}
+					if (this.#array[center] > this.#array[right]) {
+						this.#swap(center, right)
+						console.log(this.#array)
+					}
+					if (this.#array[left] > this.#array[center]) {
+						this.#swap(left, center)
+						console.log(this.#array)
+					}
+
+					// 3.将center换到right - 1的位置
+					this.#swap(center, right - 1)
+					console.log(this.#array)
+
+					return this.#array[right - 1]
+				}
+
+				// // 8.快速排序（方式二）
+				// quickSort() {
+				// 	let length = this.#array.length
+				// 	this.#quick(0, length - 1)
+				// }
+
+				// #quick(left, right) {
+				// 	if (left >= right) {
+				// 		return
+				// 	}
+				// 	let pivot = this.#array[left]
+				// 	let i = left
+				// 	let j = right
+				// 	while (i < j) {
+				// 		while (this.#array[j] > pivot) {
+				// 			j--
+				// 		}
+				// 		while (this.#array[i] < pivot) {
+				// 			i++
+				// 		}
+				// 		this.#swap(i, j)
+				// 	}
+				// 	this.#quick(left, i - 1)
+				// 	this.#quick(i + 1, right)
+				// }
+
+				// // 9.快速排序（方式三）
+				// quickSort() {
+				// 	let length = this.#array.length
+				// 	this.#quick(0, length - 1)
+				// }
+
+				// #quick(left, right) {
+				// 	if (left >= right) {
+				// 		return
+				// 	}
+				// 	let pivotIndex = this.#median(left, right)
+				// 	let pivot = this.#array[pivotIndex]
+				// 	let i = left
+				// 	let j = right
+				// 	while (i < j) {
+				// 		while (this.#array[j] > pivot) {
+				// 			j--
+				// 		}
+				// 		while (this.#array[i] < pivot) {
+				// 			i++
+				// 		}
+				// 		this.#swap(i, j)
+				// 		console.log(this.#array)
+				// 	}
+				// 	this.#quick(left, i - 1)
+				// 	this.#quick(i + 1, right)
+				// }
+
+				// #median(left, right) {
+				// 	return Math.floor((left + right) / 2)
+				// }
+			}
+
+			// 测试
+			// 1.创建列表
+			let list = new ArrayList()
+
+			// 2.插入数据
+			list.add(66)
+			list.add(88)
+			list.add(12)
+			list.add(87)
+			list.add(100)
+			list.add(5)
+			list.add(566)
+			list.add(23)
+
+			// list.add(8)
+			// list.add(3)
+			// list.add(1)
+			// list.add(7)
+			// list.add(5)
+			// list.add(9)
+
+			// list.add(4)
+			// list.add(3)
+			// list.add(2)
+			// list.add(1)
+
+			// list.add(1)
+			// list.add(1)
+
+			// 3.测试tiString
+			console.log(list.toString()) // 66 88 12 87 100 5 566 23
+
+			// 4.测试冒泡
+			// list.bubbleSort()
+			// console.log(list.toString()) // 5 12 23 66 87 88 100 566
+
+			// 5.选择排序
+			// list.selectionSort()
+			// console.log(list.toString()) // 5 12 23 66 87 88 100 566
+
+			// 6.插入排序
+			// list.insertionSort()
+			// console.log(list.toString()) // 5 12 23 66 87 88 100 566
+
+			// 7.希尔排序
+			// list.shellSprt()
+			// console.log(list.toString()) // 5 12 23 66 87 88 100 566
+
+			// 8.快速排序
+			list.quickSort()
+			console.log(list.toString()) // 5 12 23 66 87 88 100 566
+		</script>
+	</body>
+</html>

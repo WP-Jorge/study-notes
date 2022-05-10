@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!--
+        1、类名
+        <typeAliases>
+            <typeAlias type="自定义类型的全限定名称" alias="别名"/>
+        </typeAliases>
+        2、包名
+        <package> name是包名，这个包里所有的类，类名就是别名(美名不区分天小)
+    -->
+    <typeAliases>
+        <!--<typeAlias type="domain.Student" alias="stu"/>-->
+        <package name="domain"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql:///springdb?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=GMT%2B8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="111111"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="dao/StudentDao.xml"/>
+    </mappers>
+
+</configuration>

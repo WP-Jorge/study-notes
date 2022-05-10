@@ -1,0 +1,39 @@
+.input_bar {
+	width: 500px;
+	height: 350px;
+	margin: 60px auto;
+	overflow: hidden;
+	background-color: #F1F9FA;
+	box-shadow: 0px 5px 10px rgba(100, 100, 100, .6);
+	border-radius: 5px;
+	flex-wrap: wrap;
+}
+
+.input_title {
+	height: 50px;
+	text-align: center;
+	font-size: 25px;
+	line-height: 50px;
+	background-color: yellowgreen;
+}
+
+.username,
+.password {
+	padding: 0 10px;
+	display: block;
+	width: 300px;
+	height: 40px;
+	margin: 40px auto;
+}
+
+.action {
+	display: flex;
+	width: 250px;
+	margin: 10px auto;
+	justify-content: space-around;
+}
+
+.login,
+.regiest {
+	flex: .3;
+}

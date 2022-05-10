@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {number[]} nums1
+             * @param {number[]} nums2
+             * @return {number[]}
+             * 排序后使用双指针，由于sort方法使用的是快速排序，所以大部分的时间复杂度为O(nlogn)，空间复杂度O(min(m, n))
+             */
+            var intersect = function (nums1, nums2) {
+                let res = [];
+                nums1.sort((a, b) => {
+                    return a - b;
+                });
+                nums2.sort((a, b) => {
+                    return a - b;
+                });
+                let i = 0;
+                let j = 0;
+                while (i < nums1.length && j < nums2.length) {
+                    if (nums1[i] === nums2[j]) {
+                        res.push(nums1[i]);
+                        i++;
+                        j++;
+                        continue;
+                    }
+                    if (nums1[i] < nums2[j]) {
+                        i++;
+                    } else {
+                        j++;
+                    }
+                }
+                return res;
+            };
+        </script>
+    </body>
+</html>

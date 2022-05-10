@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {string} digits
+             * @return {string[]}
+             * 回溯，时间复杂度O(3^m * 4^n), 空间复杂度O(m + n), m是3个字符的数字个数，n是2个字符的数字个数
+             */
+            var letterCombinations = function (digits) {
+                let map = [
+                    '',
+                    '',
+                    'abc',
+                    'def',
+                    'ghi',
+                    'jkl',
+                    'mno',
+                    'pqrs',
+                    'tuv',
+                    'wxyz'
+                ];
+                if (!digits) {
+                    return [];
+                }
+                if (digits.length === 1) {
+                    return map[digits].split('');
+                }
+                let length = digits.length;
+                let res = [];
+                let path = [];
+                let backtracking = num => {
+                    if (path.length === length) {
+                        res.push(path.join(''));
+                        return;
+                    }
+                    for (let i = 0; i < map[digits[num]].length; i++) {
+                        path.push(map[digits[num]][i]);
+                        backtracking(num + 1);
+                        path.pop();
+                    }
+                };
+                backtracking(0);
+                return res;
+            };
+        </script>
+    </body>
+</html>

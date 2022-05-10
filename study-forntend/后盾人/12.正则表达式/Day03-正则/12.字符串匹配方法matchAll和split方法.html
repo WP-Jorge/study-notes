@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let str = `
+                https://hdcms.com
+                http://www.sina.com.cn
+                https://www.doudunren.com
+            `
+			let reg = /https?:\/\/(?:\w+\.)?(?:\w+\.)+(?:com|cn|org|cc)/gi
+			for (const iterator of str.matchAll(reg)) {
+				console.log(iterator)
+			}
+
+			let str2 = '2020-09-12'
+			console.log(str2.split(/[-\/]/)) // ["2020", "09", "12"]
+		</script>
+	</body>
+</html>

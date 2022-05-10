@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @return {number[][]}
+			 */
+			var permute = function (nums) {
+				let res = [];
+				let path = [];
+				let backtracking = (used) => {
+					if (path.length === nums.length) {
+						res.push([...path]);
+					}
+					for (let i = 0; i < nums.length; i++) {
+						if (used[i]) {
+							continue;
+						}
+						path.push(nums[i]);
+						used[i] = true;
+						backtracking(used);
+						path.pop();
+						used[i] = false;
+					}
+				};
+				backtracking([]);
+				return res;
+			};
+			console.log(permute([1, 2, 3]));
+		</script>
+	</body>
+</html>

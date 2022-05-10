@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* flex-wrap：子元素是否换行 默认不换行，如果装不开，会缩小子元素的宽度
+				nowrap：默认值不换行
+				wrap：换行
+				wrap-reverse：规定灵活的项目在必要的时候拆行或拆列，但是以相反的顺序
+				inherit：从父元素继承该属性
+				initial：设置该属性为它的默认值。
+			 */
+			
+			div {
+				display: flex;
+				width: 600px;
+				height: 400px;
+				background-color: pink;
+				flex-wrap: inherit;
+			}
+			
+			div span {
+				width: 150px;
+				height: 100px;
+				background-color: yellowgreen;
+				margin: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+			<span>4</span>
+		</div>
+	</body>
+</html>

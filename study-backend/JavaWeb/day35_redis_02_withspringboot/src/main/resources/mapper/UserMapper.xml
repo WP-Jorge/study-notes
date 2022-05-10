@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.redis.mapper.UserMapper">
+
+    <!-- 开启mybatis二级缓存 -->
+    <!--<cache/>-->
+    <!-- 开启自定义缓存 -->
+    <cache type="com.example.redis.cache.RedisCache"/>
+    <insert id="saveUser">
+        insert into user values(#{id}, #{name}, #{age}, #{bir})
+    </insert>
+    <update id="updateUser">
+        update user set id = #{id}, name = #{name}, age = #{age}, bir = #{bir} where id = 3
+    </update>
+    <delete id="delete">
+        delete from user where id = #{id}
+    </delete>
+
+    <select id="findAll" resultType="com.example.redis.entity.User">
+        select * from user;
+    </select>
+
+    <select id="findById" resultType="com.example.redis.entity.User">
+        select * from user where id = #{id}
+    </select>
+</mapper>

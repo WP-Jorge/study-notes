@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <!--&lt;!&ndash;filter1&ndash;&gt;-->
+    <!--<filter>-->
+    <!--    <filter-name>Filter</filter-name>-->
+    <!--    <filter-class>filter.Filter</filter-class>-->
+    <!--</filter>-->
+
+    <!--<filter-mapping>-->
+    <!--    <filter-name>Filter</filter-name>-->
+    <!--    &lt;!&ndash;/*表示拦截所有资源&ndash;&gt;-->
+    <!--    <url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <!--&lt;!&ndash;filter2&ndash;&gt;-->
+    <!--<filter>-->
+    <!--    <filter-name>Filter2</filter-name>-->
+    <!--    <filter-class>filter.Filter2</filter-class>-->
+    <!--</filter>-->
+
+    <!--<filter-mapping>-->
+    <!--    <filter-name>Filter2</filter-name>-->
+    <!--    <url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <!--&lt;!&ndash;filter3&ndash;&gt;-->
+    <!--<filter>-->
+    <!--    <filter-name>Filter3</filter-name>-->
+    <!--    <filter-class>filter.Filter3</filter-class>-->
+    <!--</filter>-->
+
+    <!--<filter-mapping>-->
+    <!--    <filter-name>Filter3</filter-name>-->
+    <!--    <url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <filter>
+        <filter-name>Filter4</filter-name>
+        <filter-class>filter.Filter4</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>Filter4</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>Filter5</filter-name>
+        <filter-class>filter.Filter5</filter-class>
+        <!--filter中定义的参数-->
+        <init-param>
+            <param-name>username</param-name>
+            <param-value>root</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>Filter5</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+</web-app>

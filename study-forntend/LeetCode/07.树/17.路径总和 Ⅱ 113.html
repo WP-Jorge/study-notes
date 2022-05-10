@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * Definition for a binary tree node.
+             * function TreeNode(val, left, right) {
+             *     this.val = (val===undefined ? 0 : val)
+             *     this.left = (left===undefined ? null : left)
+             *     this.right = (right===undefined ? null : right)
+             * }
+             */
+            /**
+             * @param {TreeNode} root
+             * @param {number} targetSum
+             * @return {number[][]}
+             * 树的深度优先搜索，时间复杂度O(n), 空间复杂度O(n)
+             */
+            var pathSum = function (root, targetSum) {
+                let res = [];
+                let dfs = (root, targetSum, path) => {
+                    if (targetSum === 0 && !root.left && !root.right) {
+                        res.push([...path]);
+                        return;
+                    }
+                    if (!root.left && !root.right) {
+                        return;
+                    }
+                    if (root.left) {
+                        path.push(root.left.val);
+                        dfs(root.left, targetSum - root.left.val, path);
+                        path.pop();
+                    }
+                    if (root.right) {
+                        path.push(root.right.val);
+                        dfs(root.right, targetSum - root.right.val, path);
+                        path.pop();
+                    }
+                    return;
+                };
+                if (!root) {
+                    return res;
+                }
+                dfs(root, targetSum - root.val, [root.val]);
+                return res;
+            };
+        </script>
+    </body>
+</html>

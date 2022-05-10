@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div class="father">
+			<div class="son">son盒子</div>
+		</div>
+
+		<script type="text/javascript">
+			// 1、实际开发中很少用到事件捕获阶段，大多用冒泡
+			// 2、有些事件不冒泡，如：onblur、onfocus、onmouseenter、onmouseleave
+			// 3、addEventListener(eventType, function [, boolean]) 第三个参数是true则调用捕获阶段，不填或者false调用冒泡阶段
+			// dom 事件流 三个阶段
+
+			// 1. JS 代码中只能执行捕获或者冒泡其中的一个阶段。
+			// 2. onclick 和 attachEvent（ie） 只能得到冒泡阶段。
+			// 3. 捕获阶段 如果addEventListener 第三个参数是 true 那么则处于捕获阶段  document -> html -> body -> father -> son
+			// var son = document.querySelector('.son');
+			// son.addEventListener('click', function() {
+			//     alert('son');
+			// }, true);
+			// var father = document.querySelector('.father');
+			// father.addEventListener('click', function() {
+			//     alert('father');
+			// }, true);
+			// 4. 冒泡阶段 如果addEventListener 第三个参数是 false 或者 省略 那么则处于冒泡阶段  son -> father ->body -> html -> document
+			var son = document.querySelector('.son');
+			son.addEventListener('click', function() {
+				alert('son');
+			}, false);
+			var father = document.querySelector('.father');
+			father.addEventListener('click', function() {
+				alert('father');
+			}, false);
+			document.addEventListener('click', function() {
+				alert('document');
+			})
+		</script>
+	</body>
+</html>

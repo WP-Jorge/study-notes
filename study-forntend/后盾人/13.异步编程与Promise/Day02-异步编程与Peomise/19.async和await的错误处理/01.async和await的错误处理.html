@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="02.ajax.js"></script>
+		<script>
+			// 1.使用catch进行错误处理
+			async function hd(city) {
+				if (city === '北京') {
+					throw new Error('城市不存在')
+				}
+				return await ajax(
+					`https://geoapi.qweather.com/v2/city/lookup?location=${city}&key=6fea66ec596e466a99686bcc6bb3a72a`
+				)
+			}
+			hd('北京')
+				.then(res => {
+					console.log(res)
+				})
+				.catch(err => {
+					console.log(err.message)
+				})
+
+			// 2.
+		</script>
+	</body>
+</html>

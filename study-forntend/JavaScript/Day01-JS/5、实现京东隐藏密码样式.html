@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		.box {
+			position: relative;
+			/* 子绝父相 */
+			width: 400px;
+			margin: 100px auto;
+			border-bottom: lightgray solid 1px;
+		}
+
+		.box input {
+			width: 350px;
+			border: 0;
+			height: 25px;
+			outline: none;
+		}
+
+		.box img {
+			width: 24px;
+			position: absolute;
+			/* 子绝父相 */
+			right: 2px;
+		}
+	</style>
+	<body>
+		<div class="box">
+			<label class="lab">
+				<img id="eye" src="imgs/close.png">
+			</label>
+			<input type="password" id="psd" />
+		</div>
+
+		<script type="text/javascript">
+			var eye = document.getElementById('eye')
+			var psd = document.getElementById('psd')
+			var flag = false
+			eye.onclick = function() {
+				if (flag === false) {
+					eye.src = 'imgs/open.png'
+					psd.type = 'text'
+					flag = !flag
+				} else {
+					eye.src = 'imgs/close.png'
+					psd.type = 'password'
+					flag = !flag
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} candidates
+			 * @param {number} target
+			 * @return {number[][]}
+			 * 回溯 + 剪枝
+			 */
+			var combinationSum2 = function (candidates, target) {
+				let res = [];
+				let path = [];
+				candidates.sort((a, b) => a - b);
+				function backtracking(num, sum) {
+					if (sum > target) {
+						return;
+					}
+					if (sum === target) {
+						res.push([...path]);
+						return;
+					}
+					for (let i = num; i < candidates.length && sum + candidates[i] <= target; i++) {
+						if (i > num && candidates[i] === candidates[i - 1]) {
+							continue;
+						}
+						path.push(candidates[i]);
+						backtracking(i + 1, sum + candidates[i]);
+						path.pop();
+					}
+				}
+				backtracking(0, 0);
+				return res;
+			};
+		</script>
+	</body>
+</html>

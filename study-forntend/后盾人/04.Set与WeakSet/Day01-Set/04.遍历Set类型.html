@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let set = new Set(['hdcms', 'houdunren'])
+			// 1.使用forEach 遍历
+			set.forEach((item, index, set) => {
+				console.log(item, index, set) // hdcms hdcms Set(2)
+			})
+
+			// 2.使用for of遍历
+			for (const value of set) {
+				console.log(value) // hdcms houdunren
+			}
+		</script>
+	</body>
+</html>

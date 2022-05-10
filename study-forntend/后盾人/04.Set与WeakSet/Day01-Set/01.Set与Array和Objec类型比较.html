@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.Array
+			let arr = [1, 1, 1, 1, 1, 1]
+			console.log(arr) // [1, 1, 1, 1, 1, 1]
+
+			// 2.Set set 类型不能放重复的值
+			let set = new Set()
+			console.log(set) // Set(0) {}
+			set.add(1)
+			set.add(1)
+			console.log(set) // Set(1) {1}
+
+			// 3.创建时赋值
+			let set2 = new Set([1, 2, 3, 4, 5])
+			console.log(set2) // Set(5) {1, 2, 3, 4, 5}
+		</script>
+	</body>
+</html>

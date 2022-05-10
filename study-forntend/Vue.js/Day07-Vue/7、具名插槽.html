@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<script src="lib/vue-router.js"></script>
+		<style>
+		</style>
+	</head>
+	<body>
+		<div id="div01">
+			<cpn>
+				<!-- 组件中有多个组件，要给每个组件取名，插入组件时时候使用slot="插槽名" 替换-->
+				<span slot="center">我是标题</span>
+			</cpn>
+		</div>
+		<template id="cpn">
+			<div>
+				<h2>我是组件</h2>
+				<p>我有插槽</p>
+				<!-- 插槽 -->
+				<slot name="left">左边</slot>
+				<slot name="center">中间</slot>
+				<slot name="right">右边</slot>
+			</div>
+		</template>
+		<script>
+			var nv = new Vue({
+				el: '#div01',
+				data: {},
+				methods: {},
+				components: {
+					cpn: {
+						template: '#cpn'
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

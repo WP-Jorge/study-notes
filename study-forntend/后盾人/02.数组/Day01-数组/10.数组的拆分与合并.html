@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.拆分成数组
+			let str = '野猪,乔治'
+			console.log(str.split(',')) // ["野猪", "乔治"]
+
+			// 2.合并成字符串
+			let arr = ['野猪', '乔治']
+			console.log(arr.join('')) // 野猪乔治
+
+			// 3.数组的合并 返回新数组
+			// ① 连接两个数组
+			let arr2 = [1, 2, 3, 4, 5]
+			let arr3 = ['野', '猪', '乔', '治']
+			let arr4 = arr2.concat(arr3)
+			console.log(arr4) // [1, 2, 3, 4, 5, "野", "猪", "乔", "治"]
+
+			// ③ 连接多个数组或元素
+			let arr5 = [1, 2, 3, 4, 5]
+			arr5 = arr5.concat(['a', 'b'], ['c', 'd'], ['e'], 'f')
+			console.log(arr5) // [1, 2, 3, 4, 5, "a", "b", "c", "d", "e", "f"]
+
+			// 4.数组的复制 copyWithin(to, start, length)
+			let arr6 = [1, 2, 3, 4, 5]
+			console.log(arr6.copyWithin(2, 0, 2)) // [1, 2, 1, 2, 5]
+		</script>
+	</body>
+</html>

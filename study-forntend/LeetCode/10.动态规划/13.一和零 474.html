@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string[]} strs
+			 * @param {number} m
+			 * @param {number} n
+			 * @return {number}
+			 * 0-1背包 动态规划，时间复杂度O(m*n*k)，空间复杂度O(m*n)
+			 */
+			var findMaxForm = function (strs, m, n) {
+				let dp = new Array(m + 1).fill().map(() => new Array(n + 1).fill(0));
+				for (let item of strs) {
+					let oneNum = 0;
+					let zeroNum = 0;
+					for (let char of item) {
+						if (char === '0') {
+							zeroNum++;
+							continue;
+						}
+						oneNum++;
+					}
+					for (let i = m; i >= zeroNum; i--) {
+						for (let j = n; j >= oneNum; j--) {
+							dp[i][j] = Math.max(dp[i][j], dp[i - zeroNum][j - oneNum] + 1);
+						}
+					}
+				}
+				return dp[m][n];
+			};
+		</script>
+	</body>
+</html>

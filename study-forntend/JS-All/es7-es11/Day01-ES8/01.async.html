@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// async 函数
+			async function fn() {
+				// 1.只要返回的不是promise对象，则返回的是成功的promise对象。返回类型为promise对象
+				// return '张三'
+
+				// 2.返回结果不是一个promise类型的对象，则返回的结果就是成功的promise对象
+				// return
+
+				// 3.抛出异常 返回的结果是失败的promise
+				// throw new Error('出错了')
+
+				//4.返回的结果是一个promise对象
+				return new Promise((resolve, reject) => {
+					// 成功
+					resolve('成功的数据')
+
+					// 失败
+					// reject('失败的错误')
+				})
+			}
+			let res = fn()
+			// console.log(res)
+
+			// 调用then()方法
+			res.then(
+				res => {
+					console.log(res)
+				},
+				err => {
+					console.warn(err)
+				}
+			)
+		</script>
+	</body>
+</html>

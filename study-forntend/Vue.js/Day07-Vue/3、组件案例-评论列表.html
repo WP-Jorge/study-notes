@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<style>
+			li{
+				border: dashed 1px #00BFFF;
+				height: 30px;
+				width: 500px;
+				margin-top: 10px;
+			}
+			span{
+				display: inline-block;
+				position: absolute;
+				padding-left: 350px;
+			}
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="div01">
+			<contentbox  @func="loadComment"></contentbox>
+			<ul>
+				<li v-for="item in list" :key="item.id">
+					<span>评论人：{{ item.name }}</span>
+					{{ item.content }}
+					
+				</li>
+			</ul>
+		</div>
+		
+		<template id="contentbox">
+			<div>
+				id:<input type="text" v-model="id"/>
+				name:<input type="text" v-model="name"/>
+				content:<input type="text" v-model="content"/>
+				<input type="button" value="发表" @click="postComment"/>
+			</div>
+		</template>
+		
+		<script>
+			var contentbox={
+				template:'#contentbox',
+				data(){
+					return {
+						id:'',
+						content:'',
+						name:''
+					}
+				},
+				methods:{
+					postComment(){//发表评论的方法
+						var comment = {id:this.id,name:this.name,content:this.content}
+						// 将本地缓存中的数据list中  JSON.parse()作用是将服务端中的数据处理后变成javascript对象
+						var list = JSON.parse(localStorage.getItem('contentbox') || '[]')
+						//将comment放入list数组中
+						list.unshift(comment)
+						//将list传入contentbox中的本地缓存  JSON.stringify将JavaScript对象转换为字符串
+						localStorage.setItem('contentbox',JSON.stringify(list))
+						this.id=this.name=this.content=''
+						this.$emit('func')
+					}
+				}
+			}
+			
+			
+			var nv =new Vue({
+				el:'#div01',
+				data:{
+					list:[
+						{id:1,name:'少司命',content:'万叶飞花流！！'},
+						{id:2,name:'司马果果',content:'我全挡住！！'},
+						{id:3,name:'东方离离',content:'我好像不行了...'}
+					]
+				},
+				methods:{
+					loadComment(){
+						var list = JSON.parse(localStorage.getItem('contentbox'||'[]'))
+						this.list=list
+					}
+				},
+				created(){
+					this.loadComment()
+				},
+				components:{
+					contentbox
+				}
+			})
+			
+		</script>
+	</body>
+</html>

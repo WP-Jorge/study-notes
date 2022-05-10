@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+		
+		<style>
+			.thin{
+				font-weight: 100;
+			}
+			.itatlic{
+				font-style: italic;
+			}
+			.red{
+				color: red;
+			}
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="div01">
+			<!-- 不使用v-bind，使用原生class -->
+			<!-- <h1 class="thin itatlic red">我很大！！！！！</h1> -->
+			
+			<!-- 使用v-bind，将class改写成如下形式 -->
+			<!-- <h1 :class="['thin', 'itatlic', 'red']">我很大！！！！！</h1> -->
+			
+			<!-- 使用v-bind并使用三元表达式 -->
+			<!-- <h1 :class="['thin', 'itatlic', flag?'red':'']">我很大！！！！！</h1> -->
+			
+			<!-- 使用v-bind并使用对象（对象中类名可以不用添加''）替换三元表达式以简化代码 -->
+			<!-- <h1 :class="['thin', 'itatlic', {red:flag}]">我很大！！！！！</h1> -->
+			
+			<!-- 使用v-bind并将[]换成{}，直接使用 类名:+boolean -->
+			<!-- <h1 :class="{thin:true, itatlic:true, red:true}">我很大！！！！！</h1> -->
+			
+			<!-- 使用v-bind将{}中的内容放入Vue中也可 -->
+			<!-- <h1 :class="obj">我很大！！！！！</h1> --> 	
+		</div>
+		<script>
+			var nv = new Vue({
+				el:'#div01',
+				data:{
+					flag:false,
+					obj:{thin:true, itatlic:true, red:false}
+				},
+				methods:{
+				}
+			})
+			
+		</script>
+	</body>
+	
+</html>

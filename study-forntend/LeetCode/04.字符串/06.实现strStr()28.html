@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {string} haystack
+             * @param {string} needle
+             * @return {number}
+             * kmp算法 时间复杂度O(m + n)
+             */
+            let strStr = function (haystack, needle) {
+                let getNext = needle => {
+                    // 1.初始化数据
+                    let j = 0;
+                    let next = [];
+                    next.push(j);
+                    // 2.进入循环
+                    for (let i = 1; i < needle.length; i++) {
+                        // 3.如果前后缀不相等，则回退j直到相等的地方的j的值
+                        while (j > 0 && needle[i] !== needle[j]) {
+                            j = next[j - 1];
+                        }
+                        // 4.如果前后缀相等，j + 1
+                        if (needle[i] === needle[j]) {
+                            j++;
+                        }
+                        next.push(j);
+                    }
+                    return next;
+                };
+                if (!needle) {
+                    return 0;
+                }
+                let next = getNext(needle);
+                let j = 0;
+                for (let i = 0; i < haystack.length; i++) {
+                    while (j > 0 && needle[j] !== haystack[i]) {
+                        j = next[j - 1];
+                    }
+                    if (needle[j] === haystack[i]) {
+                        j++;
+                    }
+                    if (j === needle.length) {
+                        return i - j + 1;
+                    }
+                }
+                return -1;
+            };
+        </script>
+    </body>
+</html>

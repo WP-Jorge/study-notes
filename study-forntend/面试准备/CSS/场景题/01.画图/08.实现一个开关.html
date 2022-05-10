@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.switch {
+			position: relative;
+			height: 30px;
+			width: 100px;
+			border-radius: 100px;
+			border: 1px solid gray;
+			background-color: pink;
+		}
+		.switch::before {
+			content: '';
+			display: inline-block;
+			position: absolute;
+			height: 30px;
+			width: 30px;
+			border-radius: 50%;
+			background-color: skyblue;
+			transition: all 0.5s ease;
+		}
+		.switch::after {
+			content: '';
+			display: inline-block;
+			position: absolute;
+			height: 30px;
+			width: 30px;
+			border-radius: 50%;
+			background-color: yellowgreen;
+			transition: all 0.5s ease;
+		}
+		.switch:hover::before {
+			width: 100px;
+			border-radius: 130px;
+			transition: all 0.5s ease;
+		}
+		.switch:hover::after {
+			transform: translateX(70px);
+			transition: all 0.5s ease;
+		}
+	</style>
+</head>
+<body>
+	<div class="switch"></div>
+</body>
+</html>

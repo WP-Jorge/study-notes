@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/*
+			 * function ListNode(x){
+			 *   this.val = x;
+			 *   this.next = null;
+			 * }
+			 */
+
+			/**
+			 *
+			 * @param head ListNode类
+			 * @param k int整型
+			 * @return ListNode类
+			 * 链表 时间复杂度O(n) 空间复杂度O(1)
+			 */
+			function reverseKGroup(head, k) {
+				// write code here
+				function reverse(head, m, n) {
+					let myHead = new ListNode(-1);
+					myHead.next = head;
+					let preNode = myHead;
+					for (let i = 0; i < m - 1; i++) {
+						if (!preNode) {
+							return null;
+						}
+						preNode = preNode.next;
+					}
+					let rightNode = preNode;
+					for (let i = 0; i < n - m + 1; i++) {
+						if (!rightNode) {
+							return null;
+						}
+						rightNode = rightNode.next;
+					}
+					if (!rightNode || !preNode) {
+						return null;
+					}
+					let curNode = rightNode.next;
+					let leftNode = preNode.next;
+					rightNode.next = null;
+					preNode.next = null;
+					let pre = null;
+					let cur = leftNode;
+					while (cur) {
+						let next = cur.next;
+						cur.next = pre;
+						pre = cur;
+						cur = next;
+					}
+					preNode.next = rightNode;
+					leftNode.next = curNode;
+					return myHead.next;
+				}
+				let count = 1;
+				let myHead = reverse(head, count, count + k - 1);
+				let preNode = myHead ? myHead : head;
+				while (myHead) {
+					preNode = myHead;
+					count += k;
+					myHead = reverse(myHead, count, count + k - 1);
+				}
+				return preNode;
+			}
+		</script>
+	</body>
+</html>

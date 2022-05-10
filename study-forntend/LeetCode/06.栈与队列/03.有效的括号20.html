@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {string} s
+             * @return {boolean}
+             * 栈 时间复杂度O(n), 空间复杂度O(n)
+             */
+            var isValid = function (s) {
+                let stack = [];
+                for (let i = 0; i < s.length; i++) {
+                    if (s[i] === '(' || s[i] === '[' || s[i] === '{') {
+                        stack.push(s[i]);
+                        continue;
+                    }
+                    if (
+                        (stack[stack.length - 1] === '(' && s[i] === ')') ||
+                        (stack[stack.length - 1] === '[' && s[i] === ']') ||
+                        (stack[stack.length - 1] === '{' && s[i] === '}')
+                    ) {
+                        stack.pop();
+                        continue;
+                    }
+                    stack.push(s[i]);
+                }
+                return stack.length === 0;
+            };
+
+            // 解法二：占用空间大，耗时长
+            // if (s.length % 2 !== 0) {
+            //     return false
+            // }
+            // let length = s.length / 2
+            // for (let i = 0; i < length; i++) {
+            //     s = s.replace('[]', '').replace('()', '').replace('{}', '')
+            // }
+            // return s.length === 0
+            console.log(isValid('(({}))'));
+        </script>
+    </body>
+</html>

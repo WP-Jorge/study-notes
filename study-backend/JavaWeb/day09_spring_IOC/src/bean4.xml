@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--集合类型的属性注入-->
+    <bean id="stu" class="collectiontype.Stu">
+        <!--数组类型的属性注入-->
+        <property name="course">
+            <array>
+                <value>java</value>
+                <value>JS</value>
+            </array>
+        </property>
+        <property name="list">
+            <list>
+                <value>张三</value>
+                <value>小三</value>
+            </list>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="JAVA" value="java"></entry>
+                <entry key="JS" value="js"></entry>
+            </map>
+        </property>
+        <property name="set">
+            <set>
+                <value>篮球</value>
+                <value>音乐</value>
+            </set>
+        </property>
+        <!--注入List集合类型，值为对象-->
+        <property name="courseList">
+            <list>
+                <ref bean="course1"></ref>
+                <ref bean="course2"></ref>
+            </list>
+        </property>
+    </bean>
+    <!--创建多个course对象-->
+    <bean id="course1" class="collectiontype.Course">
+        <property name="cname" value="Spring框架"></property>
+    </bean>
+    <bean id="course2" class="collectiontype.Course">
+        <property name="cname" value="SpringBoot"></property>
+    </bean>
+</beans>

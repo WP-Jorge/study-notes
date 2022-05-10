@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string} word1
+			 * @param {string} word2
+			 * @return {number}
+			 * 子序列 动态规划，时间复杂度O(m*n)，空间复杂度O(m*n)
+			 */
+			var minDistance = function (word1, word2) {
+				let dp = Array.from(new Array(word1.length + 1), () => new Array(word2.length + 1).fill(0));
+				for (let i = 1; i <= word1.length; i++) {
+					dp[i][0] = i;
+				}
+				for (let i = 1; i <= word2.length; i++) {
+					dp[0][i] = i;
+				}
+				for (let i = 1; i <= word1.length; i++) {
+					for (let j = 1; j <= word2.length; j++) {
+						if (word1[i - 1] === word2[j - 1]) {
+							dp[i][j] = dp[i - 1][j - 1];
+							continue;
+						}
+						dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + 1);
+					}
+				}
+				return dp[word1.length][word2.length];
+			};
+		</script>
+	</body>
+</html>

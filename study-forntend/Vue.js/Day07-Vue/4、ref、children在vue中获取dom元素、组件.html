@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<style>
+			
+		</style>
+		
+	</head>
+	<!-- 组件是以界面划分：按照不同页面划分不同组件，比如相同或相似的页面不用写多遍，写一个就都了，调用时把不同的地方的参数传入就行
+		 模块是以代码逻辑划分：按照不同功能划分不同模块 方便代码分层开发，保证每个层功能单一 -->
+	<body>
+		<div id="div01">
+			<input type="button" value="获取h3中的内容" @click="getElement"/>
+			<h3 ref="h3">今天天气真的好</h3>
+			<login ref="login"></login>
+		</div>
+		
+		<script>
+			var login = {
+				template:'<h3>组件中的h3</h3>',
+				data(){
+					return {
+						msg:'sonmsg'
+					}
+				},
+				methods:{
+					showSon(){
+						console.log('调用了子组件的showSon方法')
+					}
+				}
+			}
+			
+			
+			var nv =new Vue({
+				el:'#div01',
+				data:{
+					
+				},
+				methods:{
+					getElement(){
+						// // $refs 的使用
+						// //this.$refs不仅可以调用html中的元素，还能调用组件中的元素  可实现父组件调用子组件
+						// // 使用时在组件中添加ref="aaa"
+						// // 实际开发这个用的多
+						// console.log(this.$refs.h3.innerText)
+						// //调用组件中的元素
+						// this.$refs.login.showSon()
+						// console.log(this.$refs.login.msg)
+						
+						// // $children  的使用
+						console.log(this.$children[0])
+						console.log(this.$refs)
+						console.log(this.$children[0].$el.innerText)
+					}
+				},
+				components:{
+					login
+				}
+			})
+			
+		</script>
+	</body>
+</html>

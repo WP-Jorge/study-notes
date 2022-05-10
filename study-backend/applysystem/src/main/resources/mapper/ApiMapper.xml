@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cslg.applysystem.mapper.ApiMapper">
+    <cache-ref namespace="cn.cslg.applysystem.mapper.ApiMapper"/>
+    <select id="getApisByUsername" resultType="cn.cslg.applysystem.pojo.vo.ApiVO">
+        select distinct api.*
+        from user, user_role, role, role_api, api
+        where user.user_id = user_role.user_id
+        and role.role_id = user_role.role_id
+        and role.role_id = role_api.role_id
+        and role_api.api_id = api.api_id
+        and username = #{username}
+    </select>
+
+    <select id="getApisByUsernameWithPage" resultType="cn.cslg.applysystem.pojo.vo.ApiVO">
+        select distinct api.*
+        from user, user_role, role, role_api, api
+        where user.user_id = user_role.user_id
+        and role.role_id = user_role.role_id
+        and role.role_id = role_api.role_id
+        and role_api.api_id = api.api_id
+        and username = #{username}
+    </select>
+
+
+    <select id="getAllApisWithPage" resultType="cn.cslg.applysystem.pojo.vo.ApiVO">
+        select * from api
+    </select>
+
+    <!--这个是返回结果集对象-->
+    <resultMap id="RoleApiResultMap" type="cn.cslg.applysystem.pojo.vo.RoleWithApiVO">
+        <id column="role_id" jdbcType="INTEGER" property="roleId" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <collection property="childrenApi" javaType="java.util.ArrayList" column="roleId=role_id"
+                    select="getApiByRoleId">
+
+        </collection>
+    </resultMap>
+    <!--这个是返回结果中的childrenApi属性结果集对象-->
+    <resultMap id="apiResultMap" type="cn.cslg.applysystem.pojo.vo.ApiTreeVO">
+        <id column="api_id" jdbcType="INTEGER" property="apiId" />
+        <result column="parent_api_id" jdbcType="INTEGER" property="parentApiId" />
+        <result column="api_name" jdbcType="VARCHAR" property="apiName" />
+        <result column="api_path" jdbcType="VARCHAR" property="apiPath" />
+        <result column="api_type" jdbcType="VARCHAR" property="apiType" />
+        <!--column 作用是传参给getChildApiByParentApiId这个sql使用-->
+        <collection property="childrenApi" javaType="java.util.ArrayList" column="{parentId=api_id}"
+                    select="getChildApiByParentApiId">
+        </collection>
+    </resultMap>
+
+    <!-- 根据所有角色id查询权限树-->
+    <select id="getAllRolesApiTree" resultMap="RoleApiResultMap">
+       select * from role
+    </select>
+
+    <!--查询当前角色下所有当前层权限-->
+    <select id="getApiByRoleId" resultMap="apiResultMap">
+       select * from api, role_api where api.api_id = role_api.api_id and role_id = #{roleId}
+    </select>
+
+    <!--根据权限id查询下一层的权限-->
+    <select id="getChildApiByParentApiId" resultMap="apiResultMap">
+            select api_id, parent_api_id, api_name, api_path, api_type, api_method
+            from api
+            <where>
+                <choose>
+                    <when test="parent_api_id != 0">
+                        and parent_api_id = #{parentId}
+                    </when>
+                    <otherwise>
+                        and parent_api_id = 0
+                    </otherwise>
+                </choose>
+            </where>
+    </select>
+
+    <resultMap id="apiTreeResultMap" type="cn.cslg.applysystem.pojo.vo.ApiTreeVO">
+        <id property="apiId" column="api_id"/>
+        <result property="parentApiId" column="parent_api_id"/>
+        <result property="apiName" column="api_name"/>
+        <result property="apiPath" column="api_path"/>
+        <result property="apiType" column="api_type"/>
+        <result property="apiMethod" column="api_method"/>
+        <collection property="childrenApi" ofType="cn.cslg.applysystem.pojo.vo.ApiTreeVO" select="getChildApiByParentApiId" column="{parentId = api_id}"/>
+    </resultMap>
+
+    <select id="getApiTree" resultType="cn.cslg.applysystem.pojo.vo.ApiTreeVO" resultMap="apiTreeResultMap">
+        select * from api where parent_api_id = 0
+    </select>
+
+    <select id="getApiTreeByRoleId" resultType="cn.cslg.applysystem.pojo.vo.RoleWithApiVO" resultMap="apiResultMap">
+        select * from api, role_api where api.api_id = role_api.api_id and role_id = #{roleId}
+    </select>
+
+    <select id="getApiTreeByUserId" resultType="cn.cslg.applysystem.pojo.vo.RoleWithApiVO" resultMap="RoleApiResultMap">
+        select * from user, user_role where user.user_id = user_role.user_id and user.user_id = #{userId}
+    </select>
+
+    <select id="getApiTreeByUsername" resultType="cn.cslg.applysystem.pojo.vo.RoleWithApiVO" resultMap="RoleApiResultMap">
+        select * from user, user_role where user.user_id = user_role.user_id and username = #{username}
+    </select>
+
+    <insert id="addApi">
+        insert into api (parent_api_id, api_name, api_path, api_method, api_type)
+        select #{parentApiId}, #{apiName}, #{apiPath}, #{apiMethod}, #{apiType} from dual where exists(select api_id from api where api_id = #{parentApiId} or #{parentApiId} = 0)
+    </insert>
+
+    <select id="getApiTreeByApiId" resultType="cn.cslg.applysystem.pojo.vo.ApiTreeVO" resultMap="apiTreeResultMap">
+        select * from api where api_id = #{apiId}
+    </select>
+    <select id="getApisByApiNameWithPage" resultType="cn.cslg.applysystem.pojo.vo.ApiVO">
+        select * from api where api_name like concat('%', #{apiName}, '%')
+    </select>
+
+    <update id="updateApi">
+        update api
+        set parent_api_id = #{parentApiId}, api_name = #{apiName}, api_path = #{apiPath}, api_method = #{apiMethod}, api_type = #{apiType}
+        where api_id = (select api_id from (select api_id from api where api_id = #{apiId}) as temp1)
+        and exists (select api_id from (select api_id from api where api_id = #{parentApiId} or #{parentApiId} = 0) as temp2)
+    </update>
+
+
+</mapper>

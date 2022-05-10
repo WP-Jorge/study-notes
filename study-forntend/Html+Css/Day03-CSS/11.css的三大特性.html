@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* 1.层叠性：相同的样式以就进原则 */
+			/* div {
+				color: #000;
+			}
+			div {
+				color: #0000FF;
+			} */
+			
+			/* 2.继承性: 
+				div下的p标签会继承div的样式
+				子标签会继承父标签的某些样式，比如字体、字号
+				text-, font-, line-, color等
+			 */
+			div {
+				color: pink;
+			}
+			/* 2.1行高的继承 */
+			body {
+				/* /斜杆后面如果有添加单位，则为此行高 */
+				font: 15px/30px 'Times New Roman';
+				/* /斜杆后面不添加单位，则为作用到的元素的行高的1.5倍 */
+				font: 15px/30 'Times New Roman';
+			}
+			
+			/* 3.优先级：
+				选择器相同：执行层叠性
+				选择器不同：根据选择器的权重
+				继承的权重永远是0
+				权重可以叠加，但是不会有进位问题，标签选择器和类选择器无论怎么叠加，都不会超过id选择器的权重
+			*/
+		</style>
+	</head>
+	<body>
+		<!-- 1. -->
+		<!-- <div>巴拉巴拉巴拉巴拉</div> -->
+		
+		<!-- 2. -->
+		<div>
+			<p>我是div下的p标签</p>
+		</div>
+	</body>
+</html>

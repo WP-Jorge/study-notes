@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1. slice(start[, end]) 数组的截断 不会修改原有数组，返回截取的数组
+			let arr = [1, 2, 3, 4, 5]
+			let arr2 = arr.slice(1, 2)
+			console.log(arr) // [1, 2, 3, 4, 5]
+			console.log(arr2) // [2]
+
+			// 2.splice(start[, length, newValue...]) 数组的截断，会修改原有数组， 返回截取的数组
+			// ① 截取
+			let arr3 = [1, 2, 3, 4, 5]
+			let arr4 = arr3.splice(0, 3)
+			console.log(arr4) // [1, 2, 3]
+			console.log(arr3) // [4, 5]
+
+			// ② 替换
+			let arr5 = [1, 2, 3, 4, 5]
+			let arr6 = arr5.splice(0, 3, '野', '猪', '乔', '治')
+			console.log(arr6) // [1, 2, 3]
+			console.log(arr5) // ["野", "猪", "乔", "治", 4, 5] 在截取的地方可以插入新的元素，个数随意
+
+			// ③ 插入
+			let arr7 = [1, 2, 3, 4, 5]
+			let arr8 = arr7.splice(0, 0, '一')
+			console.log(arr7) // ["一", 1, 2, 3, 4, 5]
+			console.log(arr8) // []
+
+			// ④ 添加
+			let arr9 = [1, 2, 3, 4, 5]
+			let arr10 = arr9.splice(arr9.length, 0, '六')
+			console.log(arr9) // [1, 2, 3, 4, 5, "六"]
+			let arr11 = arr9.splice(0, 0, '零')
+			console.log(arr9) // ["零", 1, 2, 3, 4, 5, "六"]
+		</script>
+	</body>
+</html>

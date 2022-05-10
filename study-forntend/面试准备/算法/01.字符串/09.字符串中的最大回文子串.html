@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function longestPalindrome(str) {
+				let res = '';
+				for (let i = 0; i < str.length; i++) {
+					let s1 = getStr(str, i, i);
+					res = res.length > s1.length ? res : s1;
+					let s2 = getStr(str, i, i + 1);
+					res = res.length > s2.length ? res : s2;
+				}
+				return res;
+				function getStr(str, left, right) {
+					while (left >= 0 && right < str.length) {
+						if (str[left] === str[right]) {
+							left--;
+							right++;
+							continue;
+						}
+						break;
+					}
+					return str.slice(left + 1, right);
+				}
+			}
+			console.log(longestPalindrome('alddllddala'));
+		</script>
+	</body>
+</html>

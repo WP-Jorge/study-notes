@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string} digits
+			 * @return {string[]}
+			 * 回溯
+			 */
+			var letterCombinations = function (digits) {
+				let map = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz'];
+				let res = [];
+				let path = [];
+				let length = digits.length;
+				if (!digits.length) {
+					return res;
+				}
+				function backtracking(index) {
+					if (path.length === length) {
+						res.push(path.join(''));
+						return;
+					}
+					for (let i = 0; i < map[digits[index]].length; i++) {
+						path.push(map[digits[index]][i]);
+						backtracking(index + 1);
+						path.pop();
+					}
+				}
+				backtracking(0);
+				return res;
+			};
+		</script>
+	</body>
+</html>

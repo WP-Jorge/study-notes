@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style type="text/css">
+		input{
+			width: 30px;
+		}
+		a{
+			position: relative;
+			text-decoration: none;
+			background-color: #CCCCCC;
+			top: 2px;
+			width: 20px;
+			height: 20px;
+			display: inline-block;
+		}
+	</style>
+	<body>
+		数量：
+		<a id="low" href="javascript:void(0);">-</a>
+		<input type="text" value="1"/>
+		<a id="plus" href="javascript:void(0);">+</a>
+		<script type="text/javascript">
+			// 点击"-"文本框数量-1
+			$("#low").click(function(){
+				let num = $("input").val()
+				// 如果数量为0时返回，不继续-1
+				if(num == 1){
+					return
+				}
+				num--
+				$("input").val(num)
+			})
+			// 点击"+"文本框数量+1
+			$("#plus").click(function(){
+				let num = $("input").val()
+				num++
+				$("input").val(num)
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let xianxu = [1, 2, 4, 7, 3, 5, 6, 8]
+			let zhongxu = [4, 7, 2, 1, 5, 3, 8, 6]
+			class TreeNode {
+				#val
+				#left = null
+				#right = null
+
+				constructor(rootVal) {
+					this.#val = rootVal
+				}
+				get left() {
+					return this.#left
+				}
+				get right() {
+					return this.#right
+				}
+				set left(left) {
+					this.#left = left
+				}
+				set right(right) {
+					this.#right = right
+				}
+			}
+			function rebuildTree(xianxu, zhongxu) {
+				if (xianxu[0]) {
+					// 1. 找到根节点（前序序列的第一个元素一定是根节点）
+					let rootVal = xianxu[0] // 根节点的值
+
+					// 2.根据找到的根节点和中序序列，找到树的左右子树
+					// ① 根节点在中序列表中的位置
+					let index = zhongxu.indexOf(rootVal)
+					// ② 先序序列：左子树xianxu(0 ~ index - 1)，右子树xianxu(index + 1, 最后)
+					// ③ 中序序列：左子树zhongxu(0, index - 1)，右子树zhongxu(index + 1, 最后)
+
+					// 3.对左右子树进行1、2步操作
+					let leftTree = rebuildTree(
+						xianxu.slice(1, index + 1),
+						zhongxu.slice(0, index)
+					)
+					let rightTree = rebuildTree(
+						xianxu.slice(index + 1),
+						zhongxu.slice(index + 1)
+					)
+					let root = new TreeNode(rootVal)
+					root.left = leftTree
+					root.right = rightTree
+					return root
+				}
+			}
+
+			console.log(rebuildTree(xianxu, zhongxu))
+		</script>
+	</body>
+</html>

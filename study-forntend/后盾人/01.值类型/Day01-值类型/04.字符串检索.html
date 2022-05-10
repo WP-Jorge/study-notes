@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let str = 'houdunren.com'
+			// 1.indexOf(str[, index])
+			// ① indesOf 检索指定字符第一次出现的位置，返回第一次出现的下标，找不到则返回 -1
+			console.log(str.indexOf('o')) // 1
+			console.log(str.indexOf('p')) // -1
+
+			// ② 第二个参数表示从第几个字符的位置开始查询，小于 1 都转换成 0
+			console.log(str.indexOf('u', 3)) // 4
+
+			// 2.includes
+			// ① 跟indexOf用法一样，只是返回boolean类型。
+			console.log(str.includes('o', 5)) // true
+
+			// 3.lastIndexOf
+			// ① 从后边向前开始查找，用法与 indexOf 一样
+			console.log(str.lastIndexOf('o')) // 11
+			// ② 第二个参数从给定的位置开始向前查找
+			console.log(str.lastIndexOf('u', 2)) // 2
+
+			// 4.startWith 判断是否以指定的字符串开始，返回布尔类型
+			console.log(str.startsWith('h')) // true
+
+			// 5.endWith 判断是否以指定的字符结尾, 返回布尔类型
+			console.log(str.endsWith('com')) // true
+		</script>
+	</body>
+</html>

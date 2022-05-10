@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=`, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			'use strict'
+			let user = {
+				name: '后盾人',
+				age: 18
+			}
+			// 冻结对象 （不能修改属性,也不能进行添加）
+			Object.freeze(user) // "writable": false, "configurable": false
+			console.log(
+				JSON.stringify(Object.getOwnPropertyDescriptors(user), null, 2)
+			)
+			// user.a = 'a' // 报错
+
+			// 判断是否是冻结状态
+			console.log(Object.isFrozen(user)) // true
+		</script>
+	</body>
+</html>

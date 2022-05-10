@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Document</title>
+</head>
+<body>
+<script>
+	/**
+	 * @param {number} numRows
+	 * @return {number[][]}
+	 * 动态规划 时间复杂度O(n^2) 空间复杂度O(n^2)
+	 */
+	var generate = function (numRows) {
+		let res = Array.from(new Array(numRows)).map((item, index) => {
+			item = new Array(index + 1);
+			item[0] = 1;
+			item[index] = 1;
+			return item;
+		});
+		for (let i = 2; i < numRows; i++) {
+			for (let j = 1; j < res[i].length - 1; j++) {
+				res[i][j] = res[i - 1][j - 1] + res[i - 1][j];
+			}
+		}
+		return res;
+	};
+	console.log(generate(5));
+</script>
+</body>
+</html>

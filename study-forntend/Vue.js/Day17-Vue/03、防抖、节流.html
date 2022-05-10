@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue2.6.11.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			html {
+				height: 10000px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<!-- <button type="button" @click="move">防抖</button> -->
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el: '#app',
+				data: {},
+				mounted() {
+					const move = this.debounce(this.move, 500);
+					document.addEventListener('scroll', move);
+				},
+				methods: {
+					// func: 需要做防抖操作的函数
+					// delay: 防抖动触发时间间隔
+					debounce(func, delay) {
+						let timer = null;
+						return function(...args) {
+							if (timer) {
+								clearTimeout(timer);
+							}
+							timer = setTimeout(() => {
+								func.apply(this, args);
+							}, delay);
+						}
+					},
+					move() {
+						console.log('触发防抖');
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

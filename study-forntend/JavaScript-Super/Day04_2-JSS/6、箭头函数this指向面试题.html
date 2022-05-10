@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var age = 100;
+
+			var obj = {
+				age: 20,
+				that: function(){
+					console.log(this)
+				},
+				say: () => {
+					// alert(this.age)
+					console.log(this)
+				}
+			}
+			obj.that() // 指向obj对象
+			obj.say(); // 指向window
+			
+		</script>
+	</body>
+</html>

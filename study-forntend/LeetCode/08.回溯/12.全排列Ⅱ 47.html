@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @return {number[][]}
+			 * 回溯 + 剪枝
+			 */
+			var permuteUnique = function (nums) {
+				let res = [];
+				let path = [];
+				nums = nums.sort((a, b) => {
+					return a - b;
+				});
+				let backtacking = used => {
+					if (path.length === nums.length) {
+						res.push([...path]);
+						return;
+					}
+					for (let i = 0; i < nums.length; i++) {
+						// used[i - 1] == true，说明同⼀树⽀nums[i - 1]使⽤过
+						// used[i - 1] == false，说明同⼀树层nums[i - 1]使⽤过
+						// 如果同⼀树层nums[i - 1]使⽤过则直接跳过
+						if (i > 0 && nums[i] === nums[i - 1] && !used[i - 1]) {
+							continue;
+						}
+						// 如果同⼀树⽀nums[i]没使⽤过开始处理
+						if (!used[i]) {
+							path.push(nums[i]);
+							used[i] = true; // 标记同⼀树⽀nums[i]使⽤过，防止同一树支重复使用
+							backtacking(used);
+							path.pop();
+							used[i] = false;
+						}
+					}
+				};
+				backtacking([]);
+				return res;
+			};
+		</script>
+	</body>
+</html>

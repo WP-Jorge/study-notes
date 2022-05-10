@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * Definition for singly-linked list.
+			 * function ListNode(val, next) {
+			 *     this.val = (val===undefined ? 0 : val)
+			 *     this.next = (next===undefined ? null : next)
+			 * }
+			 */
+			/**
+			 * @param {ListNode} head
+			 * @return {ListNode}
+			 * 链表 三指针 时间复杂度O(n) 空间复杂度O(1)
+			 */
+			var deleteDuplicates = function (head) {
+				if (!head || !head.next) {
+					return head;
+				}
+				let myHead = new ListNode(null, head);
+				let pre = myHead;
+				let cur = myHead.next;
+				let next = cur.next;
+				let flag = false;
+				while (next) {
+					if (cur.val === next.val) {
+						flag = true;
+						next = next.next;
+						continue;
+					}
+					if (flag) {
+						cur = next;
+						next = next.next;
+						pre.next = cur;
+						flag = false;
+						continue;
+					}
+					pre = pre.next;
+					cur = cur.next;
+					next = next.next;
+				}
+				if (flag) {
+					pre.next = next;
+				}
+				return myHead.next;
+			};
+		</script>
+	</body>
+</html>

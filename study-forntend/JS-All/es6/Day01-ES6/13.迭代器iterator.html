@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/* 
+                迭代器：iterator 是一中接口，为各种不同的数据结构提供统一的访问机制
+                任何数据结构只要部署了iterator接口，就可以完成遍历的操作
+                1.ES6创建了一种新的遍历命令for...of循环,iterator接口主要提供for...of消费
+                2.原生具备iterator接口的数据（可用for of遍历）
+                    ① Array
+                    ② Arguments
+                    ③ Set
+                    ④ Map
+                    ⑤ String
+                    ⑥ TypedArray
+                    ⑦ NodeList
+             */
+			// 申明一个数组
+			let names = ['张三', '李四', '王五', '赵六']
+			// 使用for...of 遍历
+			for (let item of names) {
+				console.log(item)
+			}
+			console.log(names)
+
+			let iterator = names[Symbol.iterator]()
+			// 调用对象的next 方法
+			console.log(iterator.next())
+			console.log(iterator.next())
+		</script>
+	</body>
+</html>

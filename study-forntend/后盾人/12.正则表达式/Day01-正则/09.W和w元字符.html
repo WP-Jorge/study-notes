@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// \w：数字、字母、下划线  \d：数字
+			let str = 'houdunren2021'
+			console.log(str.match(/\w/g).join('')) // houdunren2021
+
+			let email = '85522324@qq.com'
+			console.log(email.match(/^\w+@\w+\.\w+$/)) // ["85522324@qq.com", index: 0, input: "85522324@qq.com", groups: undefined]
+
+			// \W：除了数组字母下划线
+			console.log('ad@ad'.match(/\W/)) // ["@", index: 2, input: "ad@ad", groups: undefined]
+
+			let username = prompt('请输入用户名')
+			console.log(/^[a-z]\w{4,9}$/.test(username))
+		</script>
+	</body>
+</html>

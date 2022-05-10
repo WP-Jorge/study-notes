@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		asd 
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+			// 连接socket 服务
+			// 参数是服务器地址
+			let socket = io('http://localhost:3000')
+			// 接收服务器返回的数据
+			// socket.on('send', data => {
+			// 	console.log(data);
+			// })
+			socket.emit('hehe', { name: 'zs', age: 18 })
+			socket.on('send', data => {
+				console.log(data);
+			})
+		</script>
+	</body>
+</html>

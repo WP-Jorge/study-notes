@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--提取集合注入部分属性-->
+    <!--
+        1、添加utils命名空间
+        2、添加http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        到xsi:schemaLocation中
+    -->
+    <!--1、提取List集合类型属性注入-->
+    <util:list id="bookList">
+        <value><![CDATA[<<计算机网络>>]]></value>
+        <value><![CDATA[<<计算机操作系统>>]]></value>
+    </util:list>
+
+    <!--2、提取List集合类型属性注入使用-->
+    <!--在spring配置文件bean标签里面有属性(scope) 用于设置单实例还是多实例
+        第一个值：singleton，单实例对象（默认），加载spring文件时就会创建单实例对象
+        第二个值：prototype，多实例对象，在调用getBean方法时候创建多实例对象
+    -->
+    <bean id="book" class="collectiontype.Book" scope="prototype">
+        <property name="list" ref="bookList"></property>
+    </bean>
+</beans>

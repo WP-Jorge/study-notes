@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.使用递归
+			let lessons1 = [
+				{
+					title: '媒体查询',
+					click: 89
+				},
+				{
+					title: 'FLEX 弹性布局',
+					click: 45
+				},
+				{
+					title: '栅格布局',
+					click: 18
+				},
+				{
+					title: '盒子模型',
+					click: 29
+				}
+			]
+			function change(lessons, num = 100, i = 0) {
+				if (i === lessons.length) {
+					return lessons
+				}
+				lessons[i].click += num
+				return change(lessons, num, ++i)
+			}
+			console.table(change(lessons1))
+
+			// 2.使用map
+			let lessons2 = [
+				{
+					title: '媒体查询',
+					click: 89
+				},
+				{
+					title: 'FLEX 弹性布局',
+					click: 45
+				},
+				{
+					title: '栅格布局',
+					click: 18
+				},
+				{
+					title: '盒子模型',
+					click: 29
+				}
+			]
+			lessons2 = lessons2.map(item => {
+				item.click += 100
+				return item
+			})
+			console.table(lessons2)
+		</script>
+	</body>
+</html>

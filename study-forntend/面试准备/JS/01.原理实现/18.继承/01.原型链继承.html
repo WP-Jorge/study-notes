@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/**
+		 * 原型链继承：
+		 * 缺点：
+		 * 		① 多个实例对引用类型属性操作会相互影响
+		 * 		② 子实例无法向父类构造函数传参
+		 * 		③ 给子类添加属性、方法必须在替换原型之后
+		 */ 
+		function Animal() {
+			this.name = 'animal';
+			this.food = ['草'];
+		}
+		function Cat() {
+			this.name = 'cat';
+		}
+		Animal.prototype.eat = function() {
+			console.log('eat');
+		}
+		Cat.prototype = new Animal();
+		Cat.prototype.constructor = Cat;
+
+		let cat1 = new Cat();
+		cat1.food.push('🐟')
+		cat1.eat();
+		console.log(cat1.name); // cat
+		console.log(cat1.food); // ['草', '🐟']
+
+		let cat2 = new Cat();
+		console.log(cat2.name); // cat
+		console.log(cat2.food); // ['草', '🐟']
+	</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片模糊处理filter</title>
+    <style>
+		/* filter:函数(); 
+			①none 			默认值，没有效果。
+			②blur(px) 		给图像设置高斯模糊。值越大越模糊；
+			③brightness(%)	给图片应用一种线性乘法，使其看起来更亮或更暗。如果值是0%，图像会全黑。值是100%，则图
+							像无变化。其他的值对应线性乘数效果。值超过100%也是可以的，图像会比原来更亮。如果没有
+							设定值，默认是1。
+			④contrast(%) 	调整图像的对比度。值是0%的话，图像会全黑。值是100%，图像不变。值可以超过100%，意味着
+							会运用更低的对比。若没有设置值，默认是1。
+			⑤opacity(%) 	转化图像的透明程度。值定义转换的比例。值为0%则是完全透明，值为100%则图像无变化。
+			⑥invert(%) 		反转输入图像。默认0，值定义转换的比例。100%的价值是完全反转。值为0%则图像无变化。
+			⑦grayscale(%) 	将图像转换为灰度图像。值定义转换的比例。值为100%则完全转为灰度图像，值为0%图像无变化。
+			⑧...
+		 */
+        img {
+            /* blur是一个函数 小括号里面数值越大，图片越模糊 注意数值要加px单位 */
+            filter: blur(15px);
+        }
+        img:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body>
+   <img src="images/pink.jpg" alt="">
+</body>
+</html>

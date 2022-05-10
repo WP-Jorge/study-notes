@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// ① new Date() 获取当前时间(object 类型)
+			let date = new Date()
+			console.log(date) // Sun Apr 04 2021 20:28:36 GMT+0800 (中国标准时间)
+			console.log(typeof date) // object
+			console.log(date * 1) // 1617539316736
+
+			// ② Date() 获取当前时间(string 类型)
+			let date2 = Date()
+			console.log(date2) // Sun Apr 04 2021 20:28:36 GMT+0800 (中国标准时间)
+			console.log(typeof date2) // string
+			console.log(date2 * 1) // NaN
+
+			// ③ Date.now() 获取当前时间戳(ms)
+			let date3 = Date.now()
+			console.log(date3) // 1617539383359
+
+			// ④ 给定字符串获取时间
+			let date4 = new Date('1990-9-10 2:22:2')
+			console.log(date4) // Mon Sep 10 1990 02:22:02 GMT+0900 (中国夏令时间)
+			console.log(new Date(2020, 2, 22, 22, 22, 22)) // Sun Mar 22 2020 22:22:22 GMT+0800 (中国标准时间)
+
+			// 获取月份getMonth
+			console.log(date4.getMonth()) // 8  月份下标8
+
+			// ⑤ 使用console.time('time') console.timeEnd('time') 来计算这两个代码之间的运行时间
+			console.time('time')
+			console.timeEnd('time') // time: 0.0048828125 ms
+		</script>
+	</body>
+</html>

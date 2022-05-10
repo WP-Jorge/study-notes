@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * Definition for a binary tree node.
+			 * function TreeNode(val, left, right) {
+			 *     this.val = (val===undefined ? 0 : val)
+			 *     this.left = (left===undefined ? null : left)
+			 *     this.right = (right===undefined ? null : right)
+			 * }
+			 */
+			/**
+			 * @param {number[]} preorder
+			 * @param {number[]} inorder
+			 * @return {TreeNode}
+			 * 树的构建 时间复杂度O(n) 空间复杂度O(n)
+			 */
+			var buildTree = function (preorder, inorder) {
+				function dfs(preorder, inorder) {
+					if (!preorder.length) {
+						return null;
+					}
+					let root = new TreeNode(preorder[0]);
+					let index = inorder.indexOf(root.val);
+					root.left = dfs(preorder.slice(1, index + 1), inorder.slice(0, index));
+					root.right = dfs(preorder.slice(index + 1), inorder.slice(index + 1));
+					return root;
+				}
+				return dfs(preorder, inorder);
+			};
+		</script>
+	</body>
+</html>

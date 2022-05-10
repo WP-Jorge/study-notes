@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单</title>
+</head>
+<body>
+<form action="http://localhost:8080/day02_servlet/parameterServlet" method="get">
+	用户名：<input type="text" name="userName"><br>
+	密码：<input type="password" name="userPwd"><br>
+	爱好：<input type="checkbox" name="hobby" value="java">java
+	<input type="checkbox" name="hobby" value="c">c
+	<input type="checkbox" name="hobby" value="c++">c++
+	<button type="submit">Get提交</button>
+</form>
+<form action="http://localhost:8080/day02_servlet/parameterServlet" method="post">
+	用户名：<input type="text" name="userName"><br>
+	密码：<input type="password" name="userPwd"><br>
+	爱好：<input type="checkbox" name="hobby" value="java">java
+	<input type="checkbox" name="hobby" value="c">c
+	<input type="checkbox" name="hobby" value="c++">c++
+	<button type="submit">Post提交</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let obj = { name: '后盾人' }
+			let edu = obj
+
+			let set = new WeakSet()
+			set.add(obj)
+			console.log(set) // WeakSet {{…}} 有值
+
+			// 1.WeakSet为弱引用，对象的引用次数不会 + 1
+			obj = null
+			edu = null
+			console.log(set) // WeakSet {{…}} 无值
+
+			// 2.所以WeakSet的循环遍历都不能操作
+			// console.log(set.values()) // 报错
+			// for (const item of set) {} // 报错
+
+			// 3.size用不了
+			console.log(set.size) // undefined
+		</script>
+	</body>
+</html>

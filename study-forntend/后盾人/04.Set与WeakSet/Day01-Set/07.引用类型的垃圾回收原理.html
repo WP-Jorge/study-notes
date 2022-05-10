@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 当一个引用类型的的被引用次数为 0 时会被垃圾回收
+			let obj = { name: '后盾人' } // { name: '后盾人' } 的引用次数为 1
+			let edu = obj // { name: '后盾人' } 的引用次数为 1 + 1 = 2
+			obj = null // { name: '后盾人' } 的引用次数为 2 - 1 = 1
+			console.log(edu) // {name: "后盾人"}
+			edu = null // { name: '后盾人' } 的引用次数为 1 - 1 = 0 被垃圾回收
+		</script>
+	</body>
+</html>

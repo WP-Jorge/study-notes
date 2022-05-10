@@ -1,0 +1,40 @@
+// 一、嵌套
+ul {
+	color: pink;
+	li {
+		font-size: 10px;
+		a {
+			text-decoration: none;
+		}
+	}
+}
+
+// 二、伪类选择器
+ul {
+	color: pink;
+	li {
+		font-size: 10px;
+		a {
+			text-decoration: none;
+			// 1.使用&，相当于a:hover
+			&:hover {
+				color: yellowgreen;
+			}
+		}
+	}
+	// 2.使用&的地方会引用父选择器
+	// 	父选择器会替代&的位置
+	& &-text {
+		padding: 100px;
+	}
+}
+
+// 三、替换相同的前缀
+//  1.使用 前缀: {需要添加前缀的属性}，会在每个需要添加前缀的属性前添加该前缀 
+.nav {
+	font: {
+		size: 10px;
+		family: He;
+	}
+}
+

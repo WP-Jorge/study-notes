@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<div></div>
+		<div></div>
+		<div></div>
+	</head>
+	<body>
+		<script>
+			// ... 扩展运算符 能将数组转化为逗号分隔的 参数序列
+			// 声明一个数组
+			let names = ['张三', '李四', '王五']
+
+			// 声明一个数组
+			function yanchu() {
+				console.log(arguments)
+			}
+			yanchu(...names) // 等价于 yanchu('张三', '李四', '王五')
+
+			// 扩展运算符的运用
+			// 1.数组的合并
+			let kuaizi = ['王太利', '肖央']
+			let fenghuang = ['曾毅', '玲花']
+			// let zuixuanxiaopingguo = kuaizi.concat(fenghuang)
+			let zuixuanxiaopingguo = [...kuaizi, ...fenghuang]
+			console.log(zuixuanxiaopingguo)
+
+			// 数组的克隆 浅拷贝
+			let sanzhihua = ['E', 'G', 'M']
+			let sanyecao = [...sanzhihua]
+			console.log(sanyecao)
+
+			// 3.将伪数组转化为真数组
+			let divs = document.querySelectorAll('div')
+			let divArr = [...divs]
+			console.log(divArr)
+		</script>
+	</body>
+</html>

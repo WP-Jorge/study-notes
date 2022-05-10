@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let hd = {
+				title: '后盾人',
+				url: 'houdunren.com',
+				teacher: {
+					name: '向军'
+				}
+			}
+			// 1.转换为JSON数据
+			// 第一个参数表述需要把哪个对象转换为json
+			// 第二个参数表示只保留哪些属性,是一个数组
+			// 第三个参数表示缩进个数 并格式化
+			// ① 只有一个参数
+			let json = JSON.stringify(hd)
+			console.log(json) // {"title":"后盾人","url":"houdunren.com","teacher":{"name":"向军"}}
+
+			// ② 有两个参数
+			let json2 = JSON.stringify(hd, ['title'])
+			console.log(json2) // {"title":"后盾人"}
+
+			// ③ 有三个参数
+			let json3 = JSON.stringify(hd, null, 2)
+			console.log(json3)
+			/*
+            {
+                "title": "后盾人",
+                "url": "houdunren.com",
+                "teacher": {
+                    "name": "向军"
+                }
+            }
+            */
+
+			// 2.自定义JSON返回格式
+			let hd2 = {
+				title: '后盾人',
+				url: 'houdunren.com',
+				teacher: {
+					name: '向军'
+				},
+				toJSON: function () {
+					return {
+						title: this.title,
+						teacher: this.teacher.name
+					}
+				}
+			}
+			let json4 = JSON.stringify(hd2, null, 2)
+			console.log(json4)
+			/*
+            {
+                "title": "后盾人",
+                "teacher": "向军"
+            }
+            */
+		</script>
+	</body>
+</html>

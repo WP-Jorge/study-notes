@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/* 
+                1.Symbol.instanceof：当其他对象使用instanceof 运算符时，判断是否为该对象的实例时，会调用这个方法
+                2.Symbol.isConcatSpreadable：属性等于的是一个布尔值，表示该对象用于Array.prototype.concat()时，是否可以展开
+                3.Symbol.match：当执行了str.match(myObject)时，如果该属性存在，会调用它，返回该方法的返回值
+                4.Symbol.replace：当该对象被str.replace(myObject)方法调用时，会返回该方法的返回值
+                5.Symbol.serach：当对象被str.search(myObject)方法调用时，会返回该方法的返回值
+                6.Symbol.split：当该对象被str.split(myObject)方法调用时，会返回该对象的返回值
+                7.Symbol.iterator：对象进行for...of循环时，会调用Symbol.iterator方法，返回该对象的默认遍历器
+                8.Symbol.toPrimitive：该对象被转换为原始对象类型的值时，会调用这个方法，返回该对象对应的原始数据类型
+                9.Symbol.toStringTag：在该对象调用toString方法时，返回该方法的返回值
+                10.Symbol.species：创建衍生对象时会调用该属性
+            */
+			// 1.当其他对象使用instanceof 运算符时，判断是否为该对象的实例时，会调用这个方法
+			// class Person {
+			// 	static [Symbol.hasInstance](param) {
+			// 		console.log(param)
+			// 		console.log('我被用来检测类型了')
+			// 		// 可以自己控制类型检测
+			// 		return true
+			// 	}
+			// }
+			// o = {}
+			// console.log(o instanceof Person)
+
+			// 2.对象的Symbol.isConcatSpreadable 属性等于的是一个布尔值，表示该对象用于Array.prototype.concat()时，是否可以展开
+			let arr1 = [1, 2, 3]
+			let arr2 = [4, 5, 6]
+			arr2[Symbol.isConcatSpreadable] = false // 表示不可展开
+			console.log(arr1.concat(arr2))
+		</script>
+	</body>
+</html>

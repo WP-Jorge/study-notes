@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/*
+			 * function ListNode(x){
+			 *   this.val = x;
+			 *   this.next = null;
+			 * }
+			 */
+
+			/**
+			 *
+			 * @param lists ListNode类一维数组
+			 * @return ListNode类
+			 * 链表 时间复杂度O(nlogn) 空间复杂度O(n)
+			 */
+			function mergeKLists(lists) {
+				// write code here
+				let arr = [];
+				if (!lists.length) {
+					return lists[0];
+				}
+				lists.forEach(item => {
+					let list = item;
+					while (list) {
+						arr.push(list.val);
+						list = list.next;
+					}
+				});
+				function quickSort(arr) {
+					if (arr.length < 2) {
+						return arr;
+					}
+					let target = arr[0];
+					let right = [];
+					let left = [];
+					for (let i = 1; i < arr.length; i++) {
+						if (arr[i] < target) {
+							left.push(arr[i]);
+							continue;
+						}
+						right.push(arr[i]);
+					}
+					return [...quickSort(left), target, ...quickSort(right)];
+				}
+				let listArr = quickSort(arr);
+				let res = new ListNode(-1);
+				let myHead = res;
+				listArr.map(item => {
+					myHead.next = new ListNode(item);
+					myHead = myHead.next;
+				});
+				return res.next;
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.使用for
+			let lessons = [
+				{ title: '媒体查询响应式布局', category: 'css' },
+				{ title: 'FLEX 弹性布局', category: 'css' },
+				{ title: 'MYSQL多表查询', category: 'mysql' }
+			]
+			for (let i = 0; i < lessons.length; i++) {
+				lessons[i].title = `后盾人${lessons[i].title}`
+			}
+			console.table(lessons)
+
+			// 2.使用for of 多用来操作数组
+			let lessons2 = [
+				{ title: '媒体查询响应式布局', category: 'css' },
+				{ title: 'FLEX 弹性布局', category: 'css' },
+				{ title: 'MYSQL多表查询', category: 'mysql' }
+			]
+			for (const value of lessons2) {
+				value.title = `后盾人${value.title}`
+			}
+			console.table(lessons2)
+
+			// 3.使用 for in 多用来操作对象
+			let lessons3 = [
+				{ title: '媒体查询响应式布局', category: 'css' },
+				{ title: 'FLEX 弹性布局', category: 'css' },
+				{ title: 'MYSQL多表查询', category: 'mysql' }
+			]
+			for (const key in lessons3) {
+				lessons3[key].title = `后盾人${lessons3[key].title}`
+			}
+			console.table(lessons3)
+		</script>
+	</body>
+</html>

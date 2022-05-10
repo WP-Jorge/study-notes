@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			var MyQueue = function () {
+				this.queue = [];
+			};
+
+			/**
+			 * @param {number} x
+			 * @return {void}
+			 */
+			MyQueue.prototype.push = function (x) {
+				this.queue.push(x);
+			};
+
+			/**
+			 * @return {number}
+			 */
+			MyQueue.prototype.pop = function () {
+				return this.queue.shift();
+			};
+
+			/**
+			 * @return {number}
+			 */
+			MyQueue.prototype.peek = function () {
+				return this.queue[0];
+			};
+
+			/**
+			 * @return {boolean}
+			 */
+			MyQueue.prototype.empty = function () {
+				return this.queue.length === 0;
+			};
+
+			/**
+			 * Your MyQueue object will be instantiated and called as such:
+			 * var obj = new MyQueue()
+			 * obj.push(x)
+			 * var param_2 = obj.pop()
+			 * var param_3 = obj.peek()
+			 * var param_4 = obj.empty()
+			 */
+		</script>
+	</body>
+</html>

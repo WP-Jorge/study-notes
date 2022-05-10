@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="02.ajax.js"></script>
+		<script>
+			let url =
+				'https://geoapi.qweather.com/v2/city/lookup?location=changshu&key=6fea66ec596e466a99686bcc6bb3a72a'
+			ajax(url)
+				.then(res => {
+					console.log(res.location[0].name)
+					return ajax(
+						'https://geoapi.qweather.com/v2/city/lookup?location=beijing&key=6fea66ec596e466a99686bcc6bb3a72a'
+					)
+				})
+				.then(res => {
+					console.log(res.location[0].name)
+				})
+		</script>
+	</body>
+</html>

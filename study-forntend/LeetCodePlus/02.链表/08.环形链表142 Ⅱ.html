@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * Definition for singly-linked list.
+			 * function ListNode(val) {
+			 *     this.val = val;
+			 *     this.next = null;
+			 * }
+			 */
+
+			/**
+			 * @param {ListNode} head
+			 * @return {ListNode}
+			 * 快慢指针 时间复杂度O(n) 空间复杂度O(1)
+			 */
+			var detectCycle = function (head) {
+				if (!head || !head.next) {
+					return null;
+				}
+				let slow = head;
+				let fast = head;
+				while (true) {
+					if (!fast || !fast.next) {
+						return null;
+					}
+					slow = slow.next;
+					fast = fast.next.next;
+					if (fast === slow) {
+						break;
+					}
+				}
+				fast = head;
+				while (fast != slow) {
+					slow = slow.next;
+					fast = fast.next;
+				}
+				return slow;
+			};
+		</script>
+	</body>
+</html>

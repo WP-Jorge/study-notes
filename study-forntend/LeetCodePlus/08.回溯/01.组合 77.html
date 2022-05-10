@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number} n
+			 * @param {number} k
+			 * @return {number[][]}
+			 * 回溯
+			 */
+			var combine = function (n, k) {
+				let path = [];
+				let res = [];
+				function backtracking(num) {
+					if (path.length === k) {
+						res.push([...path]);
+						return;
+					}
+					for (let i = num; i <= n; i++) {
+						path.push(i);
+						backtracking(i + 1);
+						path.pop();
+					}
+				}
+				backtracking(1);
+				return res;
+			};
+			/**
+			 * @param {number} n
+			 * @param {number} k
+			 * @return {number[][]}
+			 * 回溯 + 剪枝
+			 */
+			var combine = function (n, k) {
+				let path = [];
+				let res = [];
+				function backtracking(num) {
+					if (path.length === k) {
+						res.push([...path]);
+						return;
+					}
+					for (let i = num; i <= n - (k - path.length) + 1; i++) {
+						path.push(i);
+						backtracking(i + 1);
+						path.pop();
+					}
+				}
+				backtracking(1);
+				return res;
+			};
+		</script>
+	</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @return {number}
+			 * 动态规划 打家劫舍 时间复杂度O(n) 空间复杂度O(1)
+			 */
+			var rob = function (nums) {
+				if (nums.length <= 1) {
+					return nums[0];
+				}
+				let pre = nums[0];
+				let cur = Math.max(nums[0], nums[1]);
+				for (let i = 2; i < nums.length; i++) {
+					let sum = Math.max(pre + nums[i], cur);
+					pre = cur;
+					cur = sum;
+				}
+				return cur;
+			};
+			console.log(rob([1, 2, 3, 4]));
+		</script>
+	</body>
+</html>

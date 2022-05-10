@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {character[][]} board
+             * @return {boolean}
+             * 模拟 时间复杂度O(n^2), 空间复杂度O(n)
+             */
+            var isValidSudoku = function (board) {
+                for (let i = 0; i < board.length; i++) {
+                    let rowSet = new Set();
+                    let columnSet = new Set();
+                    let sudokuSet = new Set();
+                    for (let j = 0; j < board.length; j++) {
+                        let flag =
+                            board[(i % 3) * 3 + parseInt(j / 3)][
+                                parseInt(i / 3) * 3 + (j % 3)
+                            ];
+                        if (rowSet.has(board[i][j])) {
+                            return false;
+                        }
+                        if (board[i][j] !== '.') {
+                            rowSet.add(board[i][j]);
+                        }
+                        if (columnSet.has(board[j][i])) {
+                            return false;
+                        }
+                        if (board[j][i] !== '.') {
+                            columnSet.add(board[j][i]);
+                        }
+                        if (sudokuSet.has(flag)) {
+                            return false;
+                        }
+                        if (flag !== '.') {
+                            sudokuSet.add(flag);
+                        }
+                    }
+                }
+                return true;
+            };
+            console.log(
+                isValidSudoku([
+                    ['5', '3', '.', '.', '7', '.', '.', '.', '.'],
+                    ['6', '.', '.', '1', '9', '5', '.', '.', '.'],
+                    ['.', '9', '8', '.', '.', '.', '.', '6', '.'],
+                    ['8', '.', '.', '.', '6', '.', '.', '.', '3'],
+                    ['4', '.', '.', '8', '.', '3', '.', '.', '1'],
+                    ['7', '.', '.', '.', '2', '.', '.', '.', '6'],
+                    ['.', '6', '.', '.', '.', '.', '2', '8', '.'],
+                    ['.', '.', '.', '4', '1', '9', '.', '.', '5'],
+                    ['.', '.', '.', '.', '8', '.', '.', '7', '9']
+                ])
+            );
+        </script>
+    </body>
+</html>

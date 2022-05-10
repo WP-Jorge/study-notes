@@ -1,0 +1,10 @@
+// 使用@import导入_base.scss
+// 可以不写_和扩展名
+@import "base";
+
+body {
+	color: pink;
+	div {
+		background-color: blue;
+	}
+}

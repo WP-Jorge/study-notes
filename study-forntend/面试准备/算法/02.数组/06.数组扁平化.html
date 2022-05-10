@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function flat(arr, k) {
+				if (!Array.isArray(arr) || k === 0) {
+					return arr;
+				}
+				let res = [];
+				for (let i = 0; i < arr.length; i++) {
+					if (Array.isArray(arr[i])) {
+						res.push(...flat(arr[i], k - 1));
+						continue;
+					}
+					res.push(arr[i]);
+				}
+				return res;
+			}
+			console.log(flat([1, 2, [1, 2, 3, [1, 2, 3, [1, 2, 3]]], ['a', 's', 'd', [1, 2, 3]]], 3));
+		</script>
+	</body>
+</html>

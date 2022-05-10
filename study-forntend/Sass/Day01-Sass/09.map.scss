@@ -1,0 +1,25 @@
+// map
+$colorlist:(pink: pink, green: green, blue: blue);
+
+div {
+	// 使用map-get获取map中的值map-get(map变量名, 键值)
+	color: map-get($colorlist, pink); // pink
+	
+	// length(map) 获取map的长度
+	padding: length($colorlist)px; // 3px
+	
+	// mar-key(key) 获取键列表
+	// map-key($colorlist);
+	
+	// 获取map值的列表
+	// map-value($colorlist);
+	
+	// 判断是否有key
+	// map-had-key($colorlist);
+	
+	// 合并两个map
+	// map-merge($colorlist, $colorlist);
+	
+	// 移除map key
+	// map-remove($colorlist, pink);
+}

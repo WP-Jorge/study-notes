@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<style>
+			
+		</style>
+		
+	</head>
+	<body>
+		<div id="div01">
+			<template>
+				<!-- 由于使用的时全局变量dataobj，三个add公用同一个dataobj，导致三个一起变化 -->
+				<!-- <add></add>
+				<hr >
+				<add></add>
+				<hr >
+				<add></add> -->
+				<!-- 不使用全局变量，使用组件内部count，不会出现三个同时变化 -->
+				<add></add>
+				<hr >
+				<add></add>
+				<hr >
+				<add></add>
+				
+				
+			</template>
+		</div>
+		<template id="temp">
+			<div>
+				<input type="button" value="+1" @click="add"/>
+				<h3>{{ count }}</h3>
+			</div>
+		</template>
+		
+		
+		<script>
+			var dataobj={ count:0 }
+			Vue.component('add',{
+				template:'#temp',
+				data:function(){
+					//由于dataobj是全局的，数据会共享
+					// return dataobj
+					//通过组件内部return{}，使数据私有
+					return {
+						count:0
+					}
+				},
+				methods:{
+					add(){
+						this.count++
+					}
+				}
+			})
+			
+			
+			var nv =new Vue({
+				el:'#div01',
+				data:{
+					
+				},
+				methods:{
+					
+				}
+			})
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function getType(param) {
+			let str = Object.prototype.toString.call(param);
+			let reg = / (.*?)\]/;
+			let res = reg.exec(str)[1];
+			return res;
+		}
+		console.log(getType(12));
+		console.log(getType('12'));
+		console.log(getType(new Date()));
+		console.log(getType(null));
+	</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+// @function 名称(参数) {}
+
+$colors: (light: blue, dark: red);
+
+@function color($key) {
+	@return map-get($colors, $key);
+}
+
+body {
+	background-color: color(light);
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let arr = ['后盾人', 2020]
+			// 1.给数组中的每个变量一一赋值
+			let [name, year] = arr
+			console.log(name, year) // 后盾人 2020
+
+			// 2.给数组中的单一变量赋值，位置需要对应上
+			let [, year2] = arr
+			console.log(year2) // 2020
+
+			// 3.使用 ...args 形式接收多个参数
+			let [a, ...args] = [1, 2, 3, 4, 5]
+			console.log(a) // 1
+			console.log(args) // [2, 3, 4, 5]
+		</script>
+	</body>
+</html>

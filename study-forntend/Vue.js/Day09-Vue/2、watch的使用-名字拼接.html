@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue2.6.11.js"></script>
+		<style>
+
+		</style>
+
+	</head>
+
+	<body>
+		<div id="div01">
+
+			<div>
+				<input type="text" v-model="firstname" /> +
+				<input type="text" v-model="lastname" /> =
+				<input type="text" v-model="fullname" />
+			</div>
+
+		</div>
+
+		<script>
+			var nv = new Vue({
+				el: '#div01',
+				data: {
+					firstname: '',
+					lastname: '',
+					fullname: ''
+				},
+				methods: {},
+				//使用watch监听数据的变动，有变动则执行对应函数
+				watch: {
+					//第一个参数newVal：数据新的值 oldVal：数据变动前的值
+					firstname: function(newVal,oldVal) {
+						this.fullname = newVal + '-' + this.lastname
+					},
+					lastname: function(newVal) {
+						this.fullname = this.firstname + '-' + newVal
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

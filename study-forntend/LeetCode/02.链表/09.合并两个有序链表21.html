@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * Definition for singly-linked list.
+             * function ListNode(val, next) {
+             *     this.val = (val===undefined ? 0 : val)
+             *     this.next = (next===undefined ? null : next)
+             * }
+             */
+            /**
+             * @param {ListNode} l1
+             * @param {ListNode} l2
+             * @return {ListNode}
+             * 两两比较 时间复杂度：O(m + n),空间复杂度O(m + n))
+             */
+            var mergeTwoLists = function (l1, l2) {
+                if (!l1) {
+                    return l2;
+                }
+                if (!l2) {
+                    return l1;
+                }
+                let resNode = new ListNode();
+                let point = resNode;
+                while (l1 && l2) {
+                    if (l1.val < l2.val) {
+                        point.next = l1;
+                        l1 = l1.next;
+                    } else {
+                        point.next = l2;
+                        l2 = l2.next;
+                    }
+                    point = point.next;
+                }
+                // 如果其中一个已经到尾了另外一个还没有到尾，那么将point的next指向还没有到尾的那个
+                point.next = l1 === null ? l2 : l1;
+                return resNode.next;
+            };
+        </script>
+    </body>
+</html>

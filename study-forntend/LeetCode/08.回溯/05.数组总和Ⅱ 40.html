@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} candidates
+			 * @param {number} target
+			 * @return {number[][]}
+			 * 回溯 + 剪枝，时间复杂度：O(s)，其中 s 为所有可行解的长度之和, 空间复杂度O(target)
+			 */
+			var combinationSum2 = function (candidates, target) {
+				let res = [];
+				let arr = [];
+				candidates.sort((a, b) => {
+					return a - b;
+				});
+				let backtracking = (index, sum) => {
+					if (sum === target) {
+						res.push([...arr]);
+						return;
+					}
+					for (let i = index; i < candidates.length && sum + candidates[i] <= target; i++) {
+						// candidates[i] === candidates[i - 1] === true 说明同一树层出现过，false 说明同一树枝出现过
+						if (i > index && candidates[i] === candidates[i - 1]) {
+							continue;
+						}
+						arr.push(candidates[i]);
+						sum += candidates[i];
+						backtracking(i + 1, sum);
+						arr.pop();
+						sum -= candidates[i];
+					}
+				};
+				backtracking(0, 0);
+				return res;
+			};
+		</script>
+	</body>
+</html>

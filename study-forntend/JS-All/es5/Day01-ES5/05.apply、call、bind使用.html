@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /* 
+                1.Function.prototype.bind(obj)：将函数内的this绑定为obj，并将函数返回
+                2.Function.prototype.call()：将函数内的this绑定为obj，并立即执行
+                    ① 参数一：绑定的this对象
+                    ② 参数二：传入的参数，从第二个参数后都是传入的参数
+                3.Function.prototype.apply()：将函数内的this绑定为obj，并立即执行
+                    ① 参数一：绑定的this对象
+                    ② 参数二：传入的参数数组
+                4.区别bind()、call()、apply()
+                    ① 都能指定函数中的this
+                    ② call() \ apply()时立即调用函数
+                    ③ bind() 将函数返回
+            */
+            let obj = {
+                username: "张三",
+            }
+            function foo(data1, data2, data3) {
+                console.log(this, data1, data2, data3)
+            }
+            foo() // Window
+            foo.call(obj, 11, 22, 33)
+            foo.call(obj, ...[11, 22, 33]) // 如果传入数组，需要进行解构
+            foo.apply(obj, [11, 22, 33])
+        </script>
+    </body>
+</html>

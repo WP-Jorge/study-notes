@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			'use strict'
+			let user = {
+				name: '后盾人',
+				age: 18
+			}
+			Object.seal(user)
+
+			// 添加属性或方法
+			// user.site = 'houdunren.com' // 报错 设置seal后不能对对象进行添加属性或方法操作
+
+			console.log(
+				JSON.stringify(Object.getOwnPropertyDescriptors(user), null, 2)
+			)
+
+			// 判断对象是否处于封闭模式
+			console.log(Object.isSealed(user)) // true
+		</script>
+	</body>
+</html>

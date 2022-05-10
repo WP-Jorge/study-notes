@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="one">
+			<div class="two">
+				<div class="three">
+					three
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		console.log($(".three").parents()) // parents() 不写参数返回所有祖先对象
+		console.log($(".three").parents(".one")) // parents("祖先的选择器") 返回id为one的祖先对象
+	</script>
+</html>

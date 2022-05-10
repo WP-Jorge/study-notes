@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let arr = ['野', '猪', '乔', '治']
+			let arr2 = ['.', 'j', 'p', 'g']
+
+			// 1.使用遍历添加
+			for (const item of arr2) {
+				arr.push(item)
+			}
+			console.log(arr) // ["野", "猪", "乔", "治", ".", "j", "p", "g"]
+
+			// 2.使用扩展运算符添加
+			let arr3 = ['野', '猪', '乔', '治']
+			let arr4 = ['.', 'j', 'p', 'g']
+			console.log([...arr3, ...arr4]) // ["野", "猪", "乔", "治", ".", "j", "p", "g"]
+		</script>
+	</body>
+</html>

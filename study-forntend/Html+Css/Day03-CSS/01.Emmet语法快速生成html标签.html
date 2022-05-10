@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<!-- 1.输入标签名按Tab键自动补齐标签 -->
+		
+		<!-- 2.生成指定个数标签：div*10 -->
+		div*10
+		
+		<!-- 3.父子级关系如ul下的li标签：ul>li*10 -->
+		ul>li*10
+		
+		<!-- 4.兄弟关系：div+p -->
+		div+p
+		
+		<!-- 5.生成div带类名\id名 -->
+		.nav
+		#nav
+		
+		<!-- 6.生成标签名带类名\id名 -->
+		li.nav
+		li#nav
+		
+		<!-- 7.生成带序号的标签：$是占位符，以当前序号替代,可使用\来转译 -->
+		div.nav$*5
+		
+		<!-- 8.生成的标签默认带文字：{} -->
+		span{第$个span}*5
+	</body>
+</html>

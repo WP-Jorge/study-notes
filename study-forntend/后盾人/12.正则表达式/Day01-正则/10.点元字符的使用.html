@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// . 包含除了换行符外的任何字符
+			let str = 'houdunren_-=+!@3#*&^*)(*)'
+			console.log(str.match(/.+/)) // ["houdunren_-=+!@3#*&^*)(*)", index: 0, input: "houdunren_-=+!@3#*&^*)(*)", groups: undefined]
+
+			let url = 'https://www.houdunren.com'
+			console.log(url.match(/https?:\/\/\w+\.\w+\.\w+/)) // ["https://www.houdunren.com", index: 0, input: "https://www.houdunren.com", groups: undefined]
+
+			let str2 = `
+                houdunren.com
+            `
+			// s 表示把这个字符串看成当行
+			console.log(str2.match(/.+/s)[0])
+
+			let tel = '010 - 9999999'
+			console.log(tel.match(/\d - \d{7,8}/)) // ["0 - 9999999", index: 2, input: "010 - 9999999", groups: undefined]
+		</script>
+	</body>
+</html>

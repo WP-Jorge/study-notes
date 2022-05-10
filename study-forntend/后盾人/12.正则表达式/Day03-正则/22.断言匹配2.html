@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let str = 'houdunren789hdcms666'
+
+			// ?<=匹配前面是需要匹配的字符串内容
+			// (?<=houdunren)是条件
+			let reg = /(?<=houdunren)\d+/i
+			console.log(str.match(reg)) // ["789", index: 9, input: "houdunren789hdcms666", groups: undefined]
+		</script>
+	</body>
+</html>

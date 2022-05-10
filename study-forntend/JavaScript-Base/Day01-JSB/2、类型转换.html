@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+	//变量类型的转换
+		//1、数字转字符串
+			//1.1 toString()
+			// var num = 10
+			// console.log(typeof(num.toString())) //输出string
+			
+			//1.2 String() 强制转化
+			// var num = 10
+			// console.log(typeof String(num)) //输出string
+			
+			//1.3 拼接 '' ，属于隐式转化
+			// var num = 10
+			// console.log(typeof(10 + '')) //输出string
+			
+		//2、字符串转数字
+			//2.1 parseInt() 得到的是整数 也可对数值型值起效
+			// var str = 10
+			// console.log(typeof parseInt(str)) //输出number，
+			// console.log(parseInt('3.94')) //输出3，向下取整
+			// console.log(parseInt(3.94)) //输出3，对数值型同样有效
+			// console.log(parseInt('300px'))//输出300，可去除数字后缀字符串，如：px,cm,m,mm,asfkljklj 等
+			// console.log(parseInt('啦啦啦啦123啦啦啦'))// 输出NaN
+			
+			//2.2 parseFloat() 得到的是浮点数 也可对数值型值起效
+			// console.log(typeof parseFloat('3.14')) //输出number
+			// console.log(parseFloat('3.94')) //输出3.94
+			// console.log(parseFloat('3')) //输出3 如果字符串是整数，输出就是整数
+			// console.log(parseFloat('30.5px')) //输出30.5，同理parseInt()
+			
+			//2.3 Number() 得到数字型
+			// console.log(typeof Number('3.14')) //输出number
+			// console.log(Number('3.14')) //输出3.14
+			// console.log(Number('3')) //输出3
+			// console.log(Number('3px')) //输出NaN 这个Number()方法不能去除数字后缀单位
+			
+			//2.4 利用 - * /隐式转化
+			// console.log(typeof('123' - 0)) //输出number
+			// console.log('123' - 0) //输出123
+			// console.log(typeof('123' - '120')) //输出number
+			// console.log('123' - '120') //输出3
+			// console.log(typeof('123' * 1)) //输出number
+			// console.log('123' * 1) //输出123
+			// console.log(typeof('123' / 1)) //输出number
+			// console.log('123' / 1) //输出123
+			
+		//3、转化为boolean类型
+			//3.1 Boolean() 除了 '',0,NaN,null,undefined 转化为false，其余的都是true
+			// console.log(Boolean('')) //输出false
+			// console.log(Boolean(0)) //输出false
+			// console.log(Boolean(NaN)) //输出false
+			// console.log(Boolean(null)) //输出false
+			// console.log(Boolean(undefined)) //输出false
+		</script>
+	</body>
+</html>

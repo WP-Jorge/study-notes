@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+
+		<style>
+
+		</style>
+
+	</head>
+
+	<body>
+		<div id="div01">
+			<!-- 利用v-for循环中key属性绑定相应键的使用 -->
+			<input type="text" v-model="id" />
+			<input type="text" v-model="name" />
+			<input type="button" value="添加" @click="add"/>
+			<p v-for="item in list":key="item.id">
+				<input type="checkbox" /> {{ item.id }}---{{ item.name }}
+			</p>
+			
+		</div>
+		<script>
+			var nv = new Vue({
+				el: '#div01',
+				data: {
+					list:[
+						{id:1,name:'李斯'},
+						{id:2,name:'韩非'},
+						{id:3,name:'嬴政'},
+						{id:4,name:'荀子'},
+						{id:5,name:'项羽'}
+					],
+					id:'',
+					name:''
+				},
+				methods: {
+					add(){
+						// this.list.push({id:this.id,name:this.name})//尾插
+						this.list.unshift({id:this.id,name:this.name})//头插
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

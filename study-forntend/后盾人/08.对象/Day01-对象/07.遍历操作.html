@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let user = { name: '野猪', age: 19, gender: '男' }
+			// 1.对象没有迭代性属性，无法使用for of遍历，但是可以通过获取对象的键、值、键值来获取遍历对象
+			// ① Object.keys(对象名) 获取指定对象的键名
+			console.log(Object.keys(user)) // ["name", "age", "gender"]
+
+			// ② Object.values(对象名) 获取指定对象的值
+			console.log(Object.values(user)) // ["野猪", 19, "男"]
+
+			// ③ Object.entries(对象名) 获取对象的键值对
+			console.log(Object.entries(user)) // ["name", "野猪"] ["age", 19] ["gender", "男"]
+
+			// 2.for of 遍历对象
+			// ① 通过key
+			for (const key of Object.keys(user)) {
+				console.log(user[key]) // 野猪 19 男
+			}
+			// ② 通过value
+			for (const value of Object.values(user)) {
+				console.log(value) // 野猪 19 男
+			}
+			// ③ 通过entries
+			for (const [key, value] of Object.entries(user)) {
+				console.log(key + ': ' + value) // name: 野猪 age: 19 gender: 男
+			}
+
+			// 3.for in 遍历数组
+			for (const key in user) {
+				console.log(user[key]) // 野猪 19 男
+			}
+		</script>
+	</body>
+</html>

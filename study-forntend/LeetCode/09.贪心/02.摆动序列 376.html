@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @return {number}
+			 * 贪心，时间复杂度O(n), 空间复杂度O(1)
+			 */
+			var wiggleMaxLength = function (nums) {
+				if (nums.length <= 1) {
+					return nums.length;
+				}
+				// 从1开始，因为index从 0 到 1也算一个
+				let count = 1;
+				let preDiff = 0;
+				let curDiff = 0;
+				for (let i = 1; i < nums.length; i++) {
+					curDiff = nums[i] - nums[i - 1];
+					if ((curDiff > 0 && preDiff <= 0) || (curDiff < 0 && preDiff >= 0)) {
+						count++;
+						preDiff = curDiff;
+					}
+				}
+				return count;
+			};
+		</script>
+	</body>
+</html>

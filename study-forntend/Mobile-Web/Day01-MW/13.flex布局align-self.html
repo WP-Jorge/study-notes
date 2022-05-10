@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* 	align-self：控制子项自己在侧轴上的排列方式
+					align-self属性允许单个项目有与其他项目不一样的对齐方式,可覆盖align-items属性。
+					默认值为auto ,表示继承父元素的align-items属性,如果没有父元素,则等同于stretch。
+				order：属性定义项目的排列顺序
+					数值越小,排列越靠前,默认为0。
+					注意:和z-index不一样。
+				flex-grow：用于设置元素的放大比例，默认为0
+					0：不放大
+					1：将剩余空间占满
+						子元素全为1，则平均分
+					2：占两份
+						类似于flex：2
+				flex-shrink：用于设置元素缩小比例，默认0
+					0：不缩放
+					1；缩放占一份
+				flex-basis：设置元素固定或自动空间的占比
+					单位：像素单位（px rem upx rpx）
+			 */
+			
+			div {
+				display: flex;
+				width: 80%;
+				height: 300px;
+				background-color: pink;
+				/* 让三个子盒子沿着侧轴低侧对齐 */
+				/* align-items: flex-end; */
+			}
+			
+			div span {
+				width: 150px;
+				height: 100px;
+				background-color: yellowgreen;
+				margin-right: 5px;
+			}
+			
+			div span:nth-child(1) {
+				/* 只让三号盒子下来低侧 */
+				order: 2;
+			}
+			
+			div span:nth-child(2) {
+				/* 只让三号盒子下来低侧 */
+				order: 1;
+			}
+			
+			div span:nth-child(3) {
+				/* 只让三号盒子下来低侧 */
+				align-self: flex-end;
+				order: 3;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+		</div>
+	</body>
+</html>

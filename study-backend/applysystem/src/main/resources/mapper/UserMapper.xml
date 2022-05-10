@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cslg.applysystem.mapper.UserMapper">
+    <cache-ref namespace="cn.cslg.applysystem.mapper.UserMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.MajorMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.DeptMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.RoleMapper"/>
+    <select id="getUserByUsername" resultType="cn.cslg.applysystem.pojo.entity.User">
+        select * from user where username = #{username}
+    </select>
+
+    <select id="getUserInfoByUsername" resultType="cn.cslg.applysystem.pojo.vo.UserVO" resultMap="userResultMap">
+        select * from user, major, dept
+        where user.major_id = major.major_id
+        and major.dept_id = dept.dept_id
+        and username = #{username}
+    </select>
+
+    <resultMap id="userResultMap" type="cn.cslg.applysystem.pojo.vo.UserVO">
+        <id property="userId" column="user_id"></id>
+        <result property="username" column="username"></result>
+        <result property="name" column="name"></result>
+        <result property="sex" column="sex"></result>
+        <result property="age" column="age"></result>
+        <result property="tel" column="tel"></result>
+        <result property="email" column="email"></result>
+        <result property="isAdmin" column="is_admin"></result>
+        <result property="status" column="status"></result>
+        <association property="major" javaType="cn.cslg.applysystem.pojo.vo.MajorVO" resultMap="majorResultMap"/>
+    </resultMap>
+
+    <resultMap id="majorResultMap" type="cn.cslg.applysystem.pojo.vo.MajorVO">
+        <id property="majorId" column="major_id"></id>
+        <result property="majorNo" column="major_no"/>
+        <result property="majorName" column="major_name"/>
+        <association property="dept" javaType="cn.cslg.applysystem.pojo.vo.DeptVO" resultMap="deptResultMap"/>
+    </resultMap>
+
+    <resultMap id="deptResultMap" type="cn.cslg.applysystem.pojo.vo.DeptVO">
+        <id property="deptId" column="dept_id"></id>
+        <result property="deptName" column="dept_name"></result>
+    </resultMap>
+
+    <select id="getAllUsers" resultType="cn.cslg.applysystem.pojo.vo.UserVO" resultMap="userResultMap">
+        select * from user, major, dept
+        where user.major_id = major.major_id
+        and major.dept_id = dept.dept_id
+    </select>
+
+    <select id="getAllUsersWithPage" resultType="cn.cslg.applysystem.pojo.vo.UserWithRoleVO"
+            resultMap="userWithRoleResultMap">
+--         select * from user, major, dept, role, user_role
+--         where user.major_id = major.major_id
+--         and major.dept_id = dept.dept_id
+--         and user_role.user_id = user.user_id
+-- 		and role.role_id = user_role.role_id
+
+		select * from user, major, dept
+        where user.major_id = major.major_id
+        and major.dept_id = dept.dept_id
+        and user.deleted != 1
+    </select>
+
+    <resultMap id="userWithRoleResultMap" type="cn.cslg.applysystem.pojo.vo.UserWithRoleVO">
+        <id property="userId" column="user_id"></id>
+        <result property="username" column="username"></result>
+        <result property="name" column="name"></result>
+        <result property="sex" column="sex"></result>
+        <result property="age" column="age"></result>
+        <result property="tel" column="tel"></result>
+        <result property="email" column="email"></result>
+        <result property="isAdmin" column="is_admin"></result>
+        <result property="status" column="status"></result>
+        <association property="major" javaType="cn.cslg.applysystem.pojo.vo.MajorVO" resultMap="majorResultMap"/>
+        <!--<association property="role" javaType="cn.cslg.applysystem.pojo.vo.RoleVO" resultMap="roleResultMap"/>-->
+        <collection property="role" javaType="java.util.List" ofType="cn.cslg.applysystem.pojo.vo.RoleVO" select="getRoleByRoleId" column="username"/>
+    </resultMap>
+
+    <select id="getRoleByRoleId" resultMap="roleResultMap" resultType="cn.cslg.applysystem.pojo.vo.RoleVO">
+        select role.role_id, role_name from user, user_role, role
+        where user.user_id = user_role.user_id
+        and role.role_id = user_role.role_id
+        and username = #{username}
+    </select>
+
+    <resultMap id="roleResultMap" type="cn.cslg.applysystem.pojo.vo.RoleVO">
+        <id property="roleId" column="role_id"></id>
+        <result property="roleName" column="role_name"></result>
+    </resultMap>
+
+    <insert id="addUser">
+        insert into user
+        (username, password, major_id, sex, age, name, tel, email, is_admin, status)
+        values (#{username}, #{password}, #{majorId}, #{sex}, #{age}, #{name}, #{tel}, #{email}, #{isAdmin}, #{status})
+    </insert>
+
+    <update id="updateUser">
+        update user
+        set major_id = #{majorId}, sex = #{sex}, age = #{age}, name = #{name}, tel = #{tel}, email = #{email}, is_admin = #{isAdmin}, status = #{status}
+        where username = #{username}
+    </update>
+
+    <select id="getPasswordByUsername" resultType="java.lang.String">
+        select password from user where username = #{username}
+    </select>
+    <select id="getUsersByUsernameWithPage" resultType="cn.cslg.applysystem.pojo.vo.UserWithRoleVO" resultMap="userWithRoleResultMap">
+        select * from user, major, dept
+        where user.major_id = major.major_id
+        and major.dept_id = dept.dept_id
+        and user.deleted != 1
+        and username like concat('%', #{username}, '%')
+    </select>
+
+    <update id="updatePassword">
+        update user set password = #{password} where username = #{username}
+    </update>
+
+</mapper>

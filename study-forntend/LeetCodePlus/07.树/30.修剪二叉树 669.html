@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * Definition for a binary tree node.
+			 * function TreeNode(val, left, right) {
+			 *     this.val = (val===undefined ? 0 : val)
+			 *     this.left = (left===undefined ? null : left)
+			 *     this.right = (right===undefined ? null : right)
+			 * }
+			 */
+			/**
+			 * @param {TreeNode} root
+			 * @param {number} low
+			 * @param {number} high
+			 * @return {TreeNode}
+			 * 二叉树的删除 时间复杂度O(logn) 空间复杂度O(logn)
+			 */
+			var trimBST = function (root, low, high) {
+				function dfs(root, low, high) {
+					if (!root) {
+						return root;
+					}
+					if (root.val < low) {
+						return dfs(root.right, low, high);
+					}
+					if (root.val > high) {
+						return dfs(root.left, low, high);
+					}
+					root.left = dfs(root.left, low, high);
+					root.right = dfs(root.right, low, high);
+					return root;
+				}
+				return dfs(root, low, high);
+			};
+		</script>
+	</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.map 处理数组，返回处理后的数组 回调函数中的参数：第一个：每个元素，第二个：下标，第三个：原数组
+			// ① 值类型
+			let arr = ['hdcms', 'houdunren']
+			let newArr = arr.map((item, index, arr) => {
+				item = `后盾人-${item}`
+				return item
+			})
+			console.log(arr) // ["hdcms", "houdunren"]  原数组没有变化
+			console.log(newArr) // ["后盾人-hdcms", "后盾人-houdunren"]
+
+			// ② 引用类型
+			let lessons = [
+				{ title: '媒体查询响应式布局', category: 'css' },
+				{ title: 'FLEX 弹性布局', category: 'css' },
+				{ title: 'MYSQL多表查询', category: 'mysql' }
+			]
+			lessons.map(item => {
+				// item 传进来的时候直接传地址，所以原数组会改变
+				item.click = 100
+			})
+			console.log(lessons) // 0: {title: "媒体查询响应式布局", category: "css", click: 100} // 原数组变了
+			lessons.map(item => {
+				//  使用assign不会改变原有数组
+				return Object.assign({ price: '元' }, item)
+			})
+			console.log(lessons) // 0: {title: "媒体查询响应式布局", category: "css", click: 100}
+		</script>
+	</body>
+</html>

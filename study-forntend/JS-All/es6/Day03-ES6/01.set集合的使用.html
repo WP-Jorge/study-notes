@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 声明一个 set
+			let s = new Set()
+			console.log(s, typeof s)
+
+			// 会自动去重
+			let s2 = new Set(['张三', '李四', '王五', '张三'])
+			console.log(s2)
+
+			// 元素个数
+			console.log(s2.size)
+
+			// 添加新元素
+			s2.add('赵六')
+			console.log(s2)
+
+			// 删除元素
+			s2.delete('赵六')
+			console.log(s2)
+
+			// 检查有没有这个元素
+			console.log(s2.has('李四'))
+
+			// 遍历
+			for (let item of s2) {
+				console.log(item)
+			}
+
+			// 清空
+			s2.clear()
+			console.log()
+		</script>
+	</body>
+</html>

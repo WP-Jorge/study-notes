@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * Definition for singly-linked list.
+			 * function ListNode(val, next) {
+			 *     this.val = (val===undefined ? 0 : val)
+			 *     this.next = (next===undefined ? null : next)
+			 * }
+			 */
+			/**
+			 * @param {ListNode} head
+			 * @return {ListNode}
+			 * 链表 时间复杂度 O(nlongn) 空间复杂度O(logn)
+			 */
+			var sortList = function (head) {
+				if (!head || !head.next) {
+					return head;
+				}
+				let slow = head;
+				let fast = head;
+				let pre = null;
+				while (fast && fast.next) {
+					pre = slow;
+					slow = slow.next;
+					fast = fast.next.next;
+				}
+				pre.next = null;
+				return merge(sortList(head), sortList(slow));
+				function merge(left, right) {
+					let myHead = new ListNode(null);
+					let res = myHead;
+					while (left && right) {
+						if (left.val < right.val) {
+							res.next = left;
+							left = left.next;
+							res = res.next;
+							continue;
+						}
+						res.next = right;
+						right = right.next;
+						res = res.next;
+					}
+					if (left) {
+						res.next = left;
+					}
+					if (right) {
+						res.next = right;
+					}
+					return myHead.next;
+				}
+			};
+		</script>
+	</body>
+</html>

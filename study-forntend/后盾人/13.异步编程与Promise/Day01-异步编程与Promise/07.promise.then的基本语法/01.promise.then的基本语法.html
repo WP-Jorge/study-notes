@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			new Promise((resolve, reject) => {
+				// resolve('一瓶可乐')
+				reject('涨价了买不起')
+			})
+				// 前面没处理的会到后面的then中处理
+				.then(null, null)
+				// 处理前面未处理的reject
+				.then(
+					res => {
+						console.log(res)
+					},
+					err => {
+						console.log(err)
+					}
+				)
+		</script>
+	</body>
+</html>

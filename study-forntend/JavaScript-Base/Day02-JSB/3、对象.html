@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 1、创建对象
+				// 1.1、使用字面量创建
+				// var obj = {
+				// 	name : '张三',
+				// 	age : 18,
+				// 	sayHi : function(){
+				// 		console.log('hi')
+				// 	}
+				// }
+				// console.log(obj.name)
+				// console.log(obj['name']) // js中的一种调用对象属性的方式
+				// obj.sayHi() // 调用方法
+				
+				// 1.2、使用new Object的方式创建
+				// var obj = new Object()
+				// obj.name = '张三'
+				// obj.age = 18
+				// obj.sayHi = function(){
+				// 	console.log('hi')
+				// }
+				// 调用方式同上
+				
+				// 1.3、使用构造函数创建
+				// function Star(name, age, sex){
+				// 	this.name = name
+				// 	this.age = age
+				// 	this.sex = sex
+				// 	this.sing = function(sang){ // 注意：在js构造函数中的构造方法之前需要添加this
+				// 		console.log('我会唱' + sang)
+				// 	}
+				// }
+				// var ldh = new Star('刘德华', 55, '男') // 对象实例化
+				// console.log(ldh.name)
+				// ldh.sing('冰雨')
+			
+			// 2、遍历对象
+				// 2.1、使用for (var key in obj){循环体} 遍历对象
+				// function Star(name, age, sex){
+				// 	this.name = name
+				// 	this.age = age
+				// 	this.sex = sex
+				// 	this.sing = function(sang){ // 注意：在js构造函数中的构造方法之前需要添加this
+				// 		console.log('我会唱' + sang)
+				// 	}
+				// }
+				// var ldh = new Star('刘德华', 55, '男') // 对象实例化
+				// for (var key in ldh){
+				// 	console.log(ldh[key]) // 输出每个key中的元素 刘德华 55 男 function
+				// }
+		</script>
+	</body>
+</html>

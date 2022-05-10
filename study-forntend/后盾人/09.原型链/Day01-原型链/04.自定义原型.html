@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let son = { name: 'son' }
+			let parent = {
+				name: 'parent',
+				show() {
+					console.log(`parent的方法` + this.name)
+				}
+			}
+			// 1.给son指定原型
+			Object.setPrototypeOf(son, parent)
+			// 调用父级方法，this指向调用者 son
+			console.log(son.__proto__) // {name: "parent", show: ƒ}
+			son.show() // parent的方法son
+
+			// 2.获取原型
+			console.log(Object.getPrototypeOf(son)) // {name: "parent", show: ƒ}
+		</script>
+	</body>
+</html>

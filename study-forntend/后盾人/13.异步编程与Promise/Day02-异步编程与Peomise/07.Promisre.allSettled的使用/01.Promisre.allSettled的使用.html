@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="02.ajax.js"></script>
+		<script>
+			const p1 = new Promise((resolve, reject) => {
+				resolve('resolved')
+			})
+			const p2 = new Promise((resolve, reject) => {
+				reject('resolved')
+			})
+
+			// 1.无论成功或失败都可以接收
+			Promise.allSettled([p1, p2]).then(res => {
+				console.log(res)
+			})
+
+			// 2.根据城市批量获取天气信息
+			function getWeather(citys) {
+				let promises = citys.map(city => {
+					if (city === 'asd') {
+						return Promise.reject('城市错误')
+					}
+					return ajax(
+						`https://geoapi.qweather.com/v2/city/lookup?location=${city}&key=6fea66ec596e466a99686bcc6bb3a72a`
+					)
+				})
+				return Promise.allSettled(promises)
+			}
+			getWeather(['常熟', '福州', '上海', 'asd']).then(res => {
+				console.log(res)
+				// 过滤失败的数据
+				res = res.filter(weather => {
+					return weather.status === 'fulfilled'
+				})
+				console.log(res)
+			})
+		</script>
+	</body>
+</html>

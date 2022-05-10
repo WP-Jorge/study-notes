@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* transform: translate() rotate() scale()...等
+				①其顺序会影转换的效果。( 先旋转会改变坐标轴方向)
+				②当我们同时有位移和其他属性的时候,记得要将位移放到最前 
+			*/
+			div {
+				width: 200px;
+				height: 200px;
+				background-color: pink;
+				transition: all .5s;
+			}
+			div:hover {
+				transform: translate(150px, 50px) rotate(180deg);
+			}
+
+		</style>
+	</head>
+	<body>
+		<div></div>
+	</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let arr = [1, 2, 3, 2, 4, 5]
+			// 1.find 返回为真的数的值
+			// ① 直接查找数值
+			let res = arr.find(item => {
+				return item === 2
+			})
+			console.log(res) // 2
+
+			// ② 可以用来查找引用类型 includes 不行
+			let lessons = [{ name: 'js' }, { name: 'css' }, { name: 'mysql' }]
+			let res2 = lessons.find(item => {
+				return item.name === 'css'
+			})
+			console.log(res2) // {name: "css"}
+
+			// 2.findIndex 查找目标元素的索引值
+			let res3 = lessons.findIndex(item => {
+				return item.name === 'css'
+			})
+			console.log(res3) // 1
+		</script>
+	</body>
+</html>

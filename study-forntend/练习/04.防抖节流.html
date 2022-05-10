@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	防抖：<input type="text" class="input">&nbsp;<span class="debounceText"></span>
+	<br>
+	节流：<input type="text" class="input">&nbsp;<span class="throttleText"></span>
+	<script>
+		let inputs = document.getElementsByTagName('input');
+
+		// 防抖
+		let debounceText = document.getElementsByClassName('debounceText');
+		inputs[0].addEventListener('keyup', debounce(e => {
+			debounceText[0].innerText = e.target.value;
+		}, 500));
+
+		function debounce(func, delay) {
+			let timer = null;
+			return function(...args) {
+				console.log(timer)
+				if (timer) {
+					clearTimeout(timer);
+					console.log(timer);
+				}
+				timer = setTimeout(() => {
+					func(...args);
+				}, delay);
+			}
+		}
+
+		// 节流
+		let throttleText = document.getElementsByClassName('throttleText');
+		inputs[1].addEventListener('keyup', throttle(e => {
+			throttleText[0].innerText = e.target.value
+		}, 500))
+
+		function throttle(func, delay) {
+			let timer = null;
+			return function(...args) {
+				if (!timer) {
+					timer = setTimeout(() => {
+						func(...args);
+						// 这边必须使用 timer = null, 使用cleartTimeout不起效果,原因如下：
+						timer = null;
+						// timer定时器只执行一次，此时已经执行，清不清已经无所谓了，同时，clearTimeout清空定时器后 timer 并不会变成null，原来是什么值现在就是什么值
+						// clearTimeout(timer);
+						// console.log(timer)
+					}, delay);
+				}
+			}
+		}
+	</script>
+</body>
+</html>

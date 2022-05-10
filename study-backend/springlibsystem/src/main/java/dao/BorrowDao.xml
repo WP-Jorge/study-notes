@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.BorrowDao">
+    <select id="getBorrow" resultType="Book">
+        select * from borrow_tab, book_tab where borrow_tab.bid = book_tab.bid and uid = #{uid}
+    </select>
+    
+    <select id="getBorrowByLike" resultType="Book" parameterType="Book">
+        select * from book_tab
+        <where>
+            <if test="bname != null">
+                and bname like concat('%', #{bname, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="byear != null">
+                and byear like concat('%', #{byear, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="btype != null">
+                and btype like concat('%', #{btype, jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="borrowBook" resultType="Book">
+        select * from
+    </select>
+
+    <update id="updateBorrowStatusByBid">
+        update book_tab set borrowed = #{status} where bid = #{bid}
+    </update>
+
+    <insert id="addBorrow">
+        insert borrow_tab values (#{uid}, #{bid})
+    </insert>
+
+    <delete id="delBorrow">
+        delete from borrow_tab where bid = #{bid} and uid = #{uid}
+    </delete>
+
+</mapper>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * Definition for a binary tree node.
+             * function TreeNode(val, left, right) {
+             *     this.val = (val===undefined ? 0 : val)
+             *     this.left = (left===undefined ? null : left)
+             *     this.right = (right===undefined ? null : right)
+             * }
+             */
+            /**
+             * @param {number[]} nums
+             * @return {TreeNode}
+             * 二叉树的构建，时间复杂度O(n), 空间复杂度O(n)
+             */
+            var constructMaximumBinaryTree = function (nums) {
+                let buildTree = (nums, left, right) => {
+                    if (left > right) {
+                        return null;
+                    }
+                    let max = Math.max(...nums.slice(left, right + 1));
+                    let index = nums.indexOf(max);
+                    let node = new TreeNode(max);
+                    node.left = buildTree(nums, left, index - 1);
+                    node.right = buildTree(nums, index + 1, right);
+                    return node;
+                };
+                return buildTree(nums, 0, nums.length - 1);
+            };
+        </script>
+    </body>
+</html>

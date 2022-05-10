@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			div {
+				width: 150px;
+				height: 150px;
+				background-color: pink;
+				margin: 100px auto;
+				transition: all 0.5s; /* 变换过程动画 */
+			}
+
+			.current {
+				background-color: red;
+				transform: rotate(360deg); /* 旋转360° */
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="current"></div>
+		<script>
+			$(function() {
+				// 1. 添加类 addClass()
+				// $("div").click(function() {
+				//     // $(this).addClass("current");
+				// });
+				// 2. 删除类 removeClass()
+				// $("div").click(function() {
+				//     $(this).removeClass("current");
+				// });
+				// 3. 切换类 toggleClass()
+				$("div").click(function() {
+					$(this).toggleClass("current"); // 有这个类就去掉，没有就加上
+				});
+			})
+		</script>
+	</body>
+</html>

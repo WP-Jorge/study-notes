@@ -1,0 +1,20 @@
+.library_title {
+	margin-top: 30px;
+	margin-bottom: 20px;
+	font-size: 25px;
+	text-align: center;
+}
+
+.search {
+	padding-left: 10px;
+	display: flex;
+}
+
+.form-row {
+	display: flex;
+	flex: .9;
+}
+
+.search .form-row .col-auto:nth-child(-n+4) {
+	flex: 1;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    <input type="text" id="x" />
+    <select id="opt" >
+        <option value="0">+</option>
+        <option value="1">-</option>
+        <option value="2">*</option>
+        <option value="3">/</option>
+    </select>
+    <input type="text" id="y" />
+    <button id="cal">=</button>
+    <input type="text" id="result">
+</body>
+<script>
+    let calculator = {}
+    calculator.add = function add(x, y) {
+        return parseInt(x) + parseInt(y)
+    }
+    calculator.substract = function substract(x, y) {
+        return parseInt(x) - parseInt(y)
+    }
+    calculator.multiply = function multiply(x, y) {
+        return parseInt(x) * parseInt(y)
+    }
+    calculator.divide = function divide(x, y) {
+        return parseInt(x) / parseInt(y)
+    }
+
+    let oX = document.getElementById('x')
+    let oY = document.getElementById('y')
+    let oResult = document.getElementById('result')
+    let oOpt = document.getElementById('opt')
+    let oCal = document.getElementById('cal')
+
+    oCal.addEventListener('click', () => {
+        let x = oX.value.trim()
+        let y = oY.value.trim()
+        let opt = oOpt.value
+        switch(opt){
+            case '0': 
+                oResult.value = calculator.add(x, y)
+                break
+            case '1' :
+                oResult.value = calculator.substract(x, y)
+                break
+            case '2' :
+                oResult.value = calculator.multiply(x, y)
+                break
+            case '3' :
+                oResult.value = calculator.divide(x, y)
+                break
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function User() {}
+			// 1.函数拥有两个原型
+			console.dir(User) // prototype __proto__
+
+			// 2.实例化出来的对象只有一个__proto__
+			let user = new User()
+			console.log(user) // __proto__
+
+			// 3.实例化的对象与对象拥有一个 原型
+			console.log(User.prototype === user.__proto__) // true
+			console.log(User.prototype.__proto__ === User.__proto__.__proto__) // true
+		</script>
+	</body>
+</html>

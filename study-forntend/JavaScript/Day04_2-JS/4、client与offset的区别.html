@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			div {
+				width: 200px;
+				height: 200px;
+				background-color: pink;
+				border: 10px solid #ff0000;
+				padding: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div></div>
+		<script>
+			// client 宽度 和我们offsetWidth 最大的区别就是 不包含边框
+			var div = document.querySelector('div');
+			console.log(div.clientWidth);
+		</script>
+	</body>
+</html>

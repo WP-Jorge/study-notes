@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.使用立即执行函数模拟块级作用域
+			for (var i = 1; i <= 3; i++) {
+				// 立即执行函数相当于一个独立的作用域，每次执行循环体都会给循环体内的函数包上一个独立的作用域
+				;(function (a) {
+					setTimeout(() => {
+						console.log(a) // 1 2 3
+					}, 100)
+				})(i)
+			}
+		</script>
+	</body>
+</html>

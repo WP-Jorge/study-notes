@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function User(name) {
+				this.name = name
+			}
+			// 1.在构造函数中定义方法时把方法定义在原型上，避免实例化对象的时候重复创建实例方法，造成内存浪费
+			User.prototype.show = function () {
+				console.log(this.name)
+			}
+			let user = new User('张三')
+			user.show() // 张三
+			let user2 = new User('李四')
+			user2.show() // 李四
+
+			// 2.如果有多个方法，可以将方法定义在对象中
+			// 像数组、对象等有很多自己的方法时如果使用这种方式 会覆盖掉原来的方法，不推荐使用
+			User.prototype = {
+				// 使用对象装方法的时候需要把构造函数重新指定给User
+				constructor: User,
+				get() {
+					console.log(this.name + ' get...')
+				},
+				set() {
+					console.log(this.name + ' set...')
+				}
+			}
+			let user3 = new User('王五')
+			user3.get() // 王五 get...
+			user3.set() // 王五 set...
+		</script>
+	</body>
+</html>

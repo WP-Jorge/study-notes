@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * Definition for singly-linked list.
+             * function ListNode(val, next) {
+             *     this.val = (val===undefined ? 0 : val)
+             *     this.next = (next===undefined ? null : next)
+             * }
+             */
+            /**
+             * @param {ListNode} head
+             * @return {ListNode}
+             * 遍历 时间复杂度O(n), 空间复杂度O(1)
+             */
+            var deleteDuplicates = function (head) {
+                let list = new ListNode('null', head);
+                head = list;
+                while (list && list.next) {
+                    if (list.val === list.next.val) {
+                        list.next = list.next.next;
+                        continue;
+                    }
+                    list = list.next;
+                }
+                return head.next;
+            };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			div {
+				position: absolute;
+				width: 200px;
+				height: 200px;
+				background-color: pink;
+			}
+		</style>
+	</head>
+
+	<body>
+		<button>动起来</button>
+		<div></div>
+		<script>
+			$(function() {
+				$("button").click(function() {
+					// animate(params,[speed],[easing],[fn])
+					// 第一个参数：元素变化结束后的样式，以对象形式传参
+					// 第二个参数：运动速度
+					// 第三个参数：运动效果 默认"swing"(减速) "linear"(匀速)
+					// 第四个参数：回调函数
+					$("div").animate({
+						left: 500,
+						top: 300,
+						opacity: .4,
+						width: 500
+					}, 500);
+				})
+			})
+		</script>
+	</body>
+</html>

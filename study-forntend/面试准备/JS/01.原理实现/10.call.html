@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			Function.prototype.myCall = function (content) {
+				// 1、获取参数
+				let args = [...arguments].slice(1);
+				// 2、指定 this 指向
+				if (!content) {
+					content = window;
+				}
+				content.fn = this;
+				// 3、执行函数，获取返回值
+				let res;
+				if (args.length) {
+					res = content.fn(args);
+				} else {
+					res = content.fn();
+				}
+				// 4、删除新增的 fn
+				delete content.fn;
+				return res;
+			}
+			function fn (msg) {
+				console.log(this);
+				return msg;
+			}
+			console.log(fn.myCall(null, 'msg'));
+		</script>
+	</body>
+</html>

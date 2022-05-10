@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+    <html> 
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title></title>
+    </head>
+    <body>
+        ID:
+        <input id="id" type="text"/>
+        姓名：
+        <input id="name" type="text"/>
+        性别：
+        <input id="sex" type="text"/>
+        <button id="add">添加</button>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>性别</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <script>
+            'use strict';
+            let tbody = document.querySelector('tbody');
+
+
+            let btn = document.querySelector('#add');
+            let datas = [];
+            btn.addEventListener('click', function() {
+                console.log(1)
+                let item = {};
+                let ID = document.querySelector('#id').value;
+                let name = document.querySelector('#name').value;
+                let sex = document.querySelector('#sex').value;
+                item.ID = ID;
+                item.name = name;
+                item.sex = sex;
+                console.log(item);
+                datas.push(item);
+                console.log(datas);
+                showTable();
+            })
+            function showTable() {
+                console.log(tbody.childNodes)
+                for (let i = tbody.childNodes.length-1; i >= 0; i--) {
+                    tbody.removeChild(tbody.childNodes[i]);
+                }
+                for (let i = 0; i < datas.length; i++) {
+                    let tr = document.createElement('tr');
+                    tbody.appendChild(tr);
+                    // ID
+                    let tab_ID = datas[i]['ID'];
+                    let ID_td = document.createElement('td');
+                    ID_td.innerHTML = tab_ID;
+                    tr.appendChild(ID_td);
+
+                    // name
+                    let tab_name = datas[i]['name'];
+                    let name_td = document.createElement('td');
+                    name_td.innerHTML = tab_name;
+                    tr.appendChild(name_td);
+
+                    // sex
+                    let tab_sex = datas[i]['sex'];
+                    let sex_td = document.createElement('td');
+                    sex_td.innerHTML = tab_sex;
+                    tr.appendChild(sex_td);
+                }
+                
+            }
+            // showTable();
+        </script>
+    </body>
+</html>

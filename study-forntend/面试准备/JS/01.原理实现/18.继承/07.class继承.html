@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/**
+		 * class 继承
+		 * 优点：
+		 * 		① 可以看作是计生组合式继承的语法糖
+		 */ 
+		class Animal {
+			name = 'animal';
+			food = ['草'];
+			eat() {
+				console.log(`eat ${this.food}`);
+			}
+		}
+		class Cat extends Animal {
+			name = 'cat';
+		}
+		let cat1 = new Cat();
+		console.dir(cat1);
+		cat1.food.push('鱼');
+		console.log(cat1.name); // cat
+		console.log(cat1.food); // ['草', '鱼']
+		cat1.eat(); // eat 草,鱼
+		let cat2 = new Cat();
+		console.log(cat2.name); // cat
+		console.log(cat2.food); // ['草']
+		cat2.eat(); // eat 草
+	</script>
+</body>
+</html>

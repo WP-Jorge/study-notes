@@ -1,0 +1,91 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				// 私有标题，设有私有标题后，会代替这个页面的标题
+				"navigationBarTitleText": "主页",
+				// 配置编译到 App 平台时的特定样式，部分常用配置 H5 平台也支持。
+				// 如果没有配置H5节点，会默认使用app-plus下的配置
+				// 配置了H5节点后会覆盖app-plus下的配置
+				"app-plus": {
+					// 设置导航栏是否可见
+					// "titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/ifCompile/ifCompile",
+			"style": {
+				"navigationBarTitleText": "多端兼容"
+			}
+		},
+		{
+			"path": "pages/events/events",
+			"style": {
+				"navigationBarTitleText": "事件"
+			}
+		},
+		// 添加一个页面后会自动生成这个path路由
+		{
+			"path": "pages/hello/hello",
+			"style": {
+				"navigationBarTitleText": "你好"
+			}
+		}
+	],
+	// 全局样式
+	"globalStyle": {
+		// 标题的颜色，只支持黑色、白色
+		"navigationBarTextStyle": "black",
+		// 程序标题栏
+		"navigationBarTitleText": "uni-app",
+		// 导航栏背景颜色
+		"navigationBarBackgroundColor": "#F8F8F8",
+		// 窗口背景颜色，一般与导航栏背景色一样
+		"backgroundColor": "#F8F8F8",
+		// 下拉loading的样式，仅支持dark / light
+		"backgroundTextStyle": "light",
+		// 下拉刷新 默认false
+		"enablePullDownRefresh": false,
+		// 页面上拉触底事件触发时距页面底部距离，单位只支持px 默认50
+		"onReachBottomDistance": 50,
+		// 横屏配置，屏幕旋转设置，仅支持 auto / portrait / landscape
+		"pageOrientation": "portrait"
+	},
+	// 配置tabBar
+	"tabBar": {
+		// 颜色
+		"color": "#bfbfbf",
+		// 选择后的颜色
+		"selectedColor": "#515151",
+		// tabbar上边框的颜色， 仅支持 black/white 
+		"borderStyle": "black",
+		// tab的背景色
+		"backgroundColor": "#FFFFFF",
+		"list": [
+			{
+				// 页面路径
+				"pagePath": "pages/index/index",
+				// tab文字内容
+				"text": "首页",
+				// 图片路径
+				"iconPath":"static/logo.png",
+				// 选中后的图片路径
+				"selectedIconPath":"static/logo.png"
+			},
+			{
+				"pagePath": "pages/hello/hello",
+				"text": "你好",
+				"iconPath":"static/logo.png",
+				"selectedIconPath":"static/logo.png"
+			},
+			{
+				"pagePath": "pages/events/events",
+				"text": "事件",
+				"iconPath":"static/logo.png",
+				"selectedIconPath":"static/logo.png"
+			}
+		]
+	}
+}

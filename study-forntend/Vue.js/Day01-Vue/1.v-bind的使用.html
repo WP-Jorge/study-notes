@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.active {
+				color: red;
+			}
+			
+			.turnBlue {
+				background-color: blue;
+			}
+		</style>
+	</head>
+	<div id="app">
+		<!-- 1.使用v-bind进行数据绑定 缩写: -->
+		<!-- <img :src="imgUrl" > -->
+		
+		<!-- 2.使用v-bind绑定类class -->
+		<!-- <h2 :class="active">{{message}}</h2> -->
+		
+		<!-- 3.class使用对象语法 -->
+		<!-- {类名:布尔值} -->
+		<!-- <h2 :class="{active: isActive, turnBlue: isTurnBlue}">{{message}}</h2> -->
+		
+		<!-- 4.style使用对象语法 -->
+		<!-- 不使用驼峰命名的话要用引号把属性名包起来 ，后面的属性值要用引号包起来-->
+		<h2 :style="{color: 'pink', 'font-size': '30px'}">{{message}}</h2>
+		
+		<!-- 5.style使用数组语法 -->
+		<h2 :style="[fontStyle]">{{message}}</h2>
+	</div>
+	<body>
+		
+		<script type="text/javascript">
+			new Vue({
+				el: '#app',
+				data: {
+					imgUrl: "../../Day12-Vue/1.webpack的使用/3.webpack的loader/dist/img/amei.c308834e.jpg",
+					message: '我是你爸爸',
+					isActive: true,
+					isTurnBlue: true,
+					active: 'active',
+					fontStyle: {
+						fontSize: '50px'
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

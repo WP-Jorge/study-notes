@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// lastIndex 控制搜索的位置
+			let str = 'houdunren'
+			// console.log(str.match(/\w/g))
+
+			let reg = /\w/g
+			// 当reg 是全局模式的时候，每次执行一次index都会+1，直到结束
+			// console.log(reg.exec(str)) // ["h", index: 0, input: "houdunren", groups: undefined]
+			// console.log(reg.exec(str)) // ["o", index: 1, input: "houdunren", groups: undefined]
+			// console.log(reg.exec(str)) // ["u", index: 2, input: "houdunren", groups: undefined]
+
+			while ((res = reg.exec(str))) {
+				console.log(res)
+			}
+		</script>
+	</body>
+</html>

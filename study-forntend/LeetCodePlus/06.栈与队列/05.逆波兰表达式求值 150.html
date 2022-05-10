@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+ * @param {string[]} tokens
+ * @return {number}
+ * 栈 时间复杂度O(n) 空间复杂度O(n)
+ */
+var evalRPN = function(tokens) {
+    let nums = [];
+    let res = tokens[0];
+    for (let i = 0; i < tokens.length; i++) {
+        if (/^-?\d+$/.test(tokens[i])) {
+            nums.push(tokens[i]);
+            continue;
+        }
+        let num1 = parseInt(nums.pop());
+        let num2 = parseInt(nums.pop());
+        if (tokens[i] === '+') {
+            res = num2 + num1;
+            nums.push(res);
+            continue;
+        }
+        if (tokens[i] === '-') {
+            res = num2 - num1;
+            nums.push(res);
+            continue;
+        }
+        if (tokens[i] === '*') {
+            res = num2 * num1;
+            nums.push(res);
+            continue;
+        }
+        if (tokens[i] === '/') {
+            res = parseInt(num2 / num1);
+            nums.push(res);
+        }
+    }
+    return res;
+};
+            console.log(evalRPN(['2', '1', '+', '3', '*']));
+        </script>
+    </body>
+</html>

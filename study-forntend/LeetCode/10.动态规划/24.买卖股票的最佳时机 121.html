@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} prices
+			 * @return {number}
+			 * 股票问题
+			 */
+			const maxProfit = function (prices) {
+				let n = prices.length;
+				let dp = Array.from(new Array(n), () => new Array(2));
+				dp[0][0] = 0;
+				dp[0][1] = -prices[0];
+				for (let i = 1; i < n; i++) {
+					dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+					dp[i][1] = Math.max(dp[i - 1][1], -prices[i]);
+					console.log(prices);
+					console.table(dp);
+				}
+				return dp[n - 1][0];
+			};
+
+			// ① 动态规划，时间复杂度O(n)，空间复杂度O(1)
+			// var maxProfit = function(prices) {
+			//     // no：表示未持有股票
+			//     // yes：表示持有股票
+			//     let [no, yes] = [0, -prices[0]];
+			//     for (let i = 1; i < prices.length; i++) {
+			//         no = Math.max(no, yes + prices[i]);
+			//         yes = Math.max(yes, -prices[i]);
+			//     }
+			//     return no;
+			// };
+
+			// ② 贪心算法，时间复杂度O(n)，空间复杂度O(1)
+			// var maxProfit = function (prices) {
+			// 	let min = prices[0];
+			// 	let max = 0;
+			// 	for (let i = 1; i < prices.length; i++) {
+			// 		// 如果价格比最低的还低，记录下来
+			// 		if (prices[i] < min) {
+			// 			min = prices[i];
+			// 			continue;
+			// 		}
+			// 		// 如果价格比最高的还高，记录下这次买卖的最大收入
+			// 		if (prices[i] > max) {
+			// 			max = Math.max(max, prices[i] - min);
+			// 		}
+			// 	}
+			// 	return max;
+			// };
+			
+			console.log(maxProfit([7, 1, 5, 3, 6, 4]));
+		</script>
+	</body>
+</html>

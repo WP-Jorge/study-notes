@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function func(strA, strB) {
+				let dp = Array.from(new Array(strA.length + 1)).map(item => new Array(strB.length + 1).fill(0));
+				if (Math.abs(strA.length - strB.length) > 1) {
+					return false;
+				}
+				for (let i = 1; i <= strA.length; i++) {
+					for (let j = 1; j <= strB.length; j++) {
+						if (strA[i - 1] === strB[j - 1]) {
+							dp[i][j] = dp[i - 1][j - 1] + 1;
+							continue;
+						}
+						dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+					}
+				}
+				console.log(dp);
+				return Math.min(strA.length, strB.length) - dp[strA.length][strB.length] <= 1;
+			}
+			console.log(func('apple', 'aple'));
+		</script>
+	</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {number} k
+             * @param {number} n
+             * @return {number[][]}
+             * 回溯 + 剪枝，时间复杂度O(M × 2^M), 空间复杂度O(M)
+             */
+            var combinationSum3 = function (k, n) {
+                let res = [];
+                let path = [];
+                let backtracking = (k, n, res, path, sum, num) => {
+                    if (path.length === k && sum === n) {
+                        res.push([...path]);
+                        return;
+                    }
+                    if (path.length === k && sum !== n) {
+                        return;
+                    }
+                    for (let i = num; i <= 9 - (k - path.length) + 1; i++) {
+                        path.push(i);
+                        sum += i;
+                        backtracking(k, n, res, path, sum, i + 1);
+                        path.pop();
+                        sum -= i;
+                    }
+                };
+                backtracking(k, n, res, path, 0, 1);
+                return res;
+            };
+        </script>
+    </body>
+</html>

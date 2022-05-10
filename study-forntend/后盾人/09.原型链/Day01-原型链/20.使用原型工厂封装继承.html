@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function extend(son, parent) {
+				son.prototype = Object.create(parent.prototype)
+				Object.defineProperty(son.prototype, 'constructor', {
+					value: son,
+					enumerable: false
+				})
+			}
+
+			function User(name, age) {
+				this.name = name
+				this.age = age
+			}
+
+			User.prototype.show = function () {
+				console.log(this.name, this.age)
+			}
+
+			function Admin(...args) {
+				User.call(this, ...args)
+			}
+
+			extend(Admin, User)
+			let admin = new Admin('向军', 19)
+			admin.show() // 向军 19
+		</script>
+	</body>
+</html>

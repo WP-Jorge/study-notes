@@ -1,0 +1,32 @@
+{
+	"folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "..\\wamp2.5\\www\\big_homework"
+        },
+        {
+            "path": "..\\ForntEnd"
+        },
+        {
+            "path": "..\\wamp2.5\\www\\phpcode"
+        },
+        {
+            "path": "C:\\Users\\蛋丁\\Desktop\\HomeWorks\\大三上\\web\\新建文件夹\\Z09418233_朱心熹_vivo商城\\vivomall"
+        },
+        {
+            "path": "..\\wamp2.5\\www\\h_Z09418233\\news"
+        },
+        {
+            "name": ".leetcode",
+            "path": "C:\\Users\\蛋丁\\.leetcode"
+        },
+        {
+            "path": "C:\\Users\\蛋丁\\Desktop\\HomeWorks\\three down\\设计模式\\大作业\\orderapp"
+        }
+    ],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Study"
+	}
+}

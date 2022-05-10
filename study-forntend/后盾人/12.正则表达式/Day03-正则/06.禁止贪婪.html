@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let str = 'hdddd'
+			// 在匹配符后面添加一个 ? 取消贪婪
+			console.log(str.match(/hd*?/)) // ["h", index: 0, input: "hdddd", groups: undefined]
+
+			// 在{1,9} 后面添加一个 ? 后取消贪婪，{1,9}? 倾向1
+			console.log(str.match(/hd{1,3}?/)) // ["hd", index: 0, input: "hdddd", groups: undefined]
+		</script>
+	</body>
+</html>

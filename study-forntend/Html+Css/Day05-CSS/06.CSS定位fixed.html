@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*  ①固定定位是元素固定于浏览器可视区的位置。主要使用场景:可以在浏览器页面滚动时元素的位置不会改变。 
+		    ②以浏览器的可视窗口为参照点移动元素。
+        */
+
+        /* 固定定位小技巧:固定在版心右侧位置。
+        1.让固定定位的盒子left: 50%.走到浏览器可视区(也可以看做版心)的一半位置。
+        2.让固定定位的盒子margin-left:版心宽度的一半距离。多走版心宽度的一半位置就可以让固定定位的盒子贴着版心右侧对齐了。 */
+        body {
+            height: 10000px;
+        }
+        div {
+            position: fixed;
+            right: 10px;
+            bottom: 100px;
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let lessons = [
+				{ title: '媒体查询', category: 'css' },
+				{ title: '弹性盒子', category: 'css' },
+				{ title: '多表查询', category: 'mysql' }
+			]
+			let proxy = new Proxy(lessons, {
+				get(arr, key) {
+					let title = arr[key].title
+					let len = 2
+					arr[key].title =
+						title.length > len
+							? title.substr(0, len) + '.'.repeat(3)
+							: title
+					return arr[key]
+				}
+			})
+			console.log(proxy[2]) // {title: "多表...", category: "mysql"}
+		</script>
+	</body>
+</html>

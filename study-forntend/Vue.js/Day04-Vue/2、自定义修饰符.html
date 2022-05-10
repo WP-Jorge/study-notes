@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+		
+		<style>
+			
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="div01">
+			<!-- .enter可用键值代替，比如f2的键值为113，可写成@keyup.113="show" -->
+			<input type="text" @keyup.enter="show" value="按回车出现123456789"/>
+			<p>{{ num }}</p>
+		</div>
+
+		
+		<script>
+			//自定义全局按键修饰符
+			Vue.config.keyCodes.f2=113
+			
+			var nv = new Vue({
+				el:'#div01',
+				data:{
+					num:'123'
+				},
+				methods:{
+					show(){
+						this.num=this.num+'456789'
+					}
+				},
+				//局部过滤器，优先调用全局过滤器，再调用局部过滤器，所以优先调用的全局过滤器会被局部过滤器覆盖
+				filters:{
+					
+				}
+			})
+			
+		</script>
+	</body>
+	
+</html>

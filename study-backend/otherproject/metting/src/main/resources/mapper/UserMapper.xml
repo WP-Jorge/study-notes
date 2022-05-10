@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team001.mapper.UserMapper">
+
+
+ <select id="getUserDetail" resultMap="userMap">
+  select m_user.*, m_user_role.role_name
+  from m_user left join m_user_role on m_user.username = m_user_role.username
+  where m_user.username = #{username}
+ </select>
+
+
+ <!-- 可根据自己的需求，是否要使用 -->
+ <resultMap type="com.team001.entity.User" id="userMap">
+  <result property="uno" column="uno"/>
+  <result property="username" column="username"/>
+  <result property="password" column="password"/>
+  <result property="name" column="name"/>
+  <result property="dept" column="dept"/>
+  <result property="email" column="email"/>
+  <result property="phone" column="phone"/>
+  <result property="enabled" column="enabled"/>
+  <result property="createTime" column="create_time"/>
+  <collection ofType="com.team001.vo.UserRole" property="roles">
+   <result property="roleName" column="role_name"/>
+  </collection>
+ </resultMap>
+
+<!--    <resultMap id="UserResultMap" type="com.team001.entity.User">-->
+<!--        <id column="uno" property="uno" jdbcType="INTEGER"/>-->
+<!--        <result column="name" property="name" jdbcType="CHAR"/>-->
+<!--        <result column="phone" property="phone" jdbcType="CHAR"/>-->
+<!--        <result column="email" property="email" jdbcType="CHAR"/>-->
+<!--        <result column="enabled" property="enabled" jdbcType="SMALLINT"/>-->
+<!--        <result column="username" property="username" jdbcType="CHAR"/>-->
+<!--        <result column="password" property="password" jdbcType="CHAR"/>-->
+<!--        <result column="dept" property="dept" jdbcType="CHAR"/>-->
+<!--        <result column="create_time" property="create_time" jdbcType="DATE"/>-->
+<!--        <result column="login" property="login" jdbcType="SMALLINT"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="UserWithRole" type="com.team001.entity.User" extends="UserResultMap">-->
+<!--        <collection property="roles" ofType="com.team001.entity.UserRole">-->
+<!--            <id column="id" property="id" jdbcType="INTEGER"/>-->
+<!--            <result column="username" property="username" jdbcType="CHAR"/>-->
+<!--            <result column="role_name" property="role_name" jdbcType="CHAR"/>-->
+<!--        </collection>-->
+<!--    </resultMap>-->
+
+<!--    <sql id="Base_Column_List">-->
+<!--    uno, name, phone, email, enabled, username, password, dept, create_time, login-->
+<!--    </sql>-->
+
+<!--    <select id="getUserRolesByName" resultType="com.team001.entity.UserRole">-->
+<!--    select r.* from m_user_role r,m_role hrr where hrr.role_name=r.role_name and r.username=#{username}-->
+<!--    </select>-->
+</mapper>

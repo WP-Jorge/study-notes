@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			.one {
+				width: 200px;
+				height: 200px;
+				background-color: pink;
+				transition: all .3s;
+			}
+
+			.two {
+				transform: rotate(720deg);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="one two"></div>
+		<script>
+			// var one = document.querySelector(".one");
+			// one.className = "two";
+			// $(".one").addClass("two");  这个addClass相当于追加类名 不影响以前的类名
+			$(".one").removeClass("two");
+		</script>
+	</body>
+</html>

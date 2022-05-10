@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/**
+		 * 盗用构造函数继承：
+		 * 优点：
+		 * 		① 解决原型链继承中父类引用类型与子实例操作相互影响的问题
+		 * 缺点：
+		 * 		② 只能继承父类实例的属性与方法，不能继承负类原型上的属性与方法，无法实现复用
+		 */ 
+		function Animal() {
+			this.name = 'animal';
+			this.food = ['草'];
+		}
+		Animal.prototype.eat = function() {
+			console.log('eat');
+		}
+
+		function Cat() {
+			Animal.call(this);
+			this.name = 'cat';
+		}
+		let cat1 = new Cat();
+		cat1.food.push('鱼');
+		console.log(cat1.name); // cat
+		console.log(cat1.food); // ['草', '鱼']
+		let cat2 = new Cat();
+		console.log(cat2.name); // cat
+		console.log(cat2.food); // ['草']
+		cat2.eat(); // 报错
+	</script>
+</body>
+</html>

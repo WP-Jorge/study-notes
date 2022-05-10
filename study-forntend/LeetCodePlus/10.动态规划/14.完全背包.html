@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		let completePack = () => {
+			let weight = [1, 3, 4];
+			let value = [1, 20, 30];
+			let bagSize = 4;
+			let dp = new Array(bagSize + 1).fill(0);
+			for (let i = 0; i < weight.length; i++) {
+				// 由于可以重复选择，所以从之前的从尾向前遍历变成从前先后遍历，其他不变
+				for (let j = weight[i]; j <= bagSize; j++) {
+					dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
+					console.table(dp);
+				}
+			}
+			return dp[bagSize];
+		}
+		console.log(completePack());
+	</script>
+</body>
+</html>

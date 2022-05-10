@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.使用var 相当于在全局中定义了i
+			for (var i = 0; i < 5; i++) {
+				console.log(i) // 0 1 2 3 4
+			}
+			console.log(i) // 5
+
+			// 2.在for中使用var定义变量时，如果函数体内是异步函数,则变量会在异步函数执行完成后变成最终值输出
+			for (var j = 0; j < 5; j++) {
+				setTimeout(() => {
+					console.log(j) // 5 5 5 5 5
+				}, 100)
+			}
+			console.log(j) // 5
+
+			// 3.使用let 相当于在每个循环中都定义了一个块级作用域
+			for (let k = 0; k < 5; k++) {
+				console.log(k) // 0 1 2 3 4
+			}
+			// console.log(k) // undefined 报错
+
+			// 4.在for中使用let 定义变量时，如果函数体内是异步函数,则每次循环中的变量值不受影响
+			for (let l = 0; l < 5; l++) {
+				setTimeout(() => {
+					console.log(l) // 0 1 2 3 4
+				}, 100)
+			}
+			// console.log(l) // undefined 报错
+		</script>
+	</body>
+</html>

@@ -1,0 +1,9 @@
+# 只要一步就可以使用springboot中内置的和druid一样世界上最优秀的数据源了
+spring:
+  datasource:
+    url: jdbc:mysql:///mybatis?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: 111111
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8081

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<!-- 1 -->
+		<input type="button" id="btn" value="修改内容" />
+		<input type="text" id="txt" value="请按按钮" />
+		
+		
+		<script type="text/javascript">
+			// 1、操控表单元素
+			var btn = document.getElementById('btn')
+			var txt = document.getElementById('txt')
+			btn.onclick = function() {
+				txt.value = '我被点击了'
+				btn.disabled = true // disabled 设置不能被点击 this.disabled = true // 使用this代替btn效果相同
+			 // this指向事件函数的调用者 btn
+			}
+		</script>
+	</body>
+</html>

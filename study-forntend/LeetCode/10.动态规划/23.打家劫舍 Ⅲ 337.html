@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * Definition for a binary tree node.
+			 * function TreeNode(val, left, right) {
+			 *     this.val = (val===undefined ? 0 : val)
+			 *     this.left = (left===undefined ? null : left)
+			 *     this.right = (right===undefined ? null : right)
+			 * }
+			 */
+			/**
+			 * @param {TreeNode} root
+			 * @return {number}
+			 * 动态规划，时间复杂度O(n)，空间复杂度O(logn)
+			 */
+			var rob = function (root) {
+				let postOrder = node => {
+					if (!node) {
+						return [0, 0];
+					}
+					let left = postOrder(node.left);
+					let right = postOrder(node.right);
+					let no = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+					let yes = node.val + left[0] + right[0];
+					return [no, yes];
+				};
+				return Math.max(...postOrder(root));
+			};
+		</script>
+	</body>
+</html>

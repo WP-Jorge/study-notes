@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div desc="houdunren">在线学习</div>
+		<div desc="hdcms">开源产品</div>
+		<script>
+			// 1.闭包带来的问题
+			let divs = document.querySelectorAll('div')
+			divs.forEach(item => {
+				// 由于闭包特性，内部添加点击事件的函数调用item，导致复杂对象item这个元素会一直存在，造成内存泄露
+				item.addEventListener('click', () => {
+					console.log(item.getAttribute('desc'))
+				})
+			})
+
+			// 2.解决方法
+			divs.forEach(item => {
+				// 使用desc 接收添加点击事件内需要的参数，这样存起来的数据量比较小，解决item的内存泄漏
+				let desc = item.getAttribute('desc')
+				item.addEventListener('click', () => {
+					console.log(desc)
+				})
+				// 清空item 优化内存
+				item = null
+			})
+		</script>
+	</body>
+</html>

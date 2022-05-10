@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+
+		<script type="text/javascript">
+			// 1.父亲
+			// class Father {
+			// 	money = 100
+			// }
+			// var father = new Father()
+			// console.log(father.money) //输出 100
+
+			//  // 儿子继承父亲
+			// class Son extends Father {
+
+			// }
+			// var son = new Son()
+			// console.log(son.money) //输出 100 儿子继承了父亲的100元
+
+			// 2.super 的使用
+			class Father {
+				constructor(x, y) {
+					this.x = x
+					this.y = y
+				}
+				sum() {
+					console.log(this.x + this.y) // 调用类中的属性或方法要加this
+				}
+				sayHi() {
+					console.log('Hi')
+				}
+			}
+			var father = new Father(1, 2)
+			father.sum() // 输出 3
+
+			class Son extends Father {
+				constructor(x, y, z) {
+					super(x, y) // super(x, y) 调用父类的构造方法 将子类的数据传给父类 必须放构造函数中第一行
+					this.z = z
+				}
+				sum2() {
+					console.log(this.z + this.z - this.z)
+				}
+			}
+			var son = new Son(2, 3, 5)
+			son.sum()
+			son.sayHi()
+			son.sum2()
+			
+			// 3.super关键字调用父类的普通函数
+			// class Father{
+			// 	say(){
+			// 		return '我是爸爸'
+			// 	}
+			// }
+			// class Son extends Father{
+			// 	say(){
+			// 		console.log(super.say() + '的儿子')
+			// 	}
+			// }
+			// var son = new Son()
+			// son.say() // 输出 我是爸爸的儿子
+		</script>
+	</body>
+</html>

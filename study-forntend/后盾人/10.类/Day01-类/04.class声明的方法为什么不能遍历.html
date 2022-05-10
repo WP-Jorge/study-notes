@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.使用function声明的类
+			function Hd(name) {
+				this.name = name
+			}
+			Hd.prototype.show = function () {}
+			console.log(
+				JSON.stringify(
+					// 使用function定义的类中的方法时可以遍历的
+					Object.getOwnPropertyDescriptor(Hd.prototype, 'show') // {"writable":true,"enumerable":true,"configurable":true}
+				)
+			)
+			// 遍历
+			let h = new Hd('乔治')
+			for (const key in h) {
+				console.log(key) // name show
+			}
+			for (const key in h) {
+				if (Object.hasOwnProperty.call(h, key)) {
+					const element = h[key]
+					console.log(element) // 乔治 空
+				}
+			}
+
+			// 2.使用class定义类
+			class User {
+				constructor(name) {
+					this.name = name
+				}
+				show() {}
+			}
+			console.dir(User)
+			console.log(
+				JSON.stringify(
+					// 使用class定义的类中的方法不可以遍历
+					Object.getOwnPropertyDescriptor(User.prototype, 'show') // {"writable":true,"enumerable":false,"configurable":true}
+				)
+			)
+			let user = new User('乔治')
+			for (const key in user) {
+				// 使用class定义的类中的方法无法进行遍历
+				console.log(key) // name
+			}
+		</script>
+	</body>
+</html>

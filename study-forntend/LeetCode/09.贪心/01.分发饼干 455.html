@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} g
+			 * @param {number[]} s
+			 * @return {number}
+			 * 贪心，时间复杂度：O(mlogm + nlogn)，其中 m 和 n 分别是数组 g 和 s 的长度。对两个数组排序的时间复杂度是 O(mlogm + nlogn)，遍历数组的时间复杂度是 O(m+n)，因此总时间复杂度是 O(mlogm + nlogn)，空间复杂度：O(logm+logn)，其中 m 和 n 分别是数组 g 和 s 的长度。空间复杂度主要是排序的额外空间开销。
+			 */
+			var findContentChildren = function (g, s) {
+				let res = 0;
+				g.sort((a, b) => {
+					return a - b;
+				});
+				s.sort((a, b) => {
+					return a - b;
+				});
+				for (let i = 0, j = 0; i < s.length; i++) {
+					if (s[i] >= g[j]) {
+						j++;
+						res++;
+					}
+				}
+				return res;
+			};
+			console.log(findContentChildren([10, 9, 8, 7], [5, 6, 7, 8]));
+		</script>
+	</body>
+</html>

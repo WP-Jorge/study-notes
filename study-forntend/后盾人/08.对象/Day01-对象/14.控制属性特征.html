@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/*
+			         {
+			             "value": "野猪",
+			             "writable": true, // 是否可修改
+			             "enumerable": true, // 是否可枚举
+			             "configurable": true // 是否可重新被配置
+			         }
+			         */
+			let user = {
+				age: 18
+			}
+
+			console.log(user) // {age: 18}
+			// 给对象中没有的的属性设置特征,会给对象添加一个属性
+			Object.defineProperty(user, 'name', {
+				// writable enumerable configurable 没有设置默认 false
+				value: '后盾人'
+			})
+			console.log(user) // {age: 18, name: "后盾人"}
+
+			// 给多个属性设置特征
+			Object.defineProperties(user, {
+				gender: {},
+				sex: {}
+			})
+
+			console.log(
+				JSON.stringify(
+					Object.getOwnPropertyDescriptor(user, 'name'),
+					null,
+					2
+				)
+			)
+			console.log(
+				JSON.stringify(
+					Object.getOwnPropertyDescriptor(user, 'age'),
+					null,
+					2
+				)
+			)
+		</script>
+	</body>
+</html>

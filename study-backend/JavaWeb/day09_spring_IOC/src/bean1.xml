@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="spring.User"></bean>
+
+    <bean id="book" class="spring.Book">
+        <!--Book中必须要有空的构造函数-->
+        <!--使用property完成属性注入-->
+        <property name="bname" value="水浒传"></property>
+        <property name="bauthor" value="施耐庵"></property>
+    </bean>
+
+    <bean id="order" class="spring.Order">
+        <constructor-arg name="address" value="北京"/>
+        <constructor-arg name="oname" value="烤鸭"/>
+    </bean>
+
+    <!--使用p名称空间配置-->
+    <!--在beans中添加参数
+        1、xmlns:p="http://www.springframework.org/schema/p"
+        2、Student中必须要有set方法
+        3、p:参数名=“参数”
+    -->
+    <bean id="student" class="spring.Student" p:sname="张三" p:sex="男"></bean>
+
+    <bean id="student2" class="spring.Student">
+        <!--注入参数为null-->
+        <property name="habit">
+            <null/>
+        </property>
+        <!--注入特殊符号
+            ① 转译&lt表示<
+                 &gl表示>
+            ② 把特殊符号的内容放到CDATA里面
+        -->
+        <property name="sname">
+            <value><![CDATA[<<狂人>>]]></value>
+        </property>
+    </bean>
+</beans>

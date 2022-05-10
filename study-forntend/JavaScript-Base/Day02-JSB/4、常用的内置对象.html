@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 1、Math 
+				// 1.1、max() 返回最大值 同理min()
+				// console.log(Math.max()) // 不传参数返回-Infinity
+				// console.log(Math.max(1, 2, '3')) // 传入非数字参数返回NaN，如果传入字符串型的数字会隐式转化为数字型，可正常返回 // 输出3
+				
+				// 1.2 abs() 返回绝对值
+				// console.log(Math.abs(-5)) // 输出5
+				
+				// 1.3 取整
+					// // 1.3.1、floor() 地板 向下取整
+					// console.log(Math.floor(3.98)) // 输出3
+					
+					// // 1.3.2、ceil() 天花板 向上取整
+					// console.log(Math.ceil(2.01)) // 输出3
+					
+					// // 1.3.3、round()  四舍五入取整
+					// console.log(Math.round(2.5)) // 输出3
+					// console.log(Math.round(2.4)) // 输出2
+					
+					// 1.3.4、random()
+					// 使用 Math.floor(Math.random() * (max - min + 1) + min) // 返回min 到 max间的整数 ，[min, max]
+					// function getRandom(min, max){
+					// 	return Math.floor(Math.random() * (max - min + 1) + min)
+					// }
+					// console.log(getRandom(1, 10))
+					
+			// 2、Date Date是一个构造函数，必须new 
+				// 2.1、创建Date对象
+				// var date = new Date() // 可传入参数 如：2020, 10, 1 (传入月份比实际月份大1个月) 或者 2020-10-01 8:8:8
+				// console.log(date) // 输出当前时间 不传参数 默认时间为创建Date的时间
+				
+				// var date1 = new Date(2020, 10, 1) // 输出Sun Nov 01 2020 00:00:00 GMT+0800 (中国标准时间) 可传入参数 2020, 10, 1 (传入月份比实际月份大1个月)
+				// console.log(date1)
+				
+				// var date2 = new Date('2020-10-1 8:8:8') // 输出Thu Oct 01 2020 08:08:08 GMT+0800 (中国标准时间) 可传入参数 2020-10-01 8:8:8
+				// console.log(date2)
+				
+				// 2.2.1、getFullYear() // 得到年份
+				// var date = new Date()
+				// console.log(date.getFullYear()) // 输出当前年份 2020
+				
+				// // 2.2.2、getMonth() // 得到0-11月
+				// var date = new Date()
+				// console.log(date.getMonth() + 1) // 输出当前月份 7
+				
+				// // 2.2.3、getDate() // 得到月份的天数
+				// var date = new Date()
+				// console.log(date.getDate()) // 输出当前月份的天数 25
+				
+				// // 2.2.4、getDay() // 得到星期几 (周日0，周六6)
+				// var date = new Date()
+				// console.log(date.getDay()) // 输出当前星期 6
+				
+				// // 2.2.5、getHours() // 得到小时
+				// var date = new Date()
+				// console.log(date.getHours()) // 输出当前小时 14
+				
+				// // 2.2.6、getMinutes() // 得到分钟
+				// var date = new Date()
+				// console.log(date.getMinutes()) // 输出当前分钟 22
+				
+				// // 2.2.7、getSeconds() // 得到秒
+				// var date = new Date()
+				// console.log(date.getSeconds()) // 输出当前秒 28
+				
+				// 2.2.8、获取毫秒数(时间戳)
+					// 2.2.8.1、valueOf() 、getTime() 获取当前时间距离1970年1月1日多少毫秒数
+					// var date = new Date()
+					// console.log(date.getTime())
+					// console.log(date.valueOf())
+					
+					// // 2.2.8.2、使用var date = +new Date() // 简洁获取当前毫秒数
+					// var date = +new Date()
+					// console.log(date)
+					
+					// // 2.2.8.3、使用Date.now() // 简洁获取当前毫秒数 H5新增的
+					// console.log(Date.now())
+					
+				// 2.2.9 倒计时案例
+				// function countDown(time){
+				// 	var nowTime = Date.now()
+				// 	var inputTime = new Date(time)
+				// 	var times = (inputTime - nowTime) / 1000
+				// 	var day = parseInt(times / 60 / 60 / 24)
+				// 	var hours = parseInt(times / 60 % 24)
+				// 	var seconds = parseInt(times % 60)
+				// 	day = (day.toString()).padStart(2, '0')
+				// 	hours = (hours.toString()).padStart(2, '0')
+				// 	seconds = (seconds.toString()).padStart(2, '0')
+				// 	return '倒计时:' + day + '日' + hours + '时' + seconds + '秒'
+				// }
+				// console.log(countDown('2020-7-25 16:0:0'))
+				
+			// 3、Array 数组
+				// 3.1 以new Array() 创建数组
+				// var arr1 = new Array() // 创建了一个空数组
+				// var arr2 = new Array(5) // 创建一个长度为5的数组
+				// var arr3 = new Array(1,2) // 创建一个内容为1，2的数组
+				
+				// 3.2 使用instanceof、Array.isArray(参数) {H5新增的方法}判断是否为数组 
+				// var arr = []
+				// console.log(arr instanceof Array) // 输出true
+				// var arr = []
+				// console.log(Array.isArray(arr)) // 输出true
+				
+				// 3.3 数组的增删
+					// 3.3.1、push() 在数组的末尾添加一个或者多个数组元素
+					// var arr = [1, 2, 3]
+					// arr.push(4, 5)
+					// console.log(arr) // 输出[1, 2, 3, 4, 5]
+					// console.log(arr.push()) //输出5 返回值为数组长度
+					
+					// 3.3.2、unshift() 在数组的头部添加一个或者多个数组元素
+					// var arr = [1, 2, 3]
+					// arr.unshift(4, 5)
+					// console.log(arr) // 输出[4, 5, 1, 2, 3]
+					// console.log(arr.unshift()) //输出5 返回值为数组长度
+				
+					// 3.3.3、pop() 删除数组的最后一个元素
+					// var arr = [1, 2, 3]
+					// arr.pop()
+					// console.log(arr) // 输出[1, 2]
+					// console.log(arr.pop()) //输出2 返回值为删除的元素
+					
+					// 3.3.4、shift() 删除数组的第一个元素
+					// var arr = [1, 2, 3]
+					// arr.shift()
+					// console.log(arr) // 输出[2, 3]
+					// console.log(arr.shift()) //输出1 返回值为删除的元素
+				
+				// 3.4、数组的排序、反转
+					// 3.4.1、数组排序 (冒泡排序)
+					// var arr = [1, 6, 2, 3]
+					// arr.sort()
+					// console.log(arr) // 输出[1, 2, 3, 6] 这样只能实现单位数的数字排序
+					
+					// var arr = [17, 6, 21, 1, 2]
+					// arr.sort()
+					// console.log(arr) // 输出[1, 17, 2, 21, 6]，不符合要求
+					
+					// var arr = [17, 6, 21, 1, 2]
+					// arr.sort(function(a, b){
+					// 	return a-b // 升序排列 反过来为降序
+					// })
+					// console.log(arr) // [1, 2, 6, 17, 21] 符合要求
+					
+					// 3.4.2、数组反转
+					// var arr = [1, 2, 3, 4]
+					// arr.reverse()
+					// console.log(arr) // 输出[4, 3, 2, 1]
+					
+				// 3.5、返回数组索引号
+					// 3.5.1、indexOf(参数) 返回参数第一次出现的索引位置
+					// var arr = [1, 2, 3, 4]
+					// console.log(arr.indexOf(2)) // 输出1 如果找不到返回 -1
+					
+					// 3.5.2、lastIndexOf(参数) 从数组最后向前查找，返回参数第一次出现的索引位置
+					// var arr = [1, 2, 3, 4]
+					// console.log(arr.lastIndexOf(2)) // 输出1 如果找不到返回 -1
+					
+					// 3.5.3、数组去重
+					// var arr = [1, 1, 2, 3, 2, 5, 1, 3]
+					// function unique(arr){
+					// 	var newArr = []
+					// 	for (var i = 0; i < arr.length; i++){
+					// 		if (newArr.indexOf(arr[i]) === -1){
+					// 			newArr.push(arr[i])
+					// 		}
+					// 	}
+					// 	return newArr
+					// }
+					// console.log(unique(arr)) // 输出[1, 2, 3, 5]
+					
+				// 3.6、数组转字符串
+					// 3.6.1、toString()
+					// var arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+					// console.log(arr.toString()) // 输出a,b,c,d,e,f,g,h
+					
+					// 3.6.1、join(分隔符)
+					// var arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+					// console.log(arr.join(',')) // 输出a,b,c,d,e,f,g,h
+					// console.log(arr.join('')) // 输出abcdefgh 不写参数默认','分隔
+					
+			// 4、字符串
+				// 4.1、str.indexOf('要查询的字符'[, 起始的位置])
+				// var str = '123412'
+				// console.log(str.indexOf('1')) // 输出0,不写第二个参数则第二个参数默认为0
+				// console.log(str.indexOf('1', 4)) // 输出4
+				
+				// 查询a出现的位置与出现次数
+				// var str = 'afdsijfajdajskasfa'
+				// var index = str.indexOf('a')
+				// var count = 0
+				// while (index !== -1){
+				// 	console.log(index)
+				// 	index = str.indexOf('a', ++index)
+				// 	count ++
+				// }
+				// console.log(count)
+				
+				// 4.2、根据位置返回字符
+					// 4.2.1、charAt(index) // 返回指定位置的字符
+					// var str = '123456'
+					// console.log(str.charAt(10)) // 输出2 如果没有 返回''
+					
+					// 4.2.2、charCodeAt(index) // 获取指定位置的字符ASCII码 
+					// var str = '123456'
+					// console.log(str.charCodeAt(10)) // 输出NaN 如果没有 返回 NaN
+					
+					// 4.2.3、str[index] // 获取指定位置的字符 H5新增的
+					// var str = '123456'
+					// console.log(str[10]) // 输出2 如果没有 返回 undefined
+					
+					// 可以使用这个方法判断对象中是否有某个属性
+					// var obj = {
+					// 	age : 18
+					// }
+					// if (obj['age']){
+					// 	console.log('有') // 输出 有
+					// } else {
+					// 	console.log('没有')
+					// }
+					
+					// 案例 判断 'aksdhfkadfhljdsadk'中出现次数最多的字符，并统计次数
+					// var str = 'aksdhfkadfhljdsadk'
+					// var obj = {}
+					// for (var i = 0; i < str.length; i++){
+					// 	var chars = str.charAt(i)
+					// 	if (obj[chars]) {
+					// 		obj[chars]++
+					// 	} else {
+					// 		obj[chars] = 1
+					// 	}
+					// }
+					// var max = 0
+					// var ch = ''
+					// for (key in obj) {
+					// 	if (obj[key] > max) {
+					// 		max = obj[key]
+					// 		ch = key
+					// 	}
+					// }
+					// console.log(obj) // 输出{a: 3, k: 3, s: 2, d: 4, h: 2, …}
+					// console.log(ch + ':' +max) // 输出d:4
+					
+				// 4.3、字符串操作方法
+					// 4.3.1、concat(str1, str2, str3, ...) 实现字符串拼接，返回新的字符串，不改变原来的字符串
+					// var str1 = '123'
+					// var str2 = '456'
+					// var str3 = '789'
+					// var str = ''
+					// console.log(str.concat(str1, str2, str3)) // 输出123456789 相当于用+进行拼接
+					
+					// 4.3.2、substr('截取的起始位置', '截取几个字符') 与数组的splice 用法相同 
+					// var str = '123456'
+					// console.log(str.substr('0', '1')) // 输出1
+					
+					// 4.3.3、替换字符 replace('被替换的字符', '替换为的字符')
+					// var str = '123456456'
+					// console.log(str.replace('456', '789')) // 输出123789456 只替换一次
+					
+					// 4.3.4、字符串转化为数组 split('分隔符')
+					// var str = '我,是,你,爸爸'
+					// console.log(str.split(',')) // 输出["我", "是", "你", "爸爸"]
+					
+		</script>
+	</body>
+</html>

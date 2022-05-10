@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let arr = [31, 23, 34, 2, 13, 234, 23]
+			function quickSort(arr) {
+				// 1.找基准数，将比基准数小的数都放到左边（左数组），大等于的放在右边（右数组）
+				let baseNum = arr[0] // 基准数
+				let left = [] // 左数组
+				let right = [] // 右数组
+				for (let i = 1; i < arr.length; i++) {
+					// 比基准数小的放在左数组，大等于的放在右数组中
+					if (arr[i] < baseNum) {
+						left.push(arr[i])
+					} else {
+						right.push(arr[i])
+					}
+				}
+
+				// 2.对左右数组分别进行快排，返回排序后的左右数组（条件：数组中的元素个数要大于等于2个）
+				if (left.length >= 2) {
+					left = quickSort(left)
+				}
+				if (right.length >= 2) {
+					right = quickSort(right)
+				}
+
+				// 3.合并排序好之后的左数组、基准数、排序好的右数组，并且返回
+				return [...left, baseNum, ...right]
+			}
+			let res = quickSort(arr)
+			console.log(res)
+		</script>
+	</body>
+</html>

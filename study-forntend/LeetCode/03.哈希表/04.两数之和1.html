@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {number[]} nums
+             * @param {number} target
+             * @return {number[]}
+             * 使用HashMap，以空间换时间，时间复杂度O(n)，空间复杂度O(n)
+             */
+            // 先判断再放入map，将O(2n)优化至O(n)
+            var twoSum = function (nums, target) {
+                let map = new Map();
+                for (let i = 0; i < nums.length; i++) {
+                    let num = nums[i];
+                    // 如果map中num的补值，就返回结果
+                    if (map.has(target - num)) {
+                        return [i, map.get(target - num)];
+                    }
+                    // 如果循环没有找到补值，则将当前的的数与对应下标放入map
+                    map.set(num, i);
+                }
+                return [];
+            };
+
+            // 先将nums中的元素存入map，再进行判断
+            // var twoSum = function(nums, target) {
+            //     // 先将nums中的元素与对应下标放入map中
+            //     let map = new Map();
+            //     nums.forEach((item, index) => {
+            //         map.set(item, index);
+            //     })
+            //     // 遍历所有元素
+            //     for (let i = 0; i < nums.length; i++) {
+            //         let num = nums[i];
+            //         // 存在补值
+            //         if (map.has(target - num)) {
+            //             // 并且不是重复使用一个数
+            //             if (i !== map.get(target - nums[i])) {
+            //                 // 返回结果
+            //                 return [i, map.get(target - num)];
+            //             }
+            //         }
+            //     }
+            //     return [];
+            // };
+        </script>
+    </body>
+</html>

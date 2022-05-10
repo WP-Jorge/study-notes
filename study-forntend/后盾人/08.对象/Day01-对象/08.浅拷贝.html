@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let hd = { name: '后盾人', age: 18 }
+			// 1.使用for in拷贝
+			let obj = {}
+			for (const key in hd) {
+				obj[key] = hd[key]
+			}
+			console.log(obj) // {name: "后盾人", age: 18}
+
+			// 2.使用assign
+			let obj2 = {}
+			Object.assign(obj2, hd)
+			console.log(obj2) // {name: "后盾人", age: 18}
+
+			// 3.使用展开语法
+			let obj3 = { ...hd }
+			console.log(obj3) // {name: "后盾人", age: 18}
+		</script>
+	</body>
+</html>

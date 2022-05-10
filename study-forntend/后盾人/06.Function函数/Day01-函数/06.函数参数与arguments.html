@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.函数为参数传入并被调用称为回调函数
+			let arr = [1, 2, 3, 1, 2, 0, 4, 8, 7]
+			let fun = function (item) {
+				return item < 5
+			}
+			console.log(arr.filter(fun)) // [1, 2, 3, 1, 2, 0, 4]
+
+			// 2.arguments 传入不确定个参数
+			function sum() {
+				return [...arguments].reduce((total, value) => {
+					return total + value
+				})
+			}
+			console.log(sum(1, 2, 3, 4, 5)) // 15
+
+			// 3. ...args语法传入不确定个数的参数
+			function sum2(...args) {
+				return args.reduce((total, value) => {
+					return total + value
+				})
+			}
+			console.log(sum2(1, 2, 3, 4, 5)) // 15
+		</script>
+	</body>
+</html>

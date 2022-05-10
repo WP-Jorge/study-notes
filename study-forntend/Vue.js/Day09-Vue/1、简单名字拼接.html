@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue2.6.11.js"></script>
+		<style>
+			
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="div01">
+			
+			<div>
+				<input type="text" v-model="firstname" @keyup="getfullname"/> + 
+				<input type="text" v-model="lastname" @keyup="getfullname"/> = 
+				<input type="text" v-model="fullname"/>
+			</div>
+			
+		</div>
+		
+		<script>
+			
+			var nv =new Vue({
+				el:'#div01',
+				data:{
+					firstname:'',
+					lastname:'',
+					fullname:''
+				},
+				methods:{
+					getfullname(){
+						this.fullname=this.firstname + '-' + this.lastname
+					}
+				}
+			})
+			
+		</script>
+	</body>
+</html>

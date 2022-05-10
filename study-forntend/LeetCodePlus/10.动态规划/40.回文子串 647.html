@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string} s
+			 * @return {number}
+			 * 动态规划 子序列 时间复杂度O(m*n) O{m*n}
+			 */
+			var countSubstrings = function (s) {
+				let dp = Array.from(new Array(s.length), () => new Array(s.length).fill(false));
+				let res = 0;
+				for (let i = s.length - 1; i >= 0; i--) {
+					for (let j = i; j < s.length; j++) {
+						if (s[i] === s[j] && (j - i <= 1 || dp[i + 1][j - 1])) {
+							dp[i][j] = true;
+							res++;
+						}
+					}
+				}
+				return res;
+			};
+			console.log(countSubstrings('aassaadasdssdasdasd'));
+		</script>
+	</body>
+</html>

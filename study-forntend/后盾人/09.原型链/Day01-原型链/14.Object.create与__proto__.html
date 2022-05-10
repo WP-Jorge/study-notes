@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let user = {
+				show() {
+					return this.name
+				}
+			}
+			// 1.使用create定义user的原型，不能获取
+			let hd = Object.create(user, {
+				name: {
+					value: '后盾人'
+				}
+			})
+			console.log(hd.show()) // 后盾人
+
+			// 2.使用__proto__设置原型
+			let hd2 = {
+				name: '后盾人'
+			}
+			// 设置原型
+			hd2.__proto__ = user
+			// 获取原型
+			console.log(hd2.__proto__) // {show: ƒ}
+		</script>
+	</body>
+</html>

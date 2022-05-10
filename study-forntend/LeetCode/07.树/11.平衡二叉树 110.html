@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * Definition for a binary tree node.
+             * function TreeNode(val, left, right) {
+             *     this.val = (val===undefined ? 0 : val)
+             *     this.left = (left===undefined ? null : left)
+             *     this.right = (right===undefined ? null : right)
+             * }
+             */
+            /**
+             * @param {TreeNode} root
+             * @return {boolean}
+             * 二叉树的深度优先搜索, 时间复杂度O(n), 空间复杂度O(n)
+             */
+            var isBalanced = function (root) {
+                let dfs = root => {
+                    if (!root) {
+                        return 0;
+                    }
+                    let leftLevel = dfs(root.left);
+                    if (leftLevel === -1) {
+                        return -1;
+                    }
+                    let rightLevel = dfs(root.right);
+                    if (rightLevel === -1) {
+                        return -1;
+                    }
+                    return Math.abs(leftLevel - rightLevel) < 2
+                        ? Math.max(leftLevel, rightLevel) + 1
+                        : -1;
+                };
+                return dfs(root) !== -1;
+            };
+        </script>
+    </body>
+</html>

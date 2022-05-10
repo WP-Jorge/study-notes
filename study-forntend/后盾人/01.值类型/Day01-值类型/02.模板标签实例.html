@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let name = '后盾人'
+			let web = 'houdunren.com'
+
+			// 在模板字符串前定义一个函数tag，表示将模板字符串里的字符串以 ${} 来分割，所有的参数存入 tag 的第一个参数内
+			// 第二个参数开始都是 ${} 里的参数
+			tag`在线教程${name}，网址是${web}.`
+			function tag(strings, ...args) {
+				console.log(strings) // ["在线教程", "，网址是", ".", raw: Array(3)]
+				console.log(args) // ["后盾人", "houdunren.com"]
+			}
+		</script>
+	</body>
+</html>

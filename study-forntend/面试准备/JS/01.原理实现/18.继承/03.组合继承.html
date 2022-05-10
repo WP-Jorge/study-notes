@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/**
+		 * 组合继承
+		 * 优点：
+		 * 		① 解决盗用构造函数继承原型不能继承原型上属性、方法的难题
+		 * 缺点：
+		 * 		① 子实例上存在父实例副本，子原型上也存在一份父实例副本，造成资源浪费
+		 * 		② 调用两次实例化父类方法，性能开销大
+		 */ 
+		function Animal() {
+			this.name = 'animal';
+			this.food = ['草'];
+		}
+		Animal.prototype.eat = function() {
+			console.log('eat');
+		}
+
+		function Cat() {
+			Animal.call(this);
+			this.name = 'cat';
+		}
+		Cat.prototype = new Animal();
+		Cat.prototype.constructor = Cat;
+
+		let cat1 = new Cat();
+		cat1.food.push('鱼');
+		console.log(cat1.name); // cat
+		console.log(cat1.food); // ['草', '鱼']
+		let cat2 = new Cat();
+		console.log(cat2.name); // cat
+		console.log(cat2.food); // ['草']
+		cat2.eat(); // eat
+	</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/*
+			 #0000FF => rgb(0, 0, 255)
+			 #A37 => rgb(170, 51, 119)
+			 #huahs => invalid
+			*/
+			function colorTransform(colorStr) {
+				let map = {
+					0: 0,
+					1: 1,
+					2: 2,
+					3: 3,
+					4: 4,
+					5: 5,
+					6: 6,
+					7: 7,
+					8: 8,
+					9: 9,
+					a: 10,
+					b: 11,
+					c: 12,
+					d: 13,
+					e: 14,
+					f: 15
+				};
+				if (!colorStr.startsWith('#') || (colorStr.length !== 7 && colorStr.length !== 4)) {
+					return 'invalid';
+				}
+				let colors = colorStr.slice(1).toLowerCase();
+				let res = [];
+				if (colorStr.length === 4) {
+					for (let item of colors) {
+						res.push(parseInt(map[item]) * 17);
+					}
+				} else {
+					for (let i = 0; i < colors.length; i++) {
+						if (i && (i - 1) % 2 === 0) {
+							res.push(parseInt(map[colors[i - 1]]) * 16 + parseInt(map[colors[i]]));
+						}
+					}
+				}
+				return res;
+			}
+			console.log(colorTransform('#A37'));
+		</script>
+	</body>
+</html>

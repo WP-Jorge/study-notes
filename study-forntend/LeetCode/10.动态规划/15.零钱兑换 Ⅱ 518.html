@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number} amount
+			 * @param {number[]} coins
+			 * @return {number}
+			 * 完全背包 动态规划，时间复杂度O(m*n)，空间复杂度O(m)
+			 */
+			var change = function (amount, coins) {
+				let dp = new Array(amount + 1).fill(0);
+				dp[0] = 1;
+				for (let i = 0; i < coins.length; i++) {
+					for (let j = coins[i]; j <= amount; j++) {
+						dp[j] += dp[j - coins[i]];
+						console.table(dp);
+					}
+				}
+				return dp[amount];
+			};
+			console.log(change(5, [1, 2, 5]));
+		</script>
+	</body>
+</html>

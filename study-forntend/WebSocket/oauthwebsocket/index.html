@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			div {
+				width: 200px;
+				height: 200px;
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="text" placeholder="请输入你的内容" />
+		<button>发送请求</button>
+		<div></div>
+
+		<script type="text/javascript">
+			let input = document.querySelector('input')
+			let button = document.querySelector('button')
+			let div = document.querySelector('div')
+
+			// 演示websocket在浏览器中如何使用
+			// H5已经提供了websocketapi，可以直接使用
+
+			// 1、创建websocket
+			// 参数一 websocket服务地址
+			let socket = new WebSocket(
+				'ws://localhost:8081/socketServer/z09418233'
+			)
+
+			// 2、open 当websocket连接服务成功成功的时候就会触发
+			socket.addEventListener('open', () => {
+				div.innerHTML = '连接服务成功'
+			})
+			// socket.onopen = () => {
+			// 	div.innerHTML = '连接服务成功'
+			// 	console.log(11)
+			// }
+
+			// 3、click 主动给webscoket服务发送消息
+			button.addEventListener('click', () => {
+				location.href = 'http://localhost:8081/wx/z09418233'
+
+				// socket.send(value)
+			})
+
+			// 4、message 接收websocket返回的数据
+			socket.addEventListener('message', e => {
+				console.log(e)
+				let context = ''
+				context = context + JSON.parse(e.data).username
+				context = context + '\n'
+				context = context + JSON.parse(e.data).token
+				context = context + '\n'
+				// context = context + JSON.parse(e.data).auth
+				div.innerText = context
+				console.log(JSON.parse(e.data).username)
+			})
+
+			// 5、error 通讯发生错误时触发
+			socket.addEventListener('error', () => {
+				console.log('通讯发生错误')
+			})
+
+			// 6、close 关闭事件
+			socket.addEventListener('close', () => {
+				div.innerHTML = '服务断开连接'
+			})
+		</script>
+	</body>
+</html>

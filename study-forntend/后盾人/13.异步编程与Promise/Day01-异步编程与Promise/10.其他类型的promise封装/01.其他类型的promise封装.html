@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let p1 = new Promise((resolve, reject) => {
+				resolve('成功')
+			})
+				.then(res => {
+					// 返回一个对象
+					// 如果返回普通对象，那返回的东西就是一个普通的对象
+					// 如果返回的是一个then()，那么返回的就是一个promise对象
+					// 如果返回一个类的实例，类中也有then，那么也是返回一个promise对象
+					// return {
+					// 	then(resolve, reject) {
+					// 		resolve('这是对象')
+					// 	}
+					// }
+
+					// 返回静态方法then，同样能实现上面的效果
+					return class User {
+						static then(resolve, reject) {
+							resolve('这是静态类方法')
+						}
+					}
+				})
+				.then(
+					res => {
+						console.log(res)
+					},
+					err => {
+						console.log(err)
+					}
+				)
+		</script>
+	</body>
+</html>

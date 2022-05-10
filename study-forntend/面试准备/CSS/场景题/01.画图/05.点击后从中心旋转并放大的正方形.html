@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Document</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		
+		html, body {
+			height: 100%;
+		}
+		
+		.container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+		}
+		
+		.item {
+			width: 100px;
+			height: 100px;
+			background-color: pink;
+		}
+		
+		.change {
+			animation: rotate 1s ease 0s forwards;
+		}
+		
+		@keyframes rotate {
+			from {
+				transform: scale(1) rotate(0deg);
+			}
+			to {
+				transform: scale(2) rotate(360deg);
+			}
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="item">
+	
+	</div>
+</div>
+<script>
+	let item = document.querySelector('.item');
+	item.addEventListener('click', function () {
+		this.classList.add('change');
+		console.log('asd');
+	});
+</script>
+</body>
+</html>

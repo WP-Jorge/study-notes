@@ -1,0 +1,13 @@
+{
+  "name": "Day10-3-Vue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"dev": "webpack-dev-server --open chrome --contentBase src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 无论在函数、对象等其他环境中，只要是在函数中的this都是指向window，在方法中的this谁调用只向谁
+
+			// 1.在对象中
+			let obj = {
+				name: '后盾人',
+				// ① 方法 如果是对象中的方法，this就i是这个对象
+				show: function () {
+					// ② 在函数中 this就是window
+					function render() {
+						console.log(this)
+					}
+					render() // window
+					// return obj.name
+					// this 在这里表示对当前对象的引用
+					return this.name
+				}
+			}
+			console.log(obj.show()) // 后盾人
+
+			// 2.在全局中
+			console.log(window === this) // true
+
+			// 3.在类方法中
+			function User(name) {
+				this.name = name
+				this.show = function () {
+					// 函数中的this指向window
+					function rander() {
+						console.log(this) // window
+					}
+					return this.name
+				}
+			}
+			let lisi = new User('李四')
+			console.log(lisi.show()) // 李四
+		</script>
+	</body>
+</html>

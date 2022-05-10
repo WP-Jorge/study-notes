@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.什么是闭包 闭包是指 一个函数可以访问其他函数作用域内的数据就叫闭包
+			function hd() {
+				let n = 1
+				return function sum() {
+					// sum函数中可以访问hd函数中的 n 就是闭包
+					console.log(++n)
+				}
+			}
+			let a = hd()
+			a() // 2
+			a() // 3
+		</script>
+	</body>
+</html>

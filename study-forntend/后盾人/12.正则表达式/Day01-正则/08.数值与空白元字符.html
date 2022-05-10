@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 元字符
+			let str = 'houdunren 1010'
+			console.log(str.match(/\d+/g)) // ['1010']
+
+			let str2 = `张三：010-99999999，李四：020-88888888 `
+			console.log(str2.match(/\d{3}-\d{7,8}/g)) // ["010-99999999", "020-88888888"]
+
+			// 只匹配中文
+			console.log(str2.match(/[^-\d:：,，\s]+/g)) // ["张三", "李四"]
+
+			let str3 = 'houdunren 1010'
+			// \D 表示除了数字
+			console.log(str3.match(/\D+/)) // 1010
+
+			// \s 空白符 空格、回车、制表等
+			console.log(/\s/.test('乔治 ')) // true
+
+			// \S 除了空白
+			console.log(/\S/.test(' ')) // false
+		</script>
+	</body>
+</html>

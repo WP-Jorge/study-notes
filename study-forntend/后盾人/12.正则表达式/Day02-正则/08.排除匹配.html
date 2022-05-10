@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let str = 'houdunren.com'
+			// ^ 表示除了
+			console.log(str.match(/[ue]/gi)) // ["u", "u", "e"]
+			console.log(str.match(/[^ue]/gi)) // ["h", "o", "d", "n", "r", "n", ".", "c", "o", "m"]
+
+			let str2 = `张三:010-99999999,李四:020-88888888`
+			console.log(str2.match(/[^\d:\-,]+/g)) // ["张三", "李四"]
+		</script>
+	</body>
+</html>

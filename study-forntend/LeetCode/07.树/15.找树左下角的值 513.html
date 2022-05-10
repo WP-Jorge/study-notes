@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * Definition for a binary tree node.
+             * function TreeNode(val, left, right) {
+             *     this.val = (val===undefined ? 0 : val)
+             *     this.left = (left===undefined ? null : left)
+             *     this.right = (right===undefined ? null : right)
+             * }
+             */
+            /**
+             * @param {TreeNode} root
+             * @return {number}
+             * 二叉树的层序遍历（广度优先搜索），时间复杂度O(n), 空间复杂度O(n)
+             */
+            var findBottomLeftValue = function (root) {
+                let stack = [];
+                let res = [];
+                stack.push(root);
+                while (stack.length > 0) {
+                    let levelCount = stack.length;
+                    res[res.length - 1] = [];
+                    for (let i = 0; i < levelCount; i++) {
+                        let node = stack.shift();
+                        res[res.length - 1].push(node.val);
+                        node.left && stack.push(node.left);
+                        node.right && stack.push(node.right);
+                    }
+                }
+                return res[res.length - 1][0];
+            };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {number} n
+             * @return {number[][]}
+             */
+            var generateMatrix = function (n) {
+                let t = 0;
+                let r = n - 1;
+                let b = n - 1;
+                let l = 0;
+                let target = Math.pow(n, 2);
+				let num = 1;
+                let mat = Array.from(new Array(n)).map(item => new Array(n));
+				while (num <= target) {
+					for (let i = l; i <= r; i++) {
+						mat[t][i] = num++;
+					}
+					t++;
+					for (let i = t; i <= b; i++) {
+						mat[i][r] = num++;
+					}
+					r--;
+					for (let i = r; i >= l; i--) {
+						mat[b][i] = num++;
+					}
+					b--;
+					for (let i = b; i >= t; i--) {
+						mat[i][l] = num++;
+					}
+					l++;
+				}
+				return mat;
+            };
+			console.log(generateMatrix(3));;
+        </script>
+    </body>
+</html>

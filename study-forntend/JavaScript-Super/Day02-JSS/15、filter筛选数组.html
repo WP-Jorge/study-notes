@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			// filter 筛选数组  不会改变原始数组。不会对空数组进行检测。
+			// filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。
+			var arr = [12, 66, 4, 88, 3, 7];
+			var newArr = arr.filter(function(value) { // （参数可以不写）第一个参数：数组值 第二个参数：索引 第三个参数：数组本身
+				// return value >= 20;
+				return value % 2 === 0; // return后面boolean类型判断这个值是否满足条件
+			});
+			console.log(newArr);
+		</script>
+	</body>
+</html>

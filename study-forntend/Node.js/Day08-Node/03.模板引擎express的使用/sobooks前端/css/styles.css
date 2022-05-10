@@ -1,0 +1,140 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: rgba(255,213,214,.2);
+}
+
+.header	{
+	height: 170px;
+	width: 100%;
+	min-width: 1200px;
+}
+
+.navheader {
+	height: 110px;
+	width: 100%;
+	background-image: url(../img/野猪乔治.jpg);
+	background-color: #ffd5d6;
+	background-position: top center;
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+}
+
+.nav {
+	width: 100%;
+	height: 60px;
+	background: rgba(0,0,0,.5);
+}
+
+.navlist {
+	width: 1200px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+}
+
+.link {
+	width: 100px;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	color: white;
+}
+
+.search {
+	width: 300px;
+	height: 60px;
+	display: flex;
+}
+
+.search input {
+	border: none;
+	outline: none;
+	height: 60px;
+	width: 200px;
+	line-height: 60;
+	padding: 0 20px;
+	color: white;
+	font-size: 20px;
+	background-color: rgba(255,255,255,.5);
+}
+
+.search button {
+	display: flex;
+	width: 100px;
+	height: 60px;
+	color: white;
+	justify-content: center;
+	background-color: rgba(255,255,255,.7);
+	align-items: center;
+}
+
+.content {
+	display: flex;
+	width: 1200px;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+.bookList {
+	width: 1000px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.bookItem {
+	width: 240px;
+	margin: 5px;
+	height: 400px;
+	text-align: center;
+	position: relative;
+	background-color: white;
+	box-shadow: 0 1px 5px rgba(0,0,0,.4);
+}
+
+.bookItem img {
+	width: 90%;
+	height: auto;
+}
+
+.bookItem h3 {
+	font-style: 18px;
+	width: 70%;
+	padding-bottom: 5px;
+	margin: 5px auto;
+	font-family: '微软雅黑';
+	border-bottom: 1px dashed #ccc;
+}
+
+.bookItem p {
+	font-style: 16px;
+}
+
+.bookItem .cataory {
+	position: absolute;
+	width: 80px;
+	height: 30px;
+	left: 10px;
+	top: 10px;
+	text-align: center;
+	line-height: 30px;
+	color: wheat;
+	background-color: rgba(0,0,0,.7);
+}
+
+.erweima {
+	flex: 1;
+}
+
+.erweima h3 {
+	text-align: center;
+	margin: 0 0 10px;
+}
+
+.erweima img {
+	width: 100%;
+}

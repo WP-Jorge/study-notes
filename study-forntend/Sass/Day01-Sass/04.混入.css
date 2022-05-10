@@ -1,0 +1,27 @@
+.alert-warning {
+  color: pink;
+  background-color: pink;
+}
+.alert-warning a {
+  color: yellowgreen;
+}
+
+.alert-warning {
+  color: pink;
+  background-color: pink;
+}
+.alert-warning a {
+  color: skyblue;
+  background-color: #5bbce4;
+}
+
+.alert-info {
+  color: white;
+  background-color: white;
+}
+.alert-info a {
+  color: blue;
+  background-color: #0000cc;
+}
+
+/*# sourceMappingURL=04.%E6%B7%B7%E5%85%A5.css.map */

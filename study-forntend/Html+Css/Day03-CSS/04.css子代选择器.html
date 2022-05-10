@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		.nav>a {
+			color: pink;
+		}
+		
+		/* 子代选择器，只选择子代的，不选择孙子代的，格式：元素1>元素2>元素3 */
+		.nav>p>a {
+			color: red;
+		}
+	</style>
+	<body>
+		<div class="nav">
+			<a href="">儿子</a>
+			<p>
+				<a href="">孙子</a>
+			</p>
+		</div>
+	</body>
+</html>

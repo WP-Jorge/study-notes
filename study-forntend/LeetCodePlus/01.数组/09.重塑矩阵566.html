@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Document</title>
+</head>
+<body>
+<script>
+	/**
+	 * @param {number[][]} mat
+	 * @param {number} r
+	 * @param {number} c
+	 * @return {number[][]}
+	 * 模拟 时间复杂度O(m * n) 空间复杂度O(m * n)
+	 */
+	var matrixReshape = function (mat, r, c) {
+		let m = mat.length;
+		let n = mat[0].length;
+		let target = m * n;
+		let num = 0;
+		if (target !== r * c) {
+			return mat;
+		}
+		let temp = [];
+		for (let i = 0; i < m; i++) {
+			temp.push(...mat[i]);
+		}
+		let res = Array.from(new Array(r)).map(item => new Array(c));
+		for (let i = 0; i < r; i++) {
+			for (let j = 0; j < c; j++) {
+				res[i][j] = temp[num++];
+			}
+		}
+		return res;
+	};
+	console.log(matrixReshape([[1, 2], [3, 4]], 1, 4));
+</script>
+</body>
+</html>

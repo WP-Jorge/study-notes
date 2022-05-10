@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.StudentDao">
+
+    <!--定义sql片段-->
+    <sql id="studentSql">
+        select id, name, email, age from student
+    </sql>
+
+    <sql id="studentSql2">
+        select * from student where id in
+    </sql>
+
+    <!--if
+        <if: test="使用java对象的属性值作为判断条件，语法 属性=xxx值">
+    -->
+    <select id="selectStudentIf" resultType="domain.Student">
+        <include refid="studentSql"></include>
+        where 1 = 1
+        <if test="name != null and name != ''">
+            and name = #{name}
+        </if>
+        <if test="age > 0">
+            or age > #{age}
+        </if>
+    </select>
+
+    <select id="selectStudentWhere" resultType="domain.Student">
+        <include refid="studentSql"></include>
+        <where>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="age > 0">
+                or age > #{age}
+            </if>
+        </where>
+    </select>
+
+    <!--foreach的使用, List<Integer>-->
+    <select id="selectStudentEach" resultType="domain.Student">
+        <include refid="studentSql2"></include>
+        <foreach collection="list" item="myid" open="(" close=")" separator=",">
+            #{myid}
+        </foreach>
+    </select>
+
+    <!--foreach的使用, List<Student>-->
+    <select id="selectStudentEachTwo" resultType="domain.Student">
+        <include refid="studentSql2"></include>
+        <foreach collection="list" item="stu" open="(" close=")" separator=",">
+            #{stu.id}
+        </foreach>
+    </select>
+
+    <!--分页-->
+    <select id="selectAll" resultType="domain.Student">
+        select * from student order by id
+    </select>
+</mapper>

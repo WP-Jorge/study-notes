@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script type="module">
+			// 1.不添加type="module"加载不到
+			console.log(document.querySelector('button')) // null (不添加type="module"加载不到)
+
+			// 2.添加type="module"加载完成
+			console.log(document.querySelector('button')) // <button>后盾人</button> (添加type="module"加载完成)
+
+			// 3.使用type="module"后默认开启严格模式
+			site = 'asd' // 报错
+		</script>
+		<button>后盾人</button>
+	</body>
+</html>

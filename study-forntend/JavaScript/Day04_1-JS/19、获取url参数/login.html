@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		
+		<script type="text/javascript">
+			var params = location.search.substr(1)
+			var arr = params.split('=')
+			var body = document.querySelector('body')
+			body.innerHTML = '欢迎'+arr[1]+'登录'
+		</script>
+	</body>
+</html>

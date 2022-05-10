@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function sleep(time) {
+				return new Promise(resolve => setTimeout(() => resolve(time), time));
+			}
+			function* p() {
+				let res1 = yield sleep(1000);
+				console.log(res1);
+				let res2 = yield sleep(1000);
+				console.log(res2);
+			}
+			function asyncFunction(generator) {
+				let gen = generator();
+				function next(data) {
+					let {value, done} = gen.next(data);
+					if (done) {
+						return value;
+					} else if (!(value instanceof Promise)) {
+						next(value);
+					} else {
+						value.then(data => next(data));
+					}
+				}
+				next();
+			}
+			asyncFunction(p);
+		</script>
+	</body>
+</html>

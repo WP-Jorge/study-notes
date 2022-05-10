@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function myTypeof(param) {
+			let paramProto = param?.__proto__;
+			if (paramProto === String.prototype) {
+				return 'string';
+			}
+			if (paramProto === Number.prototype) {
+				return 'number';
+			}
+			if (paramProto === BigInt.prototype) {
+				return 'bigint';
+			}
+			if (paramProto === Symbol.prototype) {
+				return 'symbol';
+			}
+			if (paramProto === Function.prototype) {
+				return 'function';
+			}
+			if (param === null) {
+				return 'object';
+			}
+			if (param === undefined) {
+				return 'undefined';
+			}
+			if (paramProto === Object.prototype) {
+				return 'object';
+			}
+		}
+		let str = '124';
+		function fn() {
+			return 1;
+		}
+		console.log(myTypeof(str));
+		console.log(myTypeof(123));
+		console.log(myTypeof(fn));
+		console.log(myTypeof(null));
+		console.log(myTypeof(undefined));
+		console.log(myTypeof({}));
+		console.log(myTypeof(Symbol()));
+		console.log(myTypeof(BigInt(9007199254740991)));
+	</script>
+</body>
+</html>

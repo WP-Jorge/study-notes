@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let map = new Map([
+				['houdunren', '后盾人'],
+				['hdcms', '开源系统']
+			])
+			console.log(map) // Map(2) {"houdunren" => "后盾人", "hdcms" => "开源系统"}
+
+			// 1.Map转换为数组
+			// ① 直接转换
+			console.log(...map) // (2) ["houdunren", "后盾人"] (2) ["hdcms", "开源系统"]
+			// ② 转换到数组中
+			console.log([...map]) // [Array(2), Array(2)]
+			// 等同于 [...map.entries()]
+			console.log([...map.entries()]) // [Array(2), Array(2)]
+			// ③ 只转换键 放到数组中
+			console.log([...map.keys()]) // ["houdunren", "hdcms"]
+			// ④ 只转换值到数组中
+			console.log([...map.values()]) // ["后盾人", "开源系统"]
+		</script>
+	</body>
+</html>

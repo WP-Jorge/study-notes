@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let str = '2020/12/19'
+			console.log(str.replace(/\//, '-')) // 2020-12/19
+			console.log(str.replace(/\//g, '-')) // 2020-12-19
+
+			let tel = '(010)99999999 (020)88888888'
+			// 010-99999999
+			let reg = /\((\d{3,4})\)(\d{7,8})/g
+			console.log(tel.match(reg))
+			console.log(tel.replace(reg, '$1-$2')) // 010-99999999 020-88888888
+
+			// $` 匹配左边 $' 匹配右边 $& 匹配到的内容
+			let str2 = '=后盾人='
+			console.log(str2.replace(/后盾人/, "$'$'$&$'$'"))
+		</script>
+	</body>
+</html>

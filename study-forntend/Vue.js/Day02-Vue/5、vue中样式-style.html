@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+		
+		<style>
+			
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="div01">
+			<!-- 使用v-bind style内联样式 -->
+			<!-- <h1 :style="{ color:'red' , 'font-weight': 100 }">我很大！！！！！</h1> -->
+			
+			<!-- 使用v-bind style内联样式 将style放入vue中 -->
+			<!-- <h1 :style="[obj1,obj2]">我很大！！！！！</h1> -->
+		</div>
+		<script>
+			var nv = new Vue({
+				el:'#div01',
+				data:{
+					flag:false,
+					obj1:{ color:'red' , 'font-weight': 100 },
+					obj2:{ 'font-style': 'italic'}
+				methods:{
+				}
+			})
+			
+		</script>
+	</body>
+	
+</html>

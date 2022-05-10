@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script type="module">
+			// 直接import 会报错，需要在script标签中添加 type="module"
+			import { title, url, show } from './01.app.js'
+			console.log(title, url) // 后盾人 houdunren.com
+			show() // 乔治
+		</script>
+	</body>
+</html>

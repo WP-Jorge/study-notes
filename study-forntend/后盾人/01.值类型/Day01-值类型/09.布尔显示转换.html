@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let num = 0
+			console.log(typeof num) // number
+			// ① 使用 ! 将数值类型的转换为 布尔类型
+			num = !num
+			console.log(num) // true
+
+			// 两个!! 将其转换为布尔类型
+			num = !!num
+			console.log(num) // true
+			console.log(!!{}) // true
+			console.log(!![]) // true
+
+			// ② 使用Boolean转换
+			console.log(Boolean(num)) // true
+			console.log(Boolean({})) // true
+			console.log(Boolean([])) // true
+		</script>
+	</body>
+</html>

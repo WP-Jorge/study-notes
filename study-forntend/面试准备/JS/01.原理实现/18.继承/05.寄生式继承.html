@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/**
+		 * 寄生式继承
+		 * 优点：
+		 * 		② 解决原型式继承无法为子类添加属性的问题
+		 * 缺点：
+		 * 		① 同样存在多个实例应用数据类型属性指向相同的问题
+		 */ 
+		function getSuperObj(obj) {
+			function NewObj() {}
+			NewObj.prototype = obj;
+			return new NewObj();
+		}
+		function getNewObj(obj) {
+			let newObj = getSuperObj(obj);
+			newObj.eat = function() {
+				console.log('eat');
+			}
+			return newObj;
+		}
+		let animal = {
+			name: 'annimal',
+			food: ['草']
+		}
+
+		let cat1 = getNewObj(animal);
+		cat1.food.push('鱼');
+		console.log(cat1.name); // annimal
+		console.log(cat1.food); // ['草', '鱼']
+		cat1.eat(); // eat
+		let cat2 = getNewObj(animal);
+		console.log(cat2.name); // annimal
+		console.log(cat2.food); // ['草', '鱼']
+		cat2.eat(); // eat
+	</script>
+</body>
+</html>

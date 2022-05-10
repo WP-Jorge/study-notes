@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue2.6.11.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<!-- @load
+					1.image src有值的时候，才开始加载
+					2.onload事件是在src的资源加载完毕的时候，才会触发
+			 -->
+			<img src="../Day16-1-Vue/learnaxios/src/assets/logo.png" @load="loaded">
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el: "#app",
+				methods: {
+					loaded() {
+						console.log('图片加载完毕');
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

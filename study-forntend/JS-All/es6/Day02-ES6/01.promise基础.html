@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 实例化一个Promise对象
+			let p = new Promise((resolve, reject) => {
+				setTimeout(() => {
+					if (1 > 0) {
+						let data = '数据库中的用户数据'
+						resolve(data)
+					} else {
+						let err = '数据读取err失败'
+						resolve(err)
+					}
+				}, 1000)
+			})
+
+			// 调用promise 对象的then方法
+			p.then(res => {
+				console.log(res)
+			}).catch(e => {
+				console.log(e)
+			})
+		</script>
+	</body>
+</html>

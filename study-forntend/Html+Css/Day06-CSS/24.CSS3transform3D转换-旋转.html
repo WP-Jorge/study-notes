@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* rotate3d: 3D旋转指可以让元素在三E维平面内沿着x轴, y轴, z轴或者自定义轴进行旋转。 
+				transform:rotateX(45deg) :沿着x轴正方向旋转45度
+				transform:rotateY(45deg) : 沿着y轴正方向旋转45deg
+				transform:rotateZ(45deg) :沿着Z轴正方向旋转45deg
+				transform:rotate3d(x,y,z,deg) :沿着自定义轴旋转deg为角度(了解即可)
+			*/
+			body {
+				perspective: 500px;
+			}
+
+			.imgX {
+				display: block;
+				margin: 0 auto;
+				transition: all 1s;
+			}
+
+			.imgX:hover {
+				/* 度数正负遵循左右定则，手指方向，正反手，负正手 */
+				transform: rotateX(360deg);
+			}
+			
+			.imgY {
+				display: block;
+				margin: 100px auto;
+				transition: all 1s;
+			}
+			
+			.imgY:hover {
+				/* 度数正负遵循左右定则，手指方向，正反手，负正手 */
+				transform: rotateY(360deg);
+			}
+			
+			.imgZ {
+				display: block;
+				margin: 100px auto;
+				transition: all 1s;
+			}
+			
+			.imgZ:hover {
+				/* 度数正负遵循左右定则，手指方向，正反手，负正手 */
+				transform: rotateZ(360deg);
+			}
+			
+			.imgXYZ {
+				display: block;
+				margin: 100px auto;
+				transition: all 1s;
+			}
+			
+			.imgXYZ:hover {
+				/* 度数正负遵循左右定则，手指方向，正反手，负正手 */
+				transform: rotate3d(1, 1, 1, 360deg);
+			}
+		</style>
+	</head>
+	<body>
+		<img class="imgX" src="../Day05-CSS/images/ldh.jpg">
+		<img class="imgY" src="../Day05-CSS/images/ldh.jpg">
+		<img class="imgZ" src="../Day05-CSS/images/ldh.jpg">
+		<img class="imgXYZ" src="../Day05-CSS/images/ldh.jpg">
+	</body>
+</html>

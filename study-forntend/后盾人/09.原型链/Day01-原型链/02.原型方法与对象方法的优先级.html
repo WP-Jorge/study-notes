@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let hd = {
+				show() {
+					console.log('后盾人')
+				},
+				render() {
+					console.log('hd的向军')
+				}
+			}
+			hd.show() // 后盾人
+			// 给hd添加原型方法
+			hd.__proto__.render = function () {
+				console.log('向军')
+			}
+			console.log(hd) //原型上有render方法
+			// 先去找自己的方法，没有才去原型上找
+			hd.render() // hd的向军
+		</script>
+	</body>
+</html>

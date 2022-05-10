@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="content">houdunren.com</div>
+		<script>
+			// let hd = 'houdunren.com'
+			// // 第一个参数是需要哦匹配的字符串，第二个参数是匹配方式 g 表示全局匹配
+			// let reg = new RegExp('u', 'g')
+			// console.log(reg.test(hd))
+
+			// 示例
+			let con = prompt('请输入需要检测的内容，支持正则')
+			let reg = new RegExp(con, 'g')
+			let div = document.querySelector('.content')
+			div.innerHTML = div.innerHTML.replace(reg, search => {
+				return `<span style="color:red">${search}</span>`
+			})
+		</script>
+	</body>
+</html>

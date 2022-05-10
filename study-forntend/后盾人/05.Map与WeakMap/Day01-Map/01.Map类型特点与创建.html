@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// Map
+			let map = new Map()
+
+			// 1.字符串当键名
+			map.set('name', '后盾人')
+			console.log(map) // Map(1) {"name" => "后盾人"}
+
+			// 2.函数当键名
+			map.set(function () {}, 'hdcms')
+			console.log(map) // Map(2) {"name" => "后盾人", ƒ => "hdcms"}
+
+			// 3.对象当键名
+			map.set({}, 'sina.com.cn')
+			console.log(map) // Map(3) {"name" => "后盾人", ƒ => "hdcms", {…} => "sina.com.cn"}
+
+			// 4.数值当键名
+			map.set(1, '后盾人')
+			console.log(map) // Map(4) {"name" => "后盾人", ƒ => "hdcms", {…} => "sina.com.cn", 1 => "后盾人"}
+
+			// 5.任何类型当键名 undefined、null、NaN等
+			map.set(null, 'asdsd')
+			console.log(map) // Map(5) {"name" => "后盾人", ƒ => "hdcms", {…} => "sina.com.cn", 1 => "后盾人", null => "asdsd"}
+
+			// 6.在创建的时候添加，跟set差不多
+			let map2 = new Map([['houdunren', '开源系统']])
+			console.log(map2) // Map(1) {"houdunren" => "开源系统"}
+
+			// 7.链式操作
+			map2.set('野猪', '乔治').set('家猪', '佩奇')
+			console.log(map2) // Map(3) {"houdunren" => "开源系统", "野猪" => "乔治", "家猪" => "佩奇"}
+		</script>
+	</body>
+</html>

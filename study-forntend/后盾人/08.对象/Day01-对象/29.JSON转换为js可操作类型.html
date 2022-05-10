@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let hd = {
+				title: '后盾人',
+				url: 'houdunren.com',
+				teacher: {
+					name: '向军'
+				}
+			}
+			let json = JSON.stringify(hd, null, 2)
+			console.log(typeof json)
+
+			// 转换为js数据格式
+			// ① 普通转换
+			let obj = JSON.parse(json) // string
+			console.log(obj) // {title: "后盾人", url: "houdunren.com", teacher: {…}}
+
+			// ② 进行自定义处理然后返回
+			let obj2 = JSON.parse(json, (key, value) => {
+				if (key === 'title') {
+					value = '大大的' + value
+				}
+				return value
+			})
+			console.log(obj2) // {title: "大大的后盾人", url: "houdunren.com", teacher: {…}}
+		</script>
+	</body>
+</html>

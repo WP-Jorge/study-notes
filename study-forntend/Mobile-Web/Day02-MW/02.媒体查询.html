@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* @media 媒体查询
+				使用@media查询,可以针对不同的媒体类型定义不同的样式
+				@media可以针对不同的屏幕尺寸设置不同的样式
+				当你重置浏览器大小的过程中,页面也会根据浏览器的宽度和高度重新渲染页面
+				目前针对很多苹果手机、Android手机 ,平板等设备都用得到多媒体查询
+			*/
+
+			/* @media mediatype and | not | only (media feature) {
+				CSS-Code;
+			} */
+
+			/* 用@media开头注意@符号 mediatype媒体类型 关键字 and not only media feature媒体特性必须有小括号包含
+				mediatype：查询类型
+					all：所有设备
+					print：用于打印机或打印预览
+					screen：用于电脑屏幕、平板电脑、智能手机
+				关键字：关键字将媒体类型或多个媒体特性连接到一起做为媒体查询的条件。
+					and：可以将多个媒体特性连接到一起,相当于“且”的意思。
+					not：排除某个媒体类型,相当于“非”的意思,可以省略。
+					only：指定某个特定的媒体类型,可以省略。
+				媒体特性：每种媒体类型都具体各自不同的特性,根据不同媒体类型的媒体特性设置不同的展示风格。注意他们要加小括号包含
+					width：定义输出设备中页面可见区域的宽度
+					min-width：定义输出设备中页面最小可见区域宽度
+					max-widthhS：定义输出设备中页面最大可见区域宽度
+			 */
+			
+			/* 在屏幕上并且最大宽度800px（小于等于） */
+			@media screen and (max-width: 800px) {
+				body {
+					background-color: pink;
+				}
+			}
+			
+			@media screen and (max-width: 500px) {
+				body {
+					background-color: yellowgreen;
+				}
+			}
+		</style>
+	</head>
+	<body>
+	</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string[][]} tickets
+			 * @return {string[]}
+			 * 回溯
+			 */
+			var findItinerary = function (tickets) {
+				let res = ['JFK'];
+				let map = {};
+				for (let item of tickets) {
+					let [from, to] = item;
+					if (!map[from]) {
+						map[from] = [];
+					}
+					map[from].push(to);
+				}
+				for (let item in map) {
+					map[item].sort();
+				}
+				function backtracking() {
+					if (res.length === tickets.length + 1) {
+						return true;
+					}
+					if (!map[res[res.length - 1]]) {
+						return false;
+					}
+					for (let i = 0; i < map[res[res.length - 1]].length; i++) {
+						let city = map[res[res.length - 1]][i];
+						map[res[res.length - 1]].splice(i, 1);
+						res.push(city);
+						if (backtracking()) {
+							return true;
+						}
+						res.pop();
+						map[res[res.length - 1]].splice(i, 0, city);
+					}
+				}
+				backtracking();
+				return res;
+			};
+		</script>
+	</body>
+</html>

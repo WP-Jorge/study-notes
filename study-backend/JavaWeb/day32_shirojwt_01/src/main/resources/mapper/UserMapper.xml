@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.shirojwt.mapper.UserMapper">
+
+    <select id="findRolesByUsername" resultType="com.example.shirojwt.entity.User" resultMap="resultMap">
+        select user.user_id, username, role.role_id, role.role_name
+            from user, role, user_role
+            where user.user_id = user_role.user_id
+            and role.role_id = user_role.role_id
+            and username = #{username}
+    </select>
+
+    <resultMap id="resultMap" type="com.example.shirojwt.entity.User">
+        <result property="userId" column="user_id"></result>
+        <result property="username" column="username"></result>
+        <collection property="roles" ofType="com.example.shirojwt.entity.Role">
+            <result property="roleId" column="role_id"></result>
+            <result property="roleName" column="role_name"></result>
+        </collection>
+    </resultMap>
+
+    <select id="findPermsByRoleId" resultType="com.example.shirojwt.entity.Perms">
+        select perms.perms_id, perms_name, role_name, url
+        from role, perms, role_perms
+        where role.role_id = role_perms.role_id
+        and perms.perms_id = role_perms.perms_id
+        and role.role_id = #{roleId}
+    </select>
+
+</mapper>

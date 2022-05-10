@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string} s
+			 * @param {string} t
+			 * @return {boolean}
+			 * 子序列 动态规划，时间复杂度O(m*n)，空间复杂度O(m*n)
+			 */
+			var isSubsequence = function (s, t) {
+				let dp = new Array(s.length + 1).fill().map(item => new Array(t.length + 1).fill(0));
+				for (let i = 1; i <= s.length; i++) {
+					for (let j = 1; j <= t.length; j++) {
+						if (s[i - 1] === t[j - 1]) {
+							dp[i][j] = dp[i - 1][j - 1] + 1;
+							continue;
+						}
+						dp[i][j] = dp[i][j - 1];
+					}
+				}
+				return dp[s.length][t.length] === s.length;
+			};
+			console.log(isSubsequence('abc', 'ahbgdc'));
+		</script>
+	</body>
+</html>

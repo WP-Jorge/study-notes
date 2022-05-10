@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="02.ajax.js"></script>
+		<script>
+			async function get(city) {
+				let url = `https://geoapi.qweather.com/v2/city/lookup?location=${city}&key=6fea66ec596e466a99686bcc6bb3a72a`
+				let weather = await ajax(url)
+				console.log(weather)
+				let url2 = `https://geoapi.qweather.com/v2/city/lookup?location=北京&key=6fea66ec596e466a99686bcc6bb3a72a`
+				let weather2 = await ajax(url2)
+				console.log(weather2)
+			}
+			get('上海')
+		</script>
+	</body>
+</html>

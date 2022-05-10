@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			class User {
+				// 开放属性 public
+				site = '李四'
+				_url = '张三'
+				constructor(name) {
+					this.name = name
+				}
+				set url(url) {
+					this._url = url
+				}
+			}
+			let user = new User('乔治')
+			user.url = 'asd'
+			console.log(user.url)
+		</script>
+	</body>
+</html>

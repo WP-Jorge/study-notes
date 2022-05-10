@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			div {
+				width: 150px;
+				height: 300px;
+				background-color: pink;
+			}
+		</style>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<button>显示</button>
+		<button>隐藏</button>
+		<button>切换</button>
+		<div></div>
+		<script>
+			$(function() {
+				$("button").eq(0).click(function() {
+					// 第一个参数运动时间，可为毫秒、"fast" "slow" "normal"
+					// 第二个参数运动状态，默认"swing"(变速) "linear"(匀速)
+					// 第三个参数回调函数
+					$("div").show(1000, "swing", function() { 
+						// alert(1);
+					});
+				})
+				$("button").eq(1).click(function() {
+					$("div").hide(1000, "linear", function() {
+						// alert(1);
+					});
+				})
+				$("button").eq(2).click(function() {
+					$("div").toggle(1000);
+				})
+				// 一般情况下，我们都不加参数直接显示隐藏就可以了
+			});
+		</script>
+	</body>
+</html>

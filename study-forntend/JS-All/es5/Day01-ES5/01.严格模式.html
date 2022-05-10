@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1.使用方式
+        'use strict'
+        // 2.必须先申明变量后使用
+        // 3.创建新对象时必须使用new
+        function Person(name, age) {
+            this.name = name
+            this.age = age
+        }
+        // 如果不使用new 会报错
+        let person = new Person('张三', 12)
+        console.log(person.age)
+
+        // 4.严格模式下eval作用域与全局作用域不同，互不相干
+        let str = '111'
+        eval('let str = 222;alert(str)')
+        alert(str)
+
+        // 5.对象中的属性名不能重复
+        let obj = {
+            username: '11'
+            // username: '22' // 不能重复
+        }
+    </script>
+</body>
+</html>

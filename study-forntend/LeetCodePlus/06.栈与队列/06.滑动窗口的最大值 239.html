@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @param {number} k
+			 * @return {number[]}
+			 * 单调栈 时间复杂度O(n) 空间复杂度O(n)
+			 */
+			var maxSlidingWindow = function (nums, k) {
+				let res = [];
+				let window = [];
+				for (let i = 0; i < nums.length; i++) {
+					while (window.length && nums[i] >= nums[window[window.length - 1]]) {
+						window.pop();
+					}
+					window.push(i);
+					while (i - window[0] + 1 > k) {
+						window.shift();
+					}
+					if (i + 1 >= k) {
+						res.push(nums[window[0]]);
+					}
+				}
+				return res;
+			};
+		</script>
+	</body>
+</html>

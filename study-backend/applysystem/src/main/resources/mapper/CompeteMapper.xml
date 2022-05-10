@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cslg.applysystem.mapper.CompeteMapper">
+    <cache-ref namespace="cn.cslg.applysystem.mapper.CompeteMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.DeptMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.CompeteLevMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.OrganizerMapper"/>
+
+    <!--<select id="getAllCompetes" resultType="cn.cslg.applysystem.pojo.vo.CompeteVO" resultMap="competeResultMap">-->
+    <!--    select * from compete, compete_lev, dept-->
+    <!--    where compete.compete_lev_id = compete_lev.compete_lev_id-->
+    <!--    and compete.dept_id = dept.dept_id-->
+    <!--</select>-->
+
+    <resultMap id="competeResultMap" type="cn.cslg.applysystem.pojo.vo.CompeteVO">
+        <id property="competeId" column="compete_id"></id>
+        <result property="competeName" column="compete_name"></result>
+        <result property="competeTime" column="compete_time"></result>
+        <result property="competeEnd" column="compete_end"></result>
+        <result property="competeCost" column="compete_cost"></result>
+        <result property="organizer" column="organizer"></result>
+        <!--<association property="dept" javaType="cn.cslg.applysystem.pojo.vo.DeptVO" resultMap="deptResultMap" />-->
+        <association property="competeLev" javaType="cn.cslg.applysystem.pojo.vo.CompeteLevVO" resultMap="competeLevResultMap" />
+        <collection property="deptList" javaType="java.util.ArrayList" ofType="cn.cslg.applysystem.pojo.vo.DeptVO" column="{competeId=compete_id}" select="getCompeteDept"/>
+        <!--<association property="organizer" javaType="cn.cslg.applysystem.pojo.vo.OrganizerVO" resultMap="organizerResultMap" />-->
+    </resultMap>
+
+    <select id="getCompeteDept" resultType="cn.cslg.applysystem.pojo.vo.DeptVO" resultMap="deptResultMap">
+        select * from compete_dept, dept
+        where dept.dept_id = compete_dept.dept_id
+        and compete_dept.compete_id = #{competeId}
+    </select>
+
+    <resultMap id="deptResultMap" type="cn.cslg.applysystem.pojo.vo.DeptVO">
+        <id property="deptId" column="dept_id"></id>
+        <result property="deptName" column="dept_name"></result>
+    </resultMap>
+
+    <resultMap id="competeLevResultMap" type="cn.cslg.applysystem.pojo.vo.CompeteLevVO">
+        <id property="competeLevId" column="compete_lev_id"></id>
+        <result property="competeLevName" column="compete_lev_name"></result>
+    </resultMap>
+
+    <!--<resultMap id="organizerResultMap" type="cn.cslg.applysystem.pojo.vo.OrganizerVO">-->
+    <!--    <id property="organizerId" column="organizer_id"></id>-->
+    <!--    <result property="organizerName" column="organizer_name"></result>-->
+    <!--</resultMap>-->
+
+    <select id="getAllCompetesWithPage" resultType="cn.cslg.applysystem.pojo.vo.CompeteVO" resultMap="competeResultMap">
+        select * from compete, compete_lev
+        where compete.compete_lev_id = compete_lev.compete_lev_id
+    </select>
+    <select id="getCompetesByCompeteNameWithPage" resultType="cn.cslg.applysystem.pojo.vo.CompeteVO">
+        select * from compete, compete_lev
+        where compete.compete_lev_id = compete_lev.compete_lev_id
+        and compete_name like concat('%', #{competeName}, '%')
+    </select>
+
+</mapper>

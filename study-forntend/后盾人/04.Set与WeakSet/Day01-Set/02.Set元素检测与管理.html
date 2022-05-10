@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let set = new Set(['hdcms', 'houdunren'])
+			// 1.Set的大小
+			console.log(set.size) // 2
+
+			// 2.判断set中是否有某个元素
+			console.log(set.has('hdcms')) // true
+
+			// 3.查看Set中的元素 返回的是一个迭代器
+			console.log(set.values()) // SetIterator {"hdcms", "houdunren"}
+
+			// 4.删除元素 返回值为boolean
+			console.log(set.delete('hdcms')) // true
+
+			// 5.清空Set
+			set.clear() // 无返回值
+			console.log(set.size) // 0
+		</script>
+	</body>
+</html>

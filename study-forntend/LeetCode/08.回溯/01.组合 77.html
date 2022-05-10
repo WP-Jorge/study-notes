@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {number} n
+             * @param {number} k
+             * @return {number[][]}
+             * 回溯 + 剪枝，时间复杂度O(ckn * k), 空间复杂度O(n)
+             */
+            var combine = function (n, k) {
+                let path = [];
+                let res = [];
+                let backtracking = (n, k, path, num, res) => {
+                    if (path.length === k) {
+                        res.push([...path]);
+                        return;
+                    }
+                    for (let i = num; i <= n - (k - path.length) + 1; i++) {
+                        path.push(i);
+                        backtracking(n, k, path, i + 1, res);
+                        path.pop();
+                    }
+                };
+                backtracking(n, k, path, 1, res);
+                return res;
+            };
+        </script>
+    </body>
+</html>

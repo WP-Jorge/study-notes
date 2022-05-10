@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* 父元素不加高度，子元素添加浮动后，父元素高度为0px
+			 1.额外标签法 (必须块级元素) (不常用)
+			 2.父级添加overflow: hidden|auto|scroll属性 (缺点：无法显示溢出的部分)
+			 3.父级添加after为元素
+			 4.父级添加双伪元素
+			 */
+			.box {
+				width: 800px;
+				border: 1px solid skyblue;
+				margin: 0 auto;
+			}
+			
+			.damao {
+				float: left;
+				height: 200px;
+				width: 200px;
+				background-color: pink;
+			}
+			.xiaomao {
+				float: left;
+				height: 200px;
+				width: 200px;
+				background-color: pink;
+			}
+			.footer {
+				background-color: yellowgreen;
+				height: 200px;
+			}
+			
+			/* 1.额外标签法 */
+			/* .clear {
+				clear: both;
+			} */
+			
+			/* 3.父元素添加after伪类元素法 */
+			/* .clearfix:after {
+				content: "";
+				display: block;
+				height: 0;
+				clear: both;
+				visibility: hidden;
+			}
+			.clearfix {
+				*zoom: 1;
+			} */
+
+			/* 4.父级添加双伪元素 */
+			.clearfix::before, .clearfix::after {
+				content: "";
+				display: table;
+			}
+			.clearfix:after {
+				clear: both;
+			}
+			.clearfix {
+				*zoom: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 3.父元素添加after伪类元素法 -->
+		<div class="box clearfix">
+			<div class="damao">大猫</div>
+			<div class="xiaomao">小猫</div>
+			<!-- 1.额外标签法 -->
+			<!-- <div class="clear"></div> -->
+		</div>
+		<div class="footer"></div>
+	</body>
+</html>

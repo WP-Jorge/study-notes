@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="02.ajax.js"></script>
+		<script>
+			const hdcms = new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve('第一个promise')
+				}, 1000)
+			})
+			const houdunren = new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve('第二个promise')
+				}, 500)
+			})
+
+			// 1.那个请求快返回哪个
+			Promise.race([hdcms, houdunren])
+				.then(res => {
+					console.log(res) // 第二个promise
+				})
+				.catch(err => {
+					console.log(err)
+				})
+
+			// 2.请求未超过100ms则使用ajax，请求超出100ms则使用Promise的超时处理
+			let promises = [
+				ajax(
+					`https://geoapi.qweather.com/v2/city/lookup?location=上海&key=6fea66ec596e466a99686bcc6bb3a72a`
+				),
+				new Promise((resolve, reject) => {
+					setTimeout(() => {
+						reject('请求超时')
+					}, 100)
+				})
+			]
+			Promise.race(promises)
+				.then(res => {
+					console.log(res)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+		</script>
+	</body>
+</html>

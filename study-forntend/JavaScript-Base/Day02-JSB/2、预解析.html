@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 1.1、js引擎运行js分为两步：预解析、代码解析
+			// 1.1.1、js预解析会把所有的var还有function提升到当前作用域最前边
+			// 1.1.2、代码执行按顺序从上到下执行
+			// 1.2、预解析分为变量预解析（变量提升）、函数预解析（函数提升）
+			// 1.2.1、变量提升：把所有的变量申明提升到当前作用域最前面，不提升赋值操作
+			// 1.2.2、函数提升：把所有的函数申明提升到当前作用域最前面，不调用函数
+			
+			// console.log(num)
+			// var num = 10 // 输出undefined
+			
+			// fun() // 输出 fun
+			// function fun(){
+			// 	console.log('fun')
+			// }
+			
+			// fun() // 报错
+			// var fun = function(){
+			// 	console.log('fun')
+			// }
+		</script>
+	</body>
+</html>

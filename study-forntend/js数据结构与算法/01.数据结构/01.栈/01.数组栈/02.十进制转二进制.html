@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="00.Stack.js"></script>
+		<script>
+			// 普通函数
+			function dec2bin1(decNumber) {
+				// 1.定义一个栈对象
+				let stack = new Stack()
+
+				// 2.循环操作
+				while (decNumber > 0) {
+					// 2.1 获取余数放入栈中
+					stack.push(decNumber % 2)
+
+					// 2.2 获取整除后的结果，作为下一次的被除数
+					decNumber = Math.floor(decNumber / 2)
+				}
+
+				// 3.从栈中取出0，1
+				console.log(stack.toString())
+			}
+
+			// 使用递归
+			let stack = new Stack()
+			function dec2bin2(decNumber) {
+				if (decNumber <= 0) {
+					return
+				}
+				stack.push(decNumber % 2)
+				return dec2bin2(Math.floor(decNumber / 2))
+			}
+			dec2bin1(100)
+			dec2bin2(100)
+			console.log(stack.toString())
+		</script>
+	</body>
+</html>

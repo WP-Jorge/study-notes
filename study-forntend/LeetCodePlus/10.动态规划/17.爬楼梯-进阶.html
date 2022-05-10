@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/**
+		 * n为楼梯高度，m为一次最高可以走几层楼梯
+		 * 时间复杂度O(m*n)，空间复杂度O(n)
+		 */
+		let climbStairs = (n, m) => {
+			let dp = new Array(n + 1).fill(0);
+			dp[0] = 1;
+			for (let i = 1; i <= n; i++) {
+				for (let j = 1; j <= m; j++) {
+					if (i >= j) {
+						dp[i] += dp[i - j];
+					}
+				}
+			}
+			return dp[n];
+		}
+		console.log(climbStairs(10, 2));
+	</script>
+</body>
+</html>

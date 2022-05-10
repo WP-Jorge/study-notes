@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			// 座机号码验证:  全国座机号码  两种格式:   010-12345678  或者  0530-1234567
+			// 正则里面的或者 符号  |  
+			var reg = /^\d{3}-\d{8}|\d{4}-\d{7}$/;
+			console.log(reg.test('010-95595595'))
+			console.log(reg.test('0591-9559559'))
+		</script>
+	</body>
+</html>

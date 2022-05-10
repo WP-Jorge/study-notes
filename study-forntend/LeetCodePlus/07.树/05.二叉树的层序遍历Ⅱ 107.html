@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * Definition for a binary tree node.
+			 * function TreeNode(val, left, right) {
+			 *     this.val = (val===undefined ? 0 : val)
+			 *     this.left = (left===undefined ? null : left)
+			 *     this.right = (right===undefined ? null : right)
+			 * }
+			 */
+			/**
+			 * @param {TreeNode} root
+			 * @return {number[][]}
+			 * 树的遍历 时间复杂度O(n) 空间复杂度O(n)
+			 */
+			var levelOrderBottom = function (root) {
+				let res = [];
+				if (!root) {
+					return res;
+				}
+				let queue = [root];
+				while (queue.length) {
+					let temp = [];
+					for (let i = queue.length; i > 0; i--) {
+						let node = queue.shift();
+						temp.push(node.val);
+						if (node.left) {
+							queue.push(node.left);
+						}
+						if (node.right) {
+							queue.push(node.right);
+						}
+					}
+					res.push(temp);
+				}
+				function reverse(arr) {
+					let left = 0;
+					let right = arr.length - 1;
+					while (left < right) {
+						[arr[left++], arr[right--]] = [arr[right], arr[left]];
+					}
+					return res;
+				}
+				return reverse(res);
+			};
+		</script>
+	</body>
+</html>

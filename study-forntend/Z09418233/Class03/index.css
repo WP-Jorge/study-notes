@@ -1,0 +1,7 @@
+.table {
+	margin: 10px auto;
+	width: 600px;
+	border-left: 0;
+	border-right: 0;
+	box-sizing: border-box;
+}

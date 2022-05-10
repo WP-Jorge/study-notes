@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue2.6.11.js"></script>
+		<script src="lib/vue-router.js"></script>
+
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			.header{
+				height: 70px;
+				width: 100%;
+				background-color: #00BFFF;
+			}
+			.butn{
+				display: flex;
+			}
+			.left{
+				flex: 2;
+				background-color: #FFC0CB;
+				height: 680px;
+				min-width: 200px;
+			}
+			.main{
+				flex: 8;
+				background-color: coral;
+				height: 680px;
+				min-width: 400px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div id="div01">
+			<router-view class="header"></router-view>
+			<div class="butn">
+				<router-view name="left" class="left"></router-view>
+				<router-view name="main" class="main"></router-view>
+			</div>
+		</div>
+
+		<script>
+			var header = {
+				template: '<h2>header组件</h2>'
+			}
+			var leftBox = {
+				template: '<h2>leftBox组件</h2>'
+			}
+			var mainBox = {
+				template: '<h2>mainBox组件</h2>'
+			}
+
+			var router = new VueRouter({
+				routes: [{
+					//name实现路由经典布局时，写法如下
+					path: '/',components: {
+						//前面的是name中的值，可以不加''，系统默认添加''  后边的属性是组件对象
+						'default': header,
+						'left': leftBox,
+						'main': mainBox
+					}
+				}]
+			})
+
+			var nv = new Vue({
+				el: '#div01',
+				data: {},
+				methods: {},
+				router
+			})
+		</script>
+	</body>
+</html>

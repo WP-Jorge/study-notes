@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Title</title>
+	</head>
+	<body>
+		<script>
+			let apis = [
+				{
+					apiId: 6,
+					parentApiId: null,
+					apiName: '系统管理',
+					apiPath: '/auth',
+					apiType: 0,
+					apiMethod: null
+				},
+				{
+					apiId: 23,
+					parentApiId: null,
+					apiName: '音乐管理',
+					apiPath: '/music',
+					apiType: 0,
+					apiMethod: null
+				},
+				{
+					apiId: 24,
+					parentApiId: 23,
+					apiName: '添加音乐',
+					apiPath: '/music/addMusic',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 25,
+					parentApiId: 23,
+					apiName: '删除音乐',
+					apiPath: '/music/deleteMusic',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 26,
+					parentApiId: 23,
+					apiName: '编辑音乐',
+					apiPath: '/music/modifyMusic',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 27,
+					parentApiId: 23,
+					apiName: '查询音乐',
+					apiPath: '/music/getMusic',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 7,
+					parentApiId: 6,
+					apiName: '角色管理',
+					apiPath: '/auth/role',
+					apiType: 0,
+					apiMethod: null
+				},
+				{
+					apiId: 8,
+					parentApiId: 7,
+					apiName: '添加角色',
+					apiPath: '/auth/role/addRole',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 9,
+					parentApiId: 7,
+					apiName: '删除角色',
+					apiPath: '/auth/role/deleteRole',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 10,
+					parentApiId: 7,
+					apiName: '编辑角色',
+					apiPath: '/auth/role/modifyRole',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 11,
+					parentApiId: 7,
+					apiName: '查询角色',
+					apiPath: '/auth/role/getRole',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 12,
+					parentApiId: 6,
+					apiName: '权限管理',
+					apiPath: '/auth/api',
+					apiType: 0,
+					apiMethod: null
+				},
+				{
+					apiId: 13,
+					parentApiId: 12,
+					apiName: '添加权限',
+					apiPath: '/auth/api/addApi',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 14,
+					parentApiId: 12,
+					apiName: '删除权限',
+					apiPath: '/auth/api/deleteApi',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 15,
+					parentApiId: 12,
+					apiName: '编辑权限',
+					apiPath: '/auth/api/modifyApi',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 16,
+					parentApiId: 12,
+					apiName: '查询权限',
+					apiPath: '/auth/api/getApi',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 17,
+					parentApiId: 6,
+					apiName: '角色权限管理',
+					apiPath: '/auth/roleApi',
+					apiType: 0,
+					apiMethod: null
+				},
+				{
+					apiId: 18,
+					parentApiId: 17,
+					apiName: '编辑角色权限',
+					apiPath: '/auth/roleApi/modifyRoleApi',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 19,
+					parentApiId: 17,
+					apiName: '查询角色权限',
+					apiPath: '/auth/roleApi/getRoleApi',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 20,
+					parentApiId: 6,
+					apiName: '用户角色管理',
+					apiPath: '/auth/userRole',
+					apiType: 0,
+					apiMethod: null
+				},
+				{
+					apiId: 21,
+					parentApiId: 20,
+					apiName: '编辑用户角色',
+					apiPath: '/auth/userRole/modifyUserRole',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 22,
+					parentApiId: 20,
+					apiName: '查询用户角色',
+					apiPath: '/auth/userRole/getUserRole',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 1,
+					parentApiId: null,
+					apiName: '用户管理',
+					apiPath: '/user',
+					apiType: 0,
+					apiMethod: null
+				},
+				{
+					apiId: 2,
+					parentApiId: 1,
+					apiName: '添加用户',
+					apiPath: '/user/addUser',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 3,
+					parentApiId: 1,
+					apiName: '删除用户',
+					apiPath: '/user/deleteUser',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 4,
+					parentApiId: 1,
+					apiName: '编辑用户',
+					apiPath: '/user/modifyUser',
+					apiType: 1,
+					apiMethod: null
+				},
+				{
+					apiId: 5,
+					parentApiId: 1,
+					apiName: '查询用户',
+					apiPath: '/user/getUser',
+					apiType: 1,
+					apiMethod: null
+				}
+			];
+			const getRoutes = apis => {
+				let res = [];
+				for (const parent of apis) {
+					for (const child of apis) {
+						if (child.parentApiId === parent.apiId) {
+							parent.children
+								? parent.children.push(child)
+								: (parent.children = [child]);
+						}
+					}
+				}
+				for (const api of apis) {
+					if (!api.parentApiId) {
+						res.push(api);
+					}
+				}
+				// console.log(res);
+
+				// return getRouter(res);
+				return res;
+			};
+
+			function getRouter(routes) {
+				let res = routes.map(item => {
+					let obj = {};
+					obj.path = item.apiPath;
+					obj.name = item.apiName;
+					obj.isPage = item.apiType;
+					if (item.children?.length) {
+						obj.children = getRouter(item.children);
+					}
+					return obj;
+				});
+				return res;
+			}
+			console.log(getRoutes(apis));
+
+			let data = [
+				{ id: 1, pid: 0, text: 'xxx' },
+				{ id: 2, pid: 1, text: 'xxx-2' },
+				{ id: 3, pid: 1, text: 'xxx-3' },
+				{ id: 4, pid: 2, text: 'xxx-2-4' },
+				{ id: 5, pid: 3, text: 'xxx-3-5' },
+				{ id: 6, pid: 2, text: 'xxx-2-6' }
+			];
+			function tree(data) {
+				let res = [];
+				for (let parent of data) {
+					for (let child of data) {
+						if (child.parentApiId === parent.apiId) {
+							parent.children
+								? parent.children.push(child)
+								: (parent.children = [child]);
+						}
+					}
+				}
+				for (let item of data) {
+					if (!item.parentApiId) {
+						res.push(item);
+					}
+				}
+				return res;
+				// return JSON.stringify(res, null, 4);
+			}
+			// console.log(tree(apis));
+		</script>
+	</body>
+</html>

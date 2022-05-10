@@ -1,0 +1,40 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+html,
+body {
+	height: 100%;
+	background-color: #F7F7F7;
+}
+
+.header,
+.footer {
+	height: 50px;
+	line-height: 50px;
+	background-color: skyblue;
+}
+
+.header {
+	padding-left: 20px;
+}
+
+.footer {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	line-height: 50px;
+	text-align: center;
+}
+
+.wrapper {
+	position: relative;
+	box-sizing: border-box;
+	min-height: 100%;
+}
+
+.content {
+	padding-bottom: 50px;
+}

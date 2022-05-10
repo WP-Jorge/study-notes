@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function User() {
+				User.prototype.name = function () {
+					console.log('user.name')
+				}
+			}
+
+			function Admin() {}
+			// Admin.prototype = User.prototype 不能使用这个，这样会使同名方法被覆盖
+			// 使用原型的继承
+			// 原本的父级是Object，现在父级为User，User的父级为Object
+			Admin.prototype.__proto__ = User.prototype
+			Admin.prototype.role = function () {
+				console.log('Admin.role')
+			}
+
+			function Member() {}
+			Member.prototype.__proto__ = User.prototype
+			Member.prototype.role = function () {
+				console.log('Member.role')
+			}
+		</script>
+	</body>
+</html>

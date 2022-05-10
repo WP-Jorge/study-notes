@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.宏任务等同步任务、微任务执行完后执行
+			setTimeout(() => {
+				console.log('setTimeout')
+			}, 0)
+
+			new Promise(resolve => {
+				// 2.放在promise函数中的语句也是同步执行
+				console.log('promise1')
+				resolve()
+				console.log('promise2')
+			}).then(value => {
+				// 3.微任务中的语句在同步任务后执行
+				console.log('成功')
+			})
+
+			// 4.同步任务最先执行
+			console.log('后盾人') // promise1 promise2 后盾人 成功 setTimeout
+		</script>
+	</body>
+</html>

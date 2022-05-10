@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset='utf-8'>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+		<title>我的代办</title>
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="css/index.css">
+		<script src="lib/vue2.6.11.js"></script>
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<el-container>
+				<el-header>我的代办</el-header>
+				<el-main>
+					<!-- 输入框开始 -->
+					<el-input v-model="work" @keyup.enter.native="addItem" placeholder="请输入内容"></el-input>
+					<!-- 输入框结束 -->
+
+					<!-- 列表开始 -->
+					<!-- 全部开始 -->
+					<div class="list" v-if="showType === 0">
+						<el-row v-for="(item, index) in datas" :key="index">
+							<el-card shadow="hover">
+								<el-checkbox v-model="item.finished">&nbsp;</el-checkbox>
+								<span :class="{deleteLine:item.finished}">{{ item.work }}</span>
+								<i class="el-icon-circle-close" @click.stop="deleteItem(index)"></i>
+							</el-card>
+						</el-row>
+					</div>
+					<!-- 全部结束 -->
+					<!-- 已完成开始 -->
+					<div class="list" v-else-if="showType === 1">
+						<el-row v-for="(item, index) in datas" :key="index">
+							<el-card v-if="item.finished === true" shadow="hover">
+								<el-checkbox v-model="item.finished">&nbsp;</el-checkbox>
+								<span :class="{deleteLine:item.finished}">{{ item.work }}</span>
+								<i class="el-icon-circle-close" @click="deleteItem(index)"></i>
+							</el-card>
+						</el-row>
+					</div>
+					<!-- 已完成结束 -->
+					<!-- 未完成开始 -->
+					<div class="list" v-else-if="showType === 2">
+						<el-row v-for="(item, index) in datas" :key="index">
+							<el-card v-if="item.finished === false" shadow="hover">
+								<el-checkbox v-model="item.finished">&nbsp;</el-checkbox>
+								<span>{{ item.work }}</span>
+								<i class="el-icon-circle-close" @click="deleteItem(index)"></i>
+							</el-card>
+						</el-row>
+					</div>
+					<!-- 未完成结束 -->
+					<!-- 列表结束 -->
+				</el-main>
+				<el-footer>
+					<!-- 导航栏开始 -->
+					<el-tag>共 {{ totalItem }} 项</el-tag>
+					<div class="nav">
+						<el-tabs v-model="activeName" type="card" @tab-click="navClick">
+							<el-tab-pane label="全部" name="1"></el-tab-pane>
+							<el-tab-pane label="已完成" name="2"></el-tab-pane>
+							<el-tab-pane label="未完成" name="3"></el-tab-pane>
+						</el-tabs>
+					</div>
+					<el-link :underline="false">
+						<el-button @click="clearFinished" type="danger" size="medium" :round="true">清除已完成</el-button>
+					</el-link>
+					<!-- 导航栏结束 -->
+				</el-footer>
+			</el-container>
+		</div>
+		<script src="js/index.js"></script>
+	</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue2.6.11.js"></script>
+		<script src="lib/vue-router.js"></script>
+		
+		<style>
+			/* 修改router-link标签点击后样式① */
+			/* .router-link-active{
+				background-color: pink;
+				text-decoration: none;
+				font-weight: 600;
+			} */
+			/* 修改router-link标签点击后样式② */
+			.mystyle{
+				background-color: pink;
+				text-decoration: none;
+				font-weight: 600;
+			}
+		</style>
+		
+	</head>
+	
+	
+	<body>
+		<div id="div01">
+			<!-- <a href="#/login">登入</a>
+			<a href="#/regiest">注册</a> -->
+			
+			<!-- 使用router-link代替a标签，可以省略链接前的#   默认渲染成a标签 -->
+			<router-link to="/login">登入</router-link>
+			<router-link to="/regiest">注册</router-link>
+			<!-- 调用路由显示 -->
+			<router-view></router-view>
+		</div>
+		
+		<script>
+			
+			var login = {
+				template:'<h1>登入组件</h1>'
+			}
+			var regiest = {
+				template:'<h1>注册组件</h1>'
+			}
+			
+			var router = new VueRouter({
+				routes:[ //路由匹配规则
+				//路由规则是一个对象，每个路由规则都有两个必须的属性
+				//属性1：path，表示监听哪个路由连接地址
+				//属性2：component，如果路由匹配到前面的path，则展示component对应的那个组件，不能加引号
+					//重定向，如果是根目录，则重新定向到'/login'目录中
+					{path:'/',redirect:'/login'},
+					{path:'/login',component:login},
+					{path:'/regiest',component:regiest}
+				],
+				//添加自定义router-link点击后的样式
+				linkActiveClass:'mystyle'
+			})
+			
+			var nv =new Vue({
+				el:'#div01',
+				data:{},
+				methods:{},
+				//将路由对象注册到vue实例中
+				router
+			})
+			
+		</script>
+	</body>
+</html>

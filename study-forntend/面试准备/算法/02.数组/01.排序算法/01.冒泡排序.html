@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * 冒泡排序：
+			 * 时间复杂度：O(n^2)
+			 * 空间复杂度：O(1)
+			 * 稳定性：稳定
+			 */
+			function bubbleSort(arr) {
+				for (let i = 0; i < arr.length; i++) {
+					for (let j = 1; j < arr.length - i; j++) {
+						if (arr[j] < arr[j - 1]) {
+							[arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
+						}
+					}
+				}
+				return arr;
+			}
+			console.log(bubbleSort([5, 2, 3, 0, 9, 12, 41, 1, 2, 4]));
+		</script>
+	</body>
+</html>

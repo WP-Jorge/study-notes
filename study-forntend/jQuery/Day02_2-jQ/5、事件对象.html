@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			div {
+				width: 100px;
+				height: 100px;
+				background-color: pink;
+			}
+		</style>
+	</head>
+	<body>
+		<div></div>
+		<script>
+			$(function() {
+				$(document).on("click", function() {
+					console.log("点击了document");
+
+				})
+				$("div").on("click", function(event) {
+					// console.log(event);
+					console.log("点击了div");
+					event.stopPropagation();
+				})
+			})
+		</script>
+	</body>
+</html>

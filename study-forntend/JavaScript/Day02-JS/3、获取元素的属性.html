@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="div1">
+
+		</div>
+		<div index="div2" index2="div2" id="div2">
+
+		</div>
+
+		<script type="text/javascript">
+			var div1 = document.getElementById('div1')
+			var div2 = document.getElementById('div2')
+
+			// 1、使用element.属性 获取属性值 （获取的是内置属性值）
+			console.log(div1.id) // 输出div1
+
+			// 2、使用element.getAttribute('属性') 获取属性值 （程序员可自行定义属性名）
+			console.log(div2.getAttribute('index')) // 输出div2
+			
+			// 3、使用element.属性='新属性值' 修改属性值
+			div1.id = "div11"
+			console.log(div1.id) // 输出div11
+			
+			// 4、使用element.setAttribute('属性','新属性值') 修改属性值
+			div2.setAttribute('index', 'div22')
+			console.log(div2.getAttribute('index')) // 输出div22  属性名如果是class ，那么属性就写class 不是className
+			
+			// 5、使用element.removeAttribute('属性') 移除属性
+			div2.removeAttribute('index2')
+		</script>
+	</body>
+</html>

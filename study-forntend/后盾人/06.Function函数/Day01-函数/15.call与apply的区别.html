@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let lisi = {
+				name: '李四'
+			}
+			let wangwu = {
+				name: '王五'
+			}
+			function user(web, url) {
+				console.log(web + url + this.name)
+			}
+
+			// 1.call(this的指向[, 参数1, 参数2...]) 都会立刻执行函数
+			user.call(lisi, '后盾人', 'houdunren.com') // 后盾人houdunren.com李四
+
+			// 2.apply(this的指向[, [参数1, 参数2]]) 都会立刻执行函数
+			user.apply(wangwu, ['后盾人', 'houdunren.com']) // 后盾人houdunren.com王五
+		</script>
+	</body>
+</html>

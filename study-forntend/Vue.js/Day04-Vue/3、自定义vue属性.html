@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+		
+		<style>
+			
+		</style>
+		
+	</head>
+	
+	<body>
+		<!-- .enter可用键值代替，比如f2的键值为113，可写成@keyup.113="show" -->
+		<div id="div02">
+			<input type="text" v-color="'red'" value="外部的"/>
+		</div>
+		
+		<div id="div01">
+			<input type="text" v-focus v-color="'red'" value="自定义自动获取焦点"/>
+			<!-- <input type="text" v-color="'red'" value="内部的"/> -->
+			<p  v-fontweight="'100'">啊啊啊啊啊啊啊啊啊</p>
+			<p  v-fontSize="'30px'">哈哈哈哈哈哈哈哈哈</p>
+		</div>
+
+		
+		<script>
+			//全局
+			//所有Vue中的指令调用时都以v-开头
+			
+			//虽然这个是全局自定义属性，但是还是跟私有自定义属性一样，只能用在div01中
+			Vue.directive('focus',{
+				bind:function(el){ //每当指令被绑定到元素上的时候会立刻执行bind函数，只执行一次
+					//在每个函数中，第一个参数永远是el，表示被绑定了指令的那个元素，比如上方的input标签，这个el是一个原生的js对象
+					//如果元素未被插入到dom中，则无法生效，比如focus()函数，因为bind时只是将元素存入内存中，可以使用诸如颜色之类的对象。
+					//比如页面还未加出来，找不到要聚焦的元素，所以不行
+					//与js行为有关的操作最好放入inserted中,以防不生效
+					//与样式相关的操作可以放入bind中
+				},
+				inserted:function(el){ //元素被插入dom中时会执行inserted函数
+					//元素已被传入dom中，可以进行focus()操作
+					el.focus()
+				},
+				updated:function(el){ //当vnode更新时会执行updated，可能会执行多次
+					
+				}
+			})
+			
+			//通过传参的自定义属性
+			Vue.directive('color',{
+				bind:function(el,binding){
+					//binging是一个对象
+					//binding.value获取的是值 v-sum="1+1" 得到的是2
+					//binding.expression获取的是原生样式，v-sum="1+1" 得到的是"1+1"
+					//binding.name得到的是属性名，比如color
+					el.style.color=binding.value
+				}
+			})
+			
+			
+			var nv = new Vue({
+				el:'#div01',
+				data:{
+					
+				},
+				methods:{
+					
+				},
+				//局部过滤器，优先调用全局过滤器，再调用局部过滤器，所以优先调用的全局过滤器会被局部过滤器覆盖
+				filters:{
+					
+				},
+				//局部自定义属性
+				directives:{
+					'fontweight':{
+						bind:function(el,binding){
+							el.style.fontWeight=binding.value
+						}
+					},
+					//简写 function 默认将代码写入bind、updated中
+					'fontsize':function(el,binding){
+						console.log(parseInt(binding.value))
+						el.style.fontSize=parseInt(binding.value)+'px'
+					}
+				}
+			})
+			
+		</script>
+	</body>
+	
+</html>

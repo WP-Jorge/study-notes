@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>CSS3新增结构伪类选择器</title>
+		<style>
+			/* 伪类选择器
+				①E:first-child 	匹配父元素中的第一个子元素E
+				②E:last-child 		匹配父元素中最后一个E元素
+				③E:nth-child(n) 	匹配父元素中的第n个子元素E
+					n可以是数字,关键字和公式
+					n如果是数字,就是选择第n个子元素，里面数字从1开始
+					n可以是关键字: even偶数, odd奇数
+					n可以是公式:常见的公式如下(如果n是公式,则从0开始计算迭代,但是第0个元素或者超出了元素的个数会被忽略)
+						2n: 偶数
+						2n+1: 奇数
+						5n: 5 10 15...
+						n+5: 从第5个开始(包含第五个)到最后
+						-n+5: 前5个(包含第5个) ...
+				④E:first-of-type 	指定类型E的第一个
+				⑤E:last-of-type 	指定类型E的最后一个
+				⑥E:nth-of-type(n) 	指定类型E的第n个
+					使用方法同上
+				两者区别：
+					E:nth-child(n)：先把所有元素选出来排序，执行的时候首先看  :nth-child(n) 之后回去看 前面 div
+					E:nth-of-type(n)：先把指定元素的盒子排列序号，之后回去看 :nth-of-type(n) 第几个孩子
+			*/
+
+			/* 1. 选择ul里面的第一个孩子 小li */
+			ul li:first-child {
+				background-color: pink;
+			}
+
+			/* 2. 选择ul里面的最后一个孩子 小li */
+			ul li:last-child {
+				background-color: pink;
+			}
+
+			/* 3. 选择ul里面的第2个孩子 小li */
+			ul li:nth-child(2) {
+				background-color: skyblue;
+			}
+
+			ul li:nth-child(6) {
+				background-color: skyblue;
+			}
+			
+			/* nth-child 会把所有的盒子都排列序号 */
+			/* 执行的时候首先看  :nth-child(1) 之后回去看 前面 div */
+			
+			section div:nth-child(1) {
+			    background-color: red;
+			}
+			 /* nth-of-type 会把指定元素的盒子排列序号 */
+			/* 执行的时候首先看  div指定的元素  之后回去看 :nth-of-type(1) 第几个孩子 */
+			section div:nth-of-type(1) {
+			    background-color: blue;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li>我是第1个孩子</li>
+			<li>我是第2个孩子</li>
+			<li>我是第3个孩子</li>
+			<li>我是第4个孩子</li>
+			<li>我是第5个孩子</li>
+			<li>我是第6个孩子</li>
+			<li>我是第7个孩子</li>
+			<li>我是第8个孩子</li>
+		</ul>
+		<!-- 区别 -->
+		<section>
+		    <p>光头强</p>
+		    <div>熊大</div>
+		    <div>熊二</div>
+		</section>
+	</body>
+</html>

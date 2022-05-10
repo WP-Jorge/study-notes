@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<script src="lib/vue-router.js"></script>
+		<style>
+		</style>
+	</head>
+	<body>
+		<div id="div01">
+			<cpn>
+				<!-- 组件中写html结构会插入slot插槽中 多个html结构会全部替换 -->
+				<button>按钮</button>
+				<button>嗯嗯</button>
+			</cpn>
+			<cpn>
+				<!-- 组件中写html结构会插入slot插槽中 -->
+				<button>拉拉</button>
+			</cpn>
+			<cpn>
+				<!-- 组件中写html结构会插入slot插槽中 -->
+			</cpn>
+			<cpn2>
+				<!-- 组件中写html结构会插入slot插槽中，没有插槽不显示 -->
+				<button>按钮</button>
+			</cpn2>
+		</div>
+		<template id="cpn">
+			<div>
+				<h2>我是组件</h2>
+				<p>我有插槽</p>
+				<!-- 插槽 -->
+				<slot>
+					<!-- 如果组件没有传插槽数据，会默认用这里的button -->
+					<button type="button">默认按钮</button>
+				</slot>
+			</div>
+		</template>
+		<template id="cpn2">
+			<div>
+				<h2>我是组件</h2>
+				<p>没有插槽</p>
+				<!-- 没有插槽 -->
+			</div>
+		</template>
+		<script>
+			var nv = new Vue({
+				el: '#div01',
+				data: {},
+				methods: {},
+				components: {
+					cpn: {
+						template: '#cpn'
+					},
+					cpn2: {
+						template: '#cpn2'
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

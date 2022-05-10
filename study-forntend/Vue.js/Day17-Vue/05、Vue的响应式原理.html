@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			{{ name }} 
+			{{ name }}
+			{{ age }}
+		</div>
+		<script type="text/javascript">
+			/**
+			 * vue响应式原理
+			 * 		1.app.msg修改数据，Vue内部是如何监听msg数据改变
+			 * 			① Object.defineProperty -> 监听对象属性的改变
+			 * 		2.当数据发生改变，Vue时如何知道要通知哪些人，页面发生刷新
+			 * 			② 发布订阅模式
+			 */
+			
+			// 1.将data对象传入Vue里面,进行下面操作
+			obj = {
+				name: '张三',
+				age: 14
+			}
+			Object.keys(obj).forEach(key => {
+				let value = obj[key];
+				
+				// 监听值的改变
+				Object.defineProperty(obj, key, {
+					set(newValue) {
+						console.log('监听' + key + '改变');
+						// 数据改变告诉谁？谁用告诉谁？谁在用？
+						// 根具解析html代码，获取那些人有用属性
+						value = newValue;
+					},
+					get() {
+						console.log('获取' + key + '对应的值');
+						// 发布订阅模式
+						// 谁用就调用get
+						
+						return value;
+					}
+				})
+			})
+			// 发布订阅者模式
+			class Dep {
+				constructor() {
+				    this.subs = [];
+				}
+				// 添加订阅者
+				addSub(watcher) {
+					this.subs.push(watcher);
+				}
+				// 通知更新
+				notify() {
+					this.subs.forEach(item => {
+						item.update();
+					})
+				}
+			}
+			
+			class Watcher {
+				constructor(name) {
+				    this.name = name;
+				}
+				// 更新数据
+				update() {
+					console.log(this.name + '发生update');
+				}
+			}
+			
+			const dep = new Dep();
+			
+			const w1 = new Watcher('张三');
+			dep.addSub(w1);
+			
+			const w2 = new Watcher('李四');
+			dep.addSub(w2);
+			
+			const w3 = new Watcher('王五');
+			dep.addSub(w3);
+			
+			dep.notify();
+		</script>
+		<script type="text/javascript">
+			let app = new Vue({
+				el: '#app',
+				data: {
+					name: '张三',
+					age: 14
+				}
+			})
+		</script>
+	</body>
+</html>

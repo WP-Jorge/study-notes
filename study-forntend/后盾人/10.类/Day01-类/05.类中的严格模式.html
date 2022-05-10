@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 'use strict'
+			// 1.在非严格模式下函数中的this指向Window
+			function show() {
+				console.log(this)
+			}
+			show() // Window
+
+			// 2.在严格模式下函数中的this指向undefined
+
+			function show() {
+				console.log(this)
+			}
+			show() // undefined
+
+			// 3.使用function 定义的类中的方法在非严格模式下指向Window
+			function Hd() {}
+			Hd.prototype.show = function () {
+				function test() {
+					console.log(this)
+				}
+				test()
+			}
+			let u = new Hd()
+			u.show() // Window
+
+			// 4.在非严格模式下类的方法中的this指向undefined 类中默认是使用严格模式
+			class User {
+				show() {
+					function test() {
+						console.log(this)
+					}
+					test()
+				}
+			}
+			let user = new User()
+			user.show() // undefined
+		</script>
+	</body>
+</html>

@@ -1,0 +1,13 @@
+.alert, .alert-info {
+  padding: 15px;
+}
+
+.alert a, .alert-info a {
+  font-size: 19px;
+}
+
+.alert-info {
+  background-color: pink;
+}
+
+/*# sourceMappingURL=05.%E7%BB%A7%E6%89%BF.css.map */

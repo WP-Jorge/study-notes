@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	
+	<session-factory>
+		
+    	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="dscp.driverClassName">com.mysql.jdbc.Driver</property>
+        <property name="dscp.url">jdbc:mysql://localhost:3306/mydb</property>				
+        <property name="dscp.username">root</property>
+        <property name="dscp.password">1111</property>
+        <property name="connection.provider_class">com.liusoft.dlog4j.db.DataSourceConnectionProvider</property>
+        <property name="dscp.datasource">org.apache.commons.dbcp.BasicDataSource</property>
+        <property name="dscp.initialSize">1</property>
+        <property name="dscp.maxActive">200</property>
+        <property name="dscp.maxIdle">10</property>
+        <property name="dscp.maxWait">2000</property>
+        <property name="dscp.defaultAutoCommit">false</property>
+        <property name="dscp.poolPreparedStatements">true</property>
+        <property name="dscp.maxOpenPreparedStatements">1000</property>
+        <property name="show_sql">false</property>
+        <property name="jdbc.batch_size">100</property>
+        <property name="use_outer_join">false</property>
+        <property name="cache.use_query_cache">true</property>
+        <property name="default_batch_fetch_size">20</property>
+        <property name="jdbc.use_scrollable_resultset">true</property>
+        <property name="jdbc.use_reflection_optimizer">true</property>
+        <mapping resource="com/liusoft/dlog4j/hbm/dlog.hbm.xml"/>
+        <mapping resource="com/liusoft/dlog4j/hbm/core.hbm.xml"/>
+        <mapping resource="com/liusoft/dlog4j/hbm/diary.hbm.xml"/>	
+        <mapping resource="com/liusoft/dlog4j/hbm/photo.hbm.xml"/>
+        <mapping resource="com/liusoft/dlog4j/hbm/music.hbm.xml"/>		
+        <mapping resource="com/liusoft/dlog4j/hbm/bbs.hbm.xml"/>
+        <mapping resource="com/liusoft/dlog4j/hbm/query.hbm.xml"/>
+        <mapping resource="com/liusoft/dlog4j/hbm/other.hbm.xml"/>
+		
+		
+	</session-factory>
+	
+</hibernate-configuration>

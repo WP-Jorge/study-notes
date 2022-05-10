@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<main>后盾人不断分享视频教程，后盾人网址是 houdunren.com</main>
+		<script>
+			let main = document.querySelector('main')
+			// match 在全局下就没有细节了 exec在全局模式下保留细节
+			let reg = /后盾人/
+			console.log(main.innerHTML.match(reg))
+			console.log(reg.exec(main.innerHTML))
+
+			let reg2 = /后盾人/g
+			console.log(main.innerHTML.match(reg2))
+			console.log(reg2.exec(main.innerHTML))
+
+			let reg3 = /后盾人/g
+			// exec 循环
+			let count = 0
+			while ((res = reg3.exec(main.innerHTML))) {
+				count++
+			}
+			console.log(count)
+		</script>
+	</body>
+</html>

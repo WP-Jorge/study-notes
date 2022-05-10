@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>houdunwang</h1>
+		<h2>hdcms.com</h2>
+		<h1>后盾人</h1>
+		<script>
+			function search(string, reg) {
+				let result = []
+				while ((res = reg.exec(string))) {
+					result.push(res)
+				}
+				return result
+			}
+			let match = search(
+				document.body.innerHTML,
+				/<(h[1-6])>([\s\S]+?)<\/\1>/gi
+			)
+			console.log(match)
+			// let str = 'houdunren'
+			// let reg = /u/gi
+			// let result = []
+			// while ((res = reg.exec(str))) {
+			// 	result.push(res)
+			// }
+			// console.log(result) // [Array(1), Array(1)]
+		</script>
+	</body>
+</html>

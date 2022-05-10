@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:mysql:///book?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: 111111
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#    druid配置可以不配置，只要上面的
+#    druid:
+#      #开启后台监控页
+#      stat-view-servlet:
+#        enabled: true
+#        login-username: admin
+#        login-password: 111111
+##        重置按钮
+#        reset-enable: false
+#
+##     监控web应用
+##      web-stat-filter:
+
+# 配置mybatis配置的路径
+mybatis:
+#  设置mybatis配置文件位置，默认使用application就可以
+#  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.example.demo.pojo
+

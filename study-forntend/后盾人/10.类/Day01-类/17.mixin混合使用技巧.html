@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// mixin
+			let Tool = {
+				max(key) {
+					return this.data.sort((a, b) => b[key] - a[key])[0]
+				}
+			}
+			let Arr = {
+				count(key) {
+					return this.data.reduce((t, c) => t + c[key], 0)
+				}
+			}
+			class Lesson {
+				constructor(lessons) {
+					this.lessons = lessons
+				}
+				get data() {
+					return this.lessons
+				}
+			}
+			const data = [
+				{ name: 'js', price: 100, click: 188 },
+				{ name: 'mysql', price: 212, click: 34 },
+				{ name: 'vue.js', price: 98, click: 89 }
+			]
+			// 往原型链上添加Tool
+			Object.assign(Lesson.prototype, Tool, Arr)
+			let hd = new Lesson(data)
+			console.log(hd.max('price')) // {name: "mysql", price: 212, click: 34}
+			console.log(hd.count('price')) // 410
+		</script>
+	</body>
+</html>

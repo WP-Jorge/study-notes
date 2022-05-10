@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number} n
+			 * @return {number}
+			 * 贪心，时间复杂度O(n)，空间复杂度O(n)
+			 */
+			var monotoneIncreasingDigits = function (n) {
+				let strNum = (n + '').split('');
+				let flag = Infinity;
+				for (let i = strNum.length - 1; i > 0; i--) {
+					if (strNum[i - 1] > strNum[i]) {
+						flag = i;
+						strNum[i - 1] = strNum[i - 1] - 1;
+						strNum[i] = 9;
+					}
+				}
+				for (let i = flag; i < strNum.length; i++) {
+					strNum[i] = 9;
+				}
+				return parseInt(strNum.join(''));
+			};
+			console.log(monotoneIncreasingDigits(332));
+		</script>
+	</body>
+</html>

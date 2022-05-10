@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.普通类定义
+			class User {
+				show() {}
+				get() {
+					console.log('后盾人')
+				}
+			}
+			let hd = new User()
+			console.dir(hd) // User
+			hd.get() // 后盾人
+
+			// 2.构造函数传参
+			class User2 {
+				constructor(name) {
+					this.name = name
+				}
+			}
+			let user2 = new User2('后盾人')
+			console.log(user2.name) // 后盾人
+		</script>
+	</body>
+</html>

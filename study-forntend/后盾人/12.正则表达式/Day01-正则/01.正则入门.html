@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.match: str.match(reg)  res
+			// 2.test:  reg.test(str)   boolen
+			// 3.replace:   str.replace(reg) res
+			// 4.exec:   reg.exec(str) res
+			// 5.matchAll: str.matchAll(reg)    res
+
+			let str = 'yezhuqiaozhi2200yezhu9988'
+
+			// 不使用正则表达式
+			let nums = [...str].filter(a => {
+				return !Number.isNaN(parseInt(a))
+			})
+			console.log(nums.join('')) // 22009988
+
+			// 使用正则表达式
+			console.log(str.match(/\d/g).join('')) // 22009988
+		</script>
+	</body>
+</html>

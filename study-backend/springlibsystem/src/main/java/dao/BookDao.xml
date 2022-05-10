@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.BookDao">
+    <select id="getAllBooks" resultType="Book">
+        select * from book_tab
+    </select>
+
+    <select id="getBookByBid" resultType="Book">
+        select * from book_tab where bid = #{bid}
+    </select>
+
+    <insert id="addBook" parameterType="Book">
+
+    </insert>
+
+    <delete id="delBookByBid">
+        delete from book_tab where bid = #{bid}
+    </delete>
+
+    <update id="updateBook" parameterType="Book">
+        update book_tab set bname = #{bname}, byear = #{byear}, btype = #{btype}, bdes = #{bdes}, borrowed = 0 where bid = #{bid}
+    </update>
+</mapper>

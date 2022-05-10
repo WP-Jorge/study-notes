@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {number} n
+             * @return {boolean}
+			 * set 时间复杂度O(logn), 空间复杂度O(logn)
+             */
+            var isHappy = function (n) {
+                let set = new Set();
+				set.add(n);
+                while (n !== 1) {
+                    let nums = (n + '').split('');
+                    n = nums.reduce((pre, item) => {
+                        return pre + Math.pow(parseInt(item), 2);
+                    }, 0);
+                    if (set.has(n) || !n) {
+                        return false;
+                    }
+                    set.add(n);
+                }
+                return true;
+            };
+			console.log(isHappy(7));
+        </script>
+    </body>
+</html>

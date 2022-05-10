@@ -1,0 +1,90 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+li {
+	list-style: none;
+}
+
+.deleteLine {
+	text-decoration: line-through;
+	color: #909399;
+}
+
+#app {
+	width: 600px;
+	margin: 40px auto 0;
+}
+
+.el-container {
+	border-radius: 8px;
+	box-shadow: 0px 5px 10px rgba(100, 100, 100, .6);
+	overflow: hidden;
+	background-color: #EBEEF5;
+}
+
+.el-main {
+	overflow: visible;
+}
+
+/* 头部开始 */
+.el-container .el-header {
+	font-size: 20px;
+	color: white;
+	line-height: 60px;
+	background-color: #409EFF;
+}
+/* 头部结束 */
+
+/* 内容开始 */
+
+.el-container .el-main .el-input {
+	margin-bottom: 10px;
+}
+
+.list {
+	min-height: 320px;
+}
+
+.el-container .el-main .el-row .el-card .el-checkbox {
+	visibility: hidden;
+}
+
+.el-container .el-main .el-row .el-card:hover .el-checkbox {
+	visibility: visible;
+}
+
+.el-container .el-main .el-row i {
+	float: right;
+	cursor: pointer;
+	line-height: 20px;
+	visibility: hidden;
+}
+
+.el-container .el-main .el-row .el-card:hover i {
+	visibility: visible;
+}
+/* 内容结束 */
+
+/* 尾部开始 */
+.el-container .el-footer {
+	display: flex;
+	justify-content: space-between;
+}
+
+.el-container .el-footer .el-tag {
+	width: 80px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+}
+
+.el-container .el-footer .el-link {
+	display: inline-block;
+}
+
+.el-tabs--card>.el-tabs__header .el-tabs__item.is-active {
+	border-bottom: 0;
+}
+/* 尾部结束 */

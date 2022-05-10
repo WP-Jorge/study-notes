@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number} n
+			 * @return {number}
+			 * 贪心 时间复杂度O(n) 空间复杂度O(1)
+			 */
+			var integerBreak = function (n) {
+				if (n === 2) {
+					return 1;
+				}
+				if (n === 3) {
+					return 2;
+				}
+				if (n === 4) {
+					return 4;
+				}
+				let res = 1;
+				while (n > 4) {
+					res *= 3;
+					n -= 3;
+				}
+				return res * n;
+			};
+			console.log(integerBreak(5));
+		</script>
+	</body>
+</html>

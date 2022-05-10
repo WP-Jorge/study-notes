@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 隐藏元素
+            1.display     显示隐藏（会让元素不显示，原位置消失）
+                ①none：不会使元素消失，会让元素不显示
+            2.visibility  显示隐藏（元素消失，但是原位置依然占用）
+                ①inherit：继承上一个元素的可见性
+                ②visible：对象可视
+                ③hidden：对象隐藏
+                ④collapse：主要用来隐藏表格的行或列。 隐藏的行或列能够被其他内容使用。对于表格外的其他对象，其作用等同于hidden。
+            3.overflow    溢出显示隐藏
+                ①visible：不剪切内容也不添加滚动条。（默认）。
+                ②auto：此为body对象和textarea的默认值。在需要时剪切内容并添加滚动条
+                ③hidden：不显示超过对象尺寸的内容
+                ④scoll：总是显示滚动条
+         */
+
+        div {
+            margin-bottom: 100px;
+            height: 150px;
+            width: 250px;
+            border: 2px solid skyblue;
+        }
+        .visible {
+            overflow: visible;
+        }
+
+        .auto {
+            overflow: auto;
+        }
+
+        .hidden {
+            overflow: hidden;
+        }
+
+        .scroll {
+            overflow: scroll;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="visible">
+        《①visible：不剪切内容也不添加滚动条。（默认）。
+        《①visible：不剪切内容也不添加滚动条。（默认）。
+        《①visible：不剪切内容也不添加滚动条。（默认）。
+        《①visible：不剪切内容也不添加滚动条。（默认）。
+        《①visible：不剪切内容也不添加滚动条。（默认）。
+    </div>
+    <div class="auto">
+        ②auto：此为body对象和textarea的默认值。在需要时剪切内容并添加滚动条
+        ②auto：此为body对象和textarea的默认值。在需要时剪切内容并添加滚动条
+        ②auto：此为body对象和textarea的默认值。在需要时剪切内容并添加滚动条
+        ②auto：此为body对象和textarea的默认值。在需要时剪切内容并添加滚动条
+    </div>
+    <div class="hidden">
+        ③hidden：不显示超过对象尺寸的内容
+        ③hidden：不显示超过对象尺寸的内容
+        ③hidden：不显示超过对象尺寸的内容
+        ③hidden：不显示超过对象尺寸的内容
+        ③hidden：不显示超过对象尺寸的内容
+        ③hidden：不显示超过对象尺寸的内容
+    </div>
+    <div class="scroll">
+        ④scroll：总是显示滚动条
+        ④scroll：总是显示滚动条
+        ④scroll：总是显示滚动条
+        ④scroll：总是显示滚动条
+    </div>
+</body>
+</html>

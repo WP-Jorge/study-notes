@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.使用构造函数创建类
+			function User(name, age) {
+				let data = { name, age }
+
+				Object.defineProperties(this, {
+					name: {
+						get() {
+							return data.name
+						},
+						set(value) {
+							data.name = value
+						}
+					},
+					age: {
+						get() {
+							return data.age
+						},
+						set(value) {
+							data.age = value
+						}
+					}
+				})
+			}
+			let xj = new User('向军', 18)
+			xj.name = '后盾人'
+			console.log(xj) // User {name: "后盾人", age: 18}
+
+			// 2.使用class创建类
+			class MyUser {
+				name
+				age
+				constructor(name, age) {
+					this.name = name
+					this.age = age
+				}
+				get name() {
+					return this.name
+				}
+				set name(value) {
+					this.name = value
+				}
+				get age() {
+					return this.age
+				}
+				set age(value) {
+					this.age = value
+				}
+			}
+			let myUser = new MyUser('野猪', 18)
+			console.log(myUser) // MyUser {name: "野猪", age: 18}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * Definition for singly-linked list.
+			 * function ListNode(val, next) {
+			 *     this.val = (val===undefined ? 0 : val)
+			 *     this.next = (next===undefined ? null : next)
+			 * }
+			 */
+			/**
+			 * @param {ListNode} head
+			 * @return {ListNode}
+			 * 链表 时间复杂度O(n) 空降复杂度O(1)
+			 */
+			var swapPairs = function (head) {
+				head = new ListNode(0, head);
+				let pre = head;
+				let cur = head.next;
+				while (cur && cur.next) {
+					let node1 = cur.next.next;
+					let node2 = pre.next;
+					pre.next = node2.next;
+					node2.next.next = node2;
+					node2.next = node1;
+					pre = node2;
+					cur = pre.next;
+				}
+				return head.next;
+			};
+		</script>
+	</body>
+</html>

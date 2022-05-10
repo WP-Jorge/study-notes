@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+		
+		<style>
+			
+		</style>
+		
+	</head>
+	
+	<body>
+		<p>{{  }}</p>
+		<div id="div01">
+			<!-- 使用v-model与nv中的数据双向绑定 -->
+			ID：<input type="text" v-model="id"/>
+			Name：<input type="text" v-model="name"/>
+			<input type="button" value="添加" @click="add"/>
+			Search：<input type="text" v-model="keywords"/>
+			<!-- 定义一个列表 -->
+			<table border="2px" cellspacing="5px" cellpadding="5px">
+				<!-- 表题 -->
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Ctime</th>
+						<th>Operation</th>
+					</tr>
+				</thead>
+				<!-- 表体 -->
+				<tbody>
+					<!-- 使用v-for循环遍历list表，并使用v-bind绑定nv中的数据 -->
+					<tr v-for="item in search(keywords)" :key="item.id">
+						<td>{{ item.id }}</td>
+						<td>{{ item.name }}</td>
+						<td>{{ item.ctime | dateformate()}}</td>
+						<td><a @click.prevent="del(item.id)" href="">删除</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		
+		<script>
+			//记得在data后添加.toString()函数
+			//全局过滤器'dateformate'对应{{ data | deteformate()}}中的过滤器名deteformate()，data对应{{ data | deteformate()}}中的data
+			// Vue.filter('dateformate',function(data){
+				//这样只能替换第一个出现的字符串
+				// data.replace('被替换的字符串','替换后的字符串')
+				//这样使用正则表达式 /被替换的字符串/g  来代替上方'被替换的字符串'，可以实现全部替换，其中g表示全部
+				// data.replace(/被替换的字符串/g,'替换后的字符串')
+				// return data
+				
+			// })
+			
+			//也可在过滤器中传入替换后的字符串
+			//Vue.filter('dateformate',function(data,arg){
+				//这样只能替换第一个出现的字符串
+				// data.replace('被替换的字符串',arg)
+				//这样使用正则表达式 /被替换的字符串/g  来代替上方'被替换的字符串'，可以实现全部替换，其中g表示全部
+				//data.toString().replace(/2/g,arg)
+				//return data
+			//})
+			
+			//多个过滤器一起使用，在{{ data | 过滤器1 |过滤器2 }}
+			
+			var nv = new Vue({
+				el:'#div01',
+				data:{
+					list:[
+						{id:1,name:'大众',ctime:new Date()},
+						{id:2,name:'奔驰',ctime:new Date()}
+					],
+					id:'',
+					name:'',
+					keywords:''
+				},
+				methods:{
+					//添加一个list对象方法
+					add(){
+						var car={id:this.id,name:this.name,ctime:new Date()}
+						this.list.push(car)
+						this.id=this.name=''
+					},
+					//删除对应id的对象
+					del(id){
+						//第一种写法：使用some(参数)true退出循环  list.splice()添加、删除元素。
+						// this.list.some((item, i)=>{
+						// 	if(item.id==id){
+						// 		this.list.splice(i,1)
+						// 		return true;
+						// 	}
+						// })
+						//第二种写法：使用findindex()函数  true时与i出循环，返回该元素出现的位置index
+						var index = this.list.findIndex(item=>{
+							if(item.id==id){
+								return true;
+							}
+						})
+						console.log(index)
+						this.list.splice(index,1);
+					},
+					//搜索车辆信息，搜索栏默认keywords为''（空），则搜索全部车辆
+					search(keywords){
+						//第一种
+						// var newlist=[]
+						// this.list.forEach(item=>{
+						// 	if(item.name.indexOf(keywords)!=-1){
+						// 		newlist.push(item)
+						// 	}
+						// })
+						// return newlist;
+						
+						//第二种 使用filter（）方法（过滤器）返回类型数组
+						return this.list.filter(item=>{
+							if(item.name.includes(keywords)){
+								return item
+							}
+						})
+					}
+				},
+				//局部过滤器，优先调用全局过滤器，再调用局部过滤器，所以优先调用的全局过滤器会被局部过滤器覆盖
+				filters:{
+					dateformate(data,formate=""){//给formate取空，以防v区中formate未传入参数导致报错
+						var dt = new Date(data)
+						var y = dt.getFullYear()
+						var m = dt.getMonth()+1
+						var d = dt.getDate()
+						if(formate.toLowerCase()==="yyyy-mm-dd"){
+							return `${y}-${m}-${d}`
+						}else{
+							var hh = dt.getHours()
+							var mm = dt.getMinutes()
+							var ss = dt.getSeconds()
+							return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+						}
+					}
+				}
+			})
+			
+		</script>
+	</body>
+	
+</html>

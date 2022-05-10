@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @return {number}
+			 * 动态规划，时间复杂度O(n)，空间复杂度O(1)
+			 */
+			// var rob = function (nums) {
+			// 	if (nums.length === 1) {
+			// 		return nums[0];
+			// 	}
+			// 	let pre = nums[0];
+			// 	let cur = Math.max(pre, nums[1]);
+			// 	for (let i = 2; i < nums.length; i++) {
+			// 		let temp = Math.max(cur, pre + nums[i]);
+			// 		pre = cur;
+			// 		cur = temp;
+			// 	}
+			// 	return cur;
+			// };
+			const rob = nums => {
+				// 数组长度
+				const len = nums.length;
+				// dp数组初始化
+				const dp = [nums[0], Math.max(nums[0], nums[1])];
+				// 从下标2开始遍历
+				console.log(nums);
+				console.log(dp);
+
+				for (let i = 2; i < len; i++) {
+					dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
+					console.log(dp);
+				}
+				return dp[len - 1];
+			};
+			console.log(rob([1, 2, 3, 4]));
+		</script>
+	</body>
+</html>

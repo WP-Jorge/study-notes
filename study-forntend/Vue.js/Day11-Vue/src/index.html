@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./js/vue.js"></script>
+	</head>
+	<body>
+		<div id="div01">
+			<!-- 如果要使用组件，直接把创建出的组件的名称以html标签的形式引入页面中即可 -->
+			<!-- 如果组件名时以驼峰命名，则需要转小写，然后在每个单词前面添加 - 如myCom1=>my-com1 -->
+			<!-- <my-com1></my-com1> -->
+			<!-- <my-com2></my-com2> -->
+			<!-- <my-com3></my-com3> -->
+			<!-- <my-com4></my-com4> -->
+			<my-login></my-login>
+			<!-- <my-com5></my-com5> -->
+		</div>
+		
+		<div id="div02">
+			<login></login>
+		</div>
+		
+		<template id="temp">
+			<div>
+				<h3>这是通过Vue.component外部引入template id的形式来创建全局的Vue组件</h3>
+				<span>啦啦啦</span>
+			</div>
+		</template>
+		<template id="temp2">
+			<h3>这是私有的login组件</h3>
+		</template>
+		<script src="./js/main.js"></script>
+	</body>
+</html>

@@ -1,0 +1,82 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #F8F9FA;
+}
+
+a {
+	color: #95999C;
+}
+
+a:hover {
+	color: #202326;
+	text-decoration: none;
+}
+
+.myMemo {
+	/* min-height: 300px; */
+	width: 600px;
+	margin: 20px auto;
+	background-color: #D1ECF1;
+	box-shadow: 0px 5px 10px rgba(100, 100, 100, .6);
+	border-radius: 5px;
+}
+
+.myMemo .title {
+	text-align: center;
+	padding-top: 10px;
+}
+
+.myMemo .input {
+	display: flex;
+	justify-content: center;
+}
+
+.myMemo .input .form-control {
+	width: 90%;
+	margin: 10px 0;
+}
+
+.content-items {
+	margin: 10px;
+	min-height: 60px;
+}
+
+.content-items svg {
+	opacity: 0;
+}
+
+.content-items svg:hover {
+	opacity: 1;
+}
+
+.content-nav {
+	display: flex;
+}
+
+.content-nav div:nth-child(odd) {
+	margin: 0 5px;
+	text-align: center;
+	flex: 3;
+}
+.content-nav .list-group {
+	display: flex;
+	margin-bottom: 10px;
+	justify-content: center;
+}
+
+.content-nav .list-group a {
+	flex: 1;
+	text-align: center;
+}
+
+.content-nav div:nth-child(even) {
+	flex: 7;
+}
+
+.content-nav .list-group-item {
+	padding: 6px;
+}

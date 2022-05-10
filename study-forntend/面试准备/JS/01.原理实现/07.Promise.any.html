@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			Promise.myAny = function (asyncArr) {
+				return new Promise((resolve, reject) => {
+					if (!Array.isArray(asyncArr)) {
+						reject(new TypeError('参数类型错误'));
+					}
+					let result = [];
+					let count = 0;
+					asyncArr.forEach((item, index) => {
+						Promise.resolve(item)
+							.then(res => {
+								resolve(res);
+							})
+							.catch(err => {
+								result.push(err);
+								count++;
+								if (count === asyncArr.length) {
+									reject(new AggregateError(result));
+								}
+							});
+					});
+				});
+			};
+			function sleep(time) {
+				return new Promise((resolve, reject) => {
+					setTimeout(() => {
+						if (time <= 1000) {
+							resolve(time);
+						}
+						reject(time);
+					}, time);
+				});
+			}
+			let asyncArr = [sleep(1001), sleep(999), sleep(3000)];
+			Promise.myAny(asyncArr).then(res => console.log(res));
+		</script>
+	</body>
+</html>

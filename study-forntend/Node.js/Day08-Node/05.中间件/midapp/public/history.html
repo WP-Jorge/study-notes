@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/jquery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<h1>历史相关的书籍</h1>
+		<script type="text/javascript">
+			let httpUrl = '/api/book/cataory/1/page/1'
+			$.get(httpUrl).then(res => {
+				res.books.forEach((item, i) => {
+					$('body').append('<h2>' + item.bookname + '</h2>')
+				})
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.boolean类型在进行计算的时候会隐式转换为Boolean类型，false 的值为 0 true 的值为 1
+			let boolean = new Boolean(true)
+			console.log(typeof boolean) // object
+			console.log(boolean == 1) // true
+
+			// 2.字符串类型的数字'1' 和 '0'在进行布尔 判断的时候也会转换为 0 或 1
+			console.log('1' == true) // true
+			console.log('0' == false) // true
+			console.log('11' == true) // false
+
+			// 3.数组类型
+			// 数组类型的boolean 为真
+			// ① 空数组
+			let arr = []
+			// 空数组隐式转换值为0
+			console.log(Boolean(arr)) // true
+			console.log(Number(arr)) // 0
+			console.log(arr == false) // true
+			// 非空数组
+			arr = [2]
+			console.log(Number(arr)) // 2
+			arr = [1, 2]
+			console.log(Number(arr)) // NaN
+
+			// 4.对象
+			// 对象类型的boolean 都为 true
+			let o = {}
+			console.log(Number(o)) // NaN
+			console.log(Boolean(o)) // true
+			o = { a: 1 }
+			console.log(Boolean(o)) // true
+			o = { 1: 1 }
+			console.log(Number(o)) // NaN
+
+			// 总结
+			// 数值类型除了0以外都为真
+			// 字符串类型除了空字符串以外都为真
+			// 数组、对象等引用类型的数据 的Boolean 都为真
+		</script>
+	</body>
+</html>

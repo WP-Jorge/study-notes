@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue2.6.11.js"></script>
+		<script src="lib/vue-router.js"></script>
+		
+		<style>
+			.mystyle{
+				background-color: pink;
+				text-decoration: none;
+				font-weight: 600;
+			}
+			
+			/* 为路由添加动画 */
+			.v-enter,
+			.v-leave-to{
+				opacity: 0;
+				transform: translateX(200px);
+			}
+			.v-enter-active,
+			.v-leave-active{
+				transition: all 0.5s ease;
+			}
+		</style>
+		
+	</head>
+	
+	
+	<body>
+		<div id="div01">
+			<router-link to="/account">Account</router-link>
+			<transition mode="out-in">
+				<router-view></router-view>
+			</transition>
+		</div>
+		
+		<template id="account">
+			<div>
+				<h1>这是Account组件</h1>
+				<router-link to="/account/login">登入</router-link>
+				<router-link to="/account/regiest">注册</router-link>
+				<transition mode="out-in">
+					<router-view></router-view>
+				</transition>
+			</div>
+		</template>
+		
+		<script>
+			
+			var login = {
+				template:'<h2>登入组件</h2>'
+			}
+			var regiest = {
+				template:'<h2>注册组件</h2>'
+			}
+			var account = {
+				template:'#account'
+			}
+			
+			var router = new VueRouter({
+				routes:[
+					// 路由嵌套采用如此写法，chlidren中为子路由
+					{
+						path:'/account',
+						component:account,
+						children:[
+							// 子路由中path不能加/
+							{path:'login',component:login},
+							{path:'regiest',component:regiest}
+						]
+					},
+					
+				],
+				linkActiveClass:'mystyle'
+			})
+			
+			var nv =new Vue({
+				el:'#div01',
+				data:{},
+				methods:{},
+				router
+			})
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.自定义find方法
+			function find(arr, callback) {
+				for (const value of arr) {
+					if (callback && callback(value)) {
+						return value
+					}
+				}
+				return undefined
+			}
+			let arr = [1, 2, 3, 4, 5]
+			let res = find(arr, item => {
+				return item === 5
+			})
+			console.log(res) // 5
+
+			// 2.给原型添加自定义方法
+			Array.prototype.findValue = function (callback) {
+				for (const value of this) {
+					if (callback && callback(value)) {
+						return value
+					}
+				}
+				return undefined
+			}
+			let arr2 = [1, 2, 3, 4, 5]
+			let res3 = arr2.findValue(item => {
+				return item === 2
+			})
+			console.log(res3)
+		</script>
+	</body>
+</html>

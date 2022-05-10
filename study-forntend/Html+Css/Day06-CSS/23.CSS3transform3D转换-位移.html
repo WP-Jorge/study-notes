@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			body {
+				/* perspective透视写到被观察元素的父盒子上 */
+				/* 透视越小，物体越大,不能小等于物体大小（相当于眼睛贴物体上），不然就消失
+				 透视越大，越接近物体原本大小*/
+				perspective: 400px;
+			}
+			/* 
+				transform: translate3D(x, y, z) xyz不能省略，没有就写0
+				transform: translateX(x)
+				transform: translateY(y)
+				transform: translateZ(z) (z轴一般用px单位，越小物体越小，可为负值)
+			*/
+			div {
+				width: 200px;
+				height: 200px;
+				background-color: pink;
+				/* transform: translateX(100px) translateY(100px) translateZ(100px); */
+				/* 简写 */
+				transform: translate3d(400px, 100px, 100px);
+				/*animation-duration: 2s;*/
+			}
+		</style>
+	</head>
+	<body>
+		<div></div>
+	</body>
+</html>

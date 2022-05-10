@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 移动到指定位置后不在移动 */
+        /* 
+            ①以浏览器的可视窗口为参照点移动元素(固定定位特点)
+            ②粘性定位占有原先的位置(相对定位特点)
+            ③必须添加top、left、 right、 bottom其中一个才有效 
+        */
+        body {
+            height: 10000px;
+        }
+        div {
+            position: sticky;
+            height: 200px;
+            width: 200px;
+            top: 0px;
+            margin-top: 100px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			div {
+				width: 200px;
+				height: 200px;
+				background-color: pink;
+			}
+			
+			/* 1 盒子居中*/
+			.one {
+				margin-bottom: 20px;
+			}
+			
+			/* 2 盒子内行内块级元素、行内元素居中*/
+			.three {
+				/* 如若想让盒子居中，必须先指定宽高，然后使用margin: auto;实现居中 */
+				/* margin: 0 auto;对行内元素和行内块级元素无效 */
+				width: 300px;
+				height: 300px;
+				background-color: skyblue;
+				margin: 0 auto;
+				
+				/* 如果想让行内元素和行内块级元素水平居中，可以在其父级元素添加text-align: center;实现 */
+				text-align: center;
+			}
+			
+			/* 3 嵌套块级元素垂直外边距的塌陷margin*/
+			/* 对于两个嵌套关系的块元素，父元素有上外边距同时子元素也有上外边距，此时父元素会塌陷较大的外边距值 */
+			/* 解决方案：
+			 ①为父元素定义上边款
+			 ②为父元素定义上内边距
+			 ③为父元素添加overflow: hidden;
+			 ④盒子有浮动、固定、绝对定位就不会有塌陷问题
+			 前面两个都会改变盒子的大小，第三个不会，推荐使用第三个
+			 */
+			.fore {
+				margin-top: 20px;
+				width: 300px;
+				height: 300px;
+				background-color: yellowgreen;
+				/* ①为父元素定义上边款 */
+				/* border-top: 1px solid transparent; */
+				
+				/* ②为父元素定义上内边距 */
+				/* padding-top: 1px; */
+				
+				/* ③为父元素添加overflow: hidden; */
+				overflow: hidden;
+			}
+			
+			.fore-child {
+				/* 谁的外边距大执行谁的 */
+				margin-top: 40px;
+			}
+			
+			/* 4 行内元素建议不要设置上下边距，上下边距不起效果 */
+			span {
+				margin: 20px;
+				padding: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 1 -->
+		<div class="one">1</div>
+		<div class="two">2</div>
+		<hr >
+		<!-- 2 -->
+		<div class="three">
+			333
+			<!-- 块级元素使用text-align: center;无法居中 -->
+			<div>333里的块级元素</div>
+		</div>
+		<hr >
+		<!-- 3 -->
+		<div class="fore">
+			<div class="fore-child">444里的块级元素</div>
+		</div>
+		<hr >
+		<!-- 4 -->
+		<div class="five">
+			<span>555的行内元素</span>
+		</div>
+	</body>
+</html>

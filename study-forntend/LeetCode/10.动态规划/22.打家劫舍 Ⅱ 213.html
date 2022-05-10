@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @return {number}
+			 * 动态规划，时间复杂度O(n)，空间复杂度O(1)
+			 * 考虑选择第一个不选择最后一个，选择最后一个不选择第一个时的最大值
+			 */
+			var rob = function (nums) {
+				if (nums.length === 1) {
+					return nums[0];
+				}
+				return Math.max(myRob(nums.slice(0, nums.length - 1)), myRob(nums.slice(1)));
+				function myRob(nums) {
+					if (nums.length === 1) {
+						return nums[0];
+					}
+					let pre = nums[0];
+					let cur = Math.max(pre, nums[1]);
+					for (let i = 2; i < nums.length; i++) {
+						let temp = Math.max(cur, pre + nums[i]);
+						pre = cur;
+						cur = temp;
+					}
+					return cur;
+				}
+			};
+			console.log(rob([2, 3, 4]));
+		</script>
+	</body>
+</html>

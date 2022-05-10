@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function User(name, age) {
+				this.name = name
+				this.age = age
+			}
+
+			User.prototype.show = function () {
+				console.log(this.name, this.age)
+			}
+
+			function Admin(...args) {
+				// 使用call改变子类的this指向，使用父类的构造函数给子类属性赋值
+				User.call(this, ...args)
+			}
+
+			Admin.prototype = Object.create(User.prototype)
+			Object.defineProperty(Admin.prototype, 'constructor', {
+				value: Admin,
+				enumerable: false
+			})
+
+			let xj = new Admin('向军', 18)
+			xj.show() // 向军 18
+		</script>
+	</body>
+</html>

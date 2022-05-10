@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.使用let时，push时将函数压入数组，每个函数内有let 定义的 各自的 i
+			let arr = []
+			for (let i = 1; i <= 3; i++) {
+				arr.push(function () {
+					return i
+				})
+			}
+			console.log(arr.length) // 3
+			console.log(arr[0]()) // 1
+			console.log(arr[1]()) // 2
+			console.log(arr[2]()) // 3
+
+			// 2.使用var时，push将函数压入数组，函数内 没有  var 声明的 j，j存在于全局window中
+			let arr2 = []
+			for (var j = 1; j <= 3; j++) {
+				arr2.push(function () {
+					return j
+				})
+			}
+			console.log(arr2.length) // 3
+			console.log(arr2[0]()) // 4
+			console.log(arr2[1]()) // 4
+			console.log(arr2[2]()) // 4
+
+			// 3.使用立即执行函数改写ver
+			let arr3 = []
+			for (var k = 1; k <= 3; k++) {
+				;(function (k) {
+					arr3.push(function () {
+						return k
+					})
+				})(k)
+			}
+			console.log(arr3.length) // 3
+			console.log(arr3[0]()) // 1
+			console.log(arr3[1]()) // 2
+			console.log(arr3[2]()) // 3
+		</script>
+	</body>
+</html>

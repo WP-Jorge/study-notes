@@ -1,0 +1,67 @@
+{
+	"name": "box-music",
+	"main": "electron/background.ts",
+	"private": true,
+	"version": "0.0.0",
+	"scripts": {
+		"dev": "vite",
+		"build": "vue-tsc --noEmit && vite build",
+		"preview": "vite preview",
+		"electron": "wait-on tcp:3000 && cross-env NODE_ENV=development electron .",
+		"electron:serve": "concurrently -k \"pnpm run dev\" \"pnpm run electron\"",
+		"electron:build": "vite build && electron-builder"
+	},
+	"dependencies": {
+		"async": "^3.2.3",
+		"axios": "^0.27.2",
+		"element-plus": "^2.1.11",
+		"ffmpeg-static-electron": "^2.0.3",
+		"ffprobe-static-electron": "^2.0.2",
+		"fluent-ffmpeg": "2.1.2",
+		"isexe": "^2.0.0",
+		"pinia": "^2.0.13",
+		"vue": "^3.2.25",
+		"vue-router": "^4.0.14",
+		"which": "^2.0.2"
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.31",
+		"@typescript-eslint/eslint-plugin": "^5.21.0",
+		"@typescript-eslint/parser": "^5.21.0",
+		"@vitejs/plugin-vue": "^2.3.1",
+		"concurrently": "^7.1.0",
+		"cross-env": "^7.0.3",
+		"electron": "^18.2.0",
+		"electron-builder": "23.0.3",
+		"eslint": "^8.14.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-vue": "^8.7.1",
+		"prettier": "^2.6.2",
+		"sass": "^1.51.0",
+		"typescript": "^4.5.4",
+		"vite": "^2.9.5",
+		"vue-tsc": "^0.34.7",
+		"wait-on": "^6.0.1"
+	},
+	"build": {
+		"appId": "com.joege.box-music",
+		"productName": "box-music",
+		"copyright": "Copyright © 2022 <box-music>",
+		"mac": {
+			"category": "public.app-category.utilities"
+		},
+		"nsis": {
+			"oneClick": false,
+			"allowToChangeInstallationDirectory": true
+		},
+		"files": [
+			"dist/**/*",
+			"electron/**/*"
+		],
+		"directories": {
+			"buildResources": "assets",
+			"output": "dist_electron"
+		}
+	}
+}

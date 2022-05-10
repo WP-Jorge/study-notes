@@ -1,0 +1,15 @@
+# redis
+spring:
+# 使用集群
+  redis:
+    cluster: #操作 书写集群中的所有节点
+      nodes: 192.168.61.129:7000,192.168.61.129:7001,192.168.61.129:7002,192.168.61.129:7003,192.168.61.129:7004,192.168.61.129:7005
+
+#mybatis-plus:
+#  type-aliases-package: com.example.redis.entity
+#logging:
+#  level:
+#    root: debug
+
+
+

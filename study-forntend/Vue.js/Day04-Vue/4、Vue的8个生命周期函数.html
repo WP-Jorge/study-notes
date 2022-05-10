@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+		
+		<style>
+			
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="div01">
+			<input type="button"value="更新数据" @click="msg='okokk'" />
+			<h3 id="h3">{{ msg }}</h3>
+		</div>
+
+		
+		<script>
+			//自定义全局按键修饰符
+			var nv = new Vue({
+				el:'#div01',
+				data:{
+					msg:'ok'
+				},
+				methods:{
+					show(){
+						console.log('执行力show方法')
+					}
+				},
+				//局部过滤器，优先调用全局过滤器，再调用局部过滤器，所以优先调用的全局过滤器会被局部过滤器覆盖
+				filters:{},
+				beforeCreate(){//这是第一个生命周期函数，便是实例完全被创建出来之前，会执行它
+				//这些都未被初始化,无法调用
+					// console.log(this.msg)
+					// this.show()
+				},
+				created(){//这是第二个生命周期函数，
+				//在created中msg、show()都已被初始化，可以正常调用
+					// console.log(this.msg)
+					// this.show()
+				},
+				beforeMount(){//这是第三个生命周期函数，表示模板已经编译完成，放入内存中，但是尚未渲染到页面上去
+				//控制台显示的并不是ok，而是{{ msg }}，说明并未渲染到页面上
+					// console.log(document.getElementById('h3').innerText)
+				},
+				mounted(){//这是第四个生命周期函数，表示页面已经渲染完成了
+				//控制台显示ok，与页面相同
+					// console.log(document.getElementById('h3').innerText)
+				},
+				
+				//下面的是组件运行的生命周期函数
+				// 会根据数据改变，有选择性地最少执行0次，最多无限次
+				beforeUpdate(){//这是第五个生命周期函数，表示页面还未被更新，（数据已经更新了）
+				//按下更新按钮，页面显示okokk，但是控制台显示ok，说明这个生命周期函数是在页面更新前执行的
+					// console.log(document.getElementById('h3').innerText)
+				},
+				updated(){//这是第六个生命周期函数，表示页面与数据同步了
+				//按下更新按钮，页面显示okokk，控制台也显示okokk
+					// console.log(document.getElementById('h3').innerText)
+				},
+				
+				//下面是Vue实例销毁阶段的生命周期函数
+				beforeDestroy(){//这是第七个生命周期函数，Vue实例准备销毁，但是还能使用
+					
+				},
+				destroy(){//这是第八个生命周期函数，Vue实例销毁，Vue中所有内容不可用
+					
+				}
+			})
+			
+		</script>
+	</body>
+	
+</html>

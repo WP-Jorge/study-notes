@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} gas
+			 * @param {number[]} cost
+			 * @return {number}
+			 * 贪心，时间复杂度O(n)，空间复杂度O(1)
+			 */
+			var canCompleteCircuit = function (gas, cost) {
+				let totalSum = 0;
+				let curSum = 0;
+				let start = 0;
+				for (let i = 0; i < gas.length; i++) {
+					curSum += gas[i] - cost[i];
+					totalSum += gas[i] - cost[i];
+					if (curSum < 0) {
+						start = i + 1;
+						curSum = 0;
+					}
+				}
+				if (totalSum < 0) {
+					return -1;
+				}
+				return start;
+			};
+		</script>
+	</body>
+</html>

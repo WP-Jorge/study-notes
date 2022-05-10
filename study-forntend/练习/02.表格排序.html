@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			body,html{
+                padding: 0;
+                margin: 0;
+                font-size: 14px;
+                color: #000000;
+            }
+            table{
+                border-collapse: collapse;
+                width: 100%;
+                table-layout: fixed;
+            }
+            thead{
+                background: #3d444c;
+                color: #ffffff;
+            }
+            td,th{
+                border: 1px solid #e1e1e1;
+                padding: 0;
+                height: 30px;
+                line-height: 30px;
+                text-align: center;
+            }
+		</style>
+	</head>
+	<body>
+		<table id="jsTrolley">
+			<table>
+                <thead>
+                    <tr><th>id</th><th>price</th><th>sales</th></tr>
+                </thead>
+                <tbody id="jsList">
+                    <tr><td>1</td><td>10.0</td><td>800</td></tr>
+                    <tr><td>2</td><td>30.0</td><td>600</td></tr>
+                    <tr><td>3</td><td>20.5</td><td>700</td></tr>
+                    <tr><td>4</td><td>40.5</td><td>500</td></tr>
+                    <tr><td>5</td><td>60.5</td><td>300</td></tr>
+                    <tr><td>6</td><td>50.0</td><td>400</td></tr>
+                    <tr><td>7</td><td>70.0</td><td>200</td></tr>
+                    <tr><td>8</td><td>80.5</td><td>100</td></tr>
+                </tbody>
+            </table>
+		<script>
+			function sort(type, order) {
+                let index = 0;
+                let arr = [];
+                if(type == "id"){
+                    index = 0;
+                }else if(type == "price"){
+                    index = 1;
+                }else if(type == "sales"){
+                    index = 2;
+                }
+				let trs = document.getElementById('jsList').children
+                trs = [...trs]
+				let tdInnerTextList = []
+				let priceList = []
+				let saleList = []
+				for (let tr of trs) {
+					tdInnerTextList.push(Number(tr.childNodes[0].innerText))
+					priceList.push(Number(tr.childNodes[1].innerText))
+					saleList.push(Number(tr.childNodes[2].innerText))
+				}
+				let items = []
+				for (let i = 0; i < trs.length; i++) {
+					let item = {
+						id: tdInnerTextList[i],
+						price: priceList[i],
+						sale: saleList[i]
+					}
+					items.push(item)
+				}
+				if (order === 'desc') {
+					trs.sort((a, b) => {
+						return Number(b.childNodes[index].innerText) - Number(a.childNodes[index].innerText)
+					})
+				} else {
+					trs.sort((a, b) => {
+						return Number(a.childNodes[index].innerText) - Number(b.childNodes[index].innerText)
+					})
+				}
+				let jsList = document.getElementById('jsList') 
+                jsList.innerHTML = ''
+                for (let tr of trs) {
+                    jsList.appendChild(tr)
+                }
+			}
+            sort('price', 'desc')
+		</script>
+	</body>
+</html>

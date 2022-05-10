@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 在赋值的对象中没有的属性可以赋以默认值，表示如果赋值对象中没有这个属性就以这个默认值赋值
+			let user = { name: '野猪', age: 18 }
+			let { name = '家猪佩奇', age = 20, gender = '男' } = user
+			console.log(name, age, gender) // 野猪 18 男
+		</script>
+	</body>
+</html>

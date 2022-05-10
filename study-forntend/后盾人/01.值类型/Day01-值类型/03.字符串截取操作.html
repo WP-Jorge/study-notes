@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.slice(start, [end])
+			let str = '12345678'
+
+			// ① 第一个参数代表开始位置,第二个参数代表结束位置的下一个位置,截取出来的字符串的长度为第二个参数与第一个参数之间的差
+			console.log(str.slice(0, 3)) // 123
+
+			// ② 若参数值为负数,则将该值加上字符串长度后转为正值，诺参数为零，返回全部
+			console.log(str.slice(-1)) // 8   相当于 -1 + 8 = 7
+			console.log(str.slice(7)) // 8
+			console.log(str.slice(0)) // 12345678
+
+			// ③ 若第一个参数等于大于第二个参数,则返回空字符串.
+			console.log(str.slice(1, 0)) // 空
+			console.log(str.slice(1, 1)) // 空
+
+			// 2.substring(start, [end])
+			// ① 第一个参数代表开始位置,第二个参数代表结束位置的下一个位置
+			console.log(str.substring(0, 3)) //123
+			// ② 若参数值为负数,则将该值转为0
+			console.log(str.substring(-1)) // 12345678 相当于 0
+			console.log(str.substring(0)) // 12345678
+			// ③ 两个参数中,取较小值作为开始位置,截取出来的字符串的长度为较大值与较小值之间的差.
+			console.log(str.substring(3, 0)) // 123 相当于 0, 3
+
+			// 3.substr(start,[length])
+			// ① 第一个参数代表开始位置,第二个参数代表截取的长度
+			console.log(str.substr(0, 3)) // 123
+			// ② 只有一个参数表示从该参数位置开始截取到最后
+			console.log(str.substr(0)) // 12345678
+			// ③ 参数为负数表示字符串长度加上参数的值开始的位置截取，第二个参数为负数则置为零
+			console.log(str.substr(-8)) // 12345678
+		</script>
+	</body>
+</html>

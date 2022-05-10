@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string} s
+			 * @return {number}
+			 * 哈希表 时间复杂度O(n) 空间复杂度O(n)
+			 */
+			var firstUniqChar = function (s) {
+				let arr = s.split('');
+				let map = new Map();
+				arr.forEach((item, index) => {
+					if (map.has(item)) {
+						let temp = map.get(item);
+						map.set(item, [temp[0]], temp[1] + 1);
+					} else {
+						map.set(item, [index, 1]);
+					}
+				});
+				for (let key of map.keys()) {
+					let temp = map.get(key);
+					if (temp[1] === 1) {
+						return temp[0];
+					}
+				}
+				return -1;
+			};
+			console.log(firstUniqChar('dddccdbba'));
+		</script>
+	</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number} n
+			 * @return {boolean}
+			 * 哈希表 时间复杂度O(logn) 空间复杂度O(logn)
+			 */
+			var isHappy = function (n) {
+				let map = new Map();
+				function isHappyNumber(n) {
+					let sum = getSum(n);
+					if (sum === 1 || n === 1) {
+						return true;
+					}
+					if (map.has(n)) {
+						return false;
+					}
+					map.set(n, true);
+					return isHappyNumber(sum);
+				}
+				function getSum(num) {
+					let numArr = (num + '').split('');
+					let sum = numArr.reduce((pre, item) => {
+						return pre + Math.pow(item, 2);
+					}, 0);
+					return sum;
+				}
+				return isHappyNumber(n);
+			};
+		</script>
+	</body>
+</html>

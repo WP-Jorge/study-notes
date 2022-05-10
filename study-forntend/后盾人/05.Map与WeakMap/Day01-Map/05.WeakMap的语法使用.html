@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.WeakMap 跟 WeakSet很像，只能存放引用类型的键
+			let map = new WeakMap()
+			// map.set('hdcms', 'houdunren.com') // 报错
+			map.set([], 'houdunren.con')
+			console.log(map) // WeakMap {Array(0) => "houdunren.con"}
+
+			// 2.像keys、values、size方法都不能使用
+
+			// 3.无法遍历
+		</script>
+	</body>
+</html>

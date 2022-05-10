@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cslg.applysystem.mapper.RoleMapper">
+    <cache-ref namespace="cn.cslg.applysystem.mapper.RoleMapper"/>
+    <select id="getRolesByUsername" resultType="java.lang.String">
+        select role_name from user, user_role, role
+        where user.user_id = user_role.user_id
+        and role.role_id = user_role.role_id
+        and username = #{username}
+    </select>
+
+    <insert id="addRole">
+        insert into role (role_name) values (#{roleName})
+    </insert>
+
+    <select id="getAllRolesWithPage" resultType="cn.cslg.applysystem.pojo.vo.RoleVO">
+        select * from role
+    </select>
+
+    <resultMap id="roleResultMap" type="cn.cslg.applysystem.pojo.vo.RoleVO">
+        <id property="roleId" column="role_id"></id>
+        <result property="roleName" column="role_name"></result>
+    </resultMap>
+
+    <select id="getRolesByUsernameVO" resultType="cn.cslg.applysystem.pojo.vo.RoleVO" resultMap="roleResultMap">
+        select role.role_id, role_name from user, user_role, role
+        where user.user_id = user_role.user_id
+        and role.role_id = user_role.role_id
+        and username = #{username}
+    </select>
+    <select id="getRolesByRoleNameWithPage" resultType="cn.cslg.applysystem.pojo.vo.RoleVO">
+        select * from role where role_name like concat('%', #{roleName}, '%')
+    </select>
+
+</mapper>

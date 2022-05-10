@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script type="module">
+			// 1.a 表示默认导出, {site} 表示具名导出
+			import a, { site } from './02.module.js'
+			console.log(a)
+			console.log(site)
+
+			// 2.使用 * 来接收
+			import * as api from './02.module.js'
+			console.log(api.default)
+			console.log(api.site)
+		</script>
+	</body>
+</html>

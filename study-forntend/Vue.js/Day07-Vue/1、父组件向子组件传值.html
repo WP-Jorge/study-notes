@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<style>
+			
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="div01">
+			<!-- 父组件要想给子组件传值，需用 ：绑定子组件中的props中的值，将父组件中的data传入子组件中，子组件才能调用 -->
+			<com1 :parent-msg="msg"></com1>
+		</div>
+		
+		<script>
+			
+			var nv =new Vue({
+				el:'#div01',
+				data:{
+					msg:'父组件中的数据'
+				},
+				methods:{},
+				
+				components:{
+					com1:{
+						//子组件中的data是可读可写的
+						data(){
+							return {
+								id:'111',
+								name:'222'
+							}
+						},
+						//子组件无法获取父组件中data的数据和methods中的方法
+						template:'<h3>{{ parentMsg }}</h3>',
+						//组件中props中的数据只可读，不可写（重写会报警告）
+						//把父组件中传过来的值先在props数组中定义一下，才能使用这个数据
+						// props:['parentmsg'],
+						// 也可以使用对象
+						props: {
+							// 属性名: 属性类型
+							// parentmsg: String
+							// 还可以使用
+							parentMsg: { // 属性名如果是驼峰命名，则在传值时要用parent-msg
+								type: String, // 设置属性类型 
+								// 多个类型使用数组形式设置
+								// type: [String, Number]
+								default: 'lalala',// 设置默认值 
+								// 如果属性类型是数组或者对象，要用函数形式设置默认值
+								// default(){
+								// 	return []
+								// }
+								required: true // 设置必须要传
+							}
+						}
+					}
+				}
+			})
+			
+		</script>
+	</body>
+</html>

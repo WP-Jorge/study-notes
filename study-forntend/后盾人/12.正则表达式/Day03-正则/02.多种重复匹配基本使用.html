@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let str = 'hddddddd'
+			// + 一个或多个 贪婪的
+			console.log(str.match(/hd+/)) // ["hddddddd", index: 0, input: "hddddddd", groups: undefined]
+
+			// * 0个或多个 贪婪的
+			console.log(str.match(/hd*/)) // ["hddddddd", index: 0, input: "hddddddd", groups: undefined]
+			console.log(str.match(/ha*/)) // ["h", index: 0, input: "hddddddd", groups: undefined]
+
+			// {2} 里面的数字表示限定的数量 贪婪的 格式有{1,4} 表示一个到4的,贪婪的取最多的 {1,} 表示一个到无数个
+			console.log(str.match(/hd{2}/)) // ["hdd", index: 0, input: "hddddddd", groups: undefined]
+			console.log(str.match(/hd{2,5}/)) // ["hddddd", index: 0, input: "hddddddd", groups: undefined]
+
+			// ? 0个或1个 贪婪的
+			console.log(str.match(/hd?/)) // ["hd", index: 0, input: "hddddddd", groups: undefined]
+		</script>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.隐式转换
+			let str = '99'
+			console.log(str * 1 + 1) // 100
+			let num = 111
+			console.log(typeof (num + '')) // string
+
+			// 2.显示转换
+			console.log(Number(str) + 1) // 100
+			console.log(typeof String(num)) // string
+
+			// 3.将数字开头的字符串转换为数值型，parseInt 会将后面多余的字符串截取并丢掉
+			let str2 = '123hadasjkd'
+			console.log(parseInt(str2)) // 123
+
+			// 4.将字符串拆分放到数组中
+			let str3 = '野猪乔治'
+			console.log(str3.split('')) // ["野", "猪", "乔", "治"]
+
+			// 5.将数组转换为字符串 join 将数组以指定字符串连接起来
+			let arr = ['野', '猪', '乔', '治']
+			console.log(arr.join('')) // 野猪乔治
+		</script>
+	</body>
+</html>

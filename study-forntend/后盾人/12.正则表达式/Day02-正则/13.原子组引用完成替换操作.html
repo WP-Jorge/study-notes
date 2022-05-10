@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let str = `
+                <h1>houdunren</h1>
+                <span>后盾人</span>
+                <h2>hdcms</h2>
+            `
+			let reg = /<(h[1-6])>(\w([\s\S]+))<\/\1>/gi
+			// console.log(str.replace(reg, `<p>$2</p>`))
+			// 函数中第一个参数  p0：完整字符串 p1：第一个原子组 (h[1-6]) 第二个参数：第二个原子组 ([\s\S]+) 依次类推
+			let res = str.replace(reg, (p0, p1, p2, p3) => {
+				// console.log(p0)
+				// console.log(p1)
+				// console.log(p2)
+				// console.log(p3)
+				return `<p>${p2}</p>`
+			})
+			console.log(res)
+		</script>
+	</body>
+</html>

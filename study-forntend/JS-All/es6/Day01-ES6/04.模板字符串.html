@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// ES6 引入新的申明字符串的方式 ``
+			// 1.申明
+			let str = `我也是一个字符串`
+			console.log(str, typeof str)
+
+			// 2.内容中可以直接出现换行符
+			let str2 = `
+                    <ul>
+                        <li>张三</li>
+                        <li>李四</li>
+                        <li>王五</li>
+                        <li>赵六</li>
+                    </ul>`
+			console.log(str2)
+
+			// 3.变量拼接
+			let lovest = '懒蕉'
+			let out = `${lovest}最大！！`
+			console.log(out)
+		</script>
+	</body>
+</html>

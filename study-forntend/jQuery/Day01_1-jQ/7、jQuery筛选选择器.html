@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<ul>
+			<li>多个里面筛选几个</li>
+			<li>多个里面筛选几个</li>
+			<li>多个里面筛选几个</li>
+			<li>多个里面筛选几个</li>
+			<li>多个里面筛选几个</li>
+			<li>多个里面筛选几个</li>
+		</ul>
+		<ol>
+			<li>多个里面筛选几个</li>
+			<li>多个里面筛选几个</li>
+			<li>多个里面筛选几个</li>
+			<li>多个里面筛选几个</li>
+			<li>多个里面筛选几个</li>
+			<li>多个里面筛选几个</li>
+		</ol>
+		<script>
+			$(function() {
+				$("ul li:first").css("color", "red"); // 筛选第一个
+				$("ul li:last").css("color", "red"); // 筛选最后一个
+				$("ul li:eq(2)").css("color", "blue"); // 筛选索引号为2的那个
+				$("ol li:odd").css("color", "skyblue"); // 筛选索引号奇数个 1 3 5
+				$("ol li:even").css("color", "pink"); // 筛选索引号偶数个 0 2 4
+			})
+		</script>
+	</body>
+</html>

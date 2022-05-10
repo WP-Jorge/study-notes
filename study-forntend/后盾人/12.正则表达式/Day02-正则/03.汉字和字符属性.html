@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 一个字符有 L 属性，则这个字符为字母
+			let str = 'houdunren2010'
+			console.log(str.match(/\p{L}/gu)) // 输出所有的字符 ["h", "o", "u", "d", "u", "n", "r", "e", "n"]
+
+			// 一个字符有 P 属性，表示这个字符是标点
+			let str2 = 'houdunren2010.不断发布教程，加油！@#￥%…&*'
+			console.log(str2.match(/\p{P}/gu)) // 输出所有标点 [".", "，"]
+
+			// 一个字符有 sc=Han 属性，表示这个字符为汉字
+			console.log(str2.match(/\p{sc=Han}/gu)) // 输出所有中文 ["不", "断", "发", "布", "教", "程", "加", "油"]
+
+			// u 表示宽字符匹配
+			let str3 = 'χγ'
+			console.log(str3.match(/[χγ]/gu)) // ["χ", "γ"]
+		</script>
+	</body>
+</html>

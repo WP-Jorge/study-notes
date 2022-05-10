@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<button class="begin">开启定时器</button>
+		<button class="stop">停止定时器</button>
+		<script>
+			var begin = document.querySelector('.begin');
+			var stop = document.querySelector('.stop');
+			var timer = null; // 全局变量  null是一个空对象
+			begin.addEventListener('click', function() {
+				timer = setInterval(function() {
+					console.log('ni hao ma');
+
+				}, 1000);
+			})
+			stop.addEventListener('click', function() {
+				clearInterval(timer);
+			})
+		</script>
+	</body>
+</html>

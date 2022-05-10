@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function Request() {
+				this.get = function (params) {
+					let str = Object.keys(params)
+						.map(k => {
+							return `${k}=${params[k]}`
+						})
+						.join('&')
+					return `https://houdunren.com/${this.url}?${str}`
+				}
+			}
+			function Article() {
+				this.url = 'article/lists'
+				Request.call(this)
+			}
+			let a = new Article()
+			console.log(a.get({ id: 1, cat: 'js' })) // https://houdunren.com/article/lists?id=1&cat=js
+		</script>
+	</body>
+</html>

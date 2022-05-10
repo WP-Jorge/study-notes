@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} prices
+			 * @return {number}
+			 * 贪心 股票问题 时间复杂度O(n) 空间复杂度O(1)
+			 */
+			var maxProfit = function (prices) {
+				let min = Infinity;
+				let res = 0;
+				for (let i = 0; i < prices.length; i++) {
+					min = Math.min(min, prices[i]);
+					res = Math.max(res, prices[i] - min);
+				}
+				return res;
+			};
+			console.log(maxProfit([7, 1, 5, 3, 6, 4]));
+		</script>
+	</body>
+</html>

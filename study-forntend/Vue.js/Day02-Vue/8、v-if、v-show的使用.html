@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+
+		<style>
+
+		</style>
+
+	</head>
+
+	<body>
+		<div id="div01">
+			<!-- v-if特点：每次切换删除或创建该元素 有较高的切换性能消耗，如需频繁切换，不建议使用-->
+			<input type="button" value="切换" @click="change"/>
+			<p v-if="flag">这是v-if的文段</p>
+			<p v-show="flag">这是v-show的文段</p>
+		</div>
+		<script>
+			var nv = new Vue({
+				el: '#div01',
+				data: {
+					flag:true
+				},
+				methods: {
+					change(){
+						this.flag=!this.flag
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

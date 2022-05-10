@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<script src="lib/vue-router.js"></script>
+		<style>
+		</style>
+	</head>
+	<body>
+		<div id="div01">
+			<cpn>
+				<!-- 使用子组件中传来的msg 使用<template v-slot="slot">或者<template v-slot:son="slot"> -->
+				<template v-slot:son="slot">
+					<!-- 使用子组件中传来的用data绑定的msg 使用slot.data -->
+					<span v-for="item in slot.data">{{ item }}</span>
+				</template>
+			</cpn>
+		</div>
+		<template id="cpn">
+			<div>
+				<!-- 给父组件传子组件中的msg 使用 :data="msg" -->
+				<slot name="son" :data="msg">
+					<ul>
+						<li v-for="item in msg">{{ item }}</li>
+					</ul>
+				</slot>
+			</div>
+		</template>
+		<script>
+			var nv = new Vue({
+				el: '#div01',
+				data: {},
+				methods: {},
+				components: {
+					cpn: {
+						template: '#cpn',
+						data() {
+							return {
+								msg: ['w', 'o', 'l', 'l']
+							}
+						}
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

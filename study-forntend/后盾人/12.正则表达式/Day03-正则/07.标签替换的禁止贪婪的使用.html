@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<main>
+			<span>houdunwang</span>
+			<span>hdcms.com</span>
+			<span>houdunren,com</span>
+		</main>
+		// h4 描红 后盾人-
+		<script>
+			let main = document.querySelector('main')
+			let reg = /<span>([\s\S]+?)<\/span>/gi
+			main.innerHTML = main.innerHTML.replace(reg, (v, p1) => {
+				return `<h4 style="color: red">后盾人-${p1}</h4>`
+			})
+		</script>
+	</body>
+</html>

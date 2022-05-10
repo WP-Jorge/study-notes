@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let lesson = {
+				site: '后盾人',
+				lists: ['js', 'css', 'mysql'],
+				show: function () {
+					// console.log(this) // lesson
+
+					// 使用that接收this
+					let that = this
+					this.lists.map(function (item) {
+						console.log(that.site) // 后盾人
+					})
+				}
+			}
+			lesson.show()
+		</script>
+	</body>
+</html>

@@ -1,0 +1,29 @@
+div {
+	// 数字型可以进行四则运算，默认以第一个数字的单位为单位,没有则以第二个数的单位为单位，都没有则无单位
+	margin: 10px - 6; // 4px
+	
+	// padding: 2 * 5 px;
+	// 使用乘、除时要用括号包起来
+	padding: (5px / 5px); // 1
+	
+	// 乘法括号内不能带两个单位会变成 5px px，css不识别
+	size: (1px * 5); // 5px
+	
+	// 使用数字函数处理数字
+	//	abs() 取绝对值
+		width: abs(-10px); // 10px
+	
+	// round() 四舍五入
+		height: round(10.4px); // 10px
+		
+	// cell() 取向上取整
+		margin-top: ceil(10.1px); // 11px
+		
+	// floor() 向下取整
+		margin-bottom: floor(9.9px); // 9px
+		
+	// percentage() 取百分数
+		margin-left: percentage(.9); // 90%
+		
+
+}

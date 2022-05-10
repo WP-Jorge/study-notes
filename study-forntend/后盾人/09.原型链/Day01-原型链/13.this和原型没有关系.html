@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let hd = {
+				name: '后盾人',
+				show() {
+					// 这里的this始终指向调用者
+					console.log(this.name)
+				}
+			}
+			let User = {
+				name: '向军',
+				show() {
+					console.log(this.name)
+				}
+			}
+			// 即使将hd的原型设置成User，hd.show()中的this还是指向自己
+			Object.setPrototypeOf(hd, User)
+			hd.show() // 后盾人
+		</script>
+	</body>
+</html>

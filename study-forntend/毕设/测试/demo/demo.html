@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div style="display: none"></div>
+		<div style="display: none"></div>
+		<div style="display: none"></div>
+		<div style="display: none"></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div style="display: none"></div>
+		<script>
+			document.body.addEventListener('click', async e => {
+				const text = await navigator.clipboard.readText();
+				console.log(text);
+			});
+			document.querySelector('body').click();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.reject一个错误
+			new Promise((resolve, reject) => {
+				reject(new Error('new 一个错误'))
+			}).then(
+				res => {
+					console.log(res)
+				},
+				err => {
+					console.log(err.message) // new 一个错误
+				}
+			)
+
+			// 2.直接抛错误
+			new Promise((resolve, reject) => {
+				throw new Error('抛出一个错误')
+			}).then(
+				res => {
+					console.log(res)
+				},
+				err => {
+					console.log(err.message) // 抛出一个错误
+				}
+			)
+
+			// 3.系统自动抛出的异常
+			new Promise((resolve, reject) => {
+				asd
+			}).then(
+				res => {
+					console.log(res)
+				},
+				err => {
+					console.log(err.message) // asd is not defined
+				}
+			)
+
+			// 4.使用catch处理错误
+			new Promise((resolve, reject) => {
+				asd
+			})
+				.then(res => {
+					console.log(res)
+				})
+				.catch(err => {
+					console.log(err.message) // asd is not defined
+				})
+		</script>
+	</body>
+</html>

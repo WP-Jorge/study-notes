@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[][]} obstacleGrid
+			 * @return {number}
+			 * 动态规划，时间复杂度O(m * n)。空间复杂度O(m * n)
+			 */
+			var uniquePathsWithObstacles = function (obstacleGrid) {
+				let m = obstacleGrid.length;
+				let n = obstacleGrid[0].length;
+				let dp = new Array(m).fill().map(item => new Array(n).fill(0));
+				for (let i = 0; i < m && obstacleGrid[i][0] === 0; i++) {
+					dp[i][0] = 1;
+				}
+				for (let i = 0; i < n && obstacleGrid[0][i] === 0; i++) {
+					dp[0][i] = 1;
+				}
+				for (let i = 1; i < m; i++) {
+					for (let j = 1; j < n; j++) {
+						if (obstacleGrid[i][j] === 0) {
+							dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+						}
+					}
+				}
+				return dp[m - 1][n - 1];
+			};
+			console.log(
+				uniquePathsWithObstacles([
+					[0, 0, 0],
+					[0, 1, 0],
+					[0, 0, 0]
+				])
+			);
+		</script>
+	</body>
+</html>

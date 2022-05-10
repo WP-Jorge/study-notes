@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	
+	<style type="text/css">
+		div{
+			margin: 100px auto;
+			width: 500px;
+		}
+		.p{
+			display: inline-block;
+			padding-left: 20px;
+			margin-left: 10px;
+			color: #999;
+			background: url(imgs/mess.png) left center no-repeat;
+		}
+		.wrong{
+			color: #ff0000;
+			background: url(imgs/wrong.png) left center no-repeat;
+		}
+		.right{
+			color: #999;
+			background: url(imgs/right.png) left center no-repeat;
+		}
+	</style>
+	
+	<body>
+		<div id="div">
+			<input type="text" id="input" />
+			<p class="p" id="p">请输入6-16位账号</p>
+			
+		</div>
+		
+		<script type="text/javascript">
+			var p = document.getElementById('p')
+			var input = document.getElementById('input')
+			input.onblur = function(){
+				if(input.value.length < 6 || input.value.length > 16){
+					p.innerHTML = '输入错误，请输入6-16位账号'
+					p.className = 'p wrong'
+				}else{
+					p.innerHTML = '输入正确'
+					p.className = 'p right'
+				}
+			}
+			
+		</script>
+	</body>
+</html>

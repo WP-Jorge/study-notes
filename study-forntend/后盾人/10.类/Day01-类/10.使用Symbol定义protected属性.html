@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let HOST = Symbol()
+			class User {
+				[HOST] = 'http://123.com'
+				constructor(name) {
+					this.name = name
+				}
+				set host(url) {
+					this[HOST] = url
+				}
+				get host() {
+					return this[HOST]
+				}
+			}
+			let user = new User()
+			user.host = 123
+			console.log(user.host) // 123
+
+			// 定义User 的子类
+			class MyUser extends User {
+				constructor(name) {
+					super()
+				}
+				showFather() {
+					console.log(this[HOST])
+				}
+			}
+			let myUser = new MyUser()
+			myUser.showFather() // http://123.com
+		</script>
+	</body>
+</html>

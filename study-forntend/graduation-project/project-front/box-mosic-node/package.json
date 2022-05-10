@@ -1,0 +1,39 @@
+{
+	"name": "box-mosic-node",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"serve": "nodemon ./src/main.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"axios": "^0.26.1",
+		"bcryptjs": "^2.4.3",
+		"dotenv": "^16.0.0",
+		"ffmpeg-static-electron": "^2.0.3",
+		"ffprobe-static-electron": "^2.0.2",
+		"fluent-ffmpeg": "^2.1.2",
+		"jsonwebtoken": "^8.5.1",
+		"koa": "^2.13.4",
+		"koa-body": "^4.2.0",
+		"koa-parameter": "^3.0.1",
+		"koa-router": "^10.1.1",
+		"koa-static": "^5.0.0",
+		"mysql2": "^2.3.3",
+		"sequelize": "^6.17.0"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.21.0",
+		"@typescript-eslint/parser": "^5.21.0",
+		"eslint": "^8.14.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-vue": "^8.7.1",
+		"prettier": "^2.6.2",
+		"typescript": "^4.6.4"
+	}
+}

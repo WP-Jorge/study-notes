@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 字典的封装
+			class Dictionary {
+				// 字典属性
+				#items = {}
+
+				// 字典操作方法
+				// 1.添加键值对
+				set(key, value) {
+					this.#items[key] = value
+				}
+
+				// 2.判断字典中是否拥有某个key
+				has(key) {
+					return this.#items.hasOwnProperty(key)
+				}
+
+				// 3.删除元素
+				remove(key) {
+					if (!this.has(key)) {
+						return false
+					}
+					delete this.#items[key]
+					return true
+				}
+
+				// 4.根据key获取元素的值
+				get(key) {
+					return this.has(key) ? this.#items[key] : undefined
+				}
+
+				// 5.获取虽有keys
+				keys() {
+					return Object.keys(this.#items)
+				}
+
+				// 6.获取所有values
+				values() {
+					return Object.values(this.#items)
+				}
+
+				// 7.获取所有键值对
+				entries() {
+					return Object.entries(this.#items)
+				}
+
+				// 8.清空字典
+				clear() {
+					for (const key in this.#items) {
+						if (Object.hasOwnProperty.call(this.#items, key)) {
+							delete this.#items[key]
+						}
+					}
+				}
+			}
+
+			// 测试
+			// 1.测试创建
+			let dictionary = new Dictionary()
+
+			// 2.添加数据
+			dictionary.set('a', 1)
+			dictionary.set('b', 2)
+			dictionary.set('c', 3)
+			dictionary.set('d', 4)
+
+			// 3.通过key获取值
+			console.log(dictionary.get('a')) // 1
+			console.log(dictionary.get('b')) // 2
+			console.log(dictionary.get('c')) // 3
+			console.log(dictionary.get('d')) // 4
+
+			// 4.字典中是否拥有某个key
+			console.log(dictionary.has('a')) // true
+			console.log(dictionary.has('b')) // true
+			console.log(dictionary.has('c')) // true
+			console.log(dictionary.has('d')) // true
+
+			// 5.删除元素
+			console.log(dictionary.remove('a')) // true
+			console.log(dictionary.remove('a')) // false
+
+			// 6.获取虽有keys
+			console.log(dictionary.keys()) // ["b", "c", "d"]
+
+			// 7.获取所有values
+			console.log(dictionary.values()) // [2, 3, 4]
+
+			// 8.获取所有键值对
+			console.log(dictionary.entries()) // [Array(2), Array(2), Array(2)]
+
+			// 9.清空字典
+			dictionary.clear()
+			console.log(dictionary.keys()) // []
+		</script>
+	</body>
+</html>

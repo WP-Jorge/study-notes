@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JS</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	 crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+	 crossorigin="anonymous"></script>
+	 
+	 <style type="text/css">
+	 	#form {
+	 		padding: 10px;
+	 		position: relative;
+	 		min-height: 300px;
+	 		width: 600px;
+	 		border: 1px solid #C0C0C0;
+	 		margin: 0 auto;
+	 	}
+	 
+	 	legend {
+	 		width: auto;
+	 	}
+	 
+	 	.form-control {
+	 		/* max-width: 350px; */
+	 		display: inline-block;
+	 	}
+	 
+	 	.custom-select {
+	 		display: inline-block;
+	 		/* max-width: 60px; */
+	 		max-width: 60px;
+	 		/* margin-left: 20px; */
+	 		margin: 0;
+	 	}
+	 
+	 	table {
+	 		margin-top: 1px;
+	 		width: 600px !important;
+	 		border: 1px solid #C0C0C0;
+			border-collapse: collapse;
+	 		margin: 0 auto;
+	 	}
+	 
+	 	#label {
+	 		margin-left: 100px;
+	 	}
+	 	
+	 	#app {
+	 		width: 980px;
+	 		margin: 0 auto;
+	 	}
+	 	
+	 </style>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset id="form">
+			<legend>新增员工</legend>
+			<div class="form-group row">
+				<label for="name" class="col-sm-2 col-form-label">Name:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="name">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="age" class="col-sm-2 col-form-label">Age:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="age">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="sex" class="col-sm-2 col-form-label">Sex:</label>
+				<div class="col-sm-10">
+					<select class="custom-select my-1 mr-sm-2" v-model="newPerson.sex" id="sex">
+						<option value="male">男</option>
+						<option value="female">女</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label"></label>
+				<div class="col-sm-10">
+					<!-- <button class="btn btn-primary" @click="createPerson">添加</button> -->
+					<input type="button" class="btn btn-primary" value="添加" id="add">
+				</div>
+			</div>
+        </fieldset>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Sex</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let people = [
+            {
+                name: 'Jorge',
+                age: 20,
+                sex: 'male'
+            },
+            {
+                name: 'Joke',
+                age: 21,
+                sex: 'male'
+            },
+            {
+                name: 'Jane',
+                age: 20,
+                sex: 'female'
+            },
+            {
+                name: 'Meria',
+                age: 19,
+                sex: 'female'
+            }
+        ]
+        let tbody = document.querySelector('tbody');
+
+        // 获取表单信息
+        function getDatas() {
+            let newPerson = {
+                name: '',
+                age: 0,
+                sex: 'male'
+            }
+            let i_name = document.querySelector('#name');
+            let i_age = document.querySelector('#age');
+            let i_sex = document.querySelector('#sex');
+            newPerson.name = i_name.value;
+            newPerson.age = i_age.value;
+            newPerson.sex = i_sex.value;
+            // 将newPerson对象放入people数组
+            if (newPerson.name !== '') {
+                people.push(newPerson);
+            }
+        }
+
+        // 清空页面表格
+        function clearTab() {
+            for (let i = tbody.childNodes.length - 1; i >= 0; i--) {
+                tbody.removeChild(tbody.childNodes[i]);
+            }
+        }
+
+        // 创建页面表格
+        function createTab() {
+            let tr;
+            let td;
+            let btn;
+            for (let i = 0; i < people.length; i++) {
+                tr = document.createElement('tr');
+                tr.setAttribute('index', i);
+                tbody.appendChild(tr);
+
+                // name
+                td = document.createElement('td');
+                td.innerHTML = people[i].name;
+                tr.appendChild(td);
+
+                // age
+                td = document.createElement('td');
+                td.innerHTML = people[i].age;
+                tr.appendChild(td);
+
+                // sex
+                td = document.createElement('td');
+                td.innerHTML = people[i].sex;
+                tr.appendChild(td);
+
+                // deleteBtn
+				td = document.createElement('td');
+                btn = document.createElement('button');
+                btn.setAttribute('class', 'delete');
+				btn.classList.add('btn', 'btn-primary', 'btn-sm')
+                btn.innerHTML = '删除';
+				td.appendChild(btn);
+                tr.appendChild(td);
+            }
+        }
+
+        // 初始化表单信息
+        function initForm() {
+            document.querySelector('#name').value = '';
+            document.querySelector('#age').value = 0;
+            document.querySelector('#sex').value = 'male';
+        }
+
+        // 删除people
+        function deletePeople(e) {
+            let fatherNode = e.srcElement.parentNode;
+            let nowIndex = parseInt(fatherNode.parentNode.getAttribute('index'));
+            people.splice(nowIndex, 1);
+            initTable();
+        }
+
+        // 添加添加按钮的点击事件
+        function addAddPersonClick() {
+            document.querySelector('#add').addEventListener('click', initTable);
+        }
+
+        // 添加删除按钮的点击事件
+        function addDeleteClick() {
+            let items = document.getElementsByClassName('delete');
+            for (let i = 0; i < items.length; i++) {
+                items[i].addEventListener('click', deletePeople);
+            }
+        }
+
+        // 渲染页面表格
+        function initTable() {
+            getDatas();
+            clearTab();
+            createTab();
+            initForm();
+            addAddPersonClick();
+            addDeleteClick();
+        }
+
+		// 初始化表格
+        initTable();
+
+    </script>
+</body>
+
+</html>

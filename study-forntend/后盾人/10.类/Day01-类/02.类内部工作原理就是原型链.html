@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			class User {}
+			function Hd() {}
+			console.dir(User) // 与使用function 定义的类结构相似
+			console.dir(Hd)
+
+			console.log(User === User.prototype.constructor) // true
+			console.log(Hd === Hd.prototype.constructor) // true
+
+			// 1.在class中定义的方法被放到了原型链上
+			class User2 {
+				show() {}
+			}
+			function User3() {}
+			User3.prototype.show = function () {}
+			console.dir(User2.prototype) // Object.show
+			console.dir(User3.prototype) // Object.show
+		</script>
+	</body>
+</html>

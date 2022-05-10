@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<style>
+			
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="div01">
+			<!-- 要想让子组件能调用父组件中的方法，跟传值差不多，用 @func="父组件方法名"给子组件传父组件的方法 注：方法名后边不能带() -->
+			<mycom @func="show"></mycom>
+		</div>
+		
+		<template id="son">
+			<div>
+				<h3>这是子组件的h3</h3>
+				<input type="button" value="子组件中的按钮,调用父组件中的show方法" @click="sonclick"/>
+			</div>
+		</template>
+		
+		
+		
+		<script>
+			var mycom = {
+				template:'#son',
+				methods:{
+					sonclick(){
+						//使用this.$emit('自定义传入的函数名',参数1,参数2...)
+						//变相于子组件向父组件中传入this.sonmsg这个数据，父组件中可以调用传入的参数this.sonmsg
+						this.$emit('func',this.sonmsg) // 这里func不能用驼峰命名，如果这里用fun-C上面也不能用fun-c
+					}
+				},
+				data(){
+					return {
+						sonmsg:{
+							name:'少司命',age:18
+						}
+					}
+				}
+			}
+			
+			var nv =new Vue({
+				el:'#div01',
+				data:{
+					datamsgFromSon:null
+				},
+				methods:{
+					//show方法中传入参数data
+					show(data){
+						console.log('调用了父组件中的show方法'+data.name)
+						//子组件中的data数据传入父组件中
+						this.datamsgFromSon=data
+					}
+				},
+				components:{
+					mycom
+				}
+			})
+			
+		</script>
+	</body>
+</html>

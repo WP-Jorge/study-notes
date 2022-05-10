@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/*我们需要一个50*50像素(css像素)的图片直接放到我们的iphone8 里面会放大2倍 100* 100 就会模糊*/
+			/*我们采取的是放一个100* 100图片然后手动的把这个图片缩小为50* 50 (css像素) */
+			/*我们准备的图片比我们实际需要的大小大2倍，这就方式就是2倍图*/
+			
+			/* 要先有图片 */
+			/* background: ur1( images/dog.jpg) no-repeat; */
+			/* background-size: 图片的宽度图片的高度; */
+			/* background-size: 500px 200px; */
+			/* 1.只写一个参数肯定是宽度高度省略了会等比例缩放*/
+			/* background-size: 500px; */
+			/* 2.里面的单位可以跟% 相对于父盒子来说的*/
+			/* background-size: 50%;*/
+			/* 3. cover 等比例拉伸 要完全覆盖div盒子 可能有部分背景图片显示不全*/
+			/* background-size: cover; */
+			/* 4. contain 高度和宽度等比例拉伸当宽度或者高度铺满div盒子就不再进行拉伸了, 可能有部分空白区域*/
+			/* background-size: contain; */
+			
+			/* 1.我们有一个50 * 50的盒子需要一个背景图片，但是根据分析这个图片还是要准备2倍，
+			100*100 */
+			/* 2.我们需要把这个图片缩放一半，也就是50*50 background-size* /
+			div {
+				width: 50px;
+				height: 50px;
+				border: 1px solid red;
+			}
+		</style>
+	</head>
+	<body>
+	</body>
+</html>

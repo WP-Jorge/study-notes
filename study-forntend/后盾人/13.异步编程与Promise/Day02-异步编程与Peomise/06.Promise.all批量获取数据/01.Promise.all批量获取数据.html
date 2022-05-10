@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="02.ajax.js"></script>
+		<script>
+			const hdcms = new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve('第一个异步任务')
+				}, 1000)
+			})
+			const houdunren = new Promise((resolve, reject) => {
+				setTimeout(() => {
+					resolve('第二个异步任务')
+				}, 1000)
+			})
+			// 1.只要有一个promise 错误，就错误，返回一个数组
+			Promise.all([hdcms, houdunren]).then(res => {
+				console.log(res)
+			})
+			// 2.根据城市批量获取天气信息
+			function getWeather(citys) {
+				let promises = citys.map(city => {
+					return ajax(
+						`https://geoapi.qweather.com/v2/city/lookup?location=${city}&key=6fea66ec596e466a99686bcc6bb3a72a`
+					)
+				})
+				return Promise.all(promises)
+			}
+			getWeather(['常熟', '福州', '上海']).then(res => {
+				console.log(res)
+			})
+		</script>
+	</body>
+</html>

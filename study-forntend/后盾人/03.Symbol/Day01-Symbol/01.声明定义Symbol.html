@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.普通申明
+			let sb = Symbol('sb')
+			let sb2 = Symbol('sb2')
+			// Symbol 都不相同
+			console.log(sb === sb2) // false
+			console.log(sb) // Symbol(sb)
+			console.log(sb2) // Symbol(sb2)
+
+			// 2.for申明
+			let sb3 = Symbol.for('sb3')
+			let sb4 = Symbol.for('sb3')
+			console.log(sb3 === sb4) // true  使用for会去内存中是否有相同描述的symbol，有的话将地址指向它
+			console.log(sb3) // Symbol(sb3)
+			console.log(sb4) // Symbol(sb3)
+
+			// 3.获取描述
+			console.log(sb.description) // sb
+			console.log(sb2.description) // sb2
+
+			// 4.keyfor根据symbol获取描述
+			console.log(Symbol.keyFor(sb4)) // sb3
+		</script>
+	</body>
+</html>

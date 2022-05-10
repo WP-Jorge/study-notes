@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * 归并排序：
+			 * 时间复杂度：O(nlogn)
+			 * 空间复杂度：O(n)
+			 * 稳定性：稳定
+			 */
+			function mergeSort(arr) {
+				if (arr.length < 2) {
+					return arr;
+				}
+				let mid = parseInt(arr.length / 2);
+				return merge(mergeSort(arr.slice(0, mid)), mergeSort(arr.slice(mid)));
+
+				function merge(left, right) {
+					let res = [];
+					while (left.length && right.length) {
+						if (left[0] > right[0]) {
+							res.push(right.shift());
+							continue;
+						}
+						res.push(left.shift());
+					}
+					while (left.length) {
+						res.push(left.shift());
+					}
+					while (right.length) {
+						res.push(right.shift());
+					}
+					return res;
+				}
+			}
+			console.log(mergeSort([5, 2, 3, 0, 9, 12, 41, 1, 2, 4]));
+		</script>
+	</body>
+</html>

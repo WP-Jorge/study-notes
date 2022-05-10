@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 表示1、2、3、4、5、6
+			let reg1 = /[123456]/
+			let str1 = '1'
+			console.log(str1.match(reg1)) // ["1", index: 0, input: "1", groups: undefined]
+
+			// 表示12、34、56
+			let reg2 = /(12|34|56)/
+			let str2 = '56'
+			console.log(str2.match(reg2)) // ["56", "56", index: 0, input: "56", groups: undefined]
+		</script>
+	</body>
+</html>

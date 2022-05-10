@@ -1,0 +1,10 @@
+// @for $var from <开始值> through <结束值> {}
+
+$columns: 4;
+
+// through 包含最后一个， to不包含最后一个
+@for $i from 1 through $columns {
+	.col-#{$i} {
+		width: 100% / $columns * $i;
+	}
+}

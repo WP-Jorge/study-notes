@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let map = new Map([
+				['houdunren', '后盾人'],
+				['hdcms', '开源系统']
+			])
+			map.set('name', '线上教育')
+
+			// 1.返回所有的键 是个迭代器
+			console.log(map.keys()) // MapIterator {"houdunren", "hdcms", "name"}
+
+			// 2.获取所有值 是个迭代器
+			console.log(map.values()) // MapIterator {"后盾人", "开源系统", "线上教育"}
+
+			// 3.获取所有的键值对
+			console.log(map.entries()) // MapIterator {"houdunren" => "后盾人", "hdcms" => "开源系统", "name" => "线上教育"}
+
+			// 4.循环键
+			for (const key of map.keys()) {
+				console.log(key) // houdunren hdcms name
+			}
+
+			// 5.循环值
+
+			for (const value of map.values()) {
+				console.log(value) // 后盾人 开源系统 线上教育
+			}
+
+			// 6.循环键值对
+			// ① for of
+			for (const [key2, value2] of map.entries()) {
+				console.log(key2, value2) // houdunren 后盾人 hdcms 开源系统 name 线上教育
+			}
+
+			// ② forEach
+			map.forEach((value, key, map) => {
+				console.log(value) // 线上教育
+				console.log(key) // name
+				console.log(map) // Map(3) {"houdunren" => "后盾人", "hdcms" => "开源系统", "name" => "线上教育"}
+			})
+		</script>
+	</body>
+</html>

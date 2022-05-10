@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		Function.prototype.myBind = function (content) {
+			// 1、获取参数
+			let args = [...arguments].slice(1);
+			// 2、替换 this 指向并返回替换后的函数
+			return () => {
+				if (!content) {
+					content = window;
+				}
+				this.apply(content, args);
+			};
+		}
+		function fn (msg) {
+			console.log(this);
+			return msg;
+		}
+		newFn = fn.bind(fn, 'msg');
+		console.log(newFn());
+	</script>
+</body>
+</html>

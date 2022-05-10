@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			Function.prototype.myApply = function (content) {
+				// 1、获取参数
+				let args = [...arguments][1];
+				// 2、判断第二个参数是否是数组，不是就抛出错误
+				if (args && !Array.isArray(args)) {
+					throw new TypeError('第二个参数必须是数组');
+				}
+				if (!content) {
+					content = window;
+				}
+				// 3、设置 fn 为调用 myApply 的方法
+				content.fn = this;
+				// 4、执行函数
+				let res;
+				if (args.length) {
+					res = content.fn(...args);
+				} else {
+					res = content.fn();
+				}
+				// 5、删除新增的 fn 方法属性
+				delete content.fn;
+				// 6、将返回值返回
+				return res;
+			}
+			function fn (msg) {
+				console.log(this);
+				return msg;
+			}
+			console.log(fn.myApply(fn, ['msg']));
+		</script>
+	</body>
+</html>

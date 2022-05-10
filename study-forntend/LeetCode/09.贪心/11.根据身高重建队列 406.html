@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[][]} people
+			 * @return {number[][]}
+			 * 贪心，时间复杂度O(n), 空间复杂度O(n)
+			 */
+			var reconstructQueue = function (people) {
+				let res = [];
+				people.sort((a, b) => {
+					if (a[0] !== b[0]) {
+						return b[0] - a[0];
+					}
+					return a[1] - b[1];
+				});
+				people.forEach((item, index) => {
+					res.splice(item[1], 0, item);
+				});
+				return res;
+			};
+		</script>
+	</body>
+</html>

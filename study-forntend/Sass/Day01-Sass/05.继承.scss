@@ -1,0 +1,17 @@
+// @extend 继承样式
+
+.alert {
+	padding: 15px;
+}
+
+.alert a {
+	font-size: 19px;
+}
+
+.alert-info {
+	// 继承alert的样式
+	// 跟alert相关的样式都会被继承过来
+	@extend  .alert;
+	// 定义自己的样式
+	background-color: pink;
+}

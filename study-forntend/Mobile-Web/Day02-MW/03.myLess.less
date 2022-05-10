@@ -1,0 +1,70 @@
+// 1.Less变量
+	// 变量是指没有固定的值,可以改变的。因为我们CSS中的一些颜色和数值等经常使用。
+	// @变量名:值;
+		// ①.变量命名规范
+			// 必须有@为前缀
+			// 不能包含特殊字符
+			// 不能以数字开头
+			// 大小写敏感
+// 定义一个粉色变量
+@color: pink;
+@font14: 14px;
+body {
+	background-color: @color;
+}
+div {
+	background-color: @color;
+	font-size: @font14;
+}	
+a {
+	font-size: @font14;
+}
+			
+// 2.Less编译
+	// 下载编译插件将less编译成css文件
+	
+// 3.Less嵌套
+	.header {
+		width: 100px;
+		height: 100px;
+		background-color: pink;
+		// 嵌套写法，等价于.header a {}
+		a {
+			line-height: 15px;
+			color: pink;
+		}
+	}
+	// 如果遇见(交集|伪类|伪元素选择器)
+	// 内层选择器的前面没有 &符号,则它被解析为父选择器的后代;
+	// 如果有&符号 ,它就被解析为父元素自身或父元素的伪类。
+	.header {
+		width: 100px;
+		height: 100px;
+		background-color: pink;
+		a {
+			line-height: 15px;
+			color: pink;
+			// 等价于.header a:hovur {}
+			&:hovur {
+				color: yellowgreen;
+			}
+		}
+	}
+// 4.Less运算
+	// 任何数字、颜色或者变量都可以参与运算。就是Less提供了加(+)、减(-)、乘(*)、除(/)算术运算。
+	// 运算符两边必须添加空格
+	// 两个参数参与运算，只有一个数有单位，那就以这个数的单位为准
+	// 两个参数参与运算，两个或多个数都有单位，那就以第一个数的单位为准
+	@border: 5px + 5;
+	div {
+		width: 200px - 50;
+		height: 200px * 2;
+		border: @border + 1 solid red;
+		// 颜色数字也可以这样使用
+		color: #666 - #222; // 结果为#444
+	}
+	img {
+		width: 82 / 50rem;
+		height: 82 / 50rem;
+	}
+	

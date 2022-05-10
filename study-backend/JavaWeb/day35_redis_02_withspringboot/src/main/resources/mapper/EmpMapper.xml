@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.redis.mapper.EmpMapper">
+    <!-- 开启自定义缓存 -->
+    <!--<cache type="com.example.redis.cache.RedisCache"/>-->
+    <!-- 关联关系缓存处理 -->
+    <cache-ref namespace="com.example.redis.mapper.UserMapper"/>
+    
+    <select id="findAll" resultType="com.example.redis.entity.Emp">
+        select * from emp
+    </select>
+</mapper>

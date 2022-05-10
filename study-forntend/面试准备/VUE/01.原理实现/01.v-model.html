@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<input type="text" :value="msg" @input="onMessageChange">
+		<p>{{ msg }}</p>
+		<hr>
+		<button @click="changeMessage">点击改变 msg </button>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.9/vue.js"></script>
+	<script>
+		let vm = new Vue({
+			el: '#app',
+			data() {
+				return {
+					msg: '123'
+				}
+			},
+			methods: {
+				onMessageChange(e) {
+					this.msg = e.target.value;
+				},
+				changeMessage() {
+					this.msg = '000';
+				}
+			}
+		});
+	</script>
+</body>
+</html>

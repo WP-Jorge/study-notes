@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//1、算数运算符
+				//1.1 基本算数运算符+ - * / %(取余)
+				// console.log(0.1+0.2) //输出 0.30000000000000004 不能直接用浮点数进行运算，有精度误差
+				// var num = 0.3
+				// console.log(num === (0.1+0.2)) //输出false
+			
+			//2、比较运算符
+				//2.1 == != 运算符
+				// console.log(18 == '18') //输出true
+				// var num = '18'
+				// console.log(18 == num) //输出true，默认将字符型的转换为数值型进行比较，只要求值相同就返回true !=同理
+				// console.log(typeof num) //输出string 类型并没有改变
+				
+				// //2.2 === !== 运算符
+				// console.log(18 === '18') //输出false,只有两边类型、数据都等时返回true，!==同理
+				
+			//3、逻辑运算符
+				//3.1 && || ! 运算符 （&&优先级>||优先级）
+					//3.1.1 && 运算符
+					// console.log( 123 && 456 && 789) //输出 789 ，&& 全部true，返回最后一个数
+					// console.log(123 && 0 & 456) //输出 0 ，第一个false，后边就不判断，返回false的那个数
+					
+					// //3.1.2 || 运算符
+					// console.log(0 || 456 || 789) //输出456 ，哪个数为trun 就返回哪个数，后边的数不进行运算
+					// var num = 0
+					// console.log(123 || num++) //输出123 ，哪个数为trun 就返回哪个数，后边的数不进行运算
+					// console.log(num) //输出0，上面变大时的num++并未计算
+					// console.log(0 || 0 || 0) //输出0 ，全false 返回0
+		</script>
+	</body>
+</html>

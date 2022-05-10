@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function extend(son, parent) {
+				// 推荐使用这个
+				// son.prototype.__proto__ = parent.prototype
+
+				// 这个每次create会创建一个新的原型，导致之前原型上的属性或方法会丢失
+				son.prototype = Object.create(parent.prototype)
+				Object.defineProperty(son.prototype, 'constructor', {
+					value: son,
+					enumerable: false
+				})
+			}
+
+			let Address = {
+				getAddress() {
+					console.log('获取地址')
+				}
+			}
+
+			let Credit = {
+				total() {
+					console.log('积分统计')
+				}
+			}
+
+			let Request = {
+				ajax() {
+					console.log('请求后台')
+				}
+			}
+
+			function User(name, age) {
+				this.name = name
+				this.age = age
+			}
+
+			User.prototype.show = function () {
+				console.log(this.name, this.age)
+			}
+
+			function Admin(...args) {
+				User.call(this, ...args)
+			}
+
+			extend(Admin, User)
+
+			// 使用assign将对象内的属性、方法混合到Admin.prototype中
+			Admin.prototype = Object.assign(
+				Admin.prototype,
+				Address,
+				Credit,
+				Request
+			)
+
+			let admin = new Admin('张三', 18)
+			admin.show() // 张三 18
+			admin.total() // 积分统计
+			admin.getAddress() // 获取地址
+			admin.ajax() // 请求后台
+		</script>
+	</body>
+</html>

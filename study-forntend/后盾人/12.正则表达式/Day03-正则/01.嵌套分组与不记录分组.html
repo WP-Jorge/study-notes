@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let str = `
+                https://www.houdunren.com
+            `
+			let reg = /https:\/\/(\w+\.\w+\.(com|org|cn))/gi
+			console.log(str.match(reg)) // ["https://www.houdunren.com"]
+
+			let reg2 = /https:\/\/(\w+\.\w+\.(com|org|cn))/i
+			console.log(str.match(reg2)) // [0: "https://www.houdunren.com" 1: "www.houdunren.com" 2: "com"]
+
+			// ?: 表示排除这个分组
+			let reg3 = /https:\/\/(\w+\.\w+\.(?:com|org|cn))/i
+			console.log(str.match(reg3)) // [0: "https://www.houdunren.com" 1: "www.houdunren.com"]
+		</script>
+	</body>
+</html>

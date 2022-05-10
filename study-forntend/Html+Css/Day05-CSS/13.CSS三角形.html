@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.box1 {
+				width: 0;
+				height: 0;
+				/* border: 10px solid skyblue; */
+				border-top: 100px solid pink;
+				border-right: 100px solid skyblue;
+				border-bottom: 100px solid yellowgreen;
+				border-left: 100px solid orangered;
+			}
+			.box2 {
+				width: 0;
+				height: 0;
+				border: 100px solid transparent;
+				border-top: 100px solid pink;
+			}
+			
+			.box3 {
+				margin: auto;
+				width: 100px;
+				height: 100px;
+				/* border: 10px solid skyblue; */
+				border-top: 100px solid pink;
+				border-right: 100px solid skyblue;
+				border-bottom: 100px solid yellowgreen;
+				border-left: 100px solid orangered;
+			}
+			.box4 {
+				margin: auto;
+				width: 100px;
+				height: 100px;
+				border: 100px solid transparent;
+				border-top: 100px solid pink;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 没有宽高的box的边框为三角形 -->
+		<div class="box1"></div>
+		<!-- 倒三角 -->
+		<div class="box2"></div>
+		
+		<!-- 梯形 -->
+		<div class="box3"></div>
+		<!-- 倒梯形 -->
+		<div class="box4"></div>
+	</body>
+</html>

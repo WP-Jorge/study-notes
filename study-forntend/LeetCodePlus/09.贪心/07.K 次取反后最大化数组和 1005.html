@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @param {number} k
+			 * @return {number}
+			 * 贪心 时间复杂度O(nlogn) 空间复杂度O(1)
+			 */
+			var largestSumAfterKNegations = function (nums, k) {
+				nums.sort((a, b) => Math.abs(b) - Math.abs(a));
+				for (let i = 0; i < nums.length; i++) {
+					if (k > 0 && nums[i] < 0) {
+						nums[i] *= -1;
+						k--;
+					}
+				}
+				if (k > 0 && k % 2 === 1) {
+					nums[nums.length - 1] *= -1;
+				}
+				return nums.reduce((pre, cur) => pre + cur);
+			};
+		</script>
+	</body>
+</html>

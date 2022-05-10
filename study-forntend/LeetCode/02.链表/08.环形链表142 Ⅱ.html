@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * Definition for singly-linked list.
+             * function ListNode(val) {
+             *     this.val = val;
+             *     this.next = null;
+             * }
+             */
+
+            /**
+             * @param {ListNode} head
+             * @return {ListNode}
+             * 双指针 时间复杂度O(n), O(1)
+             * 教程：https://leetcode-cn.com/problems/linked-list-cycle-ii/solution/linked-list-cycle-ii-kuai-man-zhi-zhen-shuang-zhi-/
+             */
+            var detectCycle = function (head) {
+                if (!head || !head.next) {
+                    return null;
+                }
+                let fast = head;
+                let slow = head;
+                while (true) {
+                    if (!fast || !fast.next) {
+                        return null;
+                    }
+                    slow = slow.next;
+                    fast = fast.next.next;
+                    if (fast === slow) {
+                        break;
+                    }
+                }
+                fast = head;
+                while (slow !== fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return fast;
+            };
+        </script>
+    </body>
+</html>

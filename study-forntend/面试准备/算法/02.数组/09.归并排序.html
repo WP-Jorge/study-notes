@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function mergeSort(arr) {
+				if (arr.length < 2) {
+					return arr;
+				}
+				let mid = parseInt(arr.length / 2);
+				return marge(mergeSort(arr.slice(0, mid)), mergeSort(arr.slice(mid)));
+				function marge(left, right) {
+					let res = [];
+					while (left.length && right.length) {
+						if (left[0] < right[0]) {
+							res.push(left.shift());
+							continue;
+						}
+						res.push(right.shift());
+					}
+					if (left.length) {
+						res.push(...left);
+					}
+					if (right.length) {
+						res.push(...right);
+					}
+					return res;
+				}
+			}
+			console.log(margeSort([1, 4, 2, 3, 1, 6, 7, 3]));
+		</script>
+	</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @return {number[][]}
+			 * 回溯 + 剪枝
+			 */
+			var subsetsWithDup = function (nums) {
+				let res = [];
+				let path = [];
+				nums = nums.sort((a, b) => {
+					return a - b;
+				});
+				let backtracking = index => {
+					res.push([...path]);
+					for (let i = index; i < nums.length; i++) {
+						// nums[i] === nums[i - 1] === true 说明同一树层出现过，false 说明同一树枝出现过
+						if (i > index && nums[i] === nums[i - 1]) {
+							continue;
+						}
+						path.push(nums[i]);
+						backtracking(i + 1);
+						path.pop();
+					}
+				};
+				backtracking(0);
+				return res;
+			};
+		</script>
+	</body>
+</html>

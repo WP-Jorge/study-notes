@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/**
+		 * 寄生组合式继承
+		 * 优点：
+		 * 		① 解决其他继承中出现的所有问题
+		 */ 
+		function inheritPrototype(sub, sup) {
+			let newPrototype = Object.create(sup.prototype);
+			newPrototype.constructor = sub;
+			sub.prototype = newPrototype;
+		}
+
+		function Animal() {
+			this.name = 'animal';
+			this.food = ['草'];
+		}
+		Animal.prototype.eat = function() {
+			console.log(`eat ${this.food}`);
+		}
+		function Cat() {
+			Animal.call(this);
+			this.name = 'cat';
+		}
+		inheritPrototype(Cat, Animal);
+		let cat1 = new Cat();
+		console.dir(cat1)
+		cat1.food.push('鱼');
+		console.log(cat1.name); // cat
+		console.log(cat1.food); // ['草', '鱼']
+		cat1.eat(); // eat 草,鱼
+		let cat2 = new Cat();
+		console.log(cat2.name); // cat
+		console.log(cat2.food); // ['草']
+		cat2.eat(); // eat 草
+		
+	</script>
+</body>
+</html>

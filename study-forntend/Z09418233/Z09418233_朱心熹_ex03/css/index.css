@@ -1,0 +1,64 @@
+#app {
+	/* 清除margin上外边距塌陷 */
+	overflow: hidden;
+}
+
+.box {
+	/* 清除margin上外边距塌陷 */
+	overflow: hidden;
+	min-height: 420px;
+}
+
+.table {
+	margin: 100px auto 0;
+}
+
+.table table thead tr {
+	display: flex;
+	width: 100%;
+}
+
+.table table tbody tr {
+	display: flex;
+	width: 100%;
+}
+
+tbody {
+	min-height: 235px;
+}
+
+.form-control {
+	width: 100%;
+}
+
+.space-avg {
+	flex: 1;
+}
+
+.active-skyblue {
+	background-color: skyblue;
+}
+
+.disabled {
+	pointer-events:none;
+}
+
+#app .alert {
+	text-align: center;
+	position: fixed;
+	top: 20px;
+	left: calc(50% - 150px);
+	width: 300px;
+	
+}
+
+/* 信息弹出框动画 */
+.v-enter,
+.v-leave-to {
+	opacity: 0;
+}
+
+.v-enter-active,
+.v-leave-active {
+	transition: all .3s ease-in;
+}

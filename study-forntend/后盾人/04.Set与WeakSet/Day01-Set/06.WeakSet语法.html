@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.WeakSet 语法与Set 一样，只是 WeakSet内元素必须是引用类型
+			// let set = new WeakSet('ad') // 报错
+			// let set2 = new WeakSet([1, 2, 3]) // 报错
+			let set3 = new WeakSet()
+			set3.add([1, 2, 3]) // 成功
+		</script>
+	</body>
+</html>

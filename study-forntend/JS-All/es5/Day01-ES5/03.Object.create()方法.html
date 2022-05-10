@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /**
+         * 1.Object.create(prototype, [descriptors])
+         * 作用：以指定对象为原型创建新的对象
+         * 第一个参数：指定的对象
+         * 第二个参数：为新的对象指定新的属性，并对属性进行藐视
+         *  ① value：指定值
+         *  ② writable：标识当前属性值是否可被修改，默认false
+         *  ③ configurable：标识当前值是否可被删除，默认false
+         *  ④ enumerable：标识当前属性是否能用for in 枚举 默认false
+         */
+        
+        let obj = {username: '张三', age: 30}
+        let obj1 = {}
+        obj1 = Object.create(obj, {
+            sex: {
+                value: '男',
+                writable: true, // true 可以修改
+                configurable: true, // true 可被删除
+                enumerable: true // true 可遍历
+            }
+        })
+        console.log(obj1.sex)   
+        console.log(obj1.age)  
+
+        obj1.age = 0     
+        console.log(obj1.age)
+
+        delete obj1.age
+        console.log(obj1)
+
+        for (const item in obj1) {
+            console.log(item)
+        }
+
+        /**
+         * 2.Object.defineProperties(object, descriptors)
+         * 作用：为指定对象定义扩展多个属性
+         *  ① get：用来获取当前属性值的回调函数
+         *  ② set：修改当前属性值的触发回调函数，并且实参为修改后的值
+         *  ③ 存取器属性：setter， getter 一个用来存值， 一个用来取值
+         */ 
+        let obj2 = {firstName: '张', lastName: '三'}
+        Object.defineProperties(obj2, {
+            fullName: {
+                get: function () { // 获取属性值，获取扩展属性值的时候get 方法自动调用
+                    return this.firstName + ' ' + this.lastName
+                },
+                set: function (data) { // 监听扩展属性，当扩展属性发生变化时会自动调用，调用后会将变化的值作为实参注入到set函数中
+                    let names = data.split(' ')
+                    this.firstName = names[0]
+                    this.lastName = names[1]
+                }
+            }
+        })
+        console.log(obj2.fullName)
+        obj2.fullName = '李 四'
+        console.log(obj2)
+    </script>
+</body>
+</html>

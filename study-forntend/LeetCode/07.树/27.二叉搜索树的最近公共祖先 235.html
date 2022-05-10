@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * Definition for a binary tree node.
+             * function TreeNode(val) {
+             *     this.val = val;
+             *     this.left = this.right = null;
+             * }
+             */
+
+            /**
+             * @param {TreeNode} root
+             * @param {TreeNode} p
+             * @param {TreeNode} q
+             * @return {TreeNode}
+             * 二叉树的深度优先搜索，时间复杂度O(n), 空间复杂度O(n)
+             */
+            var lowestCommonAncestor = function (root, p, q) {
+                if (!root) {
+                    return root;
+                }
+                if (root.val > p.val && root.val > q.val) {
+                    return lowestCommonAncestor(root.left, p, q);
+                }
+                if (root.val < p.val && root.val < q.val) {
+                    return lowestCommonAncestor(root.right, p, q);
+                }
+                return root;
+            };
+        </script>
+    </body>
+</html>

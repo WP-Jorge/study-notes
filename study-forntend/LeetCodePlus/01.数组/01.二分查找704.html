@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @param {number} target
+			 * @return {number}
+			 * 数组操作 时间复杂度 O(logn) 空间复杂的O(1)
+			 */
+			var search = function (nums, target) {
+				let l = 0;
+				let r = nums.length - 1;
+				let m = parseInt((l + r) / 2);
+				while (true) {
+					// l === r 在这里已经判断，如果没有找到，则说明不存在，下一步直接返回 -1
+					if (nums[m] === target) {
+						return m;
+					}
+					if (l >= r) {
+						return -1;
+					}
+					if (nums[m] < target) {
+						l = m + 1;
+						m = parseInt((l + r) / 2);
+						continue;
+					}
+					if (nums[m] > target) {
+						r = m - 1;
+						m = parseInt((l + r) / 2);
+					}
+				}
+			};
+			console.log(search([-1, 0, 3, 5, 9, 12], 9));
+		</script>
+	</body>
+</html>

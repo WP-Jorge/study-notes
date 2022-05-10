@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number} target
+			 * @param {number[]} nums
+			 * @return {number}
+			 * 滑动窗口 时间复杂度O(n) 空间复杂度O(1)
+			 */
+			var minSubArrayLen = function (target, nums) {
+				let l = 0;
+				let r = 0;
+				let count = nums.length + 1;
+				let sum = 0;
+				while (r < nums.length) {
+					sum += nums[r];
+					r++;
+					while (sum >= target) {
+						count = r - l < count ? r - l : count;
+						sum -= nums[l];
+						l++;
+					}
+				}
+				return count === nums.length + 1 ? 0 : count;
+			};
+			console.log(minSubArrayLen(7, [2, 3, 1, 2, 4, 3]));
+		</script>
+	</body>
+</html>

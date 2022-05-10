@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.使用立即执行函数解决变量冲突
+			;(function () {
+				function hd() {
+					console.log('hd')
+				}
+				window.hd = hd
+			})()
+			let hd = function () {
+				console.log('乔治')
+			}
+			hd() // 乔治
+			window.hd() // hd
+
+			// 2.使用块作用域解决变量名冲突
+			{
+				let hd = function () {
+					console.log('块中的hd')
+				}
+				window.func2 = hd
+			}
+			window.func2() // 块中的hd
+		</script>
+	</body>
+</html>

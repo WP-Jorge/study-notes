@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * Definition for singly-linked list.
+			 * function ListNode(val) {
+			 *     this.val = val;
+			 *     this.next = null;
+			 * }
+			 */
+
+			/**
+			 * @param {ListNode} headA
+			 * @param {ListNode} headB
+			 * @return {ListNode}
+			 * 双指针 时间复杂度O(m+n) 空间复杂度O(1)
+			 */
+			var getIntersectionNode = function (headA, headB) {
+				let a = headA;
+				let b = headB;
+				while (a != b) {
+					a = a ? a.next : headB;
+					b = b ? b.next : headA;
+				}
+				return a;
+			};
+		</script>
+	</body>
+</html>

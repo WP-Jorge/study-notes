@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cslg.applysystem.mapper.CarouselMapper">
+    <cache-ref namespace="cn.cslg.applysystem.mapper.CarouselMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.FileMapper"/>
+    <select id="getCarousels" resultType="cn.cslg.applysystem.pojo.vo.CarouselVO" resultMap="carouselResultMap">
+        select * from carousel, file
+        where carousel.file_id = file.file_id
+    </select>
+
+    <resultMap id="carouselResultMap" type="cn.cslg.applysystem.pojo.vo.CarouselVO">
+        <id property="carouselId" column="carousel_id"></id>
+        <association property="file" resultMap="fileResultMap"></association>
+    </resultMap>
+
+    <resultMap id="fileResultMap" type="cn.cslg.applysystem.pojo.vo.FileVO">
+        <id property="fileId" column="file_id"></id>
+        <result property="filePath" column="file_path"></result>
+        <result property="fileType" column="file_type"></result>
+
+    </resultMap>
+
+    <!--<resultMap id="fileTypeResultMap" type="cn.cslg.applysystem.pojo.vo.FileTypeVO">-->
+    <!--    <id property="fileTypeId" column="file_type_id"></id>-->
+    <!--    <result property="fileTypeName" column="file_type_name"></result>-->
+    <!--</resultMap>-->
+</mapper>

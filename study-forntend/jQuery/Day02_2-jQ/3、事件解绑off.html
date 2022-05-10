@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			div {
+				width: 100px;
+				height: 100px;
+				background-color: pink;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div></div>
+		<ul>
+			<li>我们都是好孩子</li>
+			<li>我们都是好孩子</li>
+			<li>我们都是好孩子</li>
+		</ul>
+		<p>我是屁</p>
+		<script>
+			$(function() {
+				$("div").on({
+					click: function() {
+						console.log("我点击了");
+					},
+					mouseover: function() {
+						console.log('我鼠标经过了');
+					}
+				});
+				$("ul").on("click", "li", function() {
+					alert(11);
+				});
+				// 1. 事件解绑 off 
+				// $("div").off();  // 这个是解除了div身上的所有事件
+				$("div").off("click"); // 这个是解除了div身上的点击事件
+				$("ul").off("click", "li"); // 这个是解绑委托事件
+				// 2. one() 但是它只能触发事件一次
+				$("p").one("click", function() {
+					alert(11);
+				})
+			})
+		</script>
+	</body>
+</html>

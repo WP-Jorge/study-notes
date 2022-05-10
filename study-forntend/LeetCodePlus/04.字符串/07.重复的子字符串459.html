@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string} s
+			 * @return {boolean}
+			 * KMP 时间复杂度O(m+n) 空间复杂度O(m)
+			 */
+			var repeatedSubstringPattern = function (s) {
+				let str = s.repeat(2);
+				str = str.slice(1, str.length - 1);
+				function getNext(s) {
+					let j = 0;
+					let next = [j];
+					for (let i = 1; i < s.length; i++) {
+						while (j > 0 && s[i] !== s[j]) {
+							j = next[j - 1];
+						}
+						if (s[i] === s[j]) {
+							j++;
+						}
+						next.push(j);
+					}
+					return next;
+				}
+				let j = 0;
+				let next = getNext(s);
+				for (let i = 0; i < str.length; i++) {
+					while (j > 0 && str[i] !== s[j]) {
+						j = next[j - 1];
+					}
+					if (str[i] === s[j]) {
+						j++;
+					}
+					if (j === s.length) {
+						return true;
+					}
+				}
+				return false;
+			};
+			console.log(repeatedSubstringPattern('abcabcabcabc'));
+		</script>
+	</body>
+</html>

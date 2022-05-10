@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<input type="text" validate rule="max:12,min:3" />
+		<input type="text" validate rule="max:3,isNumber" />
+		<script>
+			class Validate {
+				max(value, len) {
+					return value.length <= len
+				}
+				min(value, len) {
+					return value.length >= len
+				}
+				isNumber(value) {
+					return /^\d+$/.test(value)
+				}
+			}
+			let validate = new Validate()
+			function ProxyFactory(target) {
+				return new Proxy(target, {
+					get(target, key) {
+						return target[key]
+					},
+					set(target, key, el) {
+						let rule = el.getAttribute('rule')
+						let validate = new Validate()
+						let state = rule.split(',').every(rule => {
+							let info = rule.split(':')
+							return validate[info[0]](el.value, info[1])
+						})
+						console.log(state)
+						return true
+					}
+				})
+			}
+			let proxy = ProxyFactory(document.querySelectorAll('[validate]'))
+			console.log(proxy) // Proxy {0: input, 1: input}
+			proxy.forEach((item, i) => {
+				item.addEventListener('keyup', function () {
+					proxy[i] = this
+				})
+			})
+		</script>
+	</body>
+</html>

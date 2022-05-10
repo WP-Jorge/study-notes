@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 在使用定位布局时,可能会出现盒子重叠的情况。此时,可以使用z-index来控制盒子的前后次序(z轴)
+            如果没加z-index，则后来者居上
+            只有定位的盒子才能生效
+         */
+
+        .father {
+            position: absolute;
+            z-index: 1;
+            height: 200px;
+            width: 200px;
+            background-color: pink;
+        }
+        .son {
+            position: absolute;
+            z-index: 2;
+            height: 100px;
+            width: 100px;
+            background-color: yellowgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="father"></div>
+    <div class="son"></div>
+</body>
+</html>

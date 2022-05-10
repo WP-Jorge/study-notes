@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let a = { name: '后盾人' }
+			let b = { url: 'houdunren.com' }
+			// 给a设置父b
+			Object.setPrototypeOf(a, b)
+
+			// hasOwnProperty 检测 a 中是否包含某个属性 不检测 父类（原型上）属性
+			console.log(a.hasOwnProperty('url')) // false
+			console.log(a.hasOwnProperty('name')) // true
+		</script>
+	</body>
+</html>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!--mybatis.xml文件加入日志配置，可以在控制台输出执行的sql语句和参数-->
+    <!--settings :控制mybatis全局行为-->
+    <settings>
+        <!--设置mybatis输出日志
+            logImpl：控制日志
+            value="STDOUT_LOGGING" 表示输出到控制台上
+        -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!--环境配置：数据库连接信息-->
+    <!--
+        default :必须和某个environment的id值一样。
+        告诉mybatis使用哪个数据库的连接信息。也就是访问哪个数据库
+    -->
+    <environments default="development">
+        <!--
+            environment:一个数据库信息的配置，就是环境
+            id:一个唯一值,自定义,表示环境的名称。
+        -->
+        <environment id="development">
+            <!--
+                transactionManager : mybatis的事务类型,事务的回滚方式
+                type:   JDBC: 表示使用jdbc中的Connection对象的commit , rollback做事务处理
+                        MANAGED: 把mybatis的事务处理委托给其他容器、框架、服务器软件
+            -->
+            <transactionManager type="JDBC"/>
+            <!--
+                datasource:表示数据源，连接数据库的
+                type :指定数据源类型
+                    1) POOLED:表示数据源的类型，POOLED表示使用连接池，mybatis会创建PooledDataSource类
+                    2) UPOLLED:不使用连接池，mybatis会创建一个UnpooledDataSource，管理Connection对象的使用
+                    3) JNDI:java命名和目录服务（Window注册表）
+            -->
+            <dataSource type="POOLED">
+                <!--
+                    driver , url ,username，password是固定的，不能自定义。
+                -->
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql:///springdb?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=GMT%2B8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="111111"/>
+            </dataSource>
+        </environment>
+
+        <environment id="online">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql:///springdb?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=GMT%2B8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="111111"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--
+        sql mapper(sq1映射 文件)的位置
+    -->
+    <mappers>
+        <!--第一种方式，使用多个mapper
+            一个mapper标签指定一个文件的位置。
+            从类路径开始的路径信息。target/clasess(类路径)
+        -->
+        <!--<mapper resource="dao/StudentDao.xml"/>-->
+
+        <!--第二种方式，使用包名
+            name: xml文件（mapper文件）所在的包名,这个包中的所有xml文件都能一次性的加载给mybatis
+            使用package的要求：
+            1、mapper文件的名称需要和接口名称一样，区分大小写
+            2、mapper文件要和接口文件在一个目录下
+        -->
+        <package name="dao"/>
+    </mappers>
+</configuration>
+        <!--
+            mybatis的主要配置文件，主要定义了数据库的配置信息，sq1映射文 件的位置
+            1、约束文件
+            <!DOCTYPE configuration
+                PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+                mybatis-3-config.dtd约束文件名称
+            2、configuration 根标签
+        -->

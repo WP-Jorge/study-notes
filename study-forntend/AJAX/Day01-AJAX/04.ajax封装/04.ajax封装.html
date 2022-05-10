@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="04.myAjax.js" type="text/javascript" charset="utf-8"></script>
+		<!--
+	    1.什么是Ajax?
+	    AJAX 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。
+	    -->
+		<script>
+			window.onload = function(ev) {
+				var obj = {
+					"userName": "啦啦啦",
+					"userPwd": "123456"
+				}
+				var oBtn = document.querySelector("button");
+				oBtn.onclick = function(ev1) {
+					// url?key=value&key=value;
+					// ajax(type, url, obj, timeout, success, error) 
+					// type:get\post url:获取目标的地址 obj:参数对象 timeout:超时时间 success:成功的回调函数 error:失败的回调函数
+					var option = {
+						type: "POST",
+						url: "04.ajax-post.php",
+						data: obj,
+						timeout: 3000,
+						success: function(e) {
+							alert(e.responseText);
+						},
+						error: function(e) {
+							alert("请求失败");
+						}
+					}
+					ajax(option);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<button>发送请求</button>
+	</body>
+</html>

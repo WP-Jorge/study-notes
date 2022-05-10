@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* flex-direction: row; 
+				row：默认值从左往右
+				row-reverse：从右往左
+				column：从上往下
+				column-reverse：从下往上
+			*/
+			
+			div {
+				/* 给父级添加flex属性 */
+				display: flex;
+				margin: 0 auto;
+				width: 80%;
+				height: 300px;
+				background-color: pink;
+				/* flex默认主轴x轴row，y轴是侧轴，元素跟主轴排列 */
+				/* flex-direction: row; */
+			}
+			
+			div span {
+				/* width: 150px; */
+				height: 100px;
+				/* 等分 */
+				flex: 1;
+				background-color: yellowgreen;
+				margin-right: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+		</div>
+	</body>
+</html>

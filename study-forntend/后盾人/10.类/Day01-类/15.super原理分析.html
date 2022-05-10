@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			class User {
+				show() {
+					console.log('user.show')
+				}
+			}
+			class Admin extends User {
+				show() {
+					console.log('admin.show')
+				}
+			}
+			let admin = new Admin()
+			admin.show() // admin.show
+
+			// super 原理分析
+			let hd = {
+				name: 'hd.name',
+				show() {
+					console.log(this.name)
+				}
+			}
+			let xj = {
+				__prop__: hd,
+				name: 'xj.name',
+				show() {
+					this.__prop__.show.call(this)
+				}
+			}
+			xj.show() // xj.name
+		</script>
+	</body>
+</html>

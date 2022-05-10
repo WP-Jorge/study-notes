@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @return {number}
+			 * 子序列 动态规划，时间复杂度O(n^2)，空间复杂度O(n)
+			 */
+			var lengthOfLIS = function (nums) {
+				let dp = new Array(nums.length).fill(1);
+				for (let i = 1; i < nums.length; i++) {
+					for (let j = 0; j < i; j++) {
+						if (nums[j] < nums[i]) {
+							dp[i] = Math.max(dp[i], dp[j] + 1);
+						}
+					}
+				}
+				return Math.max(...dp);
+			};
+			console.log(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]));
+		</script>
+	</body>
+</html>

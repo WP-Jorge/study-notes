@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* flex-flow：是flex-direction和flex-wrap属性的复合写法 设置主轴方向 是否换行 */
+			
+			div {
+				display: flex;
+				width: 600px;
+				height: 300px;
+				background-color: pink;
+				/* flex-direction: row; */
+				/* flex-wrap: wrap; */
+				/* 等价于下面： */
+				flex-flow: row wrap;
+			}
+			
+			div span {
+				width: 150px;
+				height: 100px;
+				background-color: yellowgreen;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+			<span>4</span>
+			<span>5</span>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number} n
+			 * @return {string[]}
+			 * 回溯 + 剪枝
+			 */
+			var generateParenthesis = function (n) {
+				let res = [];
+				function backtracking(n, path, left, right) {
+					if (left > n || right > left) {
+						return;
+					}
+					if (path.length === 2 * n) {
+						res.push(path);
+						return;
+					}
+					backtracking(n, path + '(', left + 1, right);
+					backtracking(n, path + ')', left, right + 1);
+				}
+				backtracking(n, '', 0, 0);
+				return res;
+			};
+		</script>
+	</body>
+</html>

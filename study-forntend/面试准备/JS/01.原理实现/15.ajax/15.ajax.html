@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function ajax(options) {
+				// 1、存储默认参数
+				let defaultOptions = {
+					method: 'get',
+					url: '',
+					data: {},
+					params: {},
+					header: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					success() {},
+					error() {}
+				};
+				// 2、使用 options 替换默认参数
+				Object.assign(defaultOptions, options);
+				// 3、创建 ajax 对象
+				let xhr = new XMLHttpRequest();
+				// 4、拼接请求参数
+				let params = '';
+				for (let key in defaultOptions.params) {
+					if (defaultOptions.params.hasOwnProperty(key)) {
+						params += key + '=' + defaultOptions.params[key] + '&';
+					}
+				}
+				params = params.slice(0, params.length - 1);
+				// 5、判断请求类型
+				if (defaultOptions.method.toLocaleLowerCase() === 'get') {
+					defaultOptions.url += '?' + params;
+				}
+				// 6、打开 xhr 连接
+				xhr.open(defaultOptions.method, defaultOptions.url);
+				// 7、配置 method 为 post 时的头部信息
+				if (defaultOptions.method.toLocaleLowerCase() === 'post') {
+					// 8、用户希望的向服务器传递的请求类型
+					if (defaultOptions.header['Content-Type']) {
+						let contentType = defaultOptions.header['Content-Type'];
+						// 9、设置请求格式
+						xhr.setRequestHeader('Content-Type', contentType);
+						// 10、如果请求格式是 JSON
+						console.log(contentType);
+						if (contentType === 'application/json') {
+							// 11、向服务器传递 json 参数
+							xhr.send(JSON.stringify(defaultOptions.data));
+						} else {
+							let data = defaultOptions.data;
+							xhr.send(data);
+						}
+					} else {
+						xhr.send(defaultOptions.data);
+					}
+				} else {
+					xhr.send();
+				}
+				// 12、监听 onload 事件（当 xhr 对象接收到响应对象后触发）
+				xhr.onload = () => {
+					// 13、获取请求头中的数据
+					let contetnType = xhr.getResponseHeader('Content-Type');
+					// 14、获取响应体中的数据
+					let res = xhr.responseText;
+					// 15、如果响应数据是 json 类型
+					if (contetnType.includes('application/json')) {
+						res = JSON.parse(res);
+					}
+					// 16、当 http 状态码为 200 时
+					if (xhr.status === 200) {
+						// 17、请求成功，调用成功的处理函数
+						defaultOptions.success(res, xhr);
+					} else {
+						defaultOptions.error(res, xhr);
+					}
+				}
+			}
+			let formData = new FormData();
+			formData.append('name', '乔治')
+			formData.append('age', 19);
+			ajax({
+				url: 'http://localhost:8080',
+				method: 'get',
+				header: {
+					'Content-Type': 'application/json'
+				},
+				// data: formData,
+				data: {
+					dataMsg: 'post 请求'
+				},
+				params: {
+					msg: '你好'
+				},
+				success(res) {
+					console.log(res);
+				},
+				error(err) {
+					console.log(err);
+				}
+			})
+		</script>
+	</body>
+</html>

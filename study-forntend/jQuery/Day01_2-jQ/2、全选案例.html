@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		全选<input class="check-all" type="checkbox" />
+		<ul>
+			<li>
+				第一个<input class="check" type="checkbox" />
+			</li>
+			<li>
+				第一个<input class="check" type="checkbox" />
+			</li>
+			<li>
+				第一个<input class="check" type="checkbox" />
+			</li>
+		</ul>
+		全选<input class="check-all" id="check-all" type="checkbox" />
+		<script type="text/javascript">
+			// 全选按钮改变，li中的小按钮全跟着改变
+			$(".check-all").change(function(){
+				$(".check, .check-all").prop("checked", $(this).prop("checked"))
+			})
+			// li中check选中数==3时 全选按钮选中，不等于3时取消选中
+			$(".check").change(function(){
+				if($(".check:checked").length === $(".check").length){
+					$(".check-all").prop("checked", true)
+				}else{
+					$(".check-all").prop("checked", false)
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cslg.applysystem.mapper.AllApplyMapper">
+    <!--<cache-ref namespace="cn.cslg.applysystem.mapper.AllApplyMapper"/>-->
+    <cache-ref namespace="cn.cslg.applysystem.mapper.UserMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.CompeteMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.DeptMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.AgencyMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.AwardMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.FileMapper"/>
+    <delete id="deleteAllApplyTrue">
+        delete from all_apply where all_apply_id = #{allApplyId}
+    </delete>
+    <select id="getAllAppliesWithPage" resultType="cn.cslg.applysystem.pojo.vo.AllApplyVO" resultMap="allApplyResultMap">
+        select * from all_apply, award, file, user, compete, compete_lev, dept, agency, major
+        where all_apply.award_id = award.award_id
+        and all_apply.file_id = file.file_id
+        and all_apply.user_id = user.user_id
+        and all_apply.compete_id = compete.compete_id
+        and compete_lev.compete_lev_id = compete.compete_lev_id
+        and dept.dept_id = all_apply.dept_id
+        and all_apply.agency_id = agency.agency_id
+        and user.major_id = major.major_id
+        and all_apply.deleted = 0
+    </select>
+
+    <resultMap id="allApplyResultMap" type="cn.cslg.applysystem.pojo.vo.AllApplyVO">
+        <id property="allApplyId" column="all_apply_id"></id>
+        <result property="awardTime" column="award_time"></result>
+        <result property="auth" column="auth"></result>
+        <result property="isGroup" column="is_group"></result>
+        <result property="status" column="status"></result>
+        <result property="des" column="des"></result>
+        <association property="compete" javaType="cn.cslg.applysystem.pojo.vo.CompeteVO" resultMap="cn.cslg.applysystem.mapper.CompeteMapper.competeResultMap"/>
+        <association property="dept" javaType="cn.cslg.applysystem.pojo.vo.DeptVO" resultMap="cn.cslg.applysystem.mapper.UserMapper.deptResultMap"/>
+        <association property="award" javaType="cn.cslg.applysystem.pojo.vo.AwardVO" resultMap="awardResultMap"/>
+        <association property="agency" javaType="cn.cslg.applysystem.pojo.vo.AgencyVO" resultMap="agencyResultMap"/>
+        <association property="file" javaType="cn.cslg.applysystem.pojo.vo.FileVO" resultMap="cn.cslg.applysystem.mapper.CarouselMapper.fileResultMap"/>
+        <association property="user" javaType="cn.cslg.applysystem.pojo.vo.UserVO" resultMap="cn.cslg.applysystem.mapper.UserMapper.userResultMap"/>
+        <collection property="users" javaType="java.util.ArrayList" ofType="cn.cslg.applysystem.pojo.vo.UserVO" column="allApplyId=all_apply_id" select="getUserAppliesByAllApplyId"/>
+        <collection property="instructors" javaType="java.util.ArrayList" ofType="cn.cslg.applysystem.pojo.vo.InstructorVO" column="{allApplyId=all_apply_id}" select="getApplyInstructorsByAllApplyId"/>
+    </resultMap>
+    
+    <select id="getUserAppliesByAllApplyId" resultType="cn.cslg.applysystem.pojo.vo.UserVO" resultMap="cn.cslg.applysystem.mapper.UserMapper.userResultMap">
+        select * from user, user_apply, dept, major
+        where user.user_id = user_apply.user_id
+        and user.major_id = major.major_id
+        and major.dept_id = dept.dept_id
+        and user_apply.all_apply_id = #{allApplyId}
+    </select>
+    <!--<resultMap id="UserApplyResultMap" type="cn.cslg.applysystem.pojo.vo.UserApplyVO">-->
+    <!--    <id property="userApplyId" column="instructor_id"></id>-->
+    <!--</resultMap>-->
+    <select id="getApplyInstructorsByAllApplyId" resultType="cn.cslg.applysystem.pojo.vo.InstructorApplyVO" resultMap="instructorApplyResultMap">
+        select * from instructor_apply, instructor, dept
+        where instructor_apply.instructor_id = instructor.instructor_id
+        and instructor.dept_id = dept.dept_id
+        and instructor_apply.all_apply_id = #{allApplyId}
+    </select>
+    <resultMap id="instructorApplyResultMap" type="cn.cslg.applysystem.pojo.vo.InstructorApplyVO">
+        <id property="instructorId" column="instructor_id"></id>
+        <result property="instructorName" column="instructor_name"></result>
+        <result property="instructorNo" column="instructor_no"></result>
+        <result property="tel" column="tel"></result>
+        <result property="email" column="email"></result>
+        <result property="applyOrder" column="apply_order"></result>
+        <association property="dept" javaType="cn.cslg.applysystem.pojo.vo.DeptVO" resultMap="cn.cslg.applysystem.mapper.UserMapper.deptResultMap"/>
+    </resultMap>
+    
+    <!--<resultMap id="userAppliesResultMap" type="cn.cslg.applysystem.pojo.vo.UserVO">-->
+    <!--    <id property="userId" column="us"></id>-->
+    <!--    <result property="username" column="username"></result>-->
+    <!--</resultMap>-->
+
+    <!--<resultMap id="deptResultMap" type="cn.cslg.applysystem.pojo.vo.DeptVO">-->
+    <!--    <id property="deptId" column="dept_id"></id>-->
+    <!--    <result property="deptName" column="dept_name"></result>-->
+    <!--</resultMap>-->
+    <!--<resultMap id="deptResultMap" type="cn.cslg.applysystem.pojo.vo.DeptVO">-->
+    <!--    <id property="deptId" column="dept_id"></id>-->
+    <!--    <result property="deptName" column="dept_name"></result>-->
+    <!--</resultMap>-->
+    <resultMap id="awardResultMap" type="cn.cslg.applysystem.pojo.vo.AwardVO">
+        <id property="awardId" column="award_id"></id>
+        <result property="awardName" column="award_name"></result>
+    </resultMap>
+    <resultMap id="agencyResultMap" type="cn.cslg.applysystem.pojo.vo.AgencyVO">
+        <id property="agencyId" column="agency_id"></id>
+        <result property="agencyName" column="agency_name"></result>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 封装集合类
+			class Set {
+				// 属性
+				#items = {}
+
+				// 方法
+				// 1.add(value) :向集合添加一个新的项
+				add(value) {
+					// ① 判断当前集合中是否已经存在该元素
+					if (this.has(value)) {
+						return false
+					}
+
+					// ② 将元素添加到集合中
+					this.#items[value] = value
+					return true
+				}
+
+				// 2.remove(value) :从集合移除一个值
+				remove(value) {
+					// ① 判断该集合中是否包含该元素
+					if (!this.has(value)) {
+						return false
+					}
+
+					// 2.将元素从属性中删除
+					delete this.#items[value]
+					return true
+				}
+
+				// 3.has(value) :如果值在集合中,返回true ,否则返回false
+				has(value) {
+					return this.#items.hasOwnProperty(value)
+				}
+
+				// 4.clear() :移除集合中的所有项
+				clear() {
+					this.#items = {}
+				}
+
+				// 5.size() :返回集合所包含元素的数量。与数组的length属性类似
+				size() {
+					return Object.keys(this.#items).length
+				}
+
+				// 6.values() :返回一个包含集合中所有值的数组
+				values() {
+					return Object.values(this.#items)
+				}
+
+				// 集合间操作
+				// 1.并集
+				union(otherSet) {
+					// ① 创建新的集合
+					let unionSet = new Set()
+
+					// ② 将A集合中的所有元素添加到新的集合中
+					let values = this.values()
+					for (const key in values) {
+						if (Object.hasOwnProperty.call(values, key)) {
+							const element = values[key]
+							unionSet.add(element)
+						}
+					}
+
+					// ③ 取出otherSet中的元素，判断是否西药添加到新集合中
+					values = otherSet.values()
+					for (const key in values) {
+						if (Object.hasOwnProperty.call(values, key)) {
+							const element = values[key]
+							unionSet.add(element)
+						}
+					}
+					return unionSet
+				}
+
+				// 2.交集
+				intersection(otherSet) {
+					// 1.创建一个新的集合
+					let intersectionSet = new Set()
+
+					// 2.从自己的集合中取出每个元素，与otherSet中的元素进行比较，相同就放入新的集合中
+					let values = this.values()
+					for (const key in values) {
+						if (Object.hasOwnProperty.call(values, key)) {
+							const item = values[key]
+							if (otherSet.has(item)) {
+								intersectionSet.add(item)
+							}
+						}
+					}
+					return intersectionSet
+				}
+
+				// 3.差集
+				difference(otherSet) {
+					// 1.创建一个新的集合
+					let differenceSet = new Set()
+
+					// 2.从自己的集合中取出每个元素，与otherSet中的元素进行比较，不相同就放入新的集合中
+					let values = this.values()
+					for (const key in values) {
+						if (Object.hasOwnProperty.call(values, key)) {
+							const item = values[key]
+							if (!otherSet.has(item)) {
+								differenceSet.add(item)
+							}
+						}
+					}
+					return differenceSet
+				}
+
+				// 4.子集
+				subset(otherSet) {
+					// 遍历集合A中所有的元素，如果发现，集合A中的元素，在集合B中不存在，那么false
+					// 如果遍历完了整个集合，依然没有返回false, 那么返回true即可
+					let values = this.values()
+					for (const key in values) {
+						if (Object.hasOwnProperty.call(values, key)) {
+							const item = values[key]
+							if (!otherSet.has(item)) {
+								return false
+							}
+						}
+					}
+					return true
+				}
+			}
+
+			// 测试set类
+			// 1.创建set
+			let set = new Set()
+
+			// 2.测试add()方法
+			set.add('a')
+			set.add('b')
+			set.add('c')
+			set.add('d')
+			set.add('d')
+
+			// 3.测试values()方法
+			console.log(set.values()) // ["a", "b", "c", "d"]
+
+			// 4.测试remove方法
+			set.remove('a')
+			console.log(set.values()) // ["b", "c", "d"]
+
+			// 5.测试size()方法
+			console.log(set.size()) // 3
+
+			// 6.测试has()方法
+			console.log(set.has('b')) // true
+
+			// 7.测试clear方法
+			set.clear()
+			console.log(set.size()) // 0
+
+			// 测试集合间操作
+			// 1.测试并集
+			let setA = new Set()
+			setA.add(1)
+			setA.add(2)
+			setA.add(3)
+			setA.add(4)
+			let setB = new Set()
+			setB.add(3)
+			setB.add(4)
+			setB.add(5)
+			console.log(setA.union(setB).values()) // [1, 2, 3, 4, 5]
+
+			// 2.测试交集
+			console.log(setA.intersection(setB).values()) // [3, 4]
+
+			// 3.测试差集
+			console.log(setA.difference(setB).values()) // [1, 2]
+
+			// 4.测试子集
+			console.log(setA.subset(setB)) // false
+			setA.remove(1)
+			setA.remove(2)
+			console.log(setA.subset(setB)) // true
+		</script>
+	</body>
+</html>

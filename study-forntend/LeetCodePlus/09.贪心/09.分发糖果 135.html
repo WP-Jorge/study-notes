@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} ratings
+			 * @return {number}
+			 * 贪心，时间复杂度O(n), 空间复杂度O(n)。遍历两次，一次从头开始遍历，计算出左边比右边小的糖果数，第二次遍历，计算出右边比左边小的糖果数，两次遍历后得出的结果满足：相邻的孩子中，评分高的孩子获得更多的糖果
+			 */
+			var candy = function (ratings) {
+				let nums = new Array(ratings.length).fill(1);
+				for (let i = 1; i <= ratings.length; i++) {
+					if (ratings[i] > ratings[i - 1]) {
+						nums[i] = nums[i - 1] + 1;
+					}
+				}
+				for (let i = ratings.length - 2; i >= 0; i--) {
+					if (ratings[i] > ratings[i + 1]) {
+						nums[i] = Math.max(nums[i + 1] + 1, nums[i]);
+					}
+				}
+				return nums.reduce((pre, cur) => {
+					return pre + cur;
+				});
+			};
+		</script>
+	</body>
+</html>

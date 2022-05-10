@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+		
+		<style>
+			
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="div01">
+			<p>{{ date | dateformate}}</p>
+		</div>
+
+		
+		<script>
+			
+			
+			var nv = new Vue({
+				el:'#div01',
+				data:{
+					date:new Date(),
+				},
+				methods:{
+
+				},
+				//局部过滤器，优先调用全局过滤器，再调用局部过滤器，所以优先调用的全局过滤器会被局部过滤器覆盖
+				filters:{
+					dateformate(data,formate=""){//给formate取空，以防v区中formate未传入参数导致报错
+					//年月日不足位数补足0，如2020-1-1补足后—>2020-01-01
+					//padStart(字符串长度,'需要补齐的内容') 在前边补
+					//padEnd(字符串长度,'需要补齐的内容') 在后边补
+						var dt = new Date(data)
+						var y = dt.getFullYear()
+						var m = (dt.getMonth()+1).toString().padStart(2,'0')
+						var d = (dt.getDate()).toString().padStart(2,'0')
+						if(formate.toLowerCase()==="yyyy-mm-dd"){
+							return `${y}-${m}-${d}`
+						}else{
+							var hh = (dt.getHours()).toString().padStart(2,'0')
+							var mm = (dt.getMinutes()).toString().padStart(2,'0')
+							var ss = (dt.getSeconds()).toString().padStart(2,'0')
+							return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+						}
+					}
+				}
+			})
+			
+		</script>
+	</body>
+	
+</html>

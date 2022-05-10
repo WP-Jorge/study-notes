@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cslg.applysystem.mapper.AgencyMapper">
+    <cache-ref namespace="cn.cslg.applysystem.mapper.AgencyMapper"/>
+    <select id="getAllAgenciesWithPage" resultType="cn.cslg.applysystem.pojo.vo.AgencyVO">
+        select * from agency
+    </select>
+    <select id="getAgenciesByAgencyNameWithPage" resultType="cn.cslg.applysystem.pojo.vo.AgencyVO">
+        select * from agency where agency_name like concat('%', #{agencyName}, '%')
+    </select>
+
+</mapper>

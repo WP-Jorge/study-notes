@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="lib/bootstrap-4.5.0-dist/css/bootstrap.css" />
+		<script src="lib/jquery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/bootstrap-4.5.0-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="lib/vue2.6.11.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+	</head>
+	<body>
+		<div id="app">
+			<transition>
+				<div :class="alertClass" role="alert" v-show="alertFlag">{{ alertMsg }}</div>
+			</transition>
+			<div class="box">
+				<div class="table">
+					<table class="table table-bordered table-hover">
+						<thead class="table-primary">
+							<tr>
+								<th scope="col" class="space-avg">用户名</th>
+								<th scope="col" class="space-avg">年龄</th>
+								<th scope="col" class="space-avg">毕业学校</th>
+								<th scope="col" class="space-avg">备注</th>
+								<th scope="col" class="space-avg">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="flag" v-for="(item, index) in studentsList" :key="index">
+								<td class="space-avg">{{ item.userName }}</td>
+								<td class="space-avg">{{ item.age }}</td>
+								<td class="space-avg">{{ item.school }}</td>
+								<td class="space-avg">{{ item.remark }}</td>
+								<td class="space-avg text-center">
+									<button class="btn btn-sm btn-outline-danger" @click="clickItem(item),deleteStu(),pageBarContral()">删除</button>
+									<button class="btn btn-sm btn-outline-primary" @click="edit(item)">编辑</button>
+								</td>
+							</tr>
+							<tr>
+								<td class="space-avg"><input type="text" class="form-control" placeholder="用户名" v-model="editItem.userName"></td>
+								<td class="space-avg"><input type="number" class="form-control" placeholder="年龄" v-model="editItem.age"></td>
+								<td class="space-avg">
+									<select class="form-control" id="exampleFormControlSelect1" v-model="editItem.school">
+										<option v-for="(school, i) in schools" :key="i">{{ school }}</option>
+									</select>
+								</td>
+								<td class="space-avg"><input type="text" class="form-control" placeholder="备注" v-model="editItem.remark"></td>
+								<td class="space-avg text-center"><button class="btn btn-sm btn-outline-success" @click="save()">保存</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="pageBar">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<li :class="preFlag === true ? 'page-item' : 'page-item disabled'" @click="prePage(),pageBarContral()">
+							<a class="page-link" @click="pageBarContral()" href="#" tabindex="-1">上一页</a>
+						</li>
+						<li :class="page == count ? 'page-item active' : 'page-item'" @click="countClick(page), pageBarContral()" v-for="(page, index) in totalPage" :key="index"><a class="page-link" href="#">{{ page }}</a></li>
+						<li :class="nexFlag === true ? 'page-item' : 'page-item disabled'" @click="nexPage(),pageBarContral()">
+							<a class="page-link" :disabled="nexFlag" href="#">下一页</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

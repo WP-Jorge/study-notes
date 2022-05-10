@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<h1>houdunwang</h1>
+		<h2>hdcms.com</h2>
+		<h1>后盾人</h1>
+		<script>
+			let reg = /<(h[1-6])>([\s\S]+?)<\/\1>/gi
+			let body = document.body
+			let str = body.innerHTML.matchAll(reg)
+			let contents = []
+			for (const iterator of str) {
+				contents.push(iterator[2])
+			}
+			console.table(contents)
+		</script>
+	</body>
+</html>

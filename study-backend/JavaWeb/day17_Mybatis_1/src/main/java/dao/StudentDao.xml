@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.StudentDao">
+    <!--查询所有学生-->
+    <select id="selectStudents" resultType="domain.Student">
+        select id, name, email, age from student order by id
+    </select>
+
+    <!--插入学生-->
+    <insert id="insertStudent">
+        insert into student values(#{id}, #{name}, #{email}, #{age})
+    </insert>
+
+    <!--
+        parameterType : dao接口中 万法参数的数据类型。
+        parameterType它的值是java的数据类型全限定名称或者是mybatis定义的别名
+        例如: parameterType= "java.lang.Integer"
+        parameterType="int"
+
+        注意:parameterType不是强制的，mybatis通过反射机制能够发现接口参数的数类型。所以可以没有。一 般我们也不写。
+    -->
+    <!--根据学生id查询学生-->
+    <select id="selectStudentById" parameterType="java.lang.Integer" resultType="domain.Student">
+        select id, name, email, age from student where id = #{id}
+    </select>
+
+    <!--多个参数，使用@param命名-->
+    <select id="selectStudentsByNameOrAge" resultType="domain.Student">
+        select id, name, email, age from student where name = #{myname} or age = #{myage}
+    </select>
+
+    <!--多个参数，使用java对象的属性值作为参数的实际值
+        1、使用对象语法: #{属性名 ，javaType=类型名称，jdbcType= 数据类型} ，然后将#{}替换成前面那段 很少用
+            javaType:指java中的属性数据类型。
+            jdbcType:在数据库中的数据类型。
+            例如: #{paramName ，javaType= java.lang.string, jdbcType=VARCHAR}
+        2、我们使用的简化方式: #{属性名 }，javaType, jdbcType的 值mybatis反射能获取。不用提供
+    -->
+    <select id="selectStudentsByParamObject" resultType="domain.Student">
+        select id, name, email, age from student where name = #{paramName} or age = #{paramAge}
+    </select>
+
+    <!--多个参数使用位置传值
+        mybatis.3.4之前,使用#{0} , #{1}
+        mybatis。3.4之后,使用#{arg0}， #{arg1}
+    -->
+    <select id="selectStudentsByPosition" resultType="domain.Student">
+        select id, name, email, age from student where name = #{arg0} or age = #{arg1}
+    </select>
+
+    <!--使用map
+        #{map的key}
+    -->
+    <select id="selectStudentsByMap" resultType="Student">
+        select id, name, email, age from student where name = #{myname} or age = #{myage}
+    </select>
+
+    <!--返回Map-->
+    <select id="selectMapById" resultType="map">
+        select id, name, email, age from student where id = #{id}
+    </select>
+
+    <!--列名与属性名不一样第一种方法，使用resultMap
+            1)先定义resultMap
+            2 )在select标签,使用resultMap来引用1定义的。
+    -->
+    <!--定义resultMap
+        id: 自定义名称，表示定义的resultMap
+        type: java类型的全限定名称
+    -->
+    <resultMap id="studentMap" type="domain.MyStudent">
+        <!--列名和java属性间的关系-->
+        <!--主键列，使用id标签
+            column：列名
+            property: java类型的属性名
+        -->
+        <id column="id" property="stuid"/>
+        <!--非主键列使用result-->
+        <result column="name" property="stuname"/>
+        <result column="email" property="stuemail"/>
+        <result column="age" property="stuage"/>
+    </resultMap>
+    <!--执行下面这段后，他的列和属性的对应关系使用上面的关系-->
+    <select id="selectAllStudents" resultMap="studentMap">
+        select id, name, email, age from student
+    </select>
+
+    <!--列名和属性名不一样的第二种方法
+        resultType的默认原则是同名的列值赋值给同名的属性，使用 列别名( java对象的属性名)
+    -->
+    <select id="selectDiffcolProperty" resultType="domain.MyStudent">
+        select id as stuid, name as stuname, email as stuemail, age as stuage from student
+    </select>
+
+    <!--第一种like，java代码中来指定like的内容 推荐-->
+    <select id="selectLikeOne" resultType="Student">
+        select id, name, email, age from student where name like #{name}
+    </select>
+
+    <!--第二种方式，在mapper文件中拼接like内容-->
+    <select id="selectLikeTwo" resultType="Student">
+        select id, name, email, age from student where name like "%" #{name} "%"
+    </select>
+</mapper>

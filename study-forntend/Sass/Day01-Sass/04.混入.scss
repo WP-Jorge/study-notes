@@ -1,0 +1,37 @@
+// 混入 mixin 名字 (参数1, 参数2...) {}
+
+// 不使用参数
+@mixin alert {
+	// 在引入的地方将这段代码插入进去
+	color: pink;
+	background-color: pink;
+	a {
+		color: yellowgreen;
+	}
+}
+
+.alert-warning {
+	@include alert();
+}
+
+//  使用参数
+@mixin alert ($color, $acolor) {
+	// 在引入的地方将这段代码插入进去
+	color: $color;
+	background-color: $color;
+	a {
+		color: $acolor;
+		// darken(颜色, 加深程度) 颜色加深
+		background-color: darken($acolor, 10%);
+	}
+}
+
+.alert-warning {
+	// 传入参数
+	@include alert(pink, skyblue);
+}
+
+// 不考虑顺序，使用参数名赋值
+.alert-info {
+	@include alert($color: white, $acolor: blue);
+}

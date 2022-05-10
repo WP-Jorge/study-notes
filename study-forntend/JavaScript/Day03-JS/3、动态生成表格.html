@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+
+	<style>
+		table {
+	            width: 500px;
+	            margin: 100px auto;
+	            border-collapse: collapse;
+	            text-align: center;
+	        }
+	        
+	        td,
+	        th {
+	            border: 1px solid #333;
+	        }
+	        
+	        thead tr {
+	            height: 40px;
+	            background-color: #ccc;
+	        }
+	    </style>
+
+	<body>
+		<table cellspacing="0">
+			<thead>
+				<tr>
+					<th>姓名</th>
+					<th>科目</th>
+					<th>成绩</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+
+		<script type="text/javascript">
+			var datas = [{
+					name: '少司命',
+					subject: '阴阳学',
+					greade: '99'
+				},
+				{
+					name: '司马离离',
+					subject: '射击学',
+					greade: '94'
+				},
+				{
+					name: '东方落',
+					subject: '神学',
+					greade: '96'
+				}
+			]
+			var tbody = document.querySelector('tbody')
+			for (var i = 0; i < datas.length; i++) {
+				var tr = document.createElement('tr')
+				tbody.appendChild(tr)
+				for (var key in datas[i]) {
+					var td = document.createElement('td')
+					td.innerHTML = datas[i][key]
+					tr.appendChild(td)
+				}
+				var td = document.createElement('td')
+				td.innerHTML = '<a href="javascript:;">删除</a>'
+				tr.appendChild(td)
+			}
+			var as = document.querySelectorAll('a')
+			for (var i = 0; i < as.length; i++) {
+				as[i].onclick = function() {
+					tbody.removeChild(this.parentNode.parentNode)
+				}
+			}
+		</script>
+	</body>
+</html>

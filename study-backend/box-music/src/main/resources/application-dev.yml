@@ -1,0 +1,11 @@
+server:
+  port: 8081
+# 配置日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// y 满足则往下匹配，不满足则终止匹配
+			let str = 'udunren'
+			let reg = /u/g
+			console.log(reg.exec(str))
+
+			let str2 = '我的qq号码：12312312314,42749148912,412748219然后就没了'
+			let reg2 = /(\d+),?/y
+			let qq = []
+			reg2.lastIndex = 7
+			while ((res = reg2.exec(str2))) qq.push(res[1]) // ["12312312314", "42749148912", "412748219"]
+			console.log(qq)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let site = '后盾人'
+		</script>
+		<script type="module">
+			let str = '后盾人'
+		</script>
+		<script>
+			// 1.没有 type="module" 时可以访问
+			console.log(site) // 后盾人 获取的到
+
+			// 2. 在 type="module" 中的内容必须导入才能使用
+			// 3.模块内的属性、方法必须要导入或者是在同一个模块中才能使用
+			console.log(str) // 获取不到
+		</script>
+	</body>
+</html>

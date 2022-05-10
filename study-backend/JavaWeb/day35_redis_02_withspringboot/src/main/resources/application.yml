@@ -1,0 +1,33 @@
+# redis
+spring:
+  redis:
+    host: 192.168.61.131
+    # 默认可以不写
+    port: 6379
+    database: 0
+    # mybatis-plus
+#  使用哨兵模式
+#  redis:
+#    sentinel:
+#      master: master
+#      nodes: 192.168.61.128:26379
+# 使用集群
+#  redis:
+#    cluster: # 操作 书写集群中的所有节点
+#      nodes: 192.168.61.129:7000,192.168.61.129:7001,192.168.61.129:7002,192.168.61.129:7003,192.168.61.129:7004,192.168.61.129:7005
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///redis?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: 111111
+
+#mybatis-plus:
+#  type-aliases-package: com.example.redis.entity
+logging:
+  level:
+    root: debug
+
+
+

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 数值型变量使用 typeof 来判断变量类型，引用型变量使用 instanceof 判断
+			// js 六种基本数据类型 number、string、boolean、symbol、undefined、null
+			// 引用数据类型统称为 Object 类型
+			let a
+			a = 1
+			console.log(typeof a) // number
+
+			a = '1'
+			console.log(typeof a) // string
+
+			a = true
+			console.log(typeof a) // boolean
+
+			a = Symbol()
+			console.log(typeof a) // symbol es6
+
+			a = null
+			console.log(typeof a) // object
+
+			console.log(typeof b) // undefined
+
+			a = function () {}
+			console.log(typeof a) // function
+
+			a = []
+			console.log(typeof a) //  object
+
+			a = {}
+			console.log(typeof a) // object
+
+			// 引用数据类型
+			// 所有的引用数据类型都是 Object
+			let o
+			o = []
+			console.log(o instanceof Array) // true
+
+			o = {}
+			console.log(o instanceof Object) // true
+
+			o = function () {}
+			console.log(o instanceof Function) // true
+		</script>
+	</body>
+</html>

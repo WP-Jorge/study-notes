@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+
+		<style>
+
+		</style>
+
+	</head>
+
+	<body>
+		<div id="div01">
+			<!-- v-for可遍历数组、对象数组、对象、数字 -->
+			
+			<!-- 使用v-for遍历简单数组 -->
+			<p v-for="item in list1">数值：{{ item }}</p>
+			<!-- 使用v-for遍历简单数组并获取小标 -->
+			<p v-for="(item,i) in list1">小标：{{ i }} 数值：{{ item }}</p>
+			<!-- 使用v-for遍历对象数组 -->
+			<p v-for="(user,i) in list2">小标:{{ i }}---id:{{ user.id }}---name:{{ user.name }}</p>
+			<!-- 使用v-for遍历对象 (value,key,i)可存放三个内容，value值，key键，i索引-->
+			<p v-for="(value,key,i) in user">键：{{ key }}---值：{{ value }}---索引：{{ i }}</p>
+			<!-- 使用v-for遍历数字，从1开始到目的数字 -->
+			<p v-for="num in 10">第{{ num }}次遍历</p>
+		</div>
+		<script>
+			var nv = new Vue({
+				el: '#div01',
+				data: {
+					list1: [1, 2, 3, 4, 5, 6],
+					list2:[
+						{id:1,name:'zhangsan1'},
+						{id:2,name:'zhangsan2'},
+						{id:3,name:'zhangsan3'},
+						{id:4,name:'zhangsan4'}
+						],
+					user:{
+						id :1,
+						name:'懒蕉',
+						sex:'男'
+					}
+				},
+				methods: {
+					
+				}
+			})
+		</script>
+	</body>
+
+</html>

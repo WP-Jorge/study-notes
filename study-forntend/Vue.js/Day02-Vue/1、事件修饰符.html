@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./lib/vue.js"></script>
+		
+		<style>
+			#div02{
+				height: 30px;
+				width: 50px;
+				background-color: skyblue;
+			}
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="div01">
+			<!-- 阻止冒泡：.stop 只执行所在内容的事件-->
+			<!-- <div @click="clickDiv">
+				<input type="button" value="按钮" @click.stop="clickBtn"/>
+			</div> -->
+			
+			<!-- 阻止默认行为：.prevent 阻止默认的事件，不如阻止a标签的跳转 -->
+			<!-- <a href="https://www.baidu.com/" @click.prevent="clickA">去百度</a> -->
+			
+			<!-- 实现捕获事件：.capture 先执行外部容器的事件 需放在欲执行的内容中-->
+			<!-- <div @click.capture="clickDiv">
+				<input type="button" value="按钮" @click="clickBtn"/>
+			</div> -->
+			
+			<!-- 实现只有点击自己本身才能执行相关事件：.self  -->
+			<!-- <div @click.self="clickDiv" id="div02">
+				<input type="button" value="按钮" @click="clickBtn"/>
+			</div> -->
+			
+			<!-- 事件修饰符属性可串联添加 先后顺序无关-->
+			<!-- <a href="https://www.baidu.com/" @click.prevent.once="clickA">去百度</a> -->
+			
+			<!-- .self与.stop的区别 .self只阻止自己本身外父容器的冒泡，不管父容器的父容器的、、、、父容器的冒泡，.stop阻止除本身外全部容器的冒泡->
+		</div>
+
+		
+		<script>
+			var nv = new Vue({
+				el:'#div01',
+				data:{
+					
+				},
+				methods:{
+					clickBtn(){
+						console.log('我是按钮');
+					},
+					clickDiv(){
+						console.log('我是div');
+					},
+					clickA(){
+						console.log('去百度')
+					}
+				}
+			})
+			
+		</script>
+	</body>
+	
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue2.6.11.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<button type="button" @click="send">send</button>
+		</div>
+		<!-- 事件总线
+				多个相关或不相关的组件间传递事件
+				
+		 -->
+		 <script type="text/javascript">
+			// 先在main.js定义$bus
+			Vue.prototype.$bus = new Vue();
+		 	new Vue({
+				el: "#app",
+				data: {},
+				mounted() {
+					// 在组件挂载后调用reach()来接收其他组件传来的事件
+					this.reach();
+				},
+				methods: {
+					send() {
+						// 组件1
+						// 1.事件总线的使用
+						// this.$bus.$emit('事件名称（可以自定义）', 参数)
+						this.$bus.$emit('funcA', '使用事件总线触发了send的方法');
+					},
+					reach() {
+						// 组件2
+						// 2.事件的接收
+						// this.$bus.$on('接收对应事件名称', (传给来的参数) => {回调函数体})
+						this.$bus.$on("funcA", (a) => {
+							//  执行自己的函数
+							console.log(a);
+						})
+					}
+				}
+			})
+		 </script>
+	</body>
+</html>

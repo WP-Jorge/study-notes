@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let lesson = {
+				site: '后盾人',
+				lists: ['js', 'css', 'mysql'],
+				show: function () {
+					// 使用箭头函数时，函数内部的this指向其作用域的上下文
+					this.lists.map(item => {
+						console.log(this) // lesson{}
+					})
+				}
+			}
+			lesson.show()
+		</script>
+	</body>
+</html>

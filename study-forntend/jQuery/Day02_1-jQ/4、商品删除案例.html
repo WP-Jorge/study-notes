@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style type="text/css">
+		input {
+			width: 30px;
+		}
+
+		a {
+			position: relative;
+			text-decoration: none;
+			background-color: #CCCCCC;
+			top: 2px;
+			width: 20px;
+			height: 20px;
+			display: inline-block;
+		}
+
+		li {
+			list-style-type: none;
+		}
+		.current{
+			background-color: pink;
+		}
+	</style>
+	<body>
+		全选：<input type="checkbox" class="check-all" />
+		<div id="goods">
+			<li>
+				<input type="checkbox" class="check" />
+				单价：<span class="price">19.30</span>元
+				数量：<a class="low" href="javascript:void(0);">-</a>
+				<input class="num" type="text" value="1" />
+				<a class="plus" href="javascript:void(0);">+</a>
+				总计：<span class="total-price"></span>元
+				<button type="button">删除</button>
+			</li>
+			<li>
+				<input type="checkbox" class="check" />
+				单价：<span class="price">21.50</span>元
+				数量：<a class="low" href="javascript:void(0);">-</a>
+				<input class="num" type="text" value="1" />
+				<a class="plus" href="javascript:void(0);">+</a>
+				总计：<span class="total-price"></span>元
+				<button type="button">删除</button>
+			</li>
+			<li>
+				<input type="checkbox" class="check" />
+				单价：<span class="price">12.60</span>元
+				数量：<a class="low" href="javascript:void(0);">-</a>
+				<input class="num" type="text" value="1" />
+				<a class="plus" href="javascript:void(0);">+</a>
+				总计：<span class="total-price"></span>元
+				<button type="button">删除</button>
+			</li>
+			<li>
+				<input type="checkbox" class="check" />
+				单价：<span class="price">99.90</span>元
+				数量：<a class="low" href="javascript:void(0);">-</a>
+				<input class="num" type="text" value="1" />
+				<a class="plus" href="javascript:void(0);">+</a>
+				总计：<span class="total-price"></span>元
+				<button type="button">删除</button>
+			</li>
+		</div>
+		全选：<input type="checkbox" class="check-all" />
+		删除已选：<button class="del" type="button">删除</button>
+		删除全部：<button class="del-all" type="button">删除</button>
+		<div class="sum">
+			总件数：<span class="goods_sum"></span>件
+			总金额：<span class="goods_price"></span>元
+		</div>
+
+
+		<script type="text/javascript">
+			// 每个商品的操作添加初始总金额
+			$.each($("li a"), function(i, ele) {
+				let p = $(ele).parent().children(".price").html()
+				let num = $(ele).parent().children(".num").val()
+				let totalPrice = (p * num).toFixed(2) // 使用.toFixed(2) 给数保留两位小数
+				$(ele).parent().children(".total-price").html(totalPrice)
+			})
+			getSum()
+			// 点击"-"文本框数量-1
+			$("li .low").click(function() {
+				let num = $(this).parent().children(".num").val()
+				// 如果数量为0时返回，不继续-1
+				if (num == 1) {
+					return
+				}
+				num--
+				$(this).parent().children(".num").val(num)
+			})
+			// 点击"+"文本框数量+1
+			$("li .plus").click(function() {
+				let num = $(this).parent().children(".num").val()
+				// 如果数量为0时返回，不继续-1
+				num++
+				$(this).parent().children(".num").val(num)
+				getSum()
+			})
+			// 点击"+""-"修改文本框同步修改金额
+			$("li a").click(function() {
+				let p = $(this).parent().children(".price").html()
+				let num = $(this).parent().children(".num").val()
+				let totalPrice = (p * num).toFixed(2) // 使用.toFixed(2) 给数保留两位小数
+				$(this).parent().children(".total-price").html(totalPrice)
+				getSum()
+			})
+			// 直接修改文本框数量同步修改金额
+			$("li .num").change(function() {
+				let p = $(this).parent().children(".price").html()
+				let num = $(this).parent().children(".num").val()
+				let totalPrice = (p * num).toFixed(2) // 使用.toFixed(2) 给数保留两位小数
+				$(this).parent().children(".total-price").html(totalPrice)
+				getSum()
+			})
+			// 获取总件数总金额
+			function getSum() {
+				let count = 0
+				let money = 0
+				// 全选则统计全部
+				if($(".check-all").prop("checked")){
+					$("li .num").each(function(i, e) {
+						count += parseInt($(e).val())
+					})
+					$(".goods_sum").text(count)
+					
+					$("li .total-price").each(function(i, e) {
+						money = money + parseFloat($(e).text())
+					})
+					$(".goods_price").text(money.toFixed(2))
+				}else{
+					// 全没选中默认0
+					if($(".check:checked").length === 0){
+						$(".goods_sum").text(count)
+						$(".goods_price").text(money.toFixed(2))
+					}
+					// 部分选中统计被选中的
+					else{
+						$(".check:checked").each(function(i, e) {
+							count += parseInt($(e).parent().children(".num").val())
+						})
+						$(".goods_sum").text(count)
+						
+						$(".check:checked").each(function(i, e) {
+							money = money + parseFloat($(e).parent().children(".total-price").text())
+						})
+						$(".goods_price").text(money.toFixed(2))
+					}
+				}
+				
+				
+			}
+			// 全选框
+			$(".check-all").change(function(){
+				$(".check, .check-all").prop("checked", $(this).prop("checked"))
+				getSum()
+				// 判断单选框是否被选中，选中则li添加current类，没选中去除current类
+				if($(this).prop("checked")){
+					$("li").addClass("current")
+				}else{
+					$("li").removeClass("current")
+				}
+			})
+			$(".check").change(function(){
+				if($(".check:checked").length === $(".check").length){
+					$(".check-all").prop("checked", true)
+					
+				}else{
+					$(".check-all").prop("checked", false)
+				}
+				getSum()
+				// 判断单选框是否被选中，选中则li添加current类，没选中去除current类
+				if($(this).prop("checked")){
+					$(this).parent().addClass("current")
+				}else{
+					$(this).parent().removeClass("current")
+				}
+			})
+			
+			
+			// 删除
+			// 单个删除
+			$("li button").click(function(){
+				$(this).parent().remove()
+				getSum()
+			})
+			// 删除已选
+			$(".del").click(function(){
+				$(".check:checked").parent().remove()
+				getSum()
+			})
+			// 删除全部
+			$(".del-all").click(function(){
+				$("li").remove()
+				getSum()
+			})
+		</script>
+	</body>
+</html>

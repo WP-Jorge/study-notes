@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// 1、不使用 API
+		let obj1 = {
+			a: 1,
+			b: {
+				c: 2,
+				d: [1, 2, 3]
+			},
+			e: [1, 2, 3, 4]
+		}
+		let newObj1 = {};
+		for (let key in obj1) {
+			if (obj1.hasOwnProperty(key)) {
+				newObj1[key] = obj1[key];
+			}
+		}
+		console.log(newObj1); // {a: 1, b: {…}, e: Array(4)}
+		newObj1.e.push(6);
+		console.log(obj1); // {a: 1, b: {…}, e: Array(5)}
+
+		// 2.使用 API
+		let obj2 = {
+			a: 1,
+			b: {
+				c: 2,
+				d: [1, 2, 3]
+			},
+			e: [1, 2]
+		}
+		let newObj2 = Object.assign(obj2);
+		console.log(newObj2); // {a: 1, b: {…}, e: Array(2)}
+		newObj2.e.push(3);
+		console.log(obj2); // {a: 1, b: {…}, e: Array(3)}
+	</script>
+</body>
+</html>

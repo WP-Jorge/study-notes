@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/* 
+			 题目：输入一个字符串，要求删除其中由相同字符组成的长度大于等于2的子串。
+			 示例：输入"abbbaca"->删掉bbb变成"aaca"->删掉aa，得到结果"ca" 
+			*/
+			function removeStr(str) {
+				let stack = [];
+				let topChar = '';
+				for (let i = 0; i < str.length; i++) {
+					if (topChar === str[i]) {
+						continue;
+					}
+					if (stack.length && stack[stack.length - 1] === str[i]) {
+						topChar = stack.pop();
+						i--;
+						continue;
+					}
+					stack.push(str[i]);
+					topChar = '';
+				}
+				return stack.join('');
+			}
+			console.log(removeStr('abbbaaca'));
+		</script>
+	</body>
+</html>

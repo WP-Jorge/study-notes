@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let symbol = Symbol('这是一个Symbol类型')
+			let obj = {
+				name: '后盾人',
+				[symbol]: 'houdunren.com'
+			}
+			// 1.遍历symbol属性
+			for (const key of Object.getOwnPropertySymbols(obj)) {
+				console.log(key) // Symbol(这是一个Symbol类型)
+			}
+
+			// 2.遍历所有属性
+			for (const key of Reflect.ownKeys(obj)) {
+				console.log(key) // name  Symbol(这是一个Symbol类型)
+			}
+
+			// 3.对象属性保护
+			let site = Symbol('这是一个Symbol')
+			class User {
+				constructor(name) {
+					this.name = name
+					this[site] = '后盾人'
+				}
+				getName() {
+					return `${this[site]} ${this.name}`
+				}
+			}
+			let user = new User('李四')
+			for (const key in user) {
+				console.log(key) // name 遍历不出symbol
+			}
+			console.log(user.getName()) // 后盾人 李四
+		</script>
+	</body>
+</html>

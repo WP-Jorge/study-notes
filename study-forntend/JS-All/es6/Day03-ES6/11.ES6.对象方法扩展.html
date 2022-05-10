@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.Object.is 判断两个值是否相等
+			console.log(Object.is(120, 120)) // true
+			console.log(Object.is(NaN, NaN)) // true
+			console.log(NaN === NaN) // false
+
+			// 2.Object.assign 对象合并
+			let o1 = {
+				host: 'localhost',
+				port: 3306,
+				name: 'root',
+				pass: '111111'
+			}
+			let o2 = {
+				host: '127.0.0.1',
+				port: 33060,
+				name: 'admin',
+				pass: {
+					name: 'asd',
+					obj: {
+						obj: 'asd'
+					}
+				},
+				remark: 'asdasd'
+			}
+			console.log(Object.assign(o1, o2)) // 后面的把前面的覆盖
+
+			// 3.Object.setPrototypeOf 设置原型对象 Object.getPrototypeOf
+			let school = {
+				name: '大学'
+			}
+			let citis = {
+				xiaoqu: ['北京', '上海', '深圳']
+			}
+			Object.setPrototypeOf(school, citis) // school的原型设置为cities 相当于school 是cities的子类
+			console.log(school)
+			console.log(Object.getPrototypeOf(school))
+		</script>
+	</body>
+</html>

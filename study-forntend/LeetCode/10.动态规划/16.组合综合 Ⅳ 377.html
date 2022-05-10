@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @param {number} target
+			 * @return {number}
+			 * 完全背包 排列问题，时间复杂度O(m*n)，空间复杂度O(m)
+			 */
+			var combinationSum4 = function (nums, target) {
+				let dp = new Array(target + 1).fill(0);
+				dp[0] = 1;
+				for (let i = 0; i <= target; i++) {
+					for (let j = 0; j < nums.length; j++) {
+						if (i >= nums[j]) {
+							dp[i] += dp[i - nums[j]];
+						}
+					}
+				}
+				return dp[target];
+			};
+			console.log(combinationSum4([1, 2, 3], 4));
+		</script>
+	</body>
+</html>

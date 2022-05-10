@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// ?= 后面是什么 ?! 后面不是什么
+			let str = 'houdunren2021hdcms'
+			let reg = /[a-z]+(?!\d)$/i
+			console.log(str.match(reg)) // ["hdcms", index: 13, input: "houdunren2021hdcms", groups: undefined]
+		</script>
+	</body>
+</html>

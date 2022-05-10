@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+
+		<script type="text/javascript">
+			// 1.使用timeOut定时器（异步操作）
+			// setTimeout(() => console.log('timeOut定时器'), 1000)
+
+			// 2.promise: 参数 -> 函数(resolve, reject)
+			// resolve, reject本身也是函数
+			// var data1 = 1
+			// var data2 = 2
+			// var data3 = 3
+			// // reject 没有可以不写
+			// new Promise((resolve, reject) => {
+			// 	setTimeout(() => {
+			// 		// 成功了就调用resolve
+			// 		resolve(data1)
+
+			// 		// 把函数体内容放到.then()里面
+			// 		// console.log('timeOut定时器')
+
+			// 		// 失败就调用reject,后面的then()不调用，去调用最后面的catch((error) => {})
+			// 		reject('error msg')
+			// 	}, 1000)
+			// }).then((data1) => {
+			// 	console.log('timeOut定时器' + data1)
+			// 	// 如果还有异步函数，return new Promise((resolve, reject) => {})函数体里面
+			// 	return new Promise((resolve, reject) => {
+			// 		setTimeout(() => {
+			// 			resolve(data2)
+			// 		}, 1000)
+			// 	})
+			// }).then((data2) => {
+			// 	console.log('timeOut定时器' + data2)
+			// 	return new Promise((resolve, reject) => {
+			// 		setTimeout(() => {
+			// 			resolve(data3)
+			// 		}, 1000)
+			// 	})
+			// }).then((data3) => {
+			// 	console.log('timeOut定时器' + data3)
+			// }).catch((error) => {
+			// 	console.log(error)
+			// })
+
+			// 3.什么情况下会用到promise？
+			// 一般情况下有起步操作时使用Promise对异步操作进行封装
+
+			// // 4.pomise的另一种写法
+			// new Promise((resolve, reject) => {
+			// 	setTimeout(() => {
+			// 		// resolve(data1)
+			// 		reject('error msg')
+			// 	}, 1000)
+			// 	// 不写catch()可用这一种方式
+			// }).then(data => {
+			// 	console.log('成功')
+			// }, err => {
+			// 	console.log(err)
+			// })
+
+			// // 5.当没有有异步请求时，resolve的可用如下写法
+			// // 把return new Promise((resolve, reject) => {}) 写成 return Promise.resolve(resolve)
+			// new Promise((resolve, reject) => {
+			// 	setTimeout(() => {
+			// 		resolve('啊啦啦啦1')
+			// 		reject('error msg')
+			// 	}, 1000)
+			// }).then((res) => {
+			// 	console.log('timeOut定时器' + res)
+			// 	return Promise.resolve(res + '啊啦啦啦2')
+			// }).then((res) => {
+			// 	console.log('timeOut定时器' + res)
+			// 	return Promise.resolve(res + '啊啦啦啦3')
+			// }).then((res) => {
+			// 	console.log('timeOut定时器' + res)
+			// 	return Promise.resolve(res + '啊啦啦啦3')
+			// })
+			
+			// // 5.1.更简洁写法，可用如下写法
+			// // 把return new Promise((resolve, reject) => {}) 写成 return Promise.resolve(resolve, reject)
+			// new Promise((resolve, reject) => {
+			// 	setTimeout(() => {
+			// 		resolve('啊啦啦啦1')
+			// 		reject('error msg')
+			// 	}, 1000)
+			// }).then((res) => {
+			// 	console.log('timeOut定时器' + res)
+			// 	// 直接return
+			// 	return res + '啊啦啦啦2'
+			// }).then((res) => {
+			// 	console.log('timeOut定时器' + res)
+			// 	return res + '啊啦啦啦3'
+			// }).then((res) => {
+			// 	console.log('timeOut定时器' + res)
+			// })
+			
+			// // 6.当没有有异步请求时，reject的可用如下写法
+			// // 把return new Promise((resolve, reject) => {}) 写成 return Promise.reject('err')
+			// new Promise((resolve, reject) => {
+			// 	setTimeout(() => {
+			// 		resolve('啊啦啦啦1')
+			// 		reject('error msg')
+			// 	}, 1000)
+			// }).then((res) => {
+			// 	console.log('timeOut定时器' + res)
+			// 	// return Promise.resolve(res + '啊啦啦啦2')
+			// 	// return Promise.reject('err')
+			// 	// 还可用throw 'errmessage'
+			// 	throw 'errmessage'
+			// }).then((res) => {
+			// 	console.log('timeOut定时器' + res)
+			// 	return Promise.resolve(res + '啊啦啦啦3')
+			// }).then((res) => {
+			// 	console.log('timeOut定时器' + res)
+			// 	return Promise.resolve(res + '啊啦啦啦3')
+			// }).catch((err) => {
+			// 	console.log(err)
+			// })
+			
+			// 7.promise的all方法使用
+			Promise.all([
+				// new Promise((resolve, reject) => {
+				// 	$.ajax({
+				// 		url: 'url1',
+				// 		success: function(data) {
+				// 			resolve(data)
+				// 		}
+				// 	})
+				// }),
+				// new Promise((resolve, reject) => {
+				// 	$.ajax({
+				// 		url: 'url2',
+				// 		success: function(data) {
+				// 			resolve(data)
+				// 		}
+				// 	})
+				// })
+				new Promise((resolve, reject) => {
+					setTimeout(() => {
+						resolve('result1')
+					}, 2000)
+				}),
+				new Promise((resolve, reject) => {
+					setTimeout(() => {
+						resolve('result2')
+					}, 1000)
+				})
+			]).then(results => {
+				// 等上方所有请求都结束后才调用then
+				console.log(results)
+				// // 下边为0的是第一个请求
+				// results[0]
+				// // 下边为1的是第二个请求
+				// results[1]
+				
+			})
+		</script>
+	</body>
+</html>

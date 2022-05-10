@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * Definition for a binary tree node.
+			 * function TreeNode(val, left, right) {
+			 *     this.val = (val===undefined ? 0 : val)
+			 *     this.left = (left===undefined ? null : left)
+			 *     this.right = (right===undefined ? null : right)
+			 * }
+			 */
+			/**
+			 * @param {number[]} nums
+			 * @return {TreeNode}
+			 * 二叉搜索树的构建 时间复杂度O(n) 空间复杂度O(n)
+			 */
+			var sortedArrayToBST = function (nums) {
+				function dfs(nums) {
+					if (!nums.length) {
+						return null;
+					}
+					let mid = parseInt(nums.length / 2);
+					let root = new TreeNode(nums[mid]);
+					root.left = dfs(nums.slice(0, mid));
+					root.right = dfs(nums.slice(mid + 1));
+					return root;
+				}
+				return dfs(nums);
+			};
+		</script>
+	</body>
+</html>

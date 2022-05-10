@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @param {number} target
+			 * @return {number[]}
+			 * 哈希表 时间复杂度O(n) 空间复杂度O(n)
+			 */
+			var twoSum = function (nums, target) {
+				let map = new Map();
+				for (let i = 0; i < nums.length; i++) {
+					let sub = target - nums[i];
+					if (map.has(sub)) {
+						return [map.get(sub), i];
+					}
+					map.set(nums[i], i);
+				}
+			};
+		</script>
+	</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	防抖：<input type="text" class="input">&nbsp;<span class="debounceText"></span>
+	<br>
+	防抖首次执行：<input type="text" class="input">&nbsp;<span class="debounceFirstText"></span>
+	<br>
+	防抖首次执行升级：<input type="text" class="input">&nbsp;<span class="debounceFirstPlusText"></span>
+	<br>
+	节流：<input type="text" class="input">&nbsp;<span class="throttleText"></span>
+	<br>
+	节流首次执行：<input type="text" class="input">&nbsp;<span class="throttleFirstText"></span>
+	<br>
+	节流首尾：<input type="text" class="input">&nbsp;<span class="throttleFirstPlusText"></span>
+	<script>
+		let inputs = document.getElementsByTagName('input');
+
+		// 防抖
+		let debounceText = document.getElementsByClassName('debounceText');
+		inputs[0].addEventListener('keyup', debounce1(e => {
+			debounceText[0].innerText = e.target.value;
+			console.log(this)
+		}, 500));
+
+		function debounce1(func, delay) {
+			let timer = null;
+			return function(...args) {
+				if (timer) {
+					clearTimeout(timer);
+				}
+				timer = setTimeout(() => {
+					// 使用apply或者call的原因是如果外部调用这个防抖函数时由于定时器是独立运行的，this指向丢失，导致func执行的this指向window
+					// func(...args);
+					func.apply(this, args);
+				}, delay);
+			}
+		}
+
+		// 防抖首次执行(只在第一次运行时才会有效果)
+		let debounceFirstText = document.getElementsByClassName('debounceFirstText');
+		// 这个地方要想正确的使用apply进行this的绑定，则不能使用箭头函数
+		inputs[1].addEventListener('keyup', debounce2(e => {
+			debounceFirstText[0].innerText = e.target.value;
+		}, 1500));
+
+		function debounce2(func, delay) {
+			let timer = null;
+			return function(...args) {
+				if (timer) {
+					clearTimeout(timer);
+				} else {
+					// 由于this在箭头函数中已经按照词法作用域绑定了，所以，用call()或者apply()调用箭头函数时，无法对this进行绑定，即传入的第一个参数被忽略
+					func.apply(this, args);
+				}
+				timer = setTimeout(() => {
+					func.apply(this, args);
+				}, delay);
+			}
+		}
+
+		// 防抖首次执行(每隔指定时间后也会有第一次的执行，同时解决如果只按一次，到点后触发两次的问题)
+		let debounceFirstPlusText = document.getElementsByClassName('debounceFirstPlusText');
+		inputs[2].addEventListener('keyup', debounce3(e => {
+			debounceFirstPlusText[0].innerText = e.target.value;
+			console.log(e.target.value);
+		}, 500));
+
+		function debounce3(func, delay) {
+			let timer = null;
+			let tempTimer = null;
+			return function(...args) {
+				if (timer) {
+					clearTimeout(timer);
+					clearTimeout(tempTimer);
+
+					timer = setTimeout(() => {
+						func.apply(this, args);
+						tempTimer = setTimeout(() => {
+							timer = null;
+						}, delay);
+					}, delay);
+				} else {
+					func.apply(this, args);
+					timer = -1;
+				}
+				
+			}
+		}
+
+		// 节流
+		let throttleText = document.getElementsByClassName('throttleText');
+		inputs[3].addEventListener('keyup', throttle1(e => {
+			throttleText[0].innerText = e.target.value
+		}, 500));
+
+		function throttle1(func, delay) {
+			let timer = null;
+			return function(...args) {
+				if (!timer) {
+					timer = setTimeout(() => {
+						func.apply(this, args);
+						// 这边必须使用 timer = null, 使用cleartTimeout不起效果,原因如下：
+						timer = null;
+						// timer定时器只执行一次，此时已经执行，清不清已经无所谓了，同时，clearTimeout清空定时器后 timer 并不会变成null，原来是什么值现在就是什么值
+						// clearTimeout(timer);
+						// console.log(timer)
+					}, delay);
+				}
+			}
+		}
+
+		// 节流首次执行(首次会调用函数，但是最后一次不会调用函数)
+		let throttleFirstText = document.getElementsByClassName('throttleFirstText');
+		inputs[4].addEventListener('keyup', throttle2(e => {
+			throttleFirstText[0].innerText = e.target.value
+		}, 1500));
+
+		function throttle2(func, delay) {
+			let time = 0;
+			return function(...args) {
+				let now = +new Date;
+				if (now - time > delay) {
+					func.apply(this, args);
+					time = now;
+				}
+			}
+		}
+		// 节流首尾：(首次会调用函数，最后一次也会调用函数)
+		let throttleFirstPlusText = document.getElementsByClassName('throttleFirstPlusText');
+		inputs[5].addEventListener('keyup', throttle3(e => {
+			throttleFirstPlusText[0].innerText = e.target.value
+		}, 1500));
+
+		function throttle3(func, delay) {
+			let time = 0;
+			let timer = null;
+			return function(...args) {
+				let now = +new Date;
+				let remaining = delay + time - now;
+				timer && clearTimeout(timer);
+				if (remaining <= 0) {
+					func.apply(this, args);
+					time = now;
+				} else {
+					timer = setTimeout(() => {
+						func.apply(this, args);
+						time = +new Date;
+					}, remaining);
+				}
+			}
+		}
+	</script>
+</body>
+</html>

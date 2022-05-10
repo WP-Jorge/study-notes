@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string} s
+			 * @return {string[][]}
+			 * 回溯
+			 */
+			var partition = function (s) {
+				let res = [];
+				let path = [];
+				function isPalindrome(str, l, r) {
+					for (let i = l, j = r; i < j; i++, j--) {
+						if (s[i] !== s[j]) {
+							return false;
+						}
+					}
+					return true;
+				}
+				function backtracking(num) {
+					if (num === s.length) {
+						res.push([...path]);
+						return;
+					}
+					for (let i = num; i < s.length; i++) {
+						if (!isPalindrome(s, num, i)) {
+							continue;
+						}
+						path.push(s.slice(num, i + 1));
+						backtracking(i + 1);
+						path.pop();
+					}
+				}
+				backtracking(0);
+				return res;
+			};
+		</script>
+	</body>
+</html>

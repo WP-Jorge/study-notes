@@ -1,0 +1,17 @@
+// 1.申明变量在变量名前面添加$
+$primary-color: pink;
+
+// 2.变量值可以为多个值,并且可以嵌套变量
+
+// 3.定义属性
+
+
+
+
+$primary-border: 1px solid $primary-color;
+
+div.box {
+	// 在使用的地方引用该变量
+	background-color: $primary-color;
+	border: $primary-border;
+}

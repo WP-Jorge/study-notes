@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[][]} matrix
+			 * @param {number} target
+			 * @return {boolean}
+			 * 数组 二分查找 时间复杂度O(mlogn) 空间复杂度O(1)
+			 */
+			var searchMatrix = function (matrix, target) {
+				for (let i = 0; i < matrix.length; i++) {
+					if (matrix[i][0] > target) {
+						return false;
+					}
+					let left = 0;
+					let right = matrix[i].length - 1;
+					let mid = parseInt((left + right) / 2);
+					while (true) {
+						if (matrix[i][mid] === target) {
+							return true;
+						}
+						if (left >= right) {
+							break;
+						}
+						if (matrix[i][mid] < target) {
+							left = mid + 1;
+							mid = parseInt((left + right) / 2);
+							continue;
+						}
+						right = mid - 1;
+						mid = parseInt((left + right) / 2);
+					}
+				}
+				return false;
+			};
+		</script>
+	</body>
+</html>

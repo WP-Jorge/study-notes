@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* 如果祖先元素有定位(相对、绝对、固定定位) ,则以最近一级的有定位祖先元素为参考点移动位置。 */
+			.father {
+				/* 为父元素添加relative后子元素中有absolute属性的元素会以父元素为参考移动焦点 */
+				position: relative;
+				width: 500px;
+				height: 500px;
+				background-color: skyblue;
+			}
+			.son {
+				position: absolute;
+				left: 10px;
+				bottom: 0;
+				width: 200px;
+				height: 200px;
+				background-color: pink;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="father">
+			<div class="son"></div>
+		</div>
+	</body>
+</html>

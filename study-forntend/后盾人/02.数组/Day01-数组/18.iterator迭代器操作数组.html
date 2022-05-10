@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let arr = ['野', '猪']
+			// 1.keys() 获取索引
+			// let keys = arr.keys()
+			// console.log(keys.next()) // {value: 0, done: false}
+			// console.log(keys.next()) // {value: 1, done: false}
+			// console.log(keys.next()) // {value: undefined, done: true}
+
+			// let { value, done } = keys.next()
+			// console.log(value, done) // 0 false
+
+			// 2.values() 获取值
+			// let values = arr.values()
+			// let { value, done } = values.next()
+			// console.log(value, done) // 野 false
+
+			// 3.使用while迭代
+			let values = arr.values()
+			while (({ value, done } = values.next()) && done === false) {
+				console.log(value)
+			}
+
+			// 4.使用for of迭代
+			for (const value of arr.values()) {
+				console.log(value)
+			}
+
+			// 5.entries 返回一个迭代对象
+			let entries = arr.entries()
+			console.log(entries.next()) // {value: Array(2), done: false}  是keys和values的综合
+			for (let [key, value] of arr.entries()) {
+				console.log(value)
+			}
+		</script>
+	</body>
+</html>

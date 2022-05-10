@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.当函数内的函数、变量不在使用后会被垃圾回收
+			function hd() {
+				let n = 1
+				function sum() {
+					console.log(++n)
+				}
+				sum()
+			}
+			hd() // 2
+			hd() // 2
+			hd() // 2
+
+			// 2.返回函数内的函数，使其被引用，可使其不被垃圾回收
+			function hd2() {
+				// 由于sum函数内引用 n ，sum函数又被外部引用，导致 n 不会被垃圾回收，所以至始至终 n 都只有原先创建的那个
+				let n = 1
+				return function sum() {
+					console.log(++n)
+				}
+			}
+			let a = hd2()
+			a() // 2
+			a() // 3
+			a() // 4
+
+			// 3.每次创建新的hd2都会创建一个新的 n ，所以新创建的 b 中的 n 的值不与 a 中的 n 共享
+			let b = hd2()
+			b() // 2
+			b() // 3
+			b() // 4
+
+			// 4.同样多次嵌套返回也是一样，只要有引用就不会被回收
+			function hd3() {
+				let n = 1
+				return function sum() {
+					let m = 1
+					return function show() {
+						console.log('n:' + ++n)
+						console.log('m:' + ++m)
+					}
+				}
+			}
+			let c = hd3()()
+			c() // n:2 m:2
+			c() // n:3 m:3
+		</script>
+	</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="02.ajax.js"></script>
+		<script>
+			function query(city) {
+				// 缓存
+				const cache = query.cache || (query.cache = new Map())
+				// 判断是否有缓存
+				if (cache.has(city)) {
+					console.log('进入缓存')
+					return Promise.resolve(cache.get(city))
+				}
+				return ajax(
+					`https://geoapi.qweather.com/v2/city/lookup?location=${city}&key=6fea66ec596e466a99686bcc6bb3a72a`
+				).then(res => {
+					cache.set(city, res)
+					console.log('进入查询')
+					return res
+				})
+			}
+			query('常熟').then(res => {
+				console.log(res)
+			})
+			setTimeout(() => {
+				query('常熟').then(res => {
+					console.log(res)
+				})
+			}, 100)
+			setTimeout(() => {
+				query('常熟').then(res => {
+					console.log(res)
+				})
+			}, 100)
+		</script>
+	</body>
+</html>

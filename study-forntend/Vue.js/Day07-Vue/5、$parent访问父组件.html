@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<style>
+
+		</style>
+
+	</head>
+	<!-- 组件是以界面划分：按照不同页面划分不同组件，比如相同或相似的页面不用写多遍，写一个就都了，调用时把不同的地方的参数传入就行
+		 模块是以代码逻辑划分：按照不同功能划分不同模块 方便代码分层开发，保证每个层功能单一 -->
+	<body>
+		<div id="div01">
+			<input type="button" value="获取父组件中的内容" @click="getElement" />
+			<h3 ref="h3">今天天气真的好</h3>
+			<login ref="login"></login>
+		</div>
+
+		<script>
+			var login = {
+				template: `
+							<button @click="showParent">点击显示父组件信息</button>
+						`,
+				data() {
+					return {
+						msg: 'sonmsg'
+					}
+				},
+				methods: {
+					showSon() {
+						console.log('调用了子组件的showSon方法')
+					},
+					showParent() {
+						this.$parent.getElement()
+						// 访问跟组件
+						// console.log(this.$root)
+					}
+				}
+			}
+
+
+			var nv = new Vue({
+				el: '#div01',
+				data: {
+
+				},
+				methods: {
+					getElement() {
+						console.log('父组件信息')
+					}
+				},
+				components: {
+					login
+				}
+			})
+		</script>
+	</body>
+</html>

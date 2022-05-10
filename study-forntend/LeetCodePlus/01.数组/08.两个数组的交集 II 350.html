@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Document</title>
+</head>
+<body>
+<script>
+	/**
+	 * @param {number[]} nums1
+	 * @param {number[]} nums2
+	 * @return {number[]}
+	 * 双指针 时间复杂度O(nlogn) 空间复杂度O(min(m, n))
+	 */
+	var intersect = function (nums1, nums2) {
+		nums1 = nums1.sort((a, b) => a - b);
+		nums2 = nums2.sort((a, b) => a - b);
+		let left = 0;
+		let right = 0;
+		let res = [];
+		while (left < nums1.length && right < nums2.length) {
+			if (nums1[left] === nums2[right]) {
+				res.push(nums1[left]);
+				left++;
+				right++;
+				continue;
+			}
+			if (nums1[left] > nums2[right]) {
+				right++;
+				continue;
+			}
+			if (nums1[left] < nums2[right]) {
+				left++;
+			}
+		}
+		return res;
+	};
+</script>
+</body>
+</html>

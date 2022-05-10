@@ -1,0 +1,12 @@
+$version: "0.0.1";
+/*
+	当前版本号：#{$version};
+*/
+
+$color: "color";
+$pink: "pink";
+
+// #{}可以插入任何地方
+div {
+	#{$color}:#{$pink};
+}

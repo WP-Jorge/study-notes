@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.pending 准备阶段
+			// 2.resolved、fulfilled 成功阶段
+			// 3.rejected 拒绝状态
+			console.log(
+				new Promise((resolve, reject) => {
+					resolve('成功状态')
+					// reject('拒绝状态')
+				})
+					.then(
+						value => {
+							// 成功走这里
+							console.log('成功的业务逻辑 1')
+						},
+						reason => {
+							// 失败走这里
+							console.log('失败的业务逻辑 1')
+						}
+					)
+					.then(
+						value => {
+							// 成功走这里
+							console.log('成功的业务逻辑 2')
+						},
+						reason => {
+							// 失败走这里
+							console.log('失败的业务逻辑 2')
+						}
+					)
+			)
+		</script>
+	</body>
+</html>

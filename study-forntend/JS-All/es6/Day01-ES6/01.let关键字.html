@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // 1.变量不能重复申明
+            // let name = '张三'
+            // let name = "李四"
+
+            // 2.块级作用域  全局、函数、eval
+            // if else while for
+            // {
+            //     let girl = "小红"
+            // }
+            // console.log(girl)
+
+            // 3.不存在变量提升
+            // console.log(song)
+            // let song = "爱"
+
+            // 4.不影响作用域链
+            {
+                let school = "学校"
+                function fn() {
+                    console.log(school)
+                }
+                fn()
+            }
+        </script>
+    </body>
+</html>

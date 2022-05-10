@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/**
+		 * 快速排序：
+		 * 时间复杂度：O(nlogn)
+		 * 空间复杂度：O(logn)
+		 * 稳定性：不稳定
+		 */
+		function quickSort(arr) {
+			let target = arr[0];
+			let left = [];
+			let right = [];
+			for (let i = 1; i < arr.length; i++) {
+				if (arr[i] < target) {
+					left.push(arr[i]);
+					continue;
+				}
+				right.push(arr[i]);
+			}
+			if (left.length >= 2) {
+				left = quickSort(left);
+			}
+			if (right.length >= 2) {
+				right = quickSort(right);
+			}
+			return [...left, target, ...right];
+		}
+		console.log(quickSort([5, 2, 3, 0, 9, 12, 41, 1, 2, 4]));
+	</script>
+</body>
+</html>

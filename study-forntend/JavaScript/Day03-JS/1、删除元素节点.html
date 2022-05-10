@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="button" value="删除" />
+		<div>
+			<li>1</li>
+			<li>1</li>
+			<li>1</li>
+		</div>
+		<script type="text/javascript">
+			var input = document.querySelector('input')
+			var div = document.querySelector('div')
+			input.onclick = function(){
+				if(div.children.length === 0){
+					input.disabled=true
+				}else{
+					div.removeChild(div.children[0]) // node.removeChild(child) 删除元素子节点
+				}
+			}
+			
+			
+		</script>
+	</body>
+</html>

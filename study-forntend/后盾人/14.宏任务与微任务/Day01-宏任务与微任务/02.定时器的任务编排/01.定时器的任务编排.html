@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.系统在解析代码的时候将定时器放入定时器队列中并开始计时
+			// 2.当定时器计时完成后将定时器放入宏任务队列中等待执行
+			// 3.宏任务始终会等主线任务、微任务执行完成后才能被执行
+			setTimeout(() => {
+				console.log('定时器')
+			}, 100)
+			for (let i = 0; i < 500; i++) {
+				console.log('')
+			}
+		</script>
+	</body>
+</html>

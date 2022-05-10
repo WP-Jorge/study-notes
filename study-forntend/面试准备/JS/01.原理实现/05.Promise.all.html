@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			Promise.myAll = function (asyncArr) {
+				return new Promise((resolve, reject) => {
+					if (!Array.isArray(asyncArr)) {
+						reject(new TypeError('参数类型错误'));
+					}
+					let result = [];
+					let count = 0;
+					asyncArr.forEach((item, index) => {
+						// 如果 item 不是异步函数，则可以使用 Promise.resolve(item) 将 item 转换为异步函数，如果直接使用 item.then，则会在 item 为普通函数的时候报 then undefine 的错误
+						Promise.resolve(item)
+							.then(res => {
+								count++;
+								result[index] = res;
+								if (count === asyncArr.length) {
+									resolve(result);
+								}
+							})
+							.catch(err => {
+								reject(new Error('错误'));
+							});
+					});
+				});
+			};
+			function sleep(time) {
+				return new Promise((resolve, reject) => {
+					setTimeout(() => {
+						// if (time === 2000) {
+						// 	reject(time);
+						// }
+						resolve(time);
+					}, time);
+				});
+			}
+			let asyncArr = [sleep(1000), sleep(3000), sleep(2000)];
+			// let asyncArr = [console.log(1), console.log(2), console.log(3)];
+			Promise.myAll(asyncArr).then(res => console.log(res));
+		</script>
+	</body>
+</html>

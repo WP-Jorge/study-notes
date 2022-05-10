@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {number[]} nums
+             * @param {number} target
+             * @return {number}
+			 * 查找第一个 >= 5 的元素，条件：nums[mid] >= target，小箭头在那边，那边就赋值为mid，right = mid
+             * 查找第一个 < 5 的元素，条件：nums[mid] < target，小箭头在那边，那边就赋值为mid，left = mid
+             * 查找第一个 > 5 的元素，条件：nums[mid] > target，小箭头在那边，那边就赋值为mid，right = mid
+             * 查找第一个 <= 5 的元素，条件：nums[mid] <= target，小箭头在那边，那边就赋值为mid，left = mid
+             */
+            var search = function (nums, target) {
+                let bs = (nums, target) => {
+                    let left = -1;
+                    let right = nums.length;
+                    while (left + 1 < right) {
+                        let mid = parseInt((left + right) / 2);
+                        if (nums[mid] >= target) {
+                            right = mid;
+                        } else {
+                            left = mid;
+                        }
+                    }
+                    return right;
+                };
+                let res = bs(nums, target);
+                if (nums[res] === target) {
+                    return res;
+                }
+                return -1;
+            };
+        </script>
+    </body>
+</html>

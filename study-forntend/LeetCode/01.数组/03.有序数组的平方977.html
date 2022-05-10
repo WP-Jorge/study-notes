@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * @param {number[]} nums
+             * @return {number[]}
+             * 双指针，时间复杂度O(n), 空间复杂度O(n)
+             */
+            var sortedSquares = function (nums) {
+                let j = nums.length - 1;
+                let i = 0;
+                let k = nums.length - 1;
+                let res = [];
+                while (i <= j) {
+                    let powI = Math.pow(nums[i], 2);
+                    let powJ = Math.pow(nums[j], 2);
+                    if (powI >= powJ) {
+                        res[k--] = powI;
+                        i++;
+                        continue;
+                    }
+                    res[k--] = powJ;
+                    j--;
+                }
+                return res;
+            };
+        </script>
+    </body>
+</html>

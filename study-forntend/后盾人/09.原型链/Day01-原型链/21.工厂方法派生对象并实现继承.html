@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function User(name, age) {
+				this.name = name
+				this.age = age
+			}
+
+			User.prototype.show = function () {
+				console.log(this.name, this.age)
+			}
+
+			function admin(name, age) {
+				let instance = Object.create(User.prototype)
+				User.call(instance, name, age)
+				return instance
+			}
+
+			let hd = new admin('向军', 19)
+			hd.show() // 向军 19
+		</script>
+	</body>
+</html>

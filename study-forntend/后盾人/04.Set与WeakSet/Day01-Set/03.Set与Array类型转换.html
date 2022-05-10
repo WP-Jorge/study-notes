@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let set = new Set([1, 2, 3])
+			// 1.Array.form() 转换为数组
+			console.log(Array.from(set)) // [1, 2, 3]
+
+			// 2.使用扩展运算符
+			console.log([...set]) // [1, 2, 3]
+
+			// 3.例子 返回Set中小于5的元素
+			let set2 = new Set('12345678')
+			let arr = [...set2].filter(item => {
+				return item < 5
+			})
+			console.log(arr) // ["1", "2", "3", "4"]
+			set2 = new Set(arr)
+			console.log(set2) // Set(4) {"1", "2", "3", "4"}
+
+			// 4.例子 去除数组中的重复值
+			let arr2 = [1, 2, 3, 4, 3, 2, 1]
+			arr2 = [...new Set(arr2)]
+			console.log(arr2) // [1, 2, 3, 4]
+		</script>
+	</body>
+</html>

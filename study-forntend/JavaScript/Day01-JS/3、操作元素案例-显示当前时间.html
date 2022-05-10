@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="button" id="btn" value="点我显示时间" />
+		<div id="time">
+			
+		</div>
+		
+		
+		
+		
+		<script type="text/javascript">
+			var btn = document.querySelector('#btn')
+			var time = document.querySelector('#time')
+			btn.onclick = function() {
+				time.innerHTML = new Date() // innerHTML 起始位置到终止位置的全部内容 包括html标签 保留空格 换行 (原样输出内容)
+				// time.innerText = new Date() // innerText 起始位置到终止位置的全部内容 去除html标签(不识别标签 先去除标签后显示内容) 不保留空格 换行
+			}
+		</script>
+	</body>
+</html>

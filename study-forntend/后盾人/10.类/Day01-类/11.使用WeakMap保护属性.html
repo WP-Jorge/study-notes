@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			const host = new WeakMap()
+			class User {
+				constructor(name) {
+					this.name = name
+					host.set(this, 'http:123.com')
+				}
+				set host(url) {
+					if (!/^http:?:/i.test(url)) {
+						throw new Error('非法网址')
+					}
+					host.set(this, url)
+				}
+				get host() {
+					return host.get(this)
+				}
+			}
+			let user = new User('张三')
+			console.log(user.host) // http:123.com
+		</script>
+	</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.直接定义的函数实在window对象中
+			function hd() {
+				console.log('后盾人')
+			}
+			hd() // 后盾人
+			window.hd() // 后盾人
+
+			// 2.var、不适用声明变量关键字也是在window中
+			cms = function () {
+				console.log('cms')
+			}
+			cms() // cms
+			window.cms() // cms
+
+			var getName = function () {
+				console.log('野猪乔治')
+			}
+			getName() // 野猪乔治
+			window.getName() // 野猪乔治
+
+			// 3.使用let、const声明的函数不在window中
+			let getPwd = function () {
+				console.log('111')
+			}
+			getPwd() // 111
+			// window.getPwd() // 报错
+			const getAge = function () {
+				console.log('12')
+			}
+			getAge() // 12
+			// window.getAge() // 报错
+		</script>
+	</body>
+</html>

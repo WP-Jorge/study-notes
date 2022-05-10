@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function User() {
+				User.prototype.name = function () {
+					console.log('user.name')
+				}
+			}
+
+			function Admin() {}
+			Admin.prototype = Object.create(User.prototype)
+			// 给使用create实现继承的函数重新设置它的构造函数
+			// 不能直接使用Admin.prototype.constructor = Admin的方式重新设置构造函数，这样在遍历实例的时候会把构造函数也遍历出来
+			// Admin.prototype.constructor = Admin
+
+			// 使用defineProperty的方式重新设置一个不能被遍历的构造函数
+			Object.defineProperty(Admin.prototype, 'constructor', {
+				value: Admin,
+				enumerable: false
+			})
+
+			Admin.prototype.role = function () {
+				console.log('Admin.role')
+			}
+
+			// 1.如果没有重新设置构造函数，那么继承后的子类的构造函数会变成父类的构造函数
+			// console.dir(Admin.prototype.constructor) // ƒ User()
+
+			// 2.重新设置它的构造函数后
+			console.dir(Admin.prototype.constructor) // ƒ Admin()
+		</script>
+	</body>
+</html>

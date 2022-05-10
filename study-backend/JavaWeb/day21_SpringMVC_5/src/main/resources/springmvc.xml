@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <context:component-scan base-package="controller"></context:component-scan>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--第二种处理静态资源的方式
+        mvc:resources加入后框架会创建ResourceHttpRequestHandler这 个处理器对象。
+        让这个对象处理静态资源的访问，不依赖tomcat服务器。
+        mapping:访问静态资源的uri地址，使用通配符**
+        location :静态资源在你的项目中的目录位置。
+        images/** :表示images/p1.jpg ， images/user/logo.gif ，images/order/list . png
+    -->
+    <mvc:resources mapping="/static/**" location="/static/"/>
+    <!--mvc : resources 和@RequestMapping有-定的冲突,加注解驱动解决-->
+    <mvc:annotation-driven/>
+
+    <!--声明拦截器：可u哦有0或多个-->
+    <mvc:interceptors>
+        <!--声明第一个拦截器-->
+        <mvc:interceptor>
+            <!--
+                指定拦截的请求uri地址
+                path :就是uri地址，可以使用通配符**
+                    **: 表示任意的字符，文件或者多级目录和目录中的文件
+                    http://localhost:8080/myweb/user/listuser.do
+                    http://localhost:8080/myweb/student/addstudent.do
+            -->
+            <mvc:mapping path="/**"/>
+            <!--声明拦截器对象-->
+            <bean class="handler.MyInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

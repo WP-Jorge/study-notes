@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @return {number[][]}
+			 * 回溯 + 剪枝
+			 */
+			var subsetsWithDup = function (nums) {
+				let res = [];
+				let path = [];
+				nums.sort((a, b) => a - b);
+				function backtracking(num) {
+					res.push([...path]);
+					for (let i = num; i < nums.length; i++) {
+						if (i > num && nums[i] === nums[i - 1]) {
+							continue;
+						}
+						path.push(nums[i]);
+						backtracking(i + 1);
+						path.pop();
+					}
+				}
+				backtracking(0);
+				return res;
+			};
+		</script>
+	</body>
+</html>

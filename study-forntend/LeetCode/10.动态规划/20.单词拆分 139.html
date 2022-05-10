@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string} s
+			 * @param {string[]} wordDict
+			 * @return {boolean}
+			 * 完全背包 动态规划，时间复杂度O(n^3)，空间复杂度O(n)
+			 */
+			var wordBreak = function (s, wordDict) {
+				let dp = new Array(s.length + 1).fill(false);
+				dp[0] = true;
+				for (let i = 1; i <= s.length; i++) {
+					for (let j = 0; j < i; j++) {
+						if (wordDict.includes(s.slice(j, i)) && dp[j]) {
+							dp[i] = true;
+							console.table(dp);
+						}
+					}
+				}
+				return dp[s.length];
+			};
+			console.log(wordBreak('leetcode', ['leet', 'code']));
+		</script>
+	</body>
+</html>

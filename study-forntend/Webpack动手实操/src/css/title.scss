@@ -1,0 +1,11 @@
+@import url('css/title.css');
+
+$color: red;
+.title {
+	height: 300px;
+	color: #12345678;
+	background-image: url('img/小鸡.jpg');
+	background-repeat: no-repeat;
+	background-size: 200px;
+	background-position: center;
+}

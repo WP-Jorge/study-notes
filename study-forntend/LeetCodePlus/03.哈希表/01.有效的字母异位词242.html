@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string} s
+			 * @param {string} t
+			 * @return {boolean}
+			 * 哈希表 时间复杂度O(max(m,n)) 空间复杂度O(m+n)
+			 */
+			var isAnagram = function (s, t) {
+				let mapS = new Map();
+				let mapT = new Map();
+				let sLength = s.length - 1;
+				let tLength = t.length - 1;
+				if (sLength !== tLength) {
+					return false;
+				}
+				while (sLength >= 0) {
+					if (mapS.has(s[sLength])) {
+						mapS.set(s[sLength], mapS.get(s[sLength]) + 1);
+					} else {
+						mapS.set(s[sLength], 1);
+					}
+					sLength--;
+				}
+				while (tLength >= 0) {
+					if (mapT.has(t[tLength])) {
+						mapT.set(t[tLength], mapT.get(t[tLength]) + 1);
+					} else {
+						mapT.set(t[tLength], 1);
+					}
+					tLength--;
+				}
+				for (let item of mapS.keys()) {
+					if (mapS.get(item) !== mapT.get(item)) {
+						return false;
+					}
+				}
+				return true;
+			};
+		</script>
+	</body>
+</html>

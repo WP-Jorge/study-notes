@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// ES6 引入rest 参数，用于获取函数的实参，用来代替arguments
+			//1. ES5 获取实参的方式
+			function es5() {
+				console.log(arguments) // 是一个对象
+			}
+			es5('张三', '李四', '王五')
+
+			// 2.rest 参数
+			function es6(...args) {
+				console.log(args) // 是一个数组，可以使用去数组相关的方法
+			}
+			es6('赵六', '宋七', '王八')
+
+			// 3.rest 必须放在参数的最后面
+			function fn(a, b, ...args) {
+				console.log(a)
+				console.log(b)
+				console.log(args)
+			}
+			fn(1, 2, 3, 4, 5, 6)
+		</script>
+	</body>
+</html>

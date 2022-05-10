@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let str = 'hoUdUnren'
+
+			// i 不区分大小写
+			console.log(str.match(/u/i)) // ["U", index: 2, input: "hoUdUnren", groups: undefined]
+
+			// g 全局匹配
+			console.log(str.match(/u/gi)) // ["U", "U"]
+
+			console.log(str.replace(/u/gi, '@')) // ho@d@nren
+		</script>
+	</body>
+</html>

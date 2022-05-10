@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {string} s
+			 * @return {number[]}
+			 * 哈希表 时间复杂度O(n) 空间复杂度O(n)
+			 */
+			var partitionLabels = function (s) {
+				let res = [];
+				let map = {};
+				for (let i = 0; i < s.length; i++) {
+					map[s[i]] = i;
+				}
+				let max = 0;
+				let pre = 0;
+				for (let i = 0; i < s.length; i++) {
+					max = Math.max(map[s[i]], max);
+					if (i === max) {
+						res.push(max - pre + 1);
+						pre = i + 1;
+					}
+				}
+				return res;
+			};
+			console.log(partitionLabels('caedbdedda'));
+		</script>
+	</body>
+</html>

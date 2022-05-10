@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			div {
+				width: 300px;
+				height: 300px;
+				/* 1.background-repeat: repeat | no-repeat | repeat-x | repeat-y */
+				/* background-image: url(../xiaoqiang001-html_css_material-master/html_css_material/第四天/images/logo.png); */
+				/* 设置图片不平铺，默认平铺 */
+				/* background-repeat: no-repeat; */
+				
+				/* 2.页面既可以添加背景颜色，也可以添加背景图片，背景图片在背景颜色上面 */
+				/* background-color: pink; */
+				background-color: rgba(0, 0, 0, .5);
+				
+				/* 3.背景图片的位置:background-position: x y | top | center | bottom | left | right */
+				/* background-position: 10px 10px; */
+				/* 如果都是是方位名词，先后顺序没有影响 */
+				/* 只写一个则另外一个居中 */
+				/* background-position: left top; */
+				/* background-position: center top; */
+				/* 精确位置和方位名词可以一起使用 */
+				/* background-position: 0 bottom; */
+				
+				/* 4.背景图片固定：background-attachment: scoll(默认滚动) | fixed(固定) */
+				/* background-attachment: fixed; */
+				
+				/* 5.背景复合写法background: 背景颜色 背景图片 背景平铺 背景图片滚动 背景图片位置  一般采用这样的顺序，不固定顺序*/
+				background: pink url(../xiaoqiang001-html_css_material-master/html_css_material/第四天/images/logo.png) no-repeat fixed left top;
+				/* 背景色渐变 */
+				/* background: linea r-gradient (起始方向，颜色1，颜色2，...) ; */
+				/* background: -webkit-linear-gradient(left, red, blue) ;
+				background: -webkit-linear-gradient(left top, red, blue) ; */
+			}
+		</style>
+	</head>
+	<body>
+		<div></div>
+	</body>
+</html>

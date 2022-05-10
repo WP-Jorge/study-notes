@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function sort(arr) {
+				let res = [];
+				let arr1 = [];
+				let arr2 = [];
+				arr.forEach(item => {
+					if (item % 2 !== 0) {
+						arr1.push(item);
+					} else {
+						arr2.push(item);
+					}
+				});
+				arr1 = quickSort(arr1, 0);
+				arr2 = quickSort(arr2, 1);
+				return [...arr1, ...arr2];
+				function quickSort(arr, flag = 0) {
+					let target = arr[0];
+					let left = [];
+					let right = [];
+					for (let i = 1; i < arr.length; i++) {
+						if (flag === 0) {
+							if (arr[i] < target) {
+								left.push(arr[i]);
+								continue;
+							}
+							right.push(arr[i]);
+							continue;
+						}
+						if (arr[i] < target) {
+							right.push(arr[i]);
+							continue;
+						}
+						left.push(arr[i]);
+					}
+					if (left.length >= 2) {
+						left = quickSort(left, flag);
+					}
+					if (right.length >= 2) {
+						right = quickSort(right, flag);
+					}
+					return [...left, target, ...right];
+				}
+			}
+			console.log(sort([1, 9, 2, 4, 3, 5, 6, 2, 8]));
+		</script>
+	</body>
+</html>

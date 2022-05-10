@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 将函数作为参数传入函数或者函数返回值为函数，则称这个函数为高阶函数
+			function fn(a, b, callback){
+				console.log(a + b)
+				callback && callback()
+			}
+			fn(1 ,2 ,function(){
+				console.log('callback函数')
+			})
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.every 所有回调函数返回真时才返回真  回调函数中的参数：第一个：每个元素，第二个：下标，第三个：原数组
+			let arr = ['hdcms', 'houdunren']
+			let status = arr.every((item, index, arr) => {
+				console.log(item)
+				return true
+			})
+			console.log(status) // true
+
+			// every例子
+			let user = [
+				{ name: '张三', js: 99 },
+				{ name: '李四', js: 78 },
+				{ name: '王五', js: 59 }
+			]
+			// 判断是否全部及格
+			let isPassAll = user.every(item => {
+				if (item.js >= 60) {
+					return true
+				}
+			})
+			console.log(isPassAll) // false
+			// 2.some 有一个为真就返回真 回调函数中的参数：第一个：每个元素，第二个：下标，第三个：原数组
+			let haveFail = user.some(item => {
+				if (item.js < 60) {
+					return true
+				}
+			})
+			console.log(haveFail) // true
+		</script>
+	</body>
+</html>

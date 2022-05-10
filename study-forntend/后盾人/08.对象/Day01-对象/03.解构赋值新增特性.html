@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let user = { name: '后盾人', age: 18 }
+			// 1.只要属性名一样就能解构赋值
+			let { name: n, age: a } = user
+
+			// 2.简写模式解构赋值
+			let { name, age } = user
+			console.log(n, a) // 后盾人 18
+			console.log(name, age) // 后盾人 18
+
+			// 3.导入模块解构赋值
+			let { random } = Math
+			console.log(random()) // 0.9945044219310268
+		</script>
+	</body>
+</html>

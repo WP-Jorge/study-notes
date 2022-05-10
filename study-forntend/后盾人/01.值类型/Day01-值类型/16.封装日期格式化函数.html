@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let date = new Date('1992-2-12 10:22:18')
+			console.log(date) // Wed Feb 12 1992 10:22:18 GMT+0800 (中国标准时间)
+			console.log(date.getFullYear()) // 1992
+			console.log(date.getMonth() + 1) // 2
+			console.log(date.getDate()) // 12
+			console.log(date.getHours()) // 10
+			console.log(date.getMinutes()) // 22
+			console.log(date.getSeconds()) // 18
+
+			function dateFormat(date, format = 'YYYY-MM-DD HH:mm:ss') {
+				let config = {
+					YYYY: date.getFullYear(),
+					MM: date.getMonth() + 1,
+					DD: date.getDate(),
+					HH: date.getHours(),
+					mm: date.getMinutes(),
+					ss: date.getSeconds()
+				}
+				for (const key in config) {
+					format = format.replace(key, config[key])
+				}
+				return format
+			}
+			console.log(dateFormat(date, 'YYYY年MM月DD日 HH时mm分ss秒'))
+		</script>
+	</body>
+</html>

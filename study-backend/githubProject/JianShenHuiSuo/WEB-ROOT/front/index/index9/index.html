@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="gbk" />
+	<title>欢迎来到-${SYSTEM_NAME}</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/WEB-ROOT/front/index/index9/css/images/favicon.ico" />
+	<link rel="stylesheet" href="/WEB-ROOT/front/index/index9/css/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="/WEB-ROOT/front/index/index9/css/flexslider.css" type="text/css" media="all" />
+	
+	<script src="/WEB-ROOT/front/index/index9/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+	<!--[if lt IE 9]>
+		<script src="/WEB-ROOT/front/index/index9/js/modernizr.custom.js"></script>
+	<![endif]-->
+	<script src="/WEB-ROOT/front/index/index9/js/jquery.flexslider-min.js" type="text/javascript"></script>
+	<script src="/WEB-ROOT/front/index/index9/js/functions.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		function openMenu(menuTable){
+			window.location.href= "/WEB-ROOT/front/index/index.do?flag=openMenu" + "&menuTable=" + menuTable ;
+		}
+	</script>
+
+</head>
+<body>
+	
+	<div id="wrapper">
+		
+		<header class="header">
+			<div class="shell">
+				<h1 >
+					<b><font face="微软雅黑" size="5"><a href="#">欢迎您来到-健身俱乐部综合管理系统</a></font></b> 
+				</h1>
+				
+				<p align="right">
+				#if( $ResultMap.login_user_acct == "" )
+					<a href="/login.do" target="_self"><font face="微软雅黑" size="2" color="white">登录</font></a>&nbsp;|&nbsp;
+					<a href="/WEB-ROOT/app/login/register.jsp" target="_self"><font face="微软雅黑" size="2" color="white">注册</font></a>
+					#else
+					<font size="2" face="微软雅黑"><font face="微软雅黑" size="2" color="white">$ResultMap.login_user_acct&nbsp;|&nbsp;</font></font>
+					<a href="/login.do" target="_self"><font face="微软雅黑" size="2" color="white">用户管理</font></a>
+					#end
+				</p>
+				
+				<nav id="navigation">
+					<ul>
+						<li class="active">
+							<a href="#"><font face="微软雅黑" size="3"  >主页</font></a>
+						</li>
+						
+						#foreach( $daohang in $ResultMap.daohang )
+					    <li><a href="#" onclick="openMenu('$daohang.menu_table');"><font face="微软雅黑" size="3"  >$daohang.menu_name</font></a></li>
+					    #end
+						
+					</ul>
+					<div class="cl">&nbsp;</div>
+				</nav>
+				
+			</div>
+		</header>
+		
+		
+		
+		<div class="slider-holder">
+			<!-- shell -->
+			<div class="shell">
+				<span class="l"></span>
+				<span class="r"></span>
+				<span class="t"></span>
+				<span class="b"></span>
+			
+				
+				<div class="slider flexslider">
+					<ul class="slides">
+						#foreach( $shouyehuandengpian in $ResultMap.shouyehuandengpian )
+						<li>
+							<img src="/UploadFile/banner${velocityCount}.jpg" title="905*309" />
+							<div class="slide-cnt">
+							
+							
+							</div>	
+						</li>
+						#end
+					</ul>
+				</div>
+				
+			</div>
+			
+		</div>	
+		
+		
+		
+		<div class="shell">
+			
+			<div class="main">
+				<section class="cols">
+				
+					#foreach( $lm in $ResultMap.lanmu )
+					<div class="col">
+						<h3><a href="#"><font face="微软雅黑" size="3" color="#155193">$lm.lanmumingcheng</font></a></h3>
+						<a href="#"><img src="/WEB-ROOT/front/index/index9/css/images/1${velocityCount}.jpg" alt="" /></a>
+						<p>
+							#foreach( $wz in $lm.wenzhang )
+							<a href="/WEB-ROOT/front/index/index.do?flag=wenzhang&id=$wz.id" target="_self"><font face="微软雅黑" size="2">$wz.wenzhangbiaoti</font></a>
+							<br>
+							#if(${velocityCount}==5)
+							#break
+							#end	
+							#end
+						</p>
+					</div>
+					#if(${velocityCount}==3)
+					#break
+					#end	
+						
+					#end
+					
+					
+					<div class="cl">&nbsp;</div>
+				</section>
+			</div>
+			
+		</div>
+		
+		<div id="footer-push"></div>
+	</div>
+	
+
+	
+	<div id="footer">
+		<div class="shell">
+			
+			<section class="footer-cols">
+				<div class="col">
+					<h3><strong><font face="微软雅黑" size="2">设计人</font></strong></h3>
+					<h3>刘天宇</h3>
+				</div>
+				<div class="col">
+					<h3><strong><font face="微软雅黑" size="2">友情链接</font></strong></h3>
+					<p>
+					<a href="http://www.cslg.cn/"> <font color="pink">常熟理工学院</font> </a><br>
+					<a href="http://bylw.cslg.cn/"><font color="red">常熟理工学院-毕业论文</font></a><br>
+					<a href="http://www.baidu.com"><font color="yellow">百度</font></a><br>
+					</p>
+					
+				</div>
+				<div class="col contact">
+					<h3><strong><font face="微软雅黑" size="2">联系我</font></strong></h3>
+					<h4>电话：18361226885</h4>
+					<a href="#">邮箱：lty7985223@qq.com</a>
+				</div>
+				
+			</section>
+			<div class="cl">&nbsp;</div>
+			<p class="copy">&copy; 版权所有 ：刘天宇 </p>
+			
+	</div>
+	
+</body>
+</html>

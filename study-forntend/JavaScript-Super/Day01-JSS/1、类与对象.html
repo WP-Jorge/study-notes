@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+
+		<script type="text/javascript">
+			// 创建类 class 创建一个明星类
+			class Star { // 类名后不加()
+				// _name // 可写可不写
+				// 构造器 接收外部传入的参数 不写constructor构造器 默认添加空的 跟java一样
+				constructor(name) { 
+				    this._name = name // 把传入的name传给Star这个对象
+				}
+				// 给类添加方法
+				sing(){ // 类中的方法不用加function
+					console.log('我会唱歌')
+				}
+
+				// 可以创建get set 方法
+				// get name() {
+				// 	return this._name
+				// }
+				// set name(value) {
+				// 	this._name = value
+				// }
+			}
+			
+			// 调用类实例化一个对象
+			var ldh = new Star('刘德华')
+			console.log(ldh.name) // 输出 刘德华   获取对象属性
+			ldh.sing() // 输出 我会唱歌  调用对象方法
+		</script>
+	</body>
+</html>

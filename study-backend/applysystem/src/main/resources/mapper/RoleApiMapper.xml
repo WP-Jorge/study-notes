@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cslg.applysystem.mapper.RoleApiMapper">
+    <cache-ref namespace="cn.cslg.applysystem.mapper.RoleMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.ApiMapper"/>
+    <cache-ref namespace="cn.cslg.applysystem.mapper.RoleApiMapper"/>
+    <select id="getApisByRoleId" resultType="cn.cslg.applysystem.pojo.vo.ApiVO">
+        select api.* from role_api, api where role_api.api_id = api.api_id and role_id = #{roleId} and api_type = 1
+    </select>
+</mapper>

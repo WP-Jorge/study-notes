@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="gbk" />
+	<title>欢迎来到-${SYSTEM_NAME}</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/WEB-ROOT/front/index/index9/css/images/favicon.ico" />
+	<link rel="stylesheet" href="/WEB-ROOT/front/index/index9/css/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="/WEB-ROOT/front/index/index9/css/flexslider.css" type="text/css" media="all" />
+	
+	<script src="/WEB-ROOT/front/index/index9/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+	<!--[if lt IE 9]>
+		<script src="/WEB-ROOT/front/index/index9/js/modernizr.custom.js"></script>
+	<![endif]-->
+	<script src="/WEB-ROOT/front/index/index9/js/jquery.flexslider-min.js" type="text/javascript"></script>
+	<script src="/WEB-ROOT/front/index/index9/js/functions.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function openMenu(menuTable){
+			window.location.href= "/WEB-ROOT/front/index/index.do?flag=openMenu" + "&menuTable=" + menuTable ;
+		}
+	</script>
+</head>
+<body>
+	
+	<div id="wrapper">
+		
+		<header class="header">
+			<div class="shell">
+				<h1 >
+					<font face="微软雅黑" size="5"><a href="/">欢迎您来到-${SYSTEM_NAME}</a></font></b> 
+				</h1>
+				
+				<p align="right">
+				#if( $ResultMap.login_user_acct == "" )
+					<a href="/login.do" target="_self"><font face="微软雅黑" size="2" color="white">登录</font></a>&nbsp;|&nbsp;
+					<a href="/WEB-ROOT/app/login/register.jsp" target="_self"><font face="微软雅黑" size="2" color="white">注册</font></a>
+					#else
+					<font size="2" face="微软雅黑"><font face="微软雅黑" size="2" color="white">$ResultMap.login_user_acct&nbsp;|&nbsp;</font></font>
+					<a href="/login.do" target="_self"><font face="微软雅黑" size="2" color="white">用户管理</font></a>
+					#end
+				</p>
+				
+				<nav id="navigation">
+					<ul>
+						<li>
+							<a href="/"><font face="微软雅黑" size="3"  >主页</font></a>
+						</li>
+						
+						#foreach( $daohang in $ResultMap.daohang )
+					    <li #if( "$ResultMap.nowMenuTable" == "$daohang.menu_table"  )  class="active"  #end><a  href="#" onclick="openMenu('$daohang.menu_table');"><font face="微软雅黑" size="3"  >$daohang.menu_name</font></a></li>
+					    #end
+						
+					</ul>
+					<div class="cl">&nbsp;</div>
+				</nav>
+				
+			</div>
+		</header>
+		
+		
+		
+		<div class="slider-holder">
+			<!-- shell -->
+			<div class="shell">
+				<span class="l"></span>
+				<span class="r"></span>
+				<span class="t"></span>
+				<span class="b"></span>
+
+				
+				<div class="slider flexslider">
+					<ul class="slides">
+						#foreach( $shouyehuandengpian in $ResultMap.shouyehuandengpian )
+						<li>
+							<img src="/UploadFile/banner${velocityCount}.jpg" title="905*309" />
+							<div class="slide-cnt">
+				
+						</li>
+						#end
+					</ul>
+				</div>
+				
+			</div>
+			
+		</div>	
+		
+		
+		
+		<div class="shell">
+			
+			<div class="main">
+				<iframe src="$ResultMap.menuUrl" style="width:910px;height:432px;"></iframe>
+			</div>
+			
+		</div>
+		
+		<div id="footer-push"></div>
+	</div>
+	
+
+	
+	<div id="footer">
+		<div class="shell">
+			
+			<section class="footer-cols">
+				<div class="col">
+					<h3><strong><font face="微软雅黑" size="2">设计人</font></strong></h3>					
+					<h3>刘天宇</h3>					
+				</div>
+				<div class="col">
+					<h3><strong><font face="微软雅黑" size="2">致谢</font></strong></h3>
+					<p>
+					董瑞志老师<br>
+					常理工学院各位老师<br>
+					</p>
+					
+				</div>
+				<div class="col contact">
+					<h3><strong><font face="微软雅黑" size="2">联系我</font></strong></h3>
+					<h4>电话：18361226885</h4>
+					<a href="#">邮箱：lty7985223@qq.com</a>
+				</div>
+				<div class="cl">&nbsp;</div>
+			</section>
+			
+			<p class="copy">&copy; 版权所有 ：刘天宇 </p>
+			
+		</div>	
+	</div>
+	
+</body>
+</html>

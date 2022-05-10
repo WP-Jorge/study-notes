@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.不使用静态属性
+			class User {
+				host = '123123'
+			}
+			let user = new User()
+			console.log(user) // User {host: "123123"}
+			console.log(user.host) // 123123
+
+			// 2.使用静态属性, 实例化的对象不能使用静态属性
+			class User2 {
+				static host = '123123'
+				// 可以通过类内部的方法访问
+				show() {
+					console.log(User2.host)
+				}
+			}
+			let user2 = new User2()
+			console.log(user2) // 空
+			console.log(user2.host) // undefined
+			console.log(User2.host) // 123123
+			user2.show() // 123123
+		</script>
+	</body>
+</html>

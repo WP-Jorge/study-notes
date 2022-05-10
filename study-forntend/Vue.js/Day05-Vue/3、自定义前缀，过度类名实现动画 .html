@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<style>
+			/* 	.v-enter： 这是一个时间点，是动画进入之前，元素的起始状态，此时动画开始进入
+				.v-leave-to：这是一个时间点，是动画进入之后，元素的最终状态，此时动画已经结束*/
+			.v-enter,
+			.v-leave-to{
+				/*  opacity:初始状透明度0
+					transform：运动
+					translateX：定义开始运动时的位置*/
+				opacity: 0;
+				transform: translateX(100px)
+			}
+			
+			/* 	.v-enter-active： 入场动画时间段
+				.v-leave-active：离场动画时间段*/
+			.v-enter-active,
+			.v-leave-active{
+				/* 设置动画过渡，将所有的属性过渡时间设置为1s ,过度状态为ease*/
+				transition: all 1s ease;
+			}
+			
+			/* 在transition中添加name="my"后，前缀变成.my 开头*/
+			.my-enter,
+			.my-leave-to{
+				/*  opacity:初始状透明度0
+					transform：运动
+					translateX：定义开始运动时的位置*/
+				opacity: 0;
+				transform: translateY(100px)
+			}
+			
+			.my-enter-active,
+			.my-leave-active{
+				/* 设置动画过渡，将所有的属性过渡时间设置为1s ,过度状态为ease*/
+				transition: all 1s ease;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="div01">
+			<input type="button" value="动画1" @click="flag1=!flag1"/>
+			<transition>
+				<h3 v-show="flag1">你好呀1</h3>
+			</transition>
+			<hr >
+			
+			<!-- 自定义前缀 -->
+			<input type="button" value="动画2" @click="flag2=!flag2"/>
+			<!-- 在transition中添加 name="***" ***为自定义前缀，用来代替v-，用于区分不同的操作 -->
+			<transition name="my">
+				<h3 v-show="flag2">你好呀2</h3>
+			</transition>
+			
+		</div>
+		
+		<script>
+			
+			var nv =new Vue({
+				el:'#div01',
+				data:{
+					flag1:false,
+					flag2:false
+				},
+				methods:{
+					
+				}
+			})
+			
+		</script>
+	</body>
+</html>

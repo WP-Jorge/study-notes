@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* align-items：设置侧轴上子元素的排列方式（单行）
+				flex-start：从上到下
+				flex-end：从下到上
+				center：挤在一起（垂直居中）
+				stretch：拉伸（默认值，子盒子不能给高度，给高度后没效果）
+			 */
+			
+			div {
+				display: flex;
+				width: 800px;
+				height: 400px;
+				background-color: pink;
+				/* 主轴居中 */
+				justify-content: center;
+				/* 侧轴剧中 */
+				align-items: center;
+			}
+			
+			div span {
+				width: 150px;
+				height: 100px;
+				background-color: yellowgreen;
+				margin: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.reduce 第一个参数回调函数，第二个参数pre的初始值
+			// 回调函数中的参数：第一个：上一次返回的结果，第二个：每个元素，第三个：下标，第三四个：原数组
+			let arr = [1, 2, 99, 1, 1]
+			arr.reduce((pre, item, index, arr) => {
+				// console.log(pre, item)
+			})
+
+			// 2.例子 统计元素出现的次数
+			function arrCount(arr, item) {
+				return arr.reduce((total, cur) => {
+					total = total + (cur === item ? 1 : 0)
+					return total
+				}, 0)
+			}
+			console.log(arrCount(arr, 1)) // 3
+
+			// 3.例子 获取最大值
+			function getMax(arr) {
+				return arr.reduce((pre, item) => {
+					return pre > item ? pre : item
+				})
+			}
+			console.log(getMax(arr)) // 99
+
+			// 4. 例子 获取总价
+			let arr2 = [
+				{ name: 'css', price: 1000 },
+				{ name: 'js', price: 1231 },
+				{ name: 'java', price: 4123 }
+			]
+			function getTotalPrice(arr) {
+				return arr2.reduce((total, item) => {
+					return (total += item.price)
+				}, 0)
+			}
+			console.log(getTotalPrice(arr2)) // 6354
+		</script>
+	</body>
+</html>

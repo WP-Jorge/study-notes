@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<ul>
+			<li class="c1">1</li>
+			<li class="c2">2</li>
+			<li class="c3">3</li>
+			<li class="c4">4</li>
+		</ul>
+		
+		<script type="text/javascript">
+			var ul = document.querySelector('ul')
+			var li1 = document.querySelector('.c1')
+			// var lili = li1.cloneNode() cloneNode()括号中为空或为false为浅拷贝，只复制标签不复制内容
+			var lili = li1.cloneNode(true) // cloneNode()括号中为true为深拷贝，复制标签复制内容
+			ul.appendChild(lili)
+		</script>
+	</body>
+</html>

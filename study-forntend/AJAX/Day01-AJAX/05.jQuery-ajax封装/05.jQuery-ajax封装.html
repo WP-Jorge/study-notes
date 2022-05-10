@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<button type="button">提交</button>
+		<script type="text/javascript">
+			$("button").on({
+				click: function() {
+					let obj = {
+						userName: "懒蕉",
+						userPwd: "123456"
+					}
+
+					// get请求
+					// $.ajax({
+					// 	type: "get",
+					// 	url: "04.ajax-get.php",
+					// 	data: obj,
+					// timeout: 3000,
+					// async: true, // 同步 false 异步true 默认true
+					// /* 
+					//  可用服务器返回数据类型：如果不指定，JQuery将自动根据http包mime信息返回responseXML或responseText，并作为回调函数参数传递
+					//  xml：返回XML文档，可用JQuery处理
+					//  html：返回纯文本HTML信息；包含的script标签会在插入DOM时执行
+					//  script：返回纯文本JavaScript代码。不会自动缓存结果。除非设置了cache参数。注意在远程请求时（不在同一个域下），所有post请求都将转为get请求。
+					//  json：返回JSON数据
+					//  jsonp：JSONP格式。使用SONP形式调用函数时，例如myurl?callback=?，JQuery将自动替换后一个“?”为正确的函数名，以执行回调函数
+					//  text：返回纯文本字符串
+					//  */
+					// dataTpye: "responseXML",
+					// 	success: function(e){
+					// 		alert(e)
+					// 	},
+					// 	error: function(e){
+					// 		alert("请求失败")
+					// 	}
+					// })
+
+					// post请求
+					$.ajax({
+						type: "post",
+						url: "04.ajax-post.php",
+						data: obj, // 要求为Object或String类型的参数，发送到服务器的数据。如果已经不是字符串，将自动转换为字符串格式。{foo1:"bar1",foo2:"bar2"}转换为&foo1=bar1&foo2=bar2
+						timeout: 3000,
+						async: true, // 同步 false 异步true 默认true
+						/* 
+						 可用服务器返回数据类型：如果不指定，JQuery将自动根据http包mime信息返回responseXML或responseText，并作为回调函数参数传递
+						 xml：返回XML文档，可用JQuery处理
+						 html：返回纯文本HTML信息；包含的script标签会在插入DOM时执行
+						 script：返回纯文本JavaScript代码。不会自动缓存结果。除非设置了cache参数。注意在远程请求时（不在同一个域下），所有post请求都将转为get请求。
+						 json：返回JSON数据
+						 jsonp：JSONP格式。使用SONP形式调用函数时，例如myurl?callback=?，JQuery将自动替换后一个“?”为正确的函数名，以执行回调函数
+						 text：返回纯文本字符串
+						 */
+						dataTpye: "responseXML", 
+						success: function(data, status) {
+							alert("返回数据：" + data + "\r\n" + "状态：" + status)
+						},
+						error: function(xml, status, errorThrown) {
+							alert("XMLHttpRequest对象:" + xml + "\r\n" + "状态:" + status + "\r\n" + "捕获错误:" + errorThrown)
+						}
+					})
+				}
+			})
+		</script>
+	</body>
+</html>

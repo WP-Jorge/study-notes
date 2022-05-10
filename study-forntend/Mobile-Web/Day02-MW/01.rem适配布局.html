@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* rem单位
+				rem (root em)是一个相对单位,类似于em , em是父元素字体大小。
+				不同的是rem的基准是相对于html元素的字体大小。
+				比如,根元素( html )设置font-size=12px;非根元素设置width:2rem;则换成px表示就是24px。
+			 */
+			
+			html {
+				font-size: 14px;
+			}
+			
+			div {
+				font-size: 12px;
+				width: 15rem;
+				height: 15rem;
+				background-color: yellowgreen;
+			}
+			
+			p {
+				/* em相对于父元素字体大小来说的 */
+				/* width: 10em; */
+				/* height: 10em; */
+				
+				/* rem相当于html的字体大小来说的 */
+				width: 10rem;
+				height: 10rem;
+				background-color: pink;
+				/* rem的优点就是可以通过修改html文字大小来改变页面中元素的大小，可以整体控制 */
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div>
+			<p></p>
+		</div>
+	</body>
+</html>

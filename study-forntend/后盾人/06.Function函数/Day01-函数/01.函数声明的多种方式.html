@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 1.使用对象的形式定义函数 第一个参数：参数，第二个参数：函数体
+			let func = new Function('title', 'console.log(title)')
+			func('后盾人') // 后盾人
+
+			// 2.字面量形式
+			function hd(title) {
+				console.log(title)
+			}
+			hd('野猪乔治') // 野猪乔治
+
+			// 3.赋值形式
+			let cms = function (title) {
+				console.log(title)
+			}
+			cms('假猪佩奇') // 假猪佩奇
+
+			// 4.放在对象中
+			let user = {
+				name: null,
+				setUsername: function (name) {
+					this.name = name
+				},
+				getUsername: function () {
+					return this.name
+				}
+			}
+			user.setUsername('野猪乔治')
+			console.log(user.getUsername()) // 野猪乔治
+		</script>
+	</body>
+</html>

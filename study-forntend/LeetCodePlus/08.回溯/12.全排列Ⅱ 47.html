@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			/**
+			 * @param {number[]} nums
+			 * @return {number[][]}
+			 * 回溯 + 剪枝
+			 */
+			var permuteUnique = function (nums) {
+				let res = [];
+				let path = [];
+				nums.sort((a, b) => a - b);
+				function backtracking(used) {
+					if (path.length === nums.length) {
+						res.push([...path]);
+					}
+					for (let i = 0; i < nums.length; i++) {
+						if (i && nums[i] === nums[i - 1] && !used[i - 1]) {
+							continue;
+						}
+						if (!used[i]) {
+							used[i] = true;
+							path.push(nums[i]);
+							backtracking(used);
+							path.pop();
+							used[i] = false;
+						}
+					}
+				}
+				backtracking([]);
+				return res;
+			};
+		</script>
+	</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// // // /*
+			// // // 给出由小写字母组成的字符串 S，重复项删除操作会选择两个相邻且相同的字母，并删除它们。
+
+			// // // 在 S 上反复执行重复项删除操作，直到无法继续删除。
+
+			// // // 在完成所有重复项删除操作后返回最终的字符串。答案保证唯一。
+
+			// // // 示例：
+
+			// // // 输入："abbaca"
+			// // // 输出："ca"
+			// // // 解释：
+			// // // 例如，在 "abbaca" 中，我们可以删除 "bb" 由于两字母相邻且相同，这是此时唯一可以执行删除操作的重复项。
+			// // // 之后我们得到字符串 "aaca"，其中又只有 "aa" 可以执行重复项删除操作，所以最后的字符串为 "ca"。
+			// // // 提示：
+
+			// // // 1 <= S.length <= 20000
+			// // // S 仅由小写英文字母组成。
+
+			// // // */
+
+			// const removeDuplicates = function(s) {
+			// 	let temp = [];
+			// 	if (!s.length) {
+			// 		return '';
+			// 	}
+			// 	temp.push(s[0]);
+			// 	for (let i = 1; i < s.length; i++) {
+			// 		if (temp[temp.length - 1] === s[i]) {
+			// 			temp.pop();
+			// 			continue;
+			// 		}
+			// 		temp.push(s[i]);
+			// 	}
+			// 	return temp.join('');
+			// }
+			// console.log(removeDuplicates('abbaca'));
+
+			// // // const removeDuplicates = function(s) {
+			// // //     // code
+			// // //   let sc = s.slice()
+			// // //   let stack = [sc[0]] // a
+			// // //   for(let i=1;i<sc.length;i++) {
+			// // //     // abbaca
+			// // //     //
+			// // //     if(stack.length && sc[i] === stack[stack.length - 1]) {
+			// // //       stack.pop()
+			// // //     } else {
+			// // //       stack.push(sc[i])
+			// // //     }
+			// // //   }
+			// // //   return stack.join('');
+			// // // };
+
+			// // // console.log(removeDuplicates('abbaca'))
+			// // // 实现一个tree函数, 将扁平的数据格式转成树结构
+			// // // **pid代表对应所属的父节点**
+
+			// let data = [
+			//     {id: 1, pid: 0, text: 'xxx'},
+			//     {id: 2, pid: 1, text: 'xxx-2'},
+			//     {id: 3, pid: 1, text: 'xxx-3'},
+			//     {id: 4, pid: 2, text: 'xxx-2-4'},
+			//     {id: 5, pid: 3, text: 'xxx-3-5'},
+			//     {id: 6, pid: 2, text: 'xxx-2-6'}
+			// ];
+			// function tree(data) {
+			// 	let res = [];
+			// 	for (let parent of data) {
+			// 		for (let child of data) {
+			// 			if (child.pid === parent.id) {
+			// 				parent.children ? parent.children.push(child) : parent.children = [child];
+			// 			}
+			// 		}
+			// 	}
+			// 	for (let item of data) {
+			// 		if (item.pid === 0) {
+			// 			res.push(item);
+			// 		}
+			// 	}
+			// 	return JSON.stringify(res, null, 4);
+			// }
+			// console.log(tree(data));
+
+			// // // 期望结果
+			// // /*
+			// // *
+			// // [
+			// //   {
+			// //     "id": 1,
+			// //     "pid": 0,
+			// //     "text": "xxx",
+			// //     "children": [
+			// //       {
+			// //         "id": 2,
+			// //         "pid": 1,
+			// //         "text": "xxx-2",
+			// //         "children": [
+			// //           {
+			// //             "id": 4,
+			// //             "pid": 2,
+			// //             "text": "xxx-2-4"
+			// //           },
+			// //           {
+			// //             "id": 6,
+			// //             "pid": 2,
+			// //             "text": "xxx-2-6"
+			// //           }
+			// //         ]
+			// //       },
+			// //       {
+			// //         "id": 3,
+			// //         "pid": 1,
+			// //         "text": "xxx-3",
+			// //         "children": [
+			// //           {
+			// //             "id": 5,
+			// //             "pid": 3,
+			// //             "text": "xxx-3-5"
+			// //           }
+			// //         ]
+			// //       }
+			// //     ]
+			// //   }
+			// // ]
+			// // * */
+
+			// // function tree (data) {
+			// //     //coding
+			// //   let res = []
+
+			// //   for(let d of data) {
+			// //     for(let t of data) {
+			// //       if(t.pid === d.id) {
+			// //         d.children ? d.children.push(t) : d.children = [t]
+			// //       }
+			// //     }
+			// //   }
+			// //   for(let d of data) {
+			// //     if(d.pid ===0) {
+			// //       res.push(d)
+			// //     }
+			// //   }
+			// //   return res
+			// // }
+
+			// // console.log(JSON.stringify(tree(data), null, 2));
+
+			// 写出一下console的输出
+
+			// （1）、
+			// function f1 () {
+			//   return this;
+			// }
+			// console.log(f1());  // 输出 window
+
+			// （2）、
+			// var prop = 36;
+			// var o = {
+			//   prop: 37,
+			//   bar: function() {
+			//     return this.prop;
+			//   }
+			// };
+			// console.log(o.bar()); // 输出 37
+
+			// （3）、
+			// var prop = 36;
+			// var o = {
+			//   prop: 37,
+			//   bar1: function() {
+			//     function foo1() {
+			//       return this.prop;
+			//     }
+			//     return foo1;
+			//   },
+			//   bar2: function() {
+			//     var foo2  = (() => this.prop);
+			//     return foo2;
+			//   }
+			// };
+			// console.log(o.bar1()());  // 输出 36
+			// console.log(o.bar1().call(o)) // 输出 37
+			// console.log(o.bar2()());  // 输出 37
+			// var fn2 = o.bar2;
+			// console.log(fn2()());  // 输出 36
+			// 3.
+			// console.log(1);
+			// new Promise((resolve, reject) => {
+			//     console.log(2);
+			//     setTimeout(() => {
+			//         console.log(3);
+			//         Promise.resolve().then(() => {
+			//             console.log(4);
+			//         })
+			//     }, 0);
+			//     resolve();
+			//     reject();
+			//     console.log(5);
+			// }).then(() => {
+			//     console.log(6);
+			//     Promise.resolve().then(() => {
+			//         console.log(7);
+			//     })
+			//     setTimeout(() => {
+			//         console.log(8);
+			//     }, 0);
+			// }, () => {
+			//     console.log(10);
+			// })
+			// 1 2 6 3 7 4 8
+			// 12567348
+		</script>
+	</body>
+</html>

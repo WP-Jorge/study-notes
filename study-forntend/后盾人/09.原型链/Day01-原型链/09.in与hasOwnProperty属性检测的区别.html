@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let a = { url: 'houdunren' }
+			let b = { name: '后盾人' }
+
+			// 1.in 判断属性是否在 指定 对象及对象的原型上
+			Object.prototype.web = 'www.houdunren.com'
+			console.log('url' in a) // true
+			console.log('web' in a) // true
+			console.log('age' in a) // false
+			Object.setPrototypeOf(a, b)
+			console.log('name' in a) // true
+
+			// 2.hasOwnProperty 判断属性是否在本身上 不检测原型上的属性
+			console.log(a.hasOwnProperty('url')) // true
+			console.log(a.hasOwnProperty('name')) // false
+		</script>
+	</body>
+</html>

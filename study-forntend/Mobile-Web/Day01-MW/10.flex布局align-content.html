@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			/* align-content：设置侧轴上的子元素排列方式（多行）
+			设置子项在侧轴上的排列方式并且只能用于子项出现换行的情况(多行), 在单行下是没有效果的。
+				flex-start：默认值在侧轴的头部开始排列
+				flex-end：在侧轴的尾部开始排列
+				center：在侧轴中间显示
+				space-around：子项在侧轴平分剩余空间
+				space-between：子项在侧轴先分布在两头,再平分剩余空间
+				stretch：设置子项元素高度平分父元素高度
+			 */
+			div {
+				display: flex;
+				width: 800px;
+				height: 400px;
+				background-color: pink;
+				/* 换行 */
+				flex-wrap: wrap;
+				/* 使用了换行后，才能使用这个，多行排列方式使用align-content */
+				align-content: center;
+			}
+			
+			div span {
+				width: 150px;
+				height: 100px;
+				background-color: yellowgreen;
+				margin: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+			<span>4</span>
+			<span>5</span>
+			<span>6</span>
+		</div>
+	</body>
+</html>

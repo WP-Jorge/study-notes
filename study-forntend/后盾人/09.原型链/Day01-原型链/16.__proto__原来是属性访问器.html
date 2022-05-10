@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			let hd = { name: '后盾人' }
+			hd.__proto__ = {
+				show() {
+					console.log(this.name)
+				}
+			}
+			hd.show() // 后盾人
+			hd.__proto__ = 99 // 没有改变
+			hd.show() // 后盾人
+
+			// 原理
+			let hd2 = {
+				action: {},
+				get proto() {
+					return this.action
+				},
+				set proto(obj) {
+					if (obj instanceof Object) {
+						this.action = obj
+					}
+				}
+			}
+
+			// 解除 __proto__ 只能设置为对象的限制
+			// 原理：getter 和 setter 都在__proto__上，使对象没有__proto__就行
+			let hd3 = Object.create(null)
+			hd3.__proto__ = '字符串'
+			console.log(hd3.__proto__) // 字符串
+		</script>
+	</body>
+</html>

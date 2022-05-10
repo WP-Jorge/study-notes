@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: pink;
+}
+body div {
+  background-color: blue;
+}
+
+/*# sourceMappingURL=06.@import%E5%92%8Cpartials.css.map */

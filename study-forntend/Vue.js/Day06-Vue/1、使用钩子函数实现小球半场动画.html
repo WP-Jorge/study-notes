@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<style>
+			.ball{
+				height: 50px;
+				width: 50px;
+				border-radius: 50%;
+				background-color: red;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="div01">
+			<input type="button" name="" id="" value="加入购物车" @click="flag=!flag"/>
+			<transition
+			@before-enter="beforeEnter"
+			@enter="enter"
+			@after-enter="afterEnter">
+				<div class="ball" v-show="flag"></div>
+			</transition>
+		</div>
+		
+		<script>
+			
+			var nv =new Vue({
+				el:'#div01',
+				data:{
+					flag:false
+				},
+				methods:{
+					//el表示需要执行动画的原生的DOM对象，如上方的<transition>标签
+					beforeEnter(el){
+						//动画入场之前，此时动画尚未开始，可以设置元素开始动画之前的其实样式
+						//设置小球开始动画前的起始位置
+						el.style.transform="translate(0,0)"
+					},
+					enter(el,done){
+						//不加效果不会出来，十分费解
+						el.offsetWidth
+						//动画入场中，此时动画进行中，可以设置小球完成动画的结束状态
+						el.style.transform="translate(200px,500px)"
+						//设置小球入场时间 all指当前容器中的所有对象，1.5s指小球运动时长，单位可以是s、ms ease指小球入场动作
+						el.style.transition="all 1s ease"
+						//dome()是afterEnter()函数的引用，加上会立即执行afterEnter函数，如果不加，afterEnter中的效果会延迟执行
+						done()
+					},
+					afterEnter(el){
+						//动画入场后，此时动画已经结束
+						//如果不添加this.flag=!this.flag,则动画后半场虽然没有写，但是最后会默认天上这句话，所以去掉这句话后再次点击按钮会延迟一会儿后消失
+						this.flag=!this.flag
+						// el.style.opacity=0.5
+						
+					}
+				}
+			})
+			
+		</script>
+	</body>
+</html>

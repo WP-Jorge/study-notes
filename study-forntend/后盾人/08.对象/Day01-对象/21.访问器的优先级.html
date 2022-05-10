@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 都是走对象中的访问器
+			let user = {
+				data: { name: '乔治', age: 18 },
+				set name(value) {
+					this.data.name = value + '访问器'
+				},
+				get name() {
+					return this.data.name
+				}
+			}
+			user.name = 'hdcms'
+			console.log(user.name) // hdcms访问器
+		</script>
+	</body>
+</html>

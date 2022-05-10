@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			div {
+				width: 150px;
+				height: 300px;
+				background-color: pink;
+				display: none;
+			}
+		</style>
+		<script src="jQuery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<button>下拉滑动</button>
+		<button>上拉滑动</button>
+		<button>切换滑动</button>
+		<div></div>
+		<script>
+			$(function() {
+				// 第一个参数运动时间，可为毫秒、"fast" "slow" "normal"
+				// 第二个参数运动状态，默认"swing"(变速) "linear"(匀速)
+				// 第三个参数回调函数
+				$("button").eq(0).click(function() {
+					// 下滑动 slideDown()
+					$("div").slideDown();
+				})
+				$("button").eq(1).click(function() {
+					// 上滑动 slideUp()
+					$("div").slideUp(500);
+
+
+				})
+				$("button").eq(2).click(function() {
+					// 滑动切换 slideToggle()
+
+					$("div").slideToggle(500);
+
+				});
+
+			});
+		</script>
+	</body>
+</html>

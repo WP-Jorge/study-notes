@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 1.1、变量的作用域 不加var 申明的变量是全局变量
+			// var a = 10 // 全局变量，在整个script标签中可以使用
+			// function getNum(){
+			// 	var a = 20 // 局部变量， 仅在函数内可以使用，在函数外无法使用
+			// }
+			// getNum()
+			// console.log(a) // 执行getNum()函数后输出a 的值仍为10，不受getNum()函数的影响
+			
+			// 1.2、块级作用域
+				// 1.2.1、在javascript中没有块级作用域 {}
+				// 在java中
+				// if (1 > 0){
+				// 	int a = 10
+				// }
+				// System.out.print(a) // 会报错，因为Java中有块级作用域
+				
+				// 1.2.2、在Javascript中
+				// if (1 > 0){
+				// 	var a = 10
+				// }
+				// console.log(a)// 输出10
+			
+			// 1.3、作用域链在函数中定义的新的函数，新的函数可以调用外层函数的属性
+			// var num = 10
+			// function fn(){
+			// 	var num = 20
+			// 	function fun(){
+			// 		console.log(num) // 调用外层num = 20 变量 先从外层函数找num，找不到再向外找，直到找到为止，采用就近原则，这就是链式作用域
+			// 	}
+			// 	fun()
+			// }
+			// fn() // 输出20
+			
+			// 1.4、变量的资源占用
+			// 全局变量只有在浏览器关闭后才会销毁，局部变量在程序完成后就会销毁，相比之下局部变量资源占用率低
+
+		</script>
+	</body>
+</html>

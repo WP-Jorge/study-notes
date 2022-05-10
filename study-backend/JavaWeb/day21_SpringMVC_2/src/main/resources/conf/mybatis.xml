@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <setting name="logImpl" value="LOG4J2"/>
+    </settings>
+
+    <typeAliases>
+        <package name="domain"/>
+    </typeAliases>
+
+    <!--<environments default="mysql">-->
+    <!--    <environment id="mysql">-->
+    <!--        <transactionManager type="JDBC"></transactionManager>-->
+    <!--        <dataSource type="DRUID">-->
+    <!--            <property name="driver" value="${druid.driver}"/>-->
+    <!--            <property name="url"-->
+    <!--                      value="${druid.url}"/>-->
+    <!--            <property name="username" value="${druid.user}"/>-->
+    <!--            <property name="password" value="${druid.password}"/>-->
+    <!--        </dataSource>-->
+    <!--    </environment>-->
+    <!--</environments>-->
+
+    <mappers>
+        <!--
+            name:是包名
+            这个包中的所有mapper.xml一次都能加载
+            使用package的要求
+            1.mapper文件 名称和dao接口名必须完全一样，包括大小写
+            2.mapper:文件和dao接口必须在同一目录
+        -->
+        <package name="dao"/>
+    </mappers>
+</configuration>

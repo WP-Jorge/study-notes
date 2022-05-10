@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            /**
+             * Definition for a binary tree node.
+             * function TreeNode(val, left, right) {
+             *     this.val = (val===undefined ? 0 : val)
+             *     this.left = (left===undefined ? null : left)
+             *     this.right = (right===undefined ? null : right)
+             * }
+             */
+            /**
+             * @param {TreeNode} root
+             * @param {number} val
+             * @return {TreeNode}
+             * 二叉搜索树的深度优先搜索（根据二叉搜索树的性质，判断插入的数是在树的左边还是右边，直到叶子为null，就插入）
+             * 时间复杂度O(n), 空间复杂度O(n);
+             */
+            var insertIntoBST = function (root, val) {
+                if (!root) {
+                    return new TreeNode(val);
+                }
+                if (val < root.val) {
+                    root.left = insertIntoBST(root.left, val);
+                }
+                if (val > root.val) {
+                    root.right = insertIntoBST(root.right, val);
+                }
+                return root;
+            };
+        </script>
+    </body>
+</html>

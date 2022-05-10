@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="lib/vue.js"></script>
+		<link rel="stylesheet" type="text/css" href="lib/animate.css"/>
+		<style>
+			
+		</style>
+		
+	</head>
+	<body>
+		<div id="div01">
+			<input type="button" value="动画" @click="flag=!flag"/>
+			<!-- 添加transition容器可实现 enter-active-class、leave-active-class 属性，调用进入动画、离场动画  
+			:duration="毫秒值"给定动画入场、离场执行时间，一般animate.css中有内定，不用加
+			:duration="{ enter:400,leave:400 }可分别对入场、离场动画设定执行时间"-->
+			<transition  enter-active-class="animate__bounceIn" leave-active-class="animate__bounceOut"> <!-- :duration="400" --> <!--  :duration="{ enter:400,leave:400 }" -->
+				<h2 v-show="flag">啦啦啦啦啦啦</h2>
+			</transition>
+			<hr >
+			
+			<input type="button" value="动画" @click="flag2=!flag2"/>
+			<!-- 不添加transition 只能使用class指定类名，调用对应的样式 -->
+			<h2 v-show="flag2" class="animate__animated animate__bounce">哈哈哈哈哈哈哈哈</h2>
+		</div>
+		
+		<script>
+			
+			var nv = new Vue({
+				el:'#div01',
+				data:{
+					flag:false,
+					flag2:false
+				},
+				methods:{
+					
+				}
+			})
+			
+		</script>
+	</body>
+</html>

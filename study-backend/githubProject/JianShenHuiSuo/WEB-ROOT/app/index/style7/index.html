@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="gb2312" />
+    ${PubTitle}
+    <link rel="stylesheet" href="/WEB-ROOT/app/index/style7/assets/css/style.css">
+    <link rel="stylesheet" href="/WEB-ROOT/app/index/style7/assets/css/loader-style.css">
+    <link rel="stylesheet" href="/WEB-ROOT/app/index/style7/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" type="text/css" href="/WEB-ROOT/app/index/style7/assets/js/progress-bar/number-pb.css">
+
+
+    <style type="text/css">
+    canvas#canvas4 {
+        position: relative;
+        top: 20px;
+    }
+    </style>
+
+	<style type="text/css">
+	   		 *{font-family:微软雅黑 ;}
+		</style>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    <!-- Fav and touch icons -->
+   
+    
+    <script type="text/javascript" src="/WEB-ROOT/app/index/style7/assets/js/clock/date.js"></script>
+    
+    <script type="text/javascript">
+	    function doQuit(){
+			window.top.location.href = "/";
+		}
+	    function clickMenu( menutext,menuurl ){
+			document.getElementById( "frame1" ).src = menuurl ;
+			
+			document.getElementById( "nowMenu" ).innerHTML =  "<font face='微软雅黑'>" +  menutext + "</font>";
+	    }
+    </script>
+    
+</head>
+
+<body> 
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status">&nbsp;</div>
+    </div>
+    <!-- TOP NAVBAR -->
+    <nav role="navigation" class="navbar navbar-static-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle" type="button">
+                    <span class="entypo-menu"></span>
+                </button>
+                <button class="navbar-toggle toggle-menu-mobile toggle-left" type="button">
+                    <span class="entypo-list-add"></span>
+                </button>
+
+                <div id="logo-mobile" class="visible-xs">
+       
+                </div>
+
+            </div>
+
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+
+                </ul>
+                <div id="nt-title-container" class="navbar-left running-text visible-lg">
+                    <ul class="date-top">
+                        <li class="entypo-calendar" style="margin-right:5px"></li>
+                        <li id="Date1"></li>
+
+
+                    </ul>
+
+                    <ul id="digital-clock" class="digital">
+                        <li class="entypo-clock" style="margin-right:5px"></li>
+                        <li class="hour"></li>
+                        <li>:</li>
+                        <li class="min"></li>
+                        <li>:</li>
+                        <li class="sec"></li>
+                        <li class="meridiem"></li>
+                    </ul>
+                    <ul id="nt-title">
+                        <li>${LoginUserAcct},&nbsp;您好！ &nbsp;&nbsp;<a href="#" style="color:#15428B" onclick="doQuit();"> <font face="微软雅黑" color="white">安全退出</font> </a>
+                        </li>
+                    </ul>
+                </div>
+
+                
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- /END OF TOP NAVBAR -->
+
+    <!-- SIDE MENU -->
+    <div id="skin-select">
+        <div id="logo">
+         <h1><font size="4">${SYSTEM_NAME}</font></h1>
+         
+        </div>
+
+        <a id="toggle">
+            <span class="entypo-menu"></span>
+        </a>
+        <div class="dark">
+            <form action="#">
+                <span>
+                    
+                </span>
+            </form>
+        </div>
+
+        <div class="search-hover">
+            <form id="demo-2">
+                
+            </form>
+        </div>
+
+
+
+        <div class="skin-part">
+            <div id="tree-wrap">
+                <div class="side-bar">
+                
+                    <ul class="topnav menu-left-nest">
+                        <li>
+                            <a href="#" style="border-left:0px solid!important;" class="title-menu-left">
+                                <span class="widget-menu"></span>
+                                <i data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i>
+                            </a>
+                        </li>
+						
+						#foreach($menu  in ${ResultMap.menuList})
+                        <li>
+                            <a class="tooltip-tip ajax-load" href="#" title="$menu.text">
+                                <i class="icon-document-edit"></i>
+                                <span> <b>$menu.text</b> </span>
+                            </a>
+                            <ul>
+                            	#foreach($submenu  in $menu.innerList)
+                                <li>
+                                    <a class="tooltip-tip2 ajax-load" href="#"  onclick="clickMenu('$submenu.text','$submenu.menu_todo');" title="$submenu.text"><i class="entypo-doc-text"></i><span>$submenu.text</span></a>
+                                </li>
+                                #end
+                            </ul>
+                        </li>
+                        
+                        #end
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END OF SIDE MENU -->
+
+
+
+    <!--  PAPER WRAP -->
+    <div class="wrap-fluid">
+        <div class="container-fluid paper-wrap bevel tlbr">
+
+            <!-- CONTENT -->
+            <!--TITLE -->
+            <div class="row">
+                
+            </div>
+            <!--/ TITLE -->
+
+            <!-- BREADCRUMB -->
+            <ul id="breadcrumb">
+                <li>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="entypo-home"></span>
+                </li>
+                <li><i class="fa fa-lg fa-angle-right"></i>
+                </li>
+                <li><a href="#"  id="nowMenu">Home</a>
+                </li>
+               
+               
+                <li class="pull-right">
+                    
+                </li>
+            </ul>
+
+            <div id="paper-middle">
+                	<iframe id="frame1" src="/WEB-ROOT/app/index/home.do" frameborder="0" scrolling="no"  frameBorder="no" width="100%" height="577"></iframe>
+            </div>
+
+                <!-- FOOTER -->
+                <div class="footer-space"></div>
+                <div id="footer">
+                    <div class="devider-footer-left"></div>
+                    <div class="time">
+                        <p id="spanDate">
+                        <p id="clock">
+                    </div>
+                    <div class="copyright">${SYSTEM_DESIGNER} </div>
+                    <div class="devider-footer"></div>
+
+
+                </div>
+                <!-- / END OF FOOTER -->
+
+
+            </div>
+        </div>
+    </div>
+    <!--  END OF PAPER WRAP -->
+
+  
+
+    <!-- END OF RIGHT SLIDER CONTENT-->
+    <script type="text/javascript" src="/WEB-ROOT/app/index/style7/assets/js/jquery.js"></script>
+    <script src="/WEB-ROOT/app/index/style7/assets/js/progress-bar/src/jquery.velocity.min.js"></script>
+    <script src="/WEB-ROOT/app/index/style7/assets/js/progress-bar/number-pb.js"></script>
+    <script src="/WEB-ROOT/app/index/style7/assets/js/progress-bar/progress-app.js"></script>
+
+
+
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="/WEB-ROOT/app/index/style7/assets/js/preloader.js"></script>
+    <script type="text/javascript" src="/WEB-ROOT/app/index/style7/assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/WEB-ROOT/app/index/style7/assets/js/app.js"></script>
+    <script type="text/javascript" src="/WEB-ROOT/app/index/style7/assets/js/load.js"></script>
+    <script type="text/javascript" src="/WEB-ROOT/app/index/style7/assets/js/main.js"></script>
+
+
+
+
+    <!-- GAGE -->
+
+
+
+    
+
+
+</body>
+
+</html>
