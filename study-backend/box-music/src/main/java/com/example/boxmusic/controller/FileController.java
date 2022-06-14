@@ -16,8 +16,8 @@ public class FileController {
 	@Autowired
 	private FileService fileService;
 	
-	@PostMapping("/uploadFile")
-	public R uploadFile(@RequestBody MultipartFile file) {
-		return fileService.uploadFile(file);
-	}
+	// @PostMapping("/uploadFile")
+	// public R uploadFile(@RequestBody MultipartFile file) {
+	// 	return fileService.uploadFile(file);
+	// }
 }

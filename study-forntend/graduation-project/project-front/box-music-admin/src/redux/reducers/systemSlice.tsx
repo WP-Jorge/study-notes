@@ -27,7 +27,13 @@ const userSlice = createSlice({
 	// reducers 存放同步 action
 	reducers: {
 		setUserInfo(state, action) {
-			state.userInfo = action.payload;
+			const userInfo = action.payload;
+			state.userInfo = userInfo;
+			let user = JSON.stringify({
+				...JSON.parse(localStorage.getItem('user') as string),
+				userInfo
+			});
+			localStorage.setItem('user', user);
 		},
 		login(state, action) {
 			const { userInfo, token, roles, apis } = action.payload;

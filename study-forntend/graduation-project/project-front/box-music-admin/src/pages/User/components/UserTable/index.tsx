@@ -19,7 +19,7 @@ import {
 import { ResponseType } from '@/globals/responseType';
 import { ColumnsType } from 'antd/es/table';
 import { TableTop } from '@/components/content/TableTop';
-import { UserForm } from '../UserForm';
+import { UserModal } from '../UserModal';
 
 export const UserTable = () => {
 	const [pageData, setPageData] = useState([] as Array<User>);
@@ -29,6 +29,7 @@ export const UserTable = () => {
 	const [selectedRowKeys, setSelectedRowKeys] = useState([] as Key[]);
 	const [editData, setEditData] = useState({} as User);
 	const [visible, setVisible] = useState(false);
+	const [keyword, setKeyword] = useState('');
 	const columns: ColumnsType<User> = [
 		{
 			title: '用户ID',
@@ -84,6 +85,7 @@ export const UserTable = () => {
 			title: '邮箱',
 			dataIndex: 'email',
 			ellipsis: true,
+			width: 160,
 			render: (str: string) => (
 				<Tooltip placement="topLeft" title={str}>
 					{str}
@@ -93,13 +95,13 @@ export const UserTable = () => {
 		{
 			title: '用户头像',
 			dataIndex: 'userPic',
-			ellipsis: true,
 			align: 'center',
+			width: 120,
 			render: (userPic: string) => {
-				userPic = userPic?.startsWith('/') ? userPic.slice(1) : userPic;
-				if (!userPic?.startsWith('http') && !userPic?.startsWith('data:')) {
-					userPic = import.meta.env.VITE_BASE_URL + userPic;
-				}
+				userPic =
+					import.meta.env.VITE_BASE_URL +
+					import.meta.env.VITE_USER_PICTURES +
+					userPic;
 				return (
 					<Image
 						width={70}
@@ -112,6 +114,7 @@ export const UserTable = () => {
 		{
 			title: '用户状态',
 			dataIndex: 'status',
+			width: 100,
 			render: (_: number, item: User) => {
 				const onChange = async (checked: boolean) => {
 					let userStatus = checked ? 1 : 0;
@@ -136,6 +139,7 @@ export const UserTable = () => {
 		{
 			title: '操作',
 			key: 'action',
+			width: 100,
 			render: item => {
 				const deleteHandle = async (clickItem: User) => {
 					let res = await deleteUsersByUserIdsApi([clickItem.userId]);
@@ -160,7 +164,7 @@ export const UserTable = () => {
 					message[res.data.type](res.data.msg);
 				};
 				return (
-					<Space direction="vertical">
+					<Space direction="vertical" size={6}>
 						<Popconfirm
 							title="确定要重置该用户密码？"
 							onConfirm={() => resetPassword(item)}
@@ -178,7 +182,9 @@ export const UserTable = () => {
 							okText="确定"
 							cancelText="取消"
 						>
-							<a href="#!">删除</a>
+							<a className="dangerous" href="#!">
+								删除
+							</a>
 						</Popconfirm>
 					</Space>
 				);
@@ -193,14 +199,19 @@ export const UserTable = () => {
 		pageSize: number,
 		searchWord?: string
 	) {
-		let res = await getUsersByUsernamePageApi(pageNumber, pageSize, searchWord);
+		let res = await getUsersByUsernamePageApi(
+			pageNumber,
+			pageSize,
+			searchWord ?? keyword
+		);
 		setPageData(res.data.pageList);
 		setCurrentPage(res.data.currentPage);
 		setPageSize(res.data.pageSize);
 		setTotal(res.data.total);
 	}
 	async function onSearch(searchWord: string) {
-		pageBarChange(currentPage, pageSize, searchWord);
+		setKeyword(searchWord);
+		pageBarChange(1, pageSize, searchWord);
 	}
 	async function onDelete() {
 		let res = await deleteUsersByUserIdsApi(
@@ -254,7 +265,8 @@ export const UserTable = () => {
 					current: currentPage,
 					pageSize: pageSize,
 					total: total,
-					onChange: pageBarChange
+					onChange: pageBarChange,
+					hideOnSinglePage: true
 				}}
 				dataSource={pageData}
 				rowSelection={{
@@ -264,7 +276,7 @@ export const UserTable = () => {
 				rowKey="userId"
 			/>
 			{visible && (
-				<UserForm
+				<UserModal
 					formData={editData}
 					clickSubmit={() => clickSubmit()}
 					clickCancel={() => clickCancel()}

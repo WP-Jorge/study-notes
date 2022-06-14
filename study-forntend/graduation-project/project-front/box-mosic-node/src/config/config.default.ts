@@ -1,0 +1,19 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+export const {
+	APP_PORT,
+	APP_HOST,
+	DATABASE_NAME,
+	MYSQL_HOST,
+	MYSQL_PORT,
+	MYSQL_USERNAME,
+	MYSQL_PASSWORD,
+	MYSQL_DATABASE_NAME,
+	JWT_SECRET,
+	NETEASE_HOST,
+	NETEASE_PORT,
+	MUSIC_HOME,
+	DRIVE_LETTER
+} = process.env;

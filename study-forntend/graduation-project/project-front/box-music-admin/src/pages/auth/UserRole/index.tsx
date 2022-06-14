@@ -1,5 +1,12 @@
 import React from 'react';
 
-export default function UserRole() {
-	return <div>UserRole</div>;
+import './index.scss';
+import { UserTable } from './components/UserRoleTable';
+
+export default function User() {
+	return (
+		<div className="user-role">
+			<UserTable></UserTable>
+		</div>
+	);
 }

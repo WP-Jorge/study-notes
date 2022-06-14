@@ -1,90 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.boxmusic.mapper.ApiMapper">
-    <cache-ref namespace="com.example.boxmusic.mapper.ApiMapper"/>
+	<cache-ref namespace="com.example.boxmusic.mapper.ApiMapper"/>
+	
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.example.boxmusic.pojo.entity.Api">
+		<id column="api_id" property="apiId"/>
+		<result column="parent_api_id" property="parentApiId"/>
+		<result column="api_name" property="apiName"/>
+		<result column="api_path" property="apiPath"/>
+		<result column="api_method" property="apiMethod"/>
+		<result column="api_type" property="apiType"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+	</resultMap>
+	
+	<select id="getApiTreeWithUserId" resultType="com.example.boxmusic.pojo.vo.RoleWithApiVO"
+			resultMap="RoleApiResultMap">
+		select *
+		from user,
+			 user_role,
+			 role
+		where user.user_id = user_role.user_id
+		  and user_role.role_id = role.role_id
+		  and user.user_id = #{userId}
+	</select>
+	
+	<!--这个是返回结果集对象-->
+	<resultMap id="RoleApiResultMap" type="com.example.boxmusic.pojo.vo.RoleWithApiVO">
+		<id column="role_id" jdbcType="BIGINT" property="roleId"/>
+		<result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+		<collection property="children" javaType="java.util.ArrayList" column="roleId=role_id"
+					select="getApiWithRoleId">
+		</collection>
+	</resultMap>
+	
+	<!--查询当前角色下所有当前层权限-->
+	<select id="getApiByRoleId" resultMap="apiResultMap">
+		select *
+		from api,
+			 role_api
+		where api.api_id = role_api.api_id
+		  and role_id = #{roleId}
+	</select>
+	
+	<resultMap id="roleApiResultMap" type="com.example.boxmusic.pojo.vo.ApiTreeVO">
+		<id column="api_id" property="apiId"/>
+		<result column="parent_api_id" property="parentApiId"/>
+		<result column="api_name" property="apiName"/>
+		<result column="api_path" property="apiPath"/>
+		<result column="api_method" property="apiMethod"/>
+		<result column="api_type" property="apiType"/>
+	</resultMap>
+	
+	<!--这个是返回结果中的childrenApi属性结果集对象-->
+	<resultMap id="apiResultMap" type="com.example.boxmusic.pojo.vo.ApiTreeVO">
+		<id column="api_id" jdbcType="BIGINT" property="apiId"/>
+		<result column="parent_api_id" jdbcType="BIGINT" property="parentApiId"/>
+		<result column="api_name" jdbcType="VARCHAR" property="apiName"/>
+		<result column="api_path" jdbcType="VARCHAR" property="apiPath"/>
+		<result column="api_type" jdbcType="VARCHAR" property="apiType"/>
+		<!--column 作用是传参给getChildApiWithParentApiId这个sql使用-->
+		<collection property="children" javaType="java.util.ArrayList" column="{parentId=api_id}"
+					select="getChildApiWithParentApiId">
+		</collection>
+	</resultMap>
+	
+	<!--根据权限id查询下一层的权限-->
+	<select id="getChildApiWithParentApiId" resultMap="apiResultMap">
+		select api_id, parent_api_id, api_name, api_path, api_type, api_method
+		from api
+		<where>
+			<choose>
+				<when test="parent_api_id != 0">
+					and parent_api_id = #{parentId}
+				</when>
+				<otherwise>
+					and parent_api_id = 0
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+	
+	<select id="getApisWithUsername" resultType="com.example.boxmusic.pojo.vo.ApiVO">
+		select distinct api.*
+		from user,
+			 user_role,
+			 role,
+			 role_api,
+			 api
+		where user.user_id = user_role.user_id
+		  and role.role_id = user_role.role_id
+		  and role.role_id = role_api.role_id
+		  and role_api.api_id = api.api_id
+		  and username = #{username}
+	</select>
+	
+	<select id="getApiTree" resultType="com.example.boxmusic.pojo.vo.ApiTreeVO" resultMap="apiTreeResultMap">
+		select *
+		from api
+		where parent_api_id = 0
+		   or parent_api_id is null
+	</select>
+	<resultMap id="apiTreeResultMap" type="com.example.boxmusic.pojo.vo.ApiTreeVO">
+		<id property="apiId" column="api_id"/>
+		<result property="parentApiId" column="parent_api_id"/>
+		<result property="apiName" column="api_name"/>
+		<result property="apiPath" column="api_path"/>
+		<result property="apiType" column="api_type"/>
+		<result property="apiMethod" column="api_method"/>
+		<collection property="children" ofType="com.example.boxmusic.pojo.vo.ApiTreeVO"
+					select="getChildApiWithParentApiId" column="{parentId = api_id}"/>
+	</resultMap>
+	
+	<update id="updateApis">
+		insert into api(api_id, parent_api_id, api_name, api_path, api_type)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.apiId}, #{item.parentApiId}, #{item.apiName}, #{item.apiPath}, #{item.apiType})
+		</foreach>
+		on duplicate key
+		update api_id = values(api_id), parent_api_id = values(parent_api_id), api_name = values(api_name), api_path = values(api_path), api_type = values(api_type)
+	</update>
+	<update id="updateApi">
+		insert into api(api_id, parent_api_id, api_name, api_path, api_type)
+		values (#{apiId}, #{parentApiId}, #{apiName}, #{apiPath}, #{apiType})
+		on duplicate key
+		update api_id = values(api_id), parent_api_id = values(parent_api_id), api_name = values(api_name), api_path = values(api_path), api_type = values(api_type)
+	</update>
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.example.boxmusic.pojo.entity.Api">
-        <id column="api_id" property="apiId"/>
-        <result column="parent_api_id" property="parentApiId"/>
-        <result column="api_name" property="apiName"/>
-        <result column="api_path" property="apiPath"/>
-        <result column="api_method" property="apiMethod"/>
-        <result column="api_type" property="apiType"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
-        <result column="deleted" property="deleted" />
-    </resultMap>
-
-    <select id="getApiTreeWithUserId" resultType="com.example.boxmusic.pojo.vo.RoleWithApiVO"
-            resultMap="RoleApiResultMap">
-        select *
-        from user,
-             user_role,
-             role
-        where user.user_id = user_role.user_id
-          and user_role.role_id = role.role_id
-          and user.user_id = #{userId}
-    </select>
-
-    <!--这个是返回结果集对象-->
-    <resultMap id="RoleApiResultMap" type="com.example.boxmusic.pojo.vo.RoleWithApiVO">
-        <id column="role_id" jdbcType="INTEGER" property="roleId"/>
-        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
-        <collection property="childrenApi" javaType="java.util.ArrayList" column="roleId=role_id"
-                    select="getApiWithRoleId">
-        </collection>
-    </resultMap>
-
-    <!--查询当前角色下所有当前层权限-->
-    <select id="getApiWithRoleId" resultMap="apiResultMap">
-        select *
-        from api,
-             role_api
-        where api.api_id = role_api.api_id
-          and role_id = #{roleId}
-    </select>
-
-    <!--这个是返回结果中的childrenApi属性结果集对象-->
-    <resultMap id="apiResultMap" type="com.example.boxmusic.pojo.vo.ApiTreeVO">
-        <id column="api_id" jdbcType="INTEGER" property="apiId"/>
-        <result column="parent_api_id" jdbcType="INTEGER" property="parentApiId"/>
-        <result column="api_name" jdbcType="VARCHAR" property="apiName"/>
-        <result column="api_path" jdbcType="VARCHAR" property="apiPath"/>
-        <result column="api_type" jdbcType="VARCHAR" property="apiType"/>
-        <!--column 作用是传参给getChildApiWithParentApiId这个sql使用-->
-        <collection property="childrenApi" javaType="java.util.ArrayList" column="{parentId=api_id}"
-                    select="getChildApiWithParentApiId">
-        </collection>
-    </resultMap>
-
-    <!--根据权限id查询下一层的权限-->
-    <select id="getChildApiWithParentApiId" resultMap="apiResultMap">
-        select api_id, parent_api_id, api_name, api_path, api_type, api_method
-        from api
-        <where>
-            <choose>
-                <when test="parent_api_id != 0">
-                    and parent_api_id = #{parentId}
-                </when>
-                <otherwise>
-                    and parent_api_id = 0
-                </otherwise>
-            </choose>
-        </where>
-    </select>
-
-    <select id="getApisWithUsername" resultType="com.example.boxmusic.pojo.vo.ApiVO">
-        select distinct api.*
-        from user,
-             user_role,
-             role,
-             role_api,
-             api
-        where user.user_id = user_role.user_id
-          and role.role_id = user_role.role_id
-          and role.role_id = role_api.role_id
-          and role_api.api_id = api.api_id
-          and username = #{username}
-    </select>
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -106,6 +107,12 @@ public class GlobalExceptionHandler {
 			list.add(m.group().substring(1, m.group().length() - 1));
 		}
 		return R.error(list.get(list.size() - 1));
+	}
+	
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public R parameterMissingExceptionHandler(MissingServletRequestParameterException e) {
+		log.error("请求参数异常----------{}", e);
+		return R.error("请求参数 " + e.getParameterName() + " 不能为空");
 	}
 	
 	@ExceptionHandler(value = RuntimeException.class)

@@ -1,8 +1,12 @@
-export const sleep = (time: number) => new Promise(resolve => setTimeout(resolve, time));
+export const sleep = (time: number) =>
+	new Promise(resolve => setTimeout(resolve, time));
 
 export const deepCopy = (obj: any, map = new WeakMap()) => {
 	// 1、判断 obj 的类型，如果是对象，则进入内部进行处理
+	console.log(typeof obj === 'object', 1, obj);
 	if (typeof obj === 'object') {
+		console.log(typeof obj === 'object', 2, obj);
+
 		// 2、如果是 null。就直接返回 null
 		if (obj === null) {
 			return null;

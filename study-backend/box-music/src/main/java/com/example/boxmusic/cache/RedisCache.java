@@ -5,6 +5,8 @@ import org.apache.ibatis.cache.Cache;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.DigestUtils;
 
+import java.util.concurrent.locks.ReadWriteLock;
+
 // 自定义 Redis 缓存的实现
 public class RedisCache implements Cache {
 	
@@ -27,8 +29,8 @@ public class RedisCache implements Cache {
 	@Override
 	public void putObject(Object o, Object o1) {
 		System.out.println("缓存中放入数据");
-		System.out.println("key: " + o.toString());
-		System.out.println("value: " + o1.toString());
+		System.out.println("key: " + o);
+		System.out.println("value: " + o1);
 		RedisTemplate redisTemplate = getRedisTemplate();
 		// 使用 redis hash 类型作为缓存存储模型 key hashKey value
 		redisTemplate.opsForHash().put(id.toString(), getKeyToMD5(o.toString()), o1);
@@ -51,9 +53,9 @@ public class RedisCache implements Cache {
 	@Override
 	public Object removeObject(Object o) {
 		System.out.println("根据指定的 key 删除缓存" + o);
-		// if (o != null) {
-		// 	getRedisTemplate().opsForHash().delete(id.toString(), o.toString());
-		// }
+		if (o != null) {
+			getRedisTemplate().opsForHash().delete(id.toString(), o.toString());
+		}
 		return null;
 	}
 	
@@ -76,6 +78,11 @@ public class RedisCache implements Cache {
 		// 获取 hash 中 key value 数量
 		return redisTemplate.opsForHash().size(id.toString()).intValue();
 	}
+	
+	// @Override
+	// public ReadWriteLock getReadWriteLock() {
+	// 	return null;
+	// }
 	
 	// 封装 redisTemplate
 	private RedisTemplate getRedisTemplate() {

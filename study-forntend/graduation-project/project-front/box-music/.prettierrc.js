@@ -7,5 +7,7 @@ module.exports = {
 	printWidth: 80, // 单行长度
 	enforceForArrowConditionals: false,
 	endOfLine: 'auto',
-	arrowParens: 'avoid'
+	arrowParens: 'avoid',
+	bracketSameLine: true, // 开始标签的右尖括号是否跟随在最后一行属性末尾
+	htmlWhitespaceSensitivity: 'ignore' // 空格敏感
 };

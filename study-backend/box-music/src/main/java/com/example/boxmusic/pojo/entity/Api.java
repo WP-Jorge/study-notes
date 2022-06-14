@@ -56,9 +56,4 @@ public class Api implements Serializable {
     @ApiModelProperty("更新时间")
     @TableField("update_time")
     private Date updateTime;
-    
-    @ApiModelProperty("逻辑删除")
-    @TableField("deleted")
-    @TableLogic
-    private Integer deleted;
 }

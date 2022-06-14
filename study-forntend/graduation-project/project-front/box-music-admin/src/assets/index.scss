@@ -3,7 +3,9 @@
 	padding: 0;
 }
 
-body, html {
+body,
+html,
+#root {
 	height: 100%;
 	width: 100%;
 }
@@ -19,4 +21,17 @@ body, html {
 			border-top-color: yellowgreen !important;
 		}
 	}
+}
+
+.dangerous {
+	color: #ff4D4D;
+	&:hover {
+		color: #ff8D8D;
+	}
+}
+
+.disabled {
+	pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
 }

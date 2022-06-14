@@ -1,0 +1,33 @@
+.user-info {
+	.ant-upload,
+	.ant-upload-list,
+	.ant-upload-picture-card-wrapper,
+	.ant-upload-list-picture-card-container {
+		height: 100px;
+		width: 100px;
+	}
+
+	.ant-avatar {
+		height: 100px !important;
+		width: 100px !important;
+		line-height: 100px !important;
+	}
+
+	.info-row {
+		margin-bottom: 20px;
+
+		&-label {
+			display: inline-block;
+			width: 80px;
+			text-align: right;
+		}
+	}
+
+	&-btn {
+		display: flow-root;
+		.ant-btn {
+			float: right;
+			margin-left: 10px;
+		}
+	}
+}

@@ -26,12 +26,10 @@ public interface UserMapper extends BaseMapper<User> {
 	
 	UserVO getUserInfoWithUsername(String username);
 	
-	Boolean checkLogin(String username, String rawPassword);
-	
 	int addUser(AddUserDTO addUserDTO);
 	
 	IPage<UserVO> getAllUsersPage(Page<Map<String, Object>> page);
 	
-	IPage<UserVO> getUsersByUsernamePage(Page<Map<String, Object>> page, String username);
+	// IPage<UserVO> getRolesByRoleNamePage(Page<Map<String, Object>> page, String username);
 	
 }

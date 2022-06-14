@@ -10,6 +10,7 @@ export interface TableTopProps {
 	};
 	deleteOption?: {
 		title?: string;
+		deleteTips?: string;
 		onDelete: () => void;
 	};
 	addOption?: {
@@ -37,7 +38,9 @@ export const TableTop = (props: TableTopProps) => {
 			{deleteOption && (
 				<div className="top-item">
 					<Popconfirm
-						title="确定要删除？（该操作将进行逻辑删除）"
+						title={
+							deleteOption.deleteTips ?? '确定要删除？（该操作将进行逻辑删除）'
+						}
 						onConfirm={confirm}
 						okText="确定"
 						cancelText="取消"

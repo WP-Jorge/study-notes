@@ -141,6 +141,24 @@
             <artifactId>javacv-platform</artifactId>
             <version>1.5.7</version>
         </dependency>
+    
+        <!-- ID 生成 -->
+        <dependency>
+            <groupId>com.github.wujun234</groupId>
+            <artifactId>uid-generator-spring-boot-starter</artifactId>
+            <version>1.0.3.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis-spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
 
     </dependencies>
 
@@ -159,6 +177,13 @@
                     <fork>true</fork>
                     <addResources>true</addResources>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

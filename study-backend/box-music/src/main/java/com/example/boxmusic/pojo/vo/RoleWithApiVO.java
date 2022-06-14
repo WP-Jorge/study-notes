@@ -14,6 +14,6 @@ public class RoleWithApiVO implements Serializable {
     
     private String roleName;
     
-    private List<ApiTreeVO> childrenApi;
+    private List<ApiTreeVO> children;
 
 }

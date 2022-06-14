@@ -1,0 +1,51 @@
+.register-form-conatiner {
+	padding: 30px;
+	width: 375px;
+	height: 550px;
+	border-radius: 10px;
+	box-shadow: 2px 2px 20px rgba($color: #000000, $alpha: 0.2);
+	background-color: #fff;
+
+	.title {
+		text-align: center;
+		color: #666666;
+	}
+
+	.ant-form {
+		.ant-upload-picture-card-wrapper {
+			height: 70px;
+
+			.ant-upload,
+			.ant-upload-list,
+			.ant-upload-list-picture-card-container {
+				height: 70px;
+				width: 70px;
+			}
+		}
+
+		.ant-row {
+			margin-bottom: 10px;
+		}
+
+		.verification-code {
+			display: flex;
+			.ant-image {
+				margin-left: 10px;
+			}
+		}
+
+		.remember {
+			font-size: 12px;
+			font-weight: 900;
+			color: #ff8888;
+		}
+
+		.register-btn {
+			display: flex;
+			justify-content: center;
+			.login-form-button {
+				color: #40a9ff;
+			}
+		}
+	}
+}

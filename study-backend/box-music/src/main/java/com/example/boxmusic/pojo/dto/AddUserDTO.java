@@ -20,7 +20,7 @@ public class AddUserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotBlank(message = "用户名不能为空")
-    @Pattern(regexp = "^([\\u4e00-\\u9fa5]{1,10})|(\\w{4,12})$", message = "用户名格式错误")
+    @Pattern(regexp = "^([\\u4e00-\\u9fa5\\w]{2,30})$", message = "用户名格式错误")
     @ApiModelProperty(value = "用户名")
     private String username;
     
@@ -46,9 +46,6 @@ public class AddUserDTO implements Serializable {
     @Email(regexp = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$", message = "邮箱格式错误")
     @ApiModelProperty(value = "邮箱")
     private String email;
-    
-    @ApiModelProperty(value = "用户头像")
-    private String userPic;
     
     @NotNull(message = "用户状态不能为空")
     @Range(min = 0, max = 1, message = "用户状态格式错误，可选 0 或 1 ")

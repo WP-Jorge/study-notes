@@ -1,0 +1,62 @@
+.api-tree {
+	.top-options {
+		display: flex;
+		justify-content: start;
+		margin-bottom: 20px;
+
+		.top-item {
+			margin-right: 20px;
+		}
+	}
+
+	.ant-tree {
+		max-height: 440px;
+		overflow: auto;
+
+		.tree-node {
+			display: flex;
+
+			.edit-inputs {
+				.edit-input {
+					display: flex;
+					span {
+						width: 90px;
+						color: #888888;
+						font-size: 12px;
+					}
+				}
+			}
+			.edit-options {
+				background-color: white;
+				.option {
+					margin: 0 5px;
+				}
+			}
+
+			.options {
+				display: none;
+				margin-left: 10px;
+
+				.option {
+					margin: 0 5px;
+				}
+
+				span {
+					margin: 0 5px;
+				}
+				.delete {
+					color: red;
+				}
+			}
+
+			&:hover {
+				.options {
+					display: block;
+				}
+			}
+		}
+		.ant-tree-node-content-wrapper.ant-tree-node-selected {
+			background-color: white;
+		}
+	}
+}

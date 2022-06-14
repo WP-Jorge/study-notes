@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import { Navigate, RouteObject, useRoutes } from 'react-router-dom';
 
 import { store } from '@/redux/store';
-import { deepCopy } from '@/utils/baseUtil';
 import { Api } from '@/networks/system';
 import {
 	routeComponentMap,
@@ -13,18 +12,19 @@ import { routeIconMap } from '@/router/routeIconMap';
 
 export function getRoutes(): Array<Route> {
 	return [
-		...defaultRoutes,
 		...getRoutesFromApiTrees(getApiTrees()),
+		...defaultRoutes,
 		notFoundRoute
 	];
 }
 
 export function getApiTrees(): Array<Api> {
-	const apis = deepCopy(store.getState().system.apis);
+	const apis = JSON.parse(JSON.stringify(store.getState().system.apis));
+
 	const res = [] as Array<Api>;
 	for (let parent of apis) {
 		for (let child of apis) {
-			if (child.parentApiId === parent.apiId) {
+			if (child.parentApiId === parent.apiId && child.apiType !== 1) {
 				parent.children
 					? parent.children.push(child)
 					: (parent.children = [child]);

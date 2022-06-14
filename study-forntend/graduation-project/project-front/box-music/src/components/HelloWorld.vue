@@ -1,21 +1,29 @@
 <script setup lang="ts">
-import { ElMessage } from 'element-plus';
-import { ref } from 'vue';
-ElMessage.error('asd');
+// const electronAPI = window.electronAPI;
+
 defineProps<{ msg: string }>();
 
-const count = ref(0);
-const ffmpeg = require('fluent-ffmpeg');
+// const ffmpeg = require('fluent-ffmpeg');
 
-ffmpeg.ffprobe(
-	'G:/Musics/1/漫长的告白-双笙-162283619.flac',
-	function (err: any, metadata: any) {
-		if (err) {
-			console.error(err);
-		}
-		console.dir(metadata);
-	}
-);
+// electronAPI.getFFmpeg((ffmpeg: any) => {
+// 	console.log(ffmpeg);
+
+// 	// ffmpeg.ffprobe(
+// 	// 	'G:/Musics/1/漫长的告白-双笙-162283619.flac',
+// 	// 	function (err: any, metadata: any) {
+// 	// 		if (err) {
+// 	// 			console.error(err);
+// 	// 		}
+// 	// 		console.dir(metadata);
+// 	// 	}
+// 	// );
+// });
+// electronAPI.getMusicInfo(
+// 	'G:/Musics/1/漫长的告白-双笙-162283619.flac',
+// 	(musicInfo: any) => {
+// 		console.log(musicInfo);
+// 	}
+// );
 </script>
 
 <template>

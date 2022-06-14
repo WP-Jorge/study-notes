@@ -4,7 +4,11 @@ import { ElMessage } from 'element-plus';
 
 const checkPath: Array<string> = ['/admin'];
 
-export const checkAuth = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+export const checkAuth = (
+	to: RouteLocationNormalized,
+	from: RouteLocationNormalized,
+	next: NavigationGuardNext
+) => {
 	let userStore = useUserStore();
 	let path = to.path;
 	let token = userStore.token;

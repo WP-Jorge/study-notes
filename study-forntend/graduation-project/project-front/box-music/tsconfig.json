@@ -16,6 +16,15 @@
 			"@/*": ["./src/*"]
 		}
 	},
-	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+	"vueCompilerOptions": {
+		"experimentalDisableTemplateSupport": false
+	},
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.d.ts",
+		"src/**/*.tsx",
+		"src/**/*.vue",
+		"src/main.js"
+	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

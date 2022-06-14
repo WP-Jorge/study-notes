@@ -1,11 +1,4 @@
-import {
-	createRouter,
-	createWebHistory,
-	createWebHashHistory,
-	RouteRecordRaw,
-	RouteLocationNormalized,
-	NavigationGuardNext
-} from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import { checkAuth } from './routerGuards';
 
 const routes: Array<RouteRecordRaw> = [
@@ -16,17 +9,17 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/home',
 		name: 'Home',
-		component: () => import('@/views/home/index.vue')
+		component: () => import('@/pages/Home/index.vue')
 	},
 	{
 		path: '/admin',
 		name: 'Admin',
-		component: () => import('@/views/admin/index.vue')
+		component: () => import('@/pages/Admin/index.vue')
 	},
 	{
 		path: '/login',
 		name: 'Login',
-		component: () => import('@/views/login/index.vue')
+		component: () => import('@/pages/Login/index.vue')
 	}
 ];
 

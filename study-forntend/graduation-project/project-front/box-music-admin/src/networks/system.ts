@@ -2,6 +2,10 @@ import axios from '@/networks';
 
 import { BaseInterface } from '@/globals/globalTypes';
 
+export const registerApi = (formData: FormData) => {
+	return axios.post('/user/adminRegister', formData);
+};
+
 export const loginApi = (data: UserLoginRequest) => {
 	return axios.post<UserLoginResponse>('/login', data);
 };
@@ -10,11 +14,25 @@ export const logoutApi = () => {
 	return axios.post('/user/logout');
 };
 
-export const getVerifyCodeApi = (codeId: string) => {
-	return axios.get('/user/getVerifyCode', {
+export const getVerificationCodeApi = (codeId: string) => {
+	return axios.get('/user/getVerificationCode', {
 		params: {
 			codeId
 		}
+	});
+};
+
+export const updateUserApi = (formData: FormData) => {
+	return axios.put('/user/updateUser', formData);
+};
+
+export const getUserInfoApi = () => {
+	return axios.get('/user/getUserInfo');
+};
+
+export const updatePasswordApi = (password: string) => {
+	return axios.put('/user/updatePassword', {
+		password
 	});
 };
 
@@ -58,16 +76,6 @@ export interface UserInfo {
 	email?: string | null;
 	userPic?: string | null;
 	status?: number;
-}
-
-export interface ApiTree {
-	roleId: number;
-	roleName: string;
-	childrenApi: ChildrenApi;
-}
-
-export interface ChildrenApi extends Api {
-	childrenApi: ChildrenApi;
 }
 
 export interface UserLogoutResponse extends BaseInterface {

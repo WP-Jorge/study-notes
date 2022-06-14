@@ -30,7 +30,7 @@ public class Music implements Serializable {
 
     @ApiModelProperty("音乐id")
     @TableId(value = "music_id", type = IdType.AUTO)
-    private Integer musicId;
+    private Long musicId;
 
     @ApiModelProperty("音乐名称")
     @TableField("music_title")
@@ -44,10 +44,6 @@ public class Music implements Serializable {
     @TableField("lyric")
     private String lyric;
     
-    @ApiModelProperty("歌词地址")
-    @TableField("lyric_url")
-    private String lyricUrl;
-
     @ApiModelProperty("专辑")
     @TableField("album")
     private String album;
@@ -70,15 +66,15 @@ public class Music implements Serializable {
 
     @ApiModelProperty("音乐最高品质格式")
     @TableField("music_format")
-    private String music_format;
+    private String musicFormat;
 
     @ApiModelProperty("音乐最高品质码率")
     @TableField("bitrate")
     private Integer bitrate;
 
     @ApiModelProperty("播放量")
-    @TableField("views")
-    private Integer views;
+    @TableField("total_views")
+    private Integer totalViews;
     
     @ApiModelProperty("音乐地址")
     @TableField("music_url")

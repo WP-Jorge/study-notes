@@ -1,14 +1,11 @@
 package com.example.boxmusic.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.boxmusic.pojo.dto.AddUserAdminDTO;
-import com.example.boxmusic.pojo.dto.AddUserDTO;
-import com.example.boxmusic.pojo.dto.UpdateUserDTO;
+import com.example.boxmusic.pojo.dto.*;
 import com.example.boxmusic.pojo.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.boxmusic.pojo.vo.UserVO;
 import com.example.boxmusic.utils.R;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,17 +28,17 @@ public interface UserService extends IService<User> {
 	
 	Boolean checkLogin(String username, String rawPassword);
 	
-	int addUser(AddUserDTO addUserDTO);
+	int addUser(User user);
 	
 	R logout(HttpServletRequest httpServletRequest);
 	
-	R register(MultipartFile file, AddUserDTO addUserDTO);
+	R adminRegister(MultipartFile picture, AddUserDTO addUserDTO);
 	
-	R getVerifyCode(String codeId);
+	R getVerificationCode(String codeId);
 	
 	R verifyVerificationCode(String codeId, String verificationCode);
 	
-	R getUserInfo(HttpServletRequest httpServletRequest);
+	R getUserInfo(String token);
 	
 	R getAllUsersPage(Page<Map<String, Object>> page);
 	
@@ -53,7 +50,11 @@ public interface UserService extends IService<User> {
 	
 	R resetPasswordByUserId(Long userId);
 	
-	R updateUser(MultipartFile file, UpdateUserDTO updateUserDTO);
+	R updateUser(MultipartFile picture, UpdateUserAdminDTO updateUserAdminDTO);
 	
-	R addUser(MultipartFile file, AddUserAdminDTO addUserAdminDTO);
+	R addUser(MultipartFile picture, AddUserAdminDTO addUserAdminDTO);
+	
+	R updateUser(String headerToken, MultipartFile picture, UpdateUserDTO updateUserDTO);
+	
+	R updatePassword(String headerToken, PasswordDTO passwordDTO);
 }

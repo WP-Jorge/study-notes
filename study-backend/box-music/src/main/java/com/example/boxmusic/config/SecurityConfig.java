@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsUtils;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -70,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/login").permitAll()
 				.antMatchers("/user/logout").permitAll()
 				.antMatchers("/user/register").permitAll()
-				.antMatchers("/user/getVerifyCode").permitAll()
+				.antMatchers("/user/getVerificationCode").permitAll()
 				.antMatchers("/user/verifyVerificationCode").permitAll()
 				.antMatchers("/file/**").permitAll()
 				.antMatchers("/images/**").permitAll()

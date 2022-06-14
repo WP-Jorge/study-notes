@@ -1,5 +1,5 @@
 import axios from '@/networks';
-import { BaseInterface } from '@/globals/globalTypes';
+import { BaseInterface } from '@/globals/GlobalTypes';
 
 export const loginApi = (data: UserLoginRequest) => {
 	return axios.post<UserLoginResponse>('/login', data);
@@ -9,8 +9,8 @@ export const logoutApi = () => {
 	return axios.post('/user/logout');
 };
 
-export const getVerifyCodeApi = (codeId: string) => {
-	return axios.get('/user/getVerifyCode', {
+export const getVerificationCodeApi = (codeId: string) => {
+	return axios.get('/user/getVerificationCode', {
 		params: {
 			codeId
 		}
@@ -69,4 +69,9 @@ export interface ChildrenApi extends Api {
 export interface UserLogoutResponse extends BaseInterface {
 	type: string;
 	msg: string;
+}
+
+export interface PureUser extends BaseInterface {
+	userId: bigint;
+	username: string;
 }

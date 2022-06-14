@@ -22,6 +22,6 @@ public class ApiTreeVO implements Serializable {
 
     private String apiMethod;
     
-    private List<ApiTreeVO> childrenApi;
+    private List<ApiTreeVO> children;
 
 }

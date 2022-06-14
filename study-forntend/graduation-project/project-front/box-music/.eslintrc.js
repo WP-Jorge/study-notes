@@ -11,14 +11,14 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:vue/vue3-recommended',
 		'plugin:@typescript-eslint/recommended',
-		'plugin:prettier/recommended'
+		'plugin:prettier/recommended',
+		'./.eslintrc-auto-import.json'
 	],
 	parser: 'vue-eslint-parser',
 	// 支持ts的最新语法
 	parserOptions: {
-		ecmaVersion: 13,
-		parser: '@typescript-eslint/parser',
-		sourceType: 'module'
+		ecmaVersion: 'latest',
+		parser: '@typescript-eslint/parser'
 	},
 	// 添加vue和@typescript-eslint插件，增强eslint的能力
 	plugins: ['vue', '@typescript-eslint'],
@@ -26,7 +26,8 @@ module.exports = {
 		'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 		'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 		'@typescript-eslint/no-var-requires': 0,
-		'@typescript-eslint/no-unused-vars': 0,
+		'@typescript-eslint/no-unused-vars': 2,
+		'no-unused-vars': 0,
 		'vue/multi-word-component-names': 0,
 		'@typescript-eslint/no-explicit-any': 0,
 		'@typescript-eslint/explicit-module-boundary-types': 0,
@@ -35,6 +36,7 @@ module.exports = {
 		'@typescript-eslint/no-non-null-asserted-nullish-coalescing': 0,
 		'prefer-const': 'off',
 		'jsx-a11y/no-noninteractive-element-interactions': 0,
+		'no-irregular-whitespace': 0,
 		'prettier/prettier': [
 			'error',
 			{
@@ -46,7 +48,9 @@ module.exports = {
 				printWidth: 80, // 单行长度
 				enforceForArrowConditionals: false,
 				endOfLine: 'auto',
-				arrowParens: 'avoid'
+				arrowParens: 'avoid',
+				bracketSameLine: true, // 开始标签的右尖括号是否跟随在最后一行属性末尾
+				htmlWhitespaceSensitivity: 'ignore' // 空格敏感
 			}
 		]
 	}

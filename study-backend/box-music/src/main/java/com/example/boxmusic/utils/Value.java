@@ -20,4 +20,5 @@ public class Value {
 	public static String VERIFICATION_CODE = "verificationCode";
 	public static String CODE_ID = "codeId";
 	public static String MUSIC_HOME = "G:/Musics/";
+	
 }

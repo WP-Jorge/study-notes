@@ -4,19 +4,19 @@ import axios, {
 	Method,
 	Canceler
 } from 'axios';
-import router from '@/router';
+// import router from '@/router';
 import { useUserStore } from '@/store/user';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import { options } from '@/configs/axios';
-import { errorCodes } from '@/globals/errorCodes';
+import { errorCodes } from '@/globals/ErrorCodes';
 
 /**
  * 跳转登录页面
  * 携带当前路由，在登录完成后返回该页面
  */
-const toLogin = () => {
-	router.replace({ name: 'Login' });
-};
+// const toLogin = () => {
+// 	router.replace({ name: 'Login' });
+// };
 
 /**
  * 请求失败后错误统一处理

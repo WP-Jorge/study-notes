@@ -1,5 +1,6 @@
 package com.example.boxmusic.service;
 
+import com.example.boxmusic.pojo.dto.UpdateApiDTO;
 import com.example.boxmusic.pojo.entity.Api;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.boxmusic.pojo.vo.ApiVO;
@@ -18,11 +19,20 @@ import java.util.List;
  */
 public interface ApiService extends IService<Api> {
 	
-	List<RoleWithApiVO> getApiTreeWithUserId(Integer userId);
+	List<RoleWithApiVO> getApiTreeWithUserId(Long userId);
 	
 	List<ApiVO> getApisWithUsername(String username);
 	
-	R getApiTreeByUserId(Integer userId);
+	R getApiTreeByUserId(Long userId);
 	
 	R getApisByUsername(String username);
+	
+	R getApiTree();
+	
+	R updateApis(List<UpdateApiDTO> apis);
+	
+	R deleteApisByApiIds(List<Long> apiIds);
+	
+	R updateApi(UpdateApiDTO api);
+	
 }
