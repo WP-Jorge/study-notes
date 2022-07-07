@@ -6,12 +6,14 @@ import { downloadFileApi } from '../network/file.network';
 const isFileExisted = (filepath: string, filename: string) => {
 	return new Promise(resolve => {
 		let fullPath = path.join(filepath, filename);
-		console.log('文件是否存在：' + fullPath);
-		fs.access(fullPath, (err: any) => {
+		console.log('文件是否存在：' + filename);
+		fs.access(fullPath, fs.constants.F_OK, (err: any) => {
 			if (err) {
-				resolve(false);
+				console.warn('文件不存在：' + filename);
+				return resolve(false);
 			}
-			resolve(true);
+			console.log('文件已存在：' + filename);
+			return resolve(true);
 		});
 	});
 };
@@ -19,13 +21,14 @@ const isFileExisted = (filepath: string, filename: string) => {
 const mkdir = (dirpath: string, dirname: string) => {
 	return new Promise(resolve => {
 		let fullPath = path.join(dirpath, dirname);
-		console.log('创建目录：' + fullPath);
+		console.log('创建目录：' + dirname);
 		fs.mkdir(fullPath, (err: any) => {
 			if (err) {
-				resolve(false);
+				console.warn('创建目录失败：' + dirname);
+				return resolve(false);
 			}
-			console.log('创建目录完成：' + fullPath);
-			resolve(true);
+			console.log('创建目录完成：' + dirname);
+			return resolve(true);
 		});
 	});
 };
@@ -34,9 +37,9 @@ const mkdirSavely = (dirpath: string, dirname: string) => {
 	return new Promise(async resolve => {
 		let isExit = await isFileExisted(dirpath, dirname);
 		if (!isExit) {
-			resolve(await mkdir(dirpath, dirname));
+			return resolve(await mkdir(dirpath, dirname));
 		}
-		resolve(false);
+		return resolve(false);
 	});
 };
 
@@ -48,13 +51,14 @@ const writeFile = (
 ) => {
 	return new Promise(resolve => {
 		let fullPath = path.join(filePath, fileName);
-		console.log('创建歌词：' + fileName);
+		// console.log('创建歌词：' + fileName);
 		fs.writeFile(fullPath, data, option, (err: any) => {
 			if (err) {
-				resolve(false);
+				// console.warn('创建歌词失败：' + fileName);
+				return resolve(false);
 			}
-			console.log('创建歌词完成：' + fileName);
-			resolve(true);
+			// console.log('创建歌词完成：' + fileName);
+			return resolve(true);
 		});
 	});
 };
@@ -67,23 +71,23 @@ const downloadFile = (fileUrl: string, filePath: string, fileName: string) => {
 			let res = await downloadFileApi(fileUrl);
 			res.data.pipe(writeStream);
 			let timer = setTimeout(() => {
-				console.log('下载超时：' + fileName);
-				resolve(false);
+				console.warn('下载超时：' + fileName);
+				return resolve(false);
 			}, 120000);
 			console.log('开始下载：' + fileName);
 			writeStream.on('finish', async () => {
 				console.log('下载完成：' + fileName);
 				clearTimeout(timer);
-				resolve(true);
+				return resolve(true);
 			});
 			writeStream.on('error', () => {
-				console.log('下载失败');
+				console.warn('下载失败');
 				clearTimeout(timer);
-				resolve(false);
+				return resolve(false);
 			});
 		} catch (err) {
-			console.log('文件下载出错：' + err);
-			resolve(false);
+			console.warn('文件下载出错：' + err);
+			return resolve(false);
 		}
 	});
 };

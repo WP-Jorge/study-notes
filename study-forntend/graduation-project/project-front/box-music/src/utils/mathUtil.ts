@@ -28,3 +28,5 @@ export const getTimestamp = (timeStr: string, offsetTime = 0) => {
 	}
 	return timestamp < 0 ? 0 : timestamp;
 };
+
+export const formatDuration = (timestamp: number) => timestamp / 1000;

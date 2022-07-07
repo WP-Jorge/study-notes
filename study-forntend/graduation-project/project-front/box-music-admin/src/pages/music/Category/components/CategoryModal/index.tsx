@@ -4,10 +4,8 @@ import {
 	Category,
 	updateCategoryApi
 } from '@/networks/category';
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, message, Modal, Upload } from 'antd';
+import { Button, Form, Input, message, Modal, Select } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import { UploadFile } from 'antd/lib/upload/interface';
 import React, { useEffect, useState } from 'react';
 import './index.scss';
 
@@ -20,23 +18,8 @@ export interface CategoryModalProps {
 export const CategoryModal = (props: CategoryModalProps) => {
 	const { formData, clickSubmit, clickCancel } = props;
 	const [title] = useState(formData?.categoryId ? '编辑分类' : '添加分类');
-	const [fileList, setFileList] = useState([] as UploadFile[]);
 	const [form] = useForm();
 	useEffect(() => {
-		if (formData?.categoryPic) {
-			console.log(formData);
-
-			const files = [
-				{
-					url:
-						import.meta.env.VITE_BASE_URL +
-						import.meta.env.VITE_CATEGORY_PICTURES +
-						formData.categoryPic
-				} as unknown as UploadFile
-			];
-			setFileList(files);
-			formData.fileList = files;
-		}
 		form.setFieldsValue({
 			...formData
 		});
@@ -50,9 +33,6 @@ export const CategoryModal = (props: CategoryModalProps) => {
 	const onFinish = async (values: any) => {
 		console.log(values);
 		const data = new FormData();
-		if (values.fileList?.length) {
-			data.append('picture', values.fileList[0]?.originFileObj);
-		}
 		for (const key in values) {
 			if (Object.prototype.hasOwnProperty.call(values, key)) {
 				const value = values[key];
@@ -74,29 +54,6 @@ export const CategoryModal = (props: CategoryModalProps) => {
 			clickSubmit();
 		}
 	};
-	const normFile = (e: any) => {
-		console.log('Upload event:', e);
-		if (Array.isArray(e)) {
-			return e;
-		}
-		return e && e.fileList;
-	};
-	const beforeUpload = (file: UploadFile) => {
-		const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-		if (!isJpgOrPng) {
-			message.error('只能上传 JPG 或者 PNG 图片');
-			return Upload.LIST_IGNORE;
-		}
-		const isLt2M = (file.size as number) / 1024 / 1024 < 2;
-		if (!isLt2M) {
-			message.error('图片大小必须小于 2MB');
-			return Upload.LIST_IGNORE;
-		}
-		return false;
-	};
-	const onImgChange = (e: any) => {
-		setFileList(e.fileList);
-	};
 
 	return (
 		<div className="category-modal">
@@ -116,35 +73,24 @@ export const CategoryModal = (props: CategoryModalProps) => {
 			>
 				<Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
 					<Form.Item
-						name="fileList"
-						label="分类图片"
-						valuePropName="fileList"
-						getValueFromEvent={normFile}
-						rules={[
-							{ required: !formData?.categoryId, message: '分类图片不能为空' }
-						]}
-						extra={!!formData?.categoryId && '如果不上传图片则使用原图片'}
-					>
-						<Upload
-							listType="picture-card"
-							name="分类图片"
-							fileList={fileList}
-							beforeUpload={beforeUpload}
-							maxCount={1}
-							showUploadList={{
-								showPreviewIcon: false
-							}}
-							onChange={onImgChange}
-						>
-							{fileList.length >= 1 ? null : <PlusOutlined />}
-						</Upload>
-					</Form.Item>
-					<Form.Item
 						name="categoryName"
 						label="分类名"
 						rules={[{ required: true, message: '分类名不能为空' }]}
 					>
 						<Input />
+					</Form.Item>
+					<Form.Item
+						name="categoryType"
+						label="分类类型"
+						rules={[{ required: true, message: '分类类型不能为空' }]}
+					>
+						<Select placeholder="请选择分类类型" allowClear>
+							<Select.Option value={0}>语种</Select.Option>
+							<Select.Option value={1}>风格</Select.Option>
+							<Select.Option value={2}>场景</Select.Option>
+							<Select.Option value={3}>情感</Select.Option>
+							<Select.Option value={4}>主题</Select.Option>
+						</Select>
 					</Form.Item>
 				</Form>
 			</Modal>

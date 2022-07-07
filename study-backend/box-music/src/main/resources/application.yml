@@ -13,8 +13,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
+      max-file-size: 120MB
+      max-request-size: 120MB
 
   # mybatis plus 逻辑删除配置
   global-config:
@@ -74,8 +74,8 @@ uid:
 userPicturePathRelative: /user-pictures/**
 userPicturePath: G:/box-music/user-pictures/
 
-musicPicturePathRelative: /music-pictures/**
-musicPicturePath: G:/box-music/music-pictures/
+albumPicturePathRelative: /album-pictures/**
+albumPicturePath: G:/box-music/album-pictures/
 
 singerPicturePathRelative: /singer-pictures/**
 singerPicturePath: G:/box-music/singer-pictures/

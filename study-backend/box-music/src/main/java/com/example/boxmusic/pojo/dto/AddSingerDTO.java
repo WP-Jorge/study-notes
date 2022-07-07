@@ -21,4 +21,7 @@ public class AddSingerDTO implements Serializable {
     @ApiModelProperty(value = "歌手名")
     private String singerName;
     
+    @ApiModelProperty(value = "歌手描述")
+    private String singerDescription;
+    
 }

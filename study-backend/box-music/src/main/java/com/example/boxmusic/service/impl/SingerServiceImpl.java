@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.boxmusic.pojo.dto.AddSingerDTO;
 import com.example.boxmusic.pojo.dto.UpdateSingerDTO;
 import com.example.boxmusic.pojo.entity.Category;
+import com.example.boxmusic.pojo.entity.Playlist;
 import com.example.boxmusic.pojo.entity.Singer;
 import com.example.boxmusic.mapper.SingerMapper;
 import com.example.boxmusic.pojo.vo.CategoryVO;
+import com.example.boxmusic.pojo.vo.PlaylistVO;
 import com.example.boxmusic.pojo.vo.SingerVO;
 import com.example.boxmusic.service.FileService;
 import com.example.boxmusic.service.SingerService;
@@ -122,5 +124,14 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
+	}
+	
+	@Override
+	public R getSingersByTotalViewsSortPage(Page<Map<String, Object>> page) {
+		QueryWrapper<Singer> queryWrapper = new QueryWrapper<>();
+		queryWrapper.orderByDesc("total_views");
+		Page<Map<String, Object>> singerPages = baseMapper.selectMapsPage(page, queryWrapper);
+		singerPages.setRecords(jsonUtil.transformPages(singerPages, SingerVO.class));
+		return R.successPage("获取歌手排行成功", singerPages);
 	}
 }

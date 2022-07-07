@@ -26,6 +26,11 @@ public class AddMusicDTO implements Serializable {
     @ApiModelProperty(value = "音乐名")
     private String musicTitle;
     
+    @NotNull(message = "专辑id不能为空")
+    @ApiModelProperty("专辑id")
+    @TableId(value = "album_id", type = IdType.AUTO)
+    private Long albumId;
+    
     @ApiModelProperty(value = "歌词")
     private String lyric;
     
@@ -36,13 +41,5 @@ public class AddMusicDTO implements Serializable {
     @NotEmpty(message = "歌手不能为空")
     @ApiModelProperty(value = "歌手")
     private List<Singer> singerList;
-    
-    @Pattern(regexp = "^([\\u4e00-\\u9fa5\\w]{1,30})$", message = "专辑格式错误")
-    @ApiModelProperty(value = "专辑")
-    private String album;
-    
-    @Pattern(regexp = "^([\\u4e00-\\u9fa5\\w]{1,30})$", message = "流派格式错误")
-    @ApiModelProperty(value = "流派")
-    private String genre;
     
 }

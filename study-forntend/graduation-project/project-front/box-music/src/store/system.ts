@@ -1,8 +1,84 @@
-import { GlobalValues } from '@/globals/GlobalValues';
+import { MessageType } from '@/globals/GlobalValues';
 import { defineStore } from 'pinia';
-
+import router from '@/router';
 const ipcRenderer = window.ipcRenderer;
-const electronAPI = window.electronAPI;
+export interface Menu {
+	title?: string;
+	label?: string;
+	path?: string;
+	children?: Menu[];
+}
+
+const menuList = [
+	{
+		title: '探索发现',
+		path: '/discovery',
+		children: [
+			{
+				label: '个性推荐',
+				path: '/recommend'
+			},
+			{
+				label: '音乐分类',
+				path: '/category'
+			},
+			{
+				label: '榜单',
+				path: '/chart'
+			},
+			{
+				label: '最近新增',
+				path: '/recentlyAdded'
+			}
+		]
+	},
+	{
+		title: '我的音乐',
+		path: '/myMusic',
+		children: [
+			{
+				label: '最近播放',
+				path: '/recentlyPlay'
+			},
+			{
+				label: '歌曲',
+				path: '/music'
+			},
+			{
+				label: '歌手',
+				path: '/singer'
+			}
+		]
+	},
+	{
+		title: '下载管理',
+		path: '/download',
+		children: [
+			{
+				label: '已完成',
+				path: '/finished'
+			},
+			{
+				label: '正在下载',
+				path: '/downloading'
+			}
+		]
+	},
+	{
+		title: '歌单',
+		path: '/playlist',
+		children: [
+			{
+				label: '我的喜欢',
+				path: '/favorite'
+			},
+			{
+				label: '我的歌单',
+				path: '/myPlaylist'
+			}
+		]
+	}
+] as Menu[];
 
 // 1.定义并导出容器
 /**
@@ -21,32 +97,42 @@ export const useSystemStore = defineStore('system', {
 			isFullscreen: false,
 			showSiderMenu: true,
 			showMain: true,
-			showMusicDetail: false
+			showMusicDetail: false,
+			menuList,
+			parentMenuIndex: 0
 		};
 	},
 	/**
 	 * 类似组件的 computed，用来封装计算属性，具有缓存功能
 	 */
-	getters: {},
+	getters: {
+		menu: state => {
+			const getCurrentMenu = (
+				menuList: Menu[],
+				targetPath: string
+			): Menu | null => {
+				for (const menu of menuList) {
+					if (menu.path === targetPath) {
+						return menu;
+					}
+					if (menu.children) {
+						return getCurrentMenu(menu.children, targetPath);
+					}
+				}
+				return null;
+			};
+			return getCurrentMenu(state.menuList, router.currentRoute.value.path);
+		},
+		parentMenu: state => {
+			return state.menuList[state.parentMenuIndex];
+		}
+	},
 	/**
 	 * 类似组件的 methods，封装业务逻辑，修改 state
 	 */
 	actions: {
-		async optionChange(optionType: string) {
+		async optionChange(optionType: MessageType) {
 			ipcRenderer.send(optionType);
-		},
-		async changeIsMax(flag: boolean) {
-			this.$patch(() => {
-				this.isMax = flag;
-			});
-		},
-		async changeIsFullscreen(flag: boolean) {
-			this.$patch(() => {
-				this.isFullscreen = flag;
-			});
-		},
-		async setShowMusicDetail(flag: boolean) {
-			this.showMusicDetail = flag;
 		}
 	}
 });
@@ -58,11 +144,20 @@ export const useSystemStore = defineStore('system', {
 // 4.使用 action
 
 // 监听主进程消息
-electronAPI.on(GlobalValues.WINDOW_MAX, (msg: any) => {
+// electronAPI.on(GlobalValues.WINDOW_MAX, (msg: any) => {
+// 	const systemStore = useSystemStore();
+// 	systemStore.isMax = msg;
+// });
+// electronAPI.on(GlobalValues.WINDOW_SCREEN, (msg: any) => {
+// 	const systemStore = useSystemStore();
+// 	systemStore.isFullscreen = msg;
+// });
+
+ipcRenderer.on(MessageType.WINDOW_MAX, (...msgs: any) => {
 	const systemStore = useSystemStore();
-	systemStore.changeIsMax(msg);
+	systemStore.isMax = msgs[1];
 });
-electronAPI.on(GlobalValues.WINDOW_SCREEN, (msg: any) => {
+ipcRenderer.on(MessageType.WINDOW_SCREEN, (...msgs: any) => {
 	const systemStore = useSystemStore();
-	systemStore.changeIsFullscreen(msg);
+	systemStore.isFullscreen = msgs[1];
 });

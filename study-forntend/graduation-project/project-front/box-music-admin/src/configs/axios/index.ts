@@ -5,7 +5,7 @@ export const options = {
 	// 请求头
 	headers: {},
 	// 请求超时时长
-	timeout: 20 * 1000,
+	timeout: 120 * 1000,
 	// base 地址
 	baseURL:
 		import.meta.env.MODE === 'development'

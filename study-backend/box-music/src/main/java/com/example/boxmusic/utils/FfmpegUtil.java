@@ -126,41 +126,41 @@ public class FfmpegUtil {
 	private Optional<String> writeInMusicInfo(String targetPath, String filename, AddMusicDTO addMusicDTO) {
 		// fileService.uploadFile(song, tempPath, filename);
 		String srcPath = getTargetSrc(tempPath, filename);
-		String targetSrc = getTargetSrc(targetPath, filename);
-		String ffmpeg = Loader.load(ffmpeg.class);
-		String singersStr = "";
-		for (Singer singer : addMusicDTO.getSingerList()) {
-			singersStr += singer.getSingerName() + ",";
-		}
+		// String targetSrc = getTargetSrc(targetPath, filename);
+		// String ffmpeg = Loader.load(ffmpeg.class);
+		// String singersStr = "";
+		// for (Singer singer : addMusicDTO.getSingerList()) {
+		// 	singersStr += singer.getSingerName() + ",";
+		// }
+		// // ProcessBuilder transformBuilder = new ProcessBuilder(ffmpeg, "-i", srcPath, "-metadata", "album=" + addMusicDTO.getAlbum(), "-metadata", "artist=" + singersStr.substring(0, singersStr.length() - 1), "-metadata", "genre=" + addMusicDTO.getGenre(), "-metadata", "title=" + addMusicDTO.getMusicTitle(), "-y", targetSrc);
 		// ProcessBuilder transformBuilder = new ProcessBuilder(ffmpeg, "-i", srcPath, "-metadata", "album=" + addMusicDTO.getAlbum(), "-metadata", "artist=" + singersStr.substring(0, singersStr.length() - 1), "-metadata", "genre=" + addMusicDTO.getGenre(), "-metadata", "title=" + addMusicDTO.getMusicTitle(), "-y", targetSrc);
-		ProcessBuilder transformBuilder = new ProcessBuilder(ffmpeg, "-i", srcPath, "-metadata", "album=" + addMusicDTO.getAlbum(), "-metadata", "artist=" + singersStr.substring(0, singersStr.length() - 1), "-metadata", "genre=" + addMusicDTO.getGenre(), "-metadata", "title=" + addMusicDTO.getMusicTitle(), "-y", targetSrc);
-		try {
-			transformBuilder.inheritIO().start().waitFor();
-			fileService.deleteFile(tempPath, filename);
-		} catch (InterruptedException | IOException e) {
-			System.out.println(e);
-			return Optional.empty();
-		}
+		// try {
+		// 	transformBuilder.inheritIO().start().waitFor();
+		// 	fileService.deleteFile(tempPath, filename);
+		// } catch (InterruptedException | IOException e) {
+		// 	System.out.println(e);
+		// 	return Optional.empty();
+		// }
 		return Optional.of(filename);
 	}
 	
 	private Optional<String> writeInMusicInfo(String targetPath, String filename, UpdateMusicDTO updateMusicDTO) {
 		// fileService.uploadFile(song, tempPath, filename);
 		String srcPath = getTargetSrc(tempPath, filename);
-		String targetSrc = getTargetSrc(targetPath, filename);
-		String ffmpeg = Loader.load(ffmpeg.class);
-		String singersStr = "";
-		for (Singer singer : updateMusicDTO.getSingerList()) {
-			singersStr += singer.getSingerName() + ",";
-		}
-		ProcessBuilder transformBuilder = new ProcessBuilder(ffmpeg, "-i", srcPath, "-metadata", "album=" + updateMusicDTO.getAlbum(), "-metadata", "artist=" + singersStr.substring(0, singersStr.length() - 1), "-metadata", "genre=" + updateMusicDTO.getGenre(), "-metadata", "title=" + updateMusicDTO.getMusicTitle(), "-y", targetSrc);
-		try {
-			transformBuilder.inheritIO().start().waitFor();
-			fileService.deleteFile(tempPath, filename);
-		} catch (InterruptedException | IOException e) {
-			System.out.println(e);
-			return Optional.empty();
-		}
+		// String targetSrc = getTargetSrc(targetPath, filename);
+		// String ffmpeg = Loader.load(ffmpeg.class);
+		// String singersStr = "";
+		// for (Singer singer : updateMusicDTO.getSingerList()) {
+		// 	singersStr += singer.getSingerName() + ",";
+		// }
+		// ProcessBuilder transformBuilder = new ProcessBuilder(ffmpeg, "-i", srcPath, "-metadata", "album=" + updateMusicDTO.getAlbum(), "-metadata", "artist=" + singersStr.substring(0, singersStr.length() - 1), "-metadata", "genre=" + updateMusicDTO.getGenre(), "-metadata", "title=" + updateMusicDTO.getMusicTitle(), "-y", targetSrc);
+		// try {
+		// 	transformBuilder.inheritIO().start().waitFor();
+		// 	fileService.deleteFile(tempPath, filename);
+		// } catch (InterruptedException | IOException e) {
+		// 	System.out.println(e);
+		// 	return Optional.empty();
+		// }
 		return Optional.of(filename);
 	}
 	

@@ -32,13 +32,18 @@ const getMusicLevel = (br = 0) => {
 };
 
 const isFileNameRight = (fileName: string) => {
-	let illegalChars = [`"`, '<', '>', '\\', '/', ':', '*', '?', '|'];
+	let illegalChars = [`"`, '<', '>', '\\', '/', ':', '*', '?', '|', '#'];
 	let fileNameList = fileName.split('');
 	return fileNameList.filter(item => illegalChars.includes(item)).length === 0;
 };
 
 const getRightFileName = (fileName: string) => {
-	return fileName.replace(/["|<|>|\\|\/|:|\*|\?|\|]/g, ' ');
+	return fileName.replace(/["|<|>|\\|\/|:|\*|\?|\||#]/g, ' ');
+};
+
+const getResourceType = (url = '') => {
+	let tempArr = url.split('.');
+	return '.' + tempArr[tempArr.length - 1];
 };
 
 const formatLyric = (lyric: string) => {
@@ -48,4 +53,25 @@ const formatLyric = (lyric: string) => {
 		.replace(/\s/g, '<s>');
 };
 
-export { sleep, getMusicLevel, isFileNameRight, getRightFileName, formatLyric };
+const formatSex = (number = 0) => {
+	switch (number) {
+		case 0:
+			return '未知';
+		case 1:
+			return '男';
+		case 2:
+			return '女';
+		default:
+			return '未知';
+	}
+};
+
+export {
+	sleep,
+	getMusicLevel,
+	isFileNameRight,
+	getRightFileName,
+	formatLyric,
+	getResourceType,
+	formatSex
+};

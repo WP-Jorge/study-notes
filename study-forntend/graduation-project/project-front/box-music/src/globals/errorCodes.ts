@@ -1,4 +1,4 @@
-export enum errorCodes {
+export enum ErrorCodes {
 	CODE_0 = 0,
 	CODE_400 = 400,
 	CODE_401 = 401,

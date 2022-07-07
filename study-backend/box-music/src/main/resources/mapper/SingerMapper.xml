@@ -8,6 +8,7 @@
         <id column="singer_id" property="singerId" />
         <result column="singer_name" property="singerName" />
         <result column="singer_pic" property="singerPic" />
+        <result column="singer_description" property="singerDescription" />
         <result column="total_views" property="totalViews" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />

@@ -51,16 +51,20 @@ export const getSongDetailBySongIdApi = (songId: string, cookie: string) => {
 	});
 };
 
-export const getSongUrlBySongIdApi = (
-	songId: string,
-	cookie: string,
-	br = 999000
-) => {
+export const getAlbumDetailByAlbumIdApi = (albumId: string, cookie: string) => {
+	return axios.get('/album', {
+		params: {
+			id: albumId,
+			cookie
+		}
+	});
+};
+
+export const getSongUrlBySongIdApi = (songId: string, cookie: string) => {
 	return axios.get('/song/url', {
 		params: {
 			id: songId,
-			cookie,
-			br
+			cookie
 		}
 	});
 };

@@ -26,3 +26,31 @@ a {
 .el-popover.el-popper {
 	min-width: 10px;
 }
+
+@font-face {
+	font-family: newFont;
+	src: url(../src/assets/fonts/小可奶酪体.ttf);
+}
+
+.ellipse {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.ellipse2 {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+.ellipse3 {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+}
+.disable {
+	background: #f4f4f4;
+	pointer-events: none;
+	color: #949494;
+}

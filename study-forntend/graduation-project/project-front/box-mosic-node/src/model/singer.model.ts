@@ -22,6 +22,10 @@ export const Singer = seq.define(
 			type: DataTypes.STRING,
 			comment: '歌手图片'
 		},
+		singer_description: {
+			type: DataTypes.TEXT,
+			comment: '歌手描述'
+		},
 		total_views: {
 			type: DataTypes.INTEGER,
 			comment: '播放量'

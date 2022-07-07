@@ -6,18 +6,16 @@ export interface Lyric {
 }
 import { useMusicStore } from '@/store/music';
 import { getFormatTime, getTimestamp } from '@/utils/mathUtil';
-import { storeToRefs } from 'pinia';
 import { customAlphabet } from 'nanoid/non-secure';
 
 const nanoid = customAlphabet('1234567890', 10);
 const musicStore = useMusicStore();
-const { setPlay } = musicStore;
-const { music, currentTime, audio } = storeToRefs(musicStore);
 const lyricList = ref([] as Lyric[]);
 const currentIndex = ref(0);
-const lyricHeight = 36;
+const lyricHeight = 45;
 const lyricContainer = ref(null);
 const isMouseOver = ref(false);
+let timer: number;
 
 const formatLyric = (lyric: string) => {
 	let timeReg = /\[(.*)\](.*)/g;
@@ -26,8 +24,12 @@ const formatLyric = (lyric: string) => {
 	while ((row = timeReg.exec(lyric))) {
 		let lyric = { id: '', timestamp: 0, lyricRow: '' } as Lyric;
 		if (row[2]) {
+			let formatTime = getTimestamp(row[1]);
 			lyric.id = nanoid();
-			lyric.timestamp = getTimestamp(row[1]);
+			lyric.timestamp =
+				formatTime > musicStore.playMusic.music.duration
+					? musicStore.playMusic.music.duration
+					: formatTime;
 			lyric.lyricRow = row[2];
 			lyrics.push(lyric);
 		}
@@ -37,51 +39,54 @@ const formatLyric = (lyric: string) => {
 
 const lyricRowClick = (index: number) => {
 	currentIndex.value = index;
-	currentTime.value = lyricList.value[index].timestamp;
-	audio.value.currentTime = currentTime.value;
-	setPlay(true);
+	musicStore.playMusic.currentTime = lyricList.value[index].timestamp;
+	musicStore.playMusic.audio.currentTime = musicStore.playMusic.currentTime;
+	musicStore.playMusic.play = true;
 };
 
 // onMounted(() => {
-// 	formatLyric(music.value.lyric as string);
+// 	formatLyric(musicStore.playMusic.music.lyric as string);
 // });
 
 watchEffect(() => {
-	formatLyric(music.value.lyric as string);
+	formatLyric(musicStore.playMusic.music.lyric as string);
 	currentIndex.value = 0;
 });
 
-watchEffect(() => {
-	while (
-		currentIndex.value < lyricList.value.length - 1 &&
-		currentTime.value > lyricList.value[currentIndex.value + 1].timestamp
-	) {
-		currentIndex.value++;
-	}
-	while (
-		currentIndex.value > 0 &&
-		currentTime.value < lyricList.value[currentIndex.value - 1].timestamp
-	) {
-		currentIndex.value--;
-	}
-});
+// watchEffect(() => {
+// 	while (
+// 		currentIndex.value < lyricList.value.length - 1 &&
+// 		musicStore.playMusic.currentTime > lyricList.value[currentIndex.value + 1].timestamp
+// 	) {
+// 		currentIndex.value++;
+// 	}
+// 	while (
+// 		currentIndex.value > 0 &&
+// 		musicStore.playMusic.currentTime < lyricList.value[currentIndex.value - 1].timestamp
+// 	) {
+// 		currentIndex.value--;
+// 	}
+// });
 
 onMounted(() => {
 	watchEffect(() => {
-		while (
-			currentIndex.value < lyricList.value.length - 1 &&
-			currentTime.value > lyricList.value[currentIndex.value + 1].timestamp
-		) {
-			currentIndex.value++;
-		}
-		while (
-			currentIndex.value > 0 &&
-			currentTime.value < lyricList.value[currentIndex.value - 1].timestamp
-		) {
-			currentIndex.value--;
-		}
+		cancelAnimationFrame(timer);
 		if (lyricContainer.value && !isMouseOver.value) {
-			let timer = requestAnimationFrame(function fn() {
+			while (
+				currentIndex.value < lyricList.value.length - 1 &&
+				musicStore.playMusic.currentTime >
+					lyricList.value[currentIndex.value + 1].timestamp
+			) {
+				currentIndex.value++;
+			}
+			while (
+				currentIndex.value > 0 &&
+				musicStore.playMusic.currentTime <
+					lyricList.value[currentIndex.value - 1].timestamp
+			) {
+				currentIndex.value--;
+			}
+			timer = requestAnimationFrame(function fn() {
 				if (
 					(lyricContainer.value as unknown as HTMLElement) &&
 					(lyricContainer.value as unknown as HTMLElement).scrollTop !==
@@ -105,22 +110,31 @@ onMounted(() => {
 <template>
 	<div class="music-lyric">
 		<div class="top-container">
-			<h1 class="title">{{ music.musicTitle }}</h1>
+			<h1 class="title">{{ musicStore.playMusic.music?.musicTitle }}</h1>
 			<p class="singers">
-				{{ music.singers.map(item => item.singerName).join(' / ') }}
+				<span>
+					{{
+						musicStore.playMusic.music?.singers
+							?.map(item => item.singerName)
+							.join(' / ')
+					}}
+				</span>
+				<span>&nbsp;-&nbsp;</span>
+				<span>{{ musicStore.playMusic.music?.album?.albumName }}</span>
 			</p>
 		</div>
-		<div ref="lyricContainer" class="bottom-container">
-			<div
-				class="lyric-container"
-				@mouseover="isMouseOver = true"
-				@mouseleave="isMouseOver = false">
+		<div
+			ref="lyricContainer"
+			class="bottom-container"
+			@mouseenter="isMouseOver = true"
+			@mouseleave="isMouseOver = false">
+			<div class="lyric-container">
 				<div
 					v-for="(item, index) of lyricList"
 					:key="item.id"
 					:class="{ 'lyric-row': true, active: currentIndex === index }">
 					<span class="time">{{ getFormatTime(item.timestamp) }}</span>
-					<span class="lyric">{{ item.lyricRow }}</span>
+					<span class="lyric ellipse2">{{ item.lyricRow }}</span>
 					<span class="option">
 						<el-tooltip
 							effect="light"
@@ -174,13 +188,17 @@ onMounted(() => {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				height: 36px;
+				height: 45px;
 				color: var(--el-text-color-secondary);
+				font-size: 13px;
 
 				.time {
 					visibility: hidden;
 					width: 50px;
 					text-align: center;
+				}
+				.lyric {
+					width: 420px;
 				}
 				.option {
 					visibility: hidden;
@@ -205,7 +223,7 @@ onMounted(() => {
 				}
 			}
 			.active {
-				font-size: 18px;
+				font-size: 16px;
 				font-weight: 800;
 				color: var(--el-text-color-primary);
 			}

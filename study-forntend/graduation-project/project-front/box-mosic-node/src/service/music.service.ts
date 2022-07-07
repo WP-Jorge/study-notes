@@ -8,9 +8,15 @@ import {
 	getSongDetailBySongIdApi,
 	getSongUrlBySongIdApi,
 	getSongLyricBySongIdApi,
-	getSingerDetailBySingerIdApi
+	getSingerDetailBySingerIdApi,
+	getAlbumDetailByAlbumIdApi
 } from '../network/music.network';
-import { sleep, getMusicLevel, getRightFileName } from '../utils/util';
+import {
+	sleep,
+	getMusicLevel,
+	getRightFileName,
+	getResourceType
+} from '../utils/util';
 import { isFileExisted, downloadFile, mkdirSavely } from '../utils/fileUtil';
 import { MUSIC_HOME, DRIVE_LETTER } from '../config/config.default';
 import { Music } from '../model/music.model';
@@ -19,6 +25,10 @@ import { Category } from '../model/category.model';
 import { MusicSinger } from '../model/music_singer.model';
 import { MusicCategory } from '../model/music_category.model';
 import { seq } from '../database/sequelize';
+import { Album } from '../model/album.model';
+import { Playlist } from '../model/playlist.model';
+import { PlaylistCategory } from '../model/playlist_category.model';
+import { MusicPlaylist } from '../model/music_playlist.model';
 
 class MusicService {
 	async getMusic(keywords: string, cookie: string) {
@@ -100,19 +110,46 @@ class MusicService {
 		return null;
 	}
 
+	async getAlbumDetailByAlbumId(albumId: string, cookie: string) {
+		let res;
+		try {
+			res = await getAlbumDetailByAlbumIdApi(albumId, cookie);
+		} catch (err: any) {
+			if (err.response.status === 404) {
+				console.log(err.response.data.message);
+			}
+			return null;
+		}
+		if (res && res.data.code === 200) {
+			return res.data.album;
+		}
+		return null;
+	}
+
 	async spiderMusic(
 		cookie: string,
-		pageSize = 1,
+		playlistSize = 10,
+		playlistOffset = 0,
+		pageSize = 10,
 		offset = 0,
 		targetOffset = 50,
 		category: string
 	) {
 		let res = [];
 		try {
-			for (offset; offset < targetOffset; offset += pageSize) {
+			for (offset; offset <= targetOffset; offset += pageSize) {
 				// await sleep(200);
 				console.log(offset, targetOffset);
-				res.push(await this.spider(cookie, pageSize, offset, category));
+				res.push(
+					await this.spider(
+						cookie,
+						playlistSize,
+						playlistOffset,
+						pageSize,
+						offset,
+						category
+					)
+				);
 			}
 			console.log('爬取数据完成！');
 			return res;
@@ -124,12 +161,14 @@ class MusicService {
 
 	async spider(
 		cookie: string,
-		pageSize = 1,
+		playlistSize = 10,
+		playlistOffset = 0,
+		pageSize = 10,
 		offset = 0,
 		category: string,
 		time = 0
 	) {
-		console.log(pageSize, offset, category);
+		console.log(offset, pageSize, category);
 
 		// 0、创建目录
 		let musicHome = path.join(DRIVE_LETTER as string, MUSIC_HOME as string);
@@ -143,37 +182,13 @@ class MusicService {
 		// 	musicPictureDirPath,
 		// 	singerPictureDirPath
 		// );
-		let isMusicDirCreated = await mkdirSavely(musicHome, 'musics');
-		let isMusicPictureDirCreated = await mkdirSavely(
-			musicHome,
-			'music-pictures'
-		);
-		let isCategoryPictureDirCreated = await mkdirSavely(
-			musicHome,
-			'category-pictures'
-		);
-		let isSingerPictureDirCreated = await mkdirSavely(
-			musicHome,
+		await createDirs(musicHome, [
+			'musics',
+			'album-pictures',
+			'playlist-pictures',
 			'singer-pictures'
-		);
-		console.log(
-			isMusicDirCreated,
-			isCategoryPictureDirCreated,
-			isMusicPictureDirCreated,
-			isSingerPictureDirCreated
-		);
+		]);
 
-		if (
-			isMusicDirCreated &&
-			isCategoryPictureDirCreated &&
-			isMusicPictureDirCreated &&
-			isSingerPictureDirCreated
-		) {
-			console.log('创建音乐目录成功');
-			console.log('创建音乐图片目录成功');
-			console.log('创建分类图片目录成功');
-			console.log('创建歌手图片目录成功');
-		}
 		// 1、获取分类列表
 		let allSongs = [];
 		let catList = [{ name: category }];
@@ -192,6 +207,11 @@ class MusicService {
 					categoryInfo: {} as any
 				}
 			};
+			// try {
+			// } catch (err) {
+			// 	console.error('错误：' + err);
+			// 	continue;
+			// }
 			// let isCatDirExisted = await isFileExisted(musicHome, 'categories');
 			// // console.log('isCatDirExisted', isCatDirExisted);
 			// if (!isCatDirExisted) {
@@ -203,7 +223,7 @@ class MusicService {
 			// }
 
 			await sleep(time);
-			let playlist = await this.getPlaylistByCatName(cat.name, cookie);
+			let playlists = await this.getPlaylistByCatName(cat.name, cookie);
 			// console.log(playlist);
 			// playlist = playlist.slice(playlist.length - 1);
 			// console.log(playlist);
@@ -211,31 +231,55 @@ class MusicService {
 			// console.log(playlist);
 
 			// 3、根据歌单id获取歌曲列表
-			let index = 0;
-			let catImgPath = '';
-			let catImgName = '';
-			for (let playlistItem of playlist) {
-				if (index++ === 0) {
-					musicItem[cat.name]['categoryInfo'] = playlistItem;
-					catImgPath = musicHome + 'category-pictures';
-					catImgName = getRightFileName(cat.name) + '.jpg';
-					let catImgExisted = await isFileExisted(catImgPath, catImgName);
-					if (!catImgExisted) {
-						if (!playlistItem.coverImgUrl) {
-							console.log('url不正确：' + playlistItem.coverImgUrl);
-							continue;
-						}
-						await sleep(time);
-						let isCatImgCreated = await downloadFile(
-							playlistItem.coverImgUrl,
-							catImgPath,
-							catImgName
-						);
-						if (!isCatImgCreated) {
-							console.log('创建分类图片失败：' + cat.name);
-							continue;
-						}
+			// let catImgPath = '';
+			// let catImgName = '';
+			for (
+				let i = playlistOffset;
+				i <= playlistSize && i < playlists.length;
+				i++
+			) {
+				let playlistItem = playlists[i];
+				if (!playlistItem.coverImgUrl) {
+					continue;
+				}
+				let playlistImgPath = '';
+				let playlistImgName = '';
+				// for (let playlistItem of playlists) {
+				musicItem[cat.name]['categoryInfo'] = playlistItem;
+				playlistImgPath = musicHome + 'playlist-pictures';
+				playlistImgName =
+					playlistItem.id + getResourceType(playlistItem.coverImgUrl);
+				let playlistImgExisted = await isFileExisted(
+					playlistImgPath,
+					playlistImgName
+				);
+				if (!playlistImgExisted) {
+					if (!playlistItem.coverImgUrl) {
+						console.log('url不正确：' + playlistItem.coverImgUrl);
+						continue;
 					}
+					await sleep(time);
+					let isPlaylistImgCreated = await downloadFile(
+						playlistItem.coverImgUrl,
+						playlistImgPath,
+						playlistImgName
+					);
+					if (!isPlaylistImgCreated) {
+						console.log('创建歌单图片失败：' + playlistItem.name);
+						continue;
+					}
+					// try {
+					// } catch (err) {
+					// 	console.error('错误：' + err);
+					// 	// continue;
+					// 	return;
+					// }
+					// try {
+					// } catch (err) {
+					// 	console.error('错误：' + err);
+					// 	// continue;
+					// 	return;
+					// }
 				}
 				await sleep(time);
 
@@ -250,6 +294,7 @@ class MusicService {
 				for (let songItem of songList) {
 					// ① 根据歌曲id获取歌曲链接
 					await sleep(time);
+					console.log('开始爬取：' + songItem.name + '-' + songItem.id);
 					let songUrl = await this.getSongUrlBySongId(songItem.id, cookie);
 					// console.log(songUrl);
 					if (!songUrl.url) {
@@ -277,8 +322,7 @@ class MusicService {
 					// }
 
 					let musicPath = musicHome + 'musics';
-					let musicLeftName =
-						getRightFileName(songDetail.name) + '-' + songDetail.id;
+					let musicLeftName = songDetail.id;
 					// let dirNameFlag = isFileNameRight(musicLeftName);
 					// if (!dirNameFlag) {
 					// musicLeftName = getRightFileName(musicLeftName);
@@ -319,30 +363,49 @@ class MusicService {
 						// 	return null;
 						// }
 					}
-					let musicPicturePath = musicHome + 'music-pictures';
-					let musicImgName = getRightFileName(musicLeftName) + '.jpg';
-					let isMusicImgExisted = await isFileExisted(
-						musicPicturePath,
-						musicImgName
+					let albumPicturePath = musicHome + 'album-pictures';
+					// let albumDetail = await this.getAlbumDetailByAlbumId(
+					// 	songDetail.al.id,
+					// 	cookie
+					// );
+					let albumDetail: any;
+					if (!songDetail.al.id) {
+						albumDetail = {
+							id: 1,
+							name: '未知专辑',
+							picUrl: 'G:/box-music/other-files/未知专辑.jpg',
+							description: '未知专辑'
+						};
+					} else {
+						albumDetail = await this.getAlbumDetailByAlbumId(
+							songDetail.al.id,
+							cookie
+						);
+					}
+					let albumImgName =
+						albumDetail.id + getResourceType(albumDetail.picUrl);
+					let isAlbumImgExisted = await isFileExisted(
+						albumPicturePath,
+						albumImgName
 					);
-					if (!isMusicImgExisted) {
+					if (!isAlbumImgExisted) {
 						// let isPictureDirCreated = await mkdir(musicHome, 'music-pictures');
 						// if (!isPictureDirCreated) {
 						// 	console.log('创建文件夹失败：' + 'music-pictures');
 						// 	continue;
 						// }
-						if (!songDetail.al.picUrl) {
-							console.log('url不正确：' + songDetail.al.picUrl);
+						if (!albumDetail.picUrl) {
+							console.log('url不正确：' + albumDetail.picUrl);
 							continue;
 						}
 						await sleep(time);
-						let isMusicImgCreated = await downloadFile(
-							songDetail.al.picUrl,
-							musicPicturePath,
-							musicImgName
+						let isAlbumImgCreated = await downloadFile(
+							albumDetail.picUrl,
+							albumPicturePath,
+							albumImgName
 						);
-						if (!isMusicImgCreated) {
-							console.log('创建音乐文件失败：' + musicImgName);
+						if (!isAlbumImgCreated) {
+							console.log('创建专辑图片失败：' + albumImgName);
 							continue;
 						}
 					}
@@ -385,27 +448,72 @@ class MusicService {
 						songUrl: songUrl,
 						songLyric: songLyric,
 						songSingers: songSingers,
+						songAlbum: albumDetail,
 						songInfo: {
 							categoryId: playlistItem.id,
 							category: cat.name,
-							playlistName: playlistItem.name,
-							categoryPic: path.join(catImgPath as string, catImgName as string)
+							playlistName: playlistItem.name
 						}
 					});
 
 					try {
 						await seq.transaction(async (t: any) => {
+							let [categoryInfo] = await Category.findOrCreate({
+								where: {
+									category_name: getRightFileName(cat.name)
+								},
+								defaults: {
+									category_name: getRightFileName(cat.name),
+									category_type: (cat as any).category
+								},
+								transaction: t
+							});
+							await Playlist.findOrCreate({
+								where: {
+									playlist_id: playlistItem.id
+								},
+								defaults: {
+									// playlist_id: playlistItem.id,
+									playlist_name: playlistItem.name,
+									playlist_pic: playlistImgName,
+									playlist_description: playlistItem.description ?? null,
+									opened: 1,
+									user_id: 2
+								},
+								transaction: t
+							});
+							await PlaylistCategory.findOrCreate({
+								where: {
+									playlist_id: playlistItem.id,
+									category_id: (categoryInfo as any).category_id
+								},
+								defaults: {
+									playlist_id: playlistItem.id,
+									category_id: (categoryInfo as any).category_id
+								},
+								transaction: t
+							});
+							await Album.findOrCreate({
+								where: {
+									album_id: albumDetail.id
+								},
+								defaults: {
+									album_name: albumDetail.name,
+									album_pic: albumImgName,
+									album_description:
+										albumDetail.description ?? albumDetail.briefDesc ?? null
+								},
+								transaction: t
+							});
 							await Music.findOrCreate({
 								where: {
 									music_id: songDetail.id
 								},
 								defaults: {
 									music_title: getRightFileName(songDetail.name),
-									music_pic: musicImgName,
 									lyric: songLyric.lrc.lyric,
-									album: songDetail.al.name,
-									genre: songDetail.al.name,
-									duration: songDetail.dt,
+									album_id: albumDetail.id,
+									duration: songDetail.dt / 1000,
 									size: songUrl.size,
 									level: getMusicLevel(songUrl.br),
 									music_format: songUrl.type,
@@ -416,16 +524,26 @@ class MusicService {
 								},
 								transaction: t
 							});
-							let [categoryInfo] = await Category.findOrCreate({
+							await MusicPlaylist.findOrCreate({
 								where: {
-									category_name: getRightFileName(cat.name)
+									music_id: songDetail.id,
+									playlist_id: playlistItem.id
 								},
 								defaults: {
-									category_name: getRightFileName(cat.name),
-									category_pic: catImgName
+									music_id: songDetail.id,
+									playlist_id: playlistItem.id
 								},
 								transaction: t
 							});
+							// let [categoryInfo] = await Category.findOrCreate({
+							// 	where: {
+							// 		category_name: getRightFileName(cat.name)
+							// 	},
+							// 	defaults: {
+							// 		category_name: getRightFileName(cat.name)
+							// 	},
+							// 	transaction: t
+							// });
 							for (let singerInfo of songSingers) {
 								// let isSingerDirExisted = await isFileExisted(musicHome, 'singers');
 								// if (!isSingerDirExisted) {
@@ -437,10 +555,8 @@ class MusicService {
 								// }
 								let singerPath = musicHome + 'singer-pictures';
 								let singerName =
-									getRightFileName(singerInfo.artist.name) +
-									'-' +
 									singerInfo.artist.id +
-									'.jpg';
+									getResourceType(singerInfo.artist.cover);
 								// let isSingerNameRight = isFileNameRight(singerName);
 								// if (!isSingerNameRight) {
 								// singerName = getRightFileName(singerName);
@@ -466,11 +582,23 @@ class MusicService {
 										singer_id: singerInfo.artist.id
 									},
 									defaults: {
-										singer_id: singerInfo.artist.id,
+										// singer_id: singerInfo.artist.id,
 										singer_name: getRightFileName(singerInfo.artist.name),
 										singer_pic: singerName,
+										singer_description: singerInfo.artist.briefDesc,
 										total_views: 0,
 										deleted: 0
+									},
+									transaction: t
+								});
+								await MusicSinger.findOrCreate({
+									where: {
+										music_id: songDetail.id,
+										singer_id: singerInfo.artist.id
+									},
+									defaults: {
+										music_id: songDetail.id,
+										singer_id: singerInfo.artist.id
 									},
 									transaction: t
 								});
@@ -486,23 +614,24 @@ class MusicService {
 								},
 								transaction: t
 							});
-							for (let singerInfo of songSingers) {
-								await MusicSinger.findOrCreate({
-									where: {
-										music_id: songDetail.id,
-										singer_id: singerInfo.artist.id
-									},
-									defaults: {
-										music_id: songDetail.id,
-										singer_id: singerInfo.artist.id
-									},
-									transaction: t
-								});
-							}
+							// for (let singerInfo of songSingers) {
+							// 	await MusicSinger.findOrCreate({
+							// 		where: {
+							// 			music_id: songDetail.id,
+							// 			singer_id: singerInfo.artist.id
+							// 		},
+							// 		defaults: {
+							// 			music_id: songDetail.id,
+							// 			singer_id: singerInfo.artist.id
+							// 		},
+							// 		transaction: t
+							// 	});
+							// }
 						});
 					} catch (err) {
 						console.error('错误：' + err);
-						continue;
+						// continue;
+						return;
 					}
 				}
 			}
@@ -512,5 +641,14 @@ class MusicService {
 		return allSongs;
 	}
 }
+
+const createDirs = async (path: string, dirnames: string[]) => {
+	for (let i = 0; i < dirnames.length; i++) {
+		const res = await mkdirSavely(path, dirnames[i]);
+		if (!res) {
+			continue;
+		}
+	}
+};
 
 export const musicService = new MusicService();

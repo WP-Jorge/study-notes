@@ -60,8 +60,8 @@ public class CategoryController {
 	@Transactional(rollbackFor = Exception.class)
 	@ApiOperation("添加分类")
 	@PostMapping("/addCategory")
-	public R addCategory(MultipartFile picture, @Valid AddCategoryDTO addCategoryDTO) {
-		return categoryService.addCategory(picture, addCategoryDTO);
+	public R addCategory(@Valid AddCategoryDTO addCategoryDTO) {
+		return categoryService.addCategory(addCategoryDTO);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
@@ -70,5 +70,6 @@ public class CategoryController {
 	public R updateCategory(MultipartFile picture, @Valid UpdateCategoryDTO updateCategoryDTO) {
 		return categoryService.updateCategory(picture, updateCategoryDTO);
 	}
+	
 }
 

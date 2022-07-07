@@ -1,27 +1,27 @@
 import axios from '@/networks';
 
-import { BaseInterface } from '@/globals/globalTypes';
+import { BaseInterface } from '@/globals/GlobalTypes';
 import { Category } from './category';
 import { Singer } from './singer';
+import { Album } from './album';
+import { DownloadItemInfo } from '@/store/download';
 
 export interface Music extends BaseInterface {
 	musicId: string;
 	musicTitle: string;
-	musicPic: string;
+	musicUrl: string;
 	lyric?: string;
-	lyricUrl?: string;
-	album?: string;
-	genre?: string;
-	duration?: number;
+	album: Album;
+	duration: number;
 	size?: number;
 	level?: string;
 	musicFormat?: string;
 	bitrate?: number;
 	totalViews?: number;
-	musicUrl?: string;
 	deleted?: number;
 	categories?: Category[];
 	singers: Singer[];
+	downloadItemInfo?: DownloadItemInfo;
 }
 
 const baseUrl = '/music/';
@@ -40,16 +40,54 @@ export const getMusicsByMusicTitlePageApi = (
 	});
 };
 
-export const deleteMusicsByMusicIdsApi = (ids: Array<string>) => {
-	return axios.delete(baseUrl + 'deleteMusicsByMusicIds', {
-		data: ids
+export const getMusicsByTotalViewsSortPageApi = (
+	currentPage?: number,
+	pageSize?: number
+) => {
+	return axios.get(baseUrl + 'getMusicsByTotalViewsSortPage', {
+		params: {
+			currentPage,
+			pageSize
+		}
 	});
 };
 
-export const addMusicApi = (formData: FormData) => {
-	return axios.post(baseUrl + 'addMusic', formData);
+export const getMusicsByCreateTimeSortPageApi = (
+	currentPage?: number,
+	pageSize?: number
+) => {
+	return axios.get(baseUrl + 'getMusicsByCreateTimeSortPage', {
+		params: {
+			currentPage,
+			pageSize
+		}
+	});
 };
 
-export const updateMusicApi = (formData: FormData) => {
-	return axios.put(baseUrl + 'updateMusic', formData);
+export const getMusicsByCategoryIdPageApi = (
+	currentPage?: number,
+	pageSize?: number,
+	categoryId?: string
+) => {
+	return axios.get(baseUrl + 'getMusicsByCategoryIdPage', {
+		params: {
+			currentPage,
+			pageSize,
+			categoryId
+		}
+	});
+};
+
+export const getMusicsByPlaylistIdPageApi = (
+	currentPage?: number,
+	pageSize?: number,
+	playlistId?: string
+) => {
+	return axios.get(baseUrl + 'getMusicsByPlaylistIdPage', {
+		params: {
+			currentPage,
+			pageSize,
+			playlistId
+		}
+	});
 };

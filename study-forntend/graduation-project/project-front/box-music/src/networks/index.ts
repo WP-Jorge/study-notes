@@ -8,7 +8,7 @@ import axios, {
 import { useUserStore } from '@/store/user';
 import { ElMessage } from 'element-plus';
 import { options } from '@/configs/axios';
-import { errorCodes } from '@/globals/ErrorCodes';
+import { ErrorCodes } from '@/globals/ErrorCodes';
 
 /**
  * 跳转登录页面
@@ -26,28 +26,28 @@ import { errorCodes } from '@/globals/ErrorCodes';
 const errorHandler = (status: number, msg: string) => {
 	// 状态码判断
 	switch (status) {
-		case errorCodes.CODE_0:
+		case ErrorCodes.CODE_0:
 			ElMessage.error(msg);
 			break;
-		case errorCodes.CODE_400:
+		case ErrorCodes.CODE_400:
 			ElMessage.error('请求语法错误，服务端不支持，' + msg);
 			break;
-		case errorCodes.CODE_401:
+		case ErrorCodes.CODE_401:
 			ElMessage.error('身份信息认证失败，' + msg);
 			break;
-		case errorCodes.CODE_403:
+		case ErrorCodes.CODE_403:
 			ElMessage.error('身份信息认证失败，' + msg);
 			break;
-		case errorCodes.CODE_404:
+		case ErrorCodes.CODE_404:
 			ElMessage.error('网络请求不存在，' + msg);
 			break;
-		case errorCodes.CODE_500:
+		case ErrorCodes.CODE_500:
 			ElMessage.error('服务器异常，' + msg);
 			break;
-		case errorCodes.CODE_502:
+		case ErrorCodes.CODE_502:
 			ElMessage.error('网关错误，' + msg);
 			break;
-		case errorCodes.CODE_503:
+		case ErrorCodes.CODE_503:
 			ElMessage.error('当前服务不可用，' + msg);
 			break;
 		default:
@@ -148,7 +148,7 @@ instance.interceptors.response.use(
 		if (error.response) {
 			errorHandler(error.response.status, error.response.data.message);
 		} else {
-			errorHandler(errorCodes.CODE_0, error.message);
+			errorHandler(ErrorCodes.CODE_0, error.message);
 		}
 		return Promise.reject(error.message);
 	}

@@ -34,10 +34,10 @@ public class Category implements Serializable {
     @TableField("category_name")
     private String categoryName;
     
-    @ApiModelProperty("歌曲分类图片")
-    @TableField("category_pic")
-    private String categoryPic;
-
+    @ApiModelProperty("歌曲分类类型")
+    @TableField("category_type")
+    private Integer categoryType;
+    
     @ApiModelProperty("创建时间")
     @TableField("create_time")
     private Date createTime;

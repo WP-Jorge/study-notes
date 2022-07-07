@@ -8,11 +8,23 @@ import ElementPlus from 'unplugin-element-plus/vite';
 import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 import EslintPlugin from 'vite-plugin-eslint';
+import electron from 'vite-plugin-electron';
+import renderer from 'vite-plugin-electron/renderer';
 
 export default defineConfig({
 	base: './',
 	plugins: [
 		vue(),
+		electron({
+			main: {
+				entry: 'electron/main/main.ts'
+			},
+			preload: {
+				// Must be use absolute path, this is the limit of rollup
+				input: path.join(__dirname, './electron/preload/preload.ts')
+			}
+		}),
+		renderer(),
 		EslintPlugin({
 			failOnError: false
 		}),
@@ -42,6 +54,13 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, 'src')
+		}
+	},
+	build: {
+		rollupOptions: {
+			output: {
+				format: 'es'
+			}
 		}
 	}
 });

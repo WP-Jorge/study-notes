@@ -70,5 +70,13 @@ public class SingerController {
 	public R updateSinger(MultipartFile picture, @Valid UpdateSingerDTO updateSingerDTO) {
 		return singerService.updateSinger(picture, updateSingerDTO);
 	}
+	
+	@ApiOperation("获取歌手排行")
+	@GetMapping("/getSingersByTotalViewsSortPage")
+	public R getSingersByTotalViewsSortPage(@RequestParam(defaultValue = "1") Integer currentPage,
+											  @RequestParam(defaultValue = "10") Integer pageSize) {
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
+		return singerService.getSingersByTotalViewsSortPage(page);
+	}
 }
 

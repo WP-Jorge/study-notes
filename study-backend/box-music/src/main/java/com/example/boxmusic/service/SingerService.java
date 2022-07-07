@@ -28,4 +28,6 @@ public interface SingerService extends IService<Singer> {
 	R deleteSingersBySingerIds(List<Long> singerIds);
 	
 	R updateSinger(MultipartFile picture, UpdateSingerDTO updateSingerDTO);
+	
+	R getSingersByTotalViewsSortPage(Page<Map<String, Object>> page);
 }

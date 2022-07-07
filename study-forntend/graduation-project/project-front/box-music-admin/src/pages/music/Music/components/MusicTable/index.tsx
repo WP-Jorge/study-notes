@@ -1,6 +1,6 @@
 import React, { Key, useEffect, useState } from 'react';
 import './index.scss';
-import { Image, message, Popconfirm, Space, Table, Tooltip } from 'antd';
+import { message, Popconfirm, Space, Table, Tooltip } from 'antd';
 import { ResponseType } from '@/globals/responseType';
 import { ColumnsType } from 'antd/es/table';
 import { TableTop } from '@/components/content/TableTop';
@@ -10,6 +10,7 @@ import {
 	getMusicsByMusicTitlePageApi,
 	Music
 } from '@/networks/music';
+import { Album } from '@/networks/album';
 
 export const MusicTable = () => {
 	const [pageData, setPageData] = useState([] as Array<Music>);
@@ -55,21 +56,13 @@ export const MusicTable = () => {
 			title: '专辑',
 			dataIndex: 'album',
 			ellipsis: true,
-			render: (str: string) => (
-				<Tooltip placement="topLeft" title={str}>
-					{str}
-				</Tooltip>
-			)
-		},
-		{
-			title: '流派',
-			dataIndex: 'genre',
-			ellipsis: true,
-			render: (str: string) => (
-				<Tooltip placement="topLeft" title={str}>
-					{str}
-				</Tooltip>
-			)
+			render: (record: Album) => {
+				return (
+					<Tooltip placement="topLeft" title={record.albumName}>
+						{record.albumName}
+					</Tooltip>
+				);
+			}
 		},
 		{
 			title: '时长',
@@ -130,25 +123,6 @@ export const MusicTable = () => {
 					{str}
 				</Tooltip>
 			)
-		},
-		{
-			title: '音乐图片',
-			dataIndex: 'musicPic',
-			align: 'center',
-			width: 120,
-			render: (musicPic: string, item) => {
-				musicPic =
-					import.meta.env.VITE_BASE_URL +
-					import.meta.env.VITE_MUSIC_PICTURES +
-					item.musicPic;
-				return (
-					<Image
-						width={70}
-						src={musicPic}
-						fallback="/src/assets/userImage.jfif"
-					/>
-				);
-			}
 		},
 		{
 			title: '操作',

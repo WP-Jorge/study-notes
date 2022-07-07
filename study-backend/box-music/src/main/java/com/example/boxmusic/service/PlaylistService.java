@@ -28,4 +28,8 @@ public interface PlaylistService extends IService<Playlist> {
 	R deletePlaylistsByPlaylistIds(List<Long> playlistIds);
 	
 	R updatePlaylist(MultipartFile picture, UpdatePlaylistAdminDTO updatePlaylistAdminDTO);
+	
+	R getPlaylistsByTotalViewsSortPage(Page<Map<String, Object>> page);
+	
+	R getPlaylistsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
 }

@@ -6,7 +6,6 @@ import { Key } from 'antd/es/table/interface';
 export interface Category extends BaseInterface {
 	categoryId?: bigint | Key | string;
 	categoryName: string;
-	categoryPic?: string;
 }
 
 const baseUrl = '/category/';

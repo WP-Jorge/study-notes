@@ -36,21 +36,13 @@ public class Music implements Serializable {
     @TableField("music_title")
     private String musicTitle;
 
-    @ApiModelProperty("音乐封面")
-    @TableField("music_pic")
-    private String musicPic;
-
     @ApiModelProperty("歌词")
     @TableField("lyric")
     private String lyric;
     
-    @ApiModelProperty("专辑")
-    @TableField("album")
-    private String album;
-
-    @ApiModelProperty("流派")
-    @TableField("genre")
-    private String genre;
+    @ApiModelProperty("专辑id")
+    @TableField("album_id")
+    private Long albumId;
 
     @ApiModelProperty("时长")
     @TableField("duration")

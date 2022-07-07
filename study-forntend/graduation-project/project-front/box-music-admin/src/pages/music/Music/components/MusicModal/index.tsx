@@ -1,6 +1,6 @@
 import { ResponseType } from '@/globals/responseType';
 import { addMusicApi, Music, updateMusicApi } from '@/networks/music';
-import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message, Modal, Upload } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import TextArea from 'antd/lib/input/TextArea';
@@ -8,12 +8,14 @@ import { UploadFile } from 'antd/lib/upload/interface';
 import React, { useEffect, useState } from 'react';
 import './index.scss';
 import { LabeledValue } from 'antd/lib/select';
-import { DebounceSelect } from '../DebounceSelect';
+import { DebounceSelect } from '../../../../../components/common/DebounceSelect';
 import {
 	Category,
 	getCategoriesByCategoryNamePageApi
 } from '@/networks/category';
 import { getSingersBySingerNamePageApi, Singer } from '@/networks/singer';
+import { Album, getAlbumsByAlbumNamePageApi } from '@/networks/album';
+// import { Album, getAlbumsByAlbumNamePageApi } from '@/networks/album';
 
 export interface MusicModalProps {
 	formData?: Music;
@@ -24,26 +26,14 @@ export interface MusicModalProps {
 export const UserModal = (props: MusicModalProps) => {
 	const { formData, clickSubmit, clickCancel } = props;
 	const [title] = useState(formData?.userId ? '编辑音乐' : '添加音乐');
-	const [pictureList, setPictureList] = useState([] as UploadFile[]);
 	const [form] = useForm();
 
 	const [value, setValue] = useState([] as LabeledValue[]);
+	const [album, setAlbum] = useState({} as LabeledValue);
 
 	useEffect(() => {
 		console.log(formData);
 
-		if (formData?.musicPic) {
-			const pictures = [
-				{
-					url:
-						import.meta.env.VITE_BASE_URL +
-						import.meta.env.VITE_MUSIC_PICTURES +
-						formData.musicPic
-				} as unknown as UploadFile
-			];
-			setPictureList(pictures);
-			formData.pictures = pictures;
-		}
 		if (formData?.musicId) {
 			let categoryList = [];
 			let singerList = [];
@@ -61,6 +51,10 @@ export const UserModal = (props: MusicModalProps) => {
 			}
 			formData.categoryList = categoryList;
 			formData.singerList = singerList;
+			formData.albumLabel = {
+				label: formData.album?.albumName,
+				value: formData.album?.albumId
+			};
 		}
 		form.setFieldsValue({
 			...formData
@@ -98,8 +92,7 @@ export const UserModal = (props: MusicModalProps) => {
 				data.append(`singerList[${index}].singerName`, item.label as string);
 			});
 		}
-		console.log(data.get('singerIds'));
-
+		data.append('albumId', values.albumLabel.value);
 		for (const key in values) {
 			if (
 				Object.prototype.hasOwnProperty.call(values, key) &&
@@ -134,19 +127,6 @@ export const UserModal = (props: MusicModalProps) => {
 		}
 		return e && e.fileList;
 	};
-	const beforePictureUpload = (file: UploadFile) => {
-		const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-		if (!isJpgOrPng) {
-			message.error('只能上传 JPG 或者 PNG 图片');
-			return Upload.LIST_IGNORE;
-		}
-		const isLt2M = (file.size as number) / 1024 / 1024 < 2;
-		if (!isLt2M) {
-			message.error('图片大小必须小于 2MB');
-			return Upload.LIST_IGNORE;
-		}
-		return false;
-	};
 	const beforeMusicUpload = (file: UploadFile) => {
 		const isSong = file.type?.startsWith('audio');
 		if (!isSong) {
@@ -159,9 +139,6 @@ export const UserModal = (props: MusicModalProps) => {
 			return Upload.LIST_IGNORE;
 		}
 		return false;
-	};
-	const onImgChange = (e: any) => {
-		setPictureList(e.fileList);
 	};
 
 	async function fetchCategoryList(categoryName: string) {
@@ -190,6 +167,19 @@ export const UserModal = (props: MusicModalProps) => {
 		return singerList;
 	}
 
+	async function fetchAlbumList(albumName: string) {
+		console.log('fetching album', albumName);
+		let res = await getAlbumsByAlbumNamePageApi(1, 10, albumName);
+		let albumList = [];
+		if (res.data.type === ResponseType.SUCCESS) {
+			albumList = res.data.pageList.map((item: Album) => ({
+				label: item.albumName,
+				value: item.albumId
+			}));
+		}
+		return albumList;
+	}
+
 	return (
 		<div className="music-modal">
 			<Modal
@@ -207,30 +197,6 @@ export const UserModal = (props: MusicModalProps) => {
 				]}
 			>
 				<Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
-					<Form.Item
-						name="pictures"
-						label="音乐图片"
-						valuePropName="fileList"
-						getValueFromEvent={normFile}
-						rules={[
-							{ required: !formData?.musicId, message: '音乐图片不能为空' }
-						]}
-						extra={!!formData?.musicId && '如果不上传图片则使用原图片'}
-					>
-						<Upload
-							listType="picture-card"
-							name="音乐图片"
-							fileList={pictureList}
-							beforeUpload={beforePictureUpload}
-							maxCount={1}
-							showUploadList={{
-								showPreviewIcon: false
-							}}
-							onChange={onImgChange}
-						>
-							{pictureList.length >= 1 ? null : <PlusOutlined />}
-						</Upload>
-					</Form.Item>
 					<Form.Item
 						name="musics"
 						label="音乐"
@@ -266,7 +232,7 @@ export const UserModal = (props: MusicModalProps) => {
 						<DebounceSelect
 							mode="multiple"
 							value={value}
-							placeholder="Select users"
+							placeholder="请选择分类"
 							fetchOptions={fetchCategoryList}
 							onChange={(newValue: LabeledValue[]) => {
 								setValue(newValue);
@@ -275,11 +241,6 @@ export const UserModal = (props: MusicModalProps) => {
 								width: '100%'
 							}}
 						/>
-						{/* <Select placeholder="请选择音乐分类" allowClear>
-							<Select.Option value="男">男</Select.Option>
-							<Select.Option value="女">女</Select.Option>
-							<Select.Option value="保密">保密</Select.Option>
-						</Select> */}
 					</Form.Item>
 					<Form.Item
 						name="singerList"
@@ -289,7 +250,7 @@ export const UserModal = (props: MusicModalProps) => {
 						<DebounceSelect
 							mode="multiple"
 							value={value}
-							placeholder="Select users"
+							placeholder="请选择歌手"
 							fetchOptions={fetchSingerList}
 							onChange={(newValue: LabeledValue[]) => {
 								setValue(newValue);
@@ -298,17 +259,35 @@ export const UserModal = (props: MusicModalProps) => {
 								width: '100%'
 							}}
 						/>
-						{/* <Select placeholder="请选择歌手" allowClear>
-							<Select.Option value="男">男</Select.Option>
-							<Select.Option value="女">女</Select.Option>
-							<Select.Option value="保密">保密</Select.Option>
+					</Form.Item>
+					<Form.Item
+						name="albumLabel"
+						label="专辑"
+						rules={[{ required: true, message: '专辑不能为空' }]}
+					>
+						<DebounceSelect
+							showSearch
+							mode="combobox"
+							value={album}
+							placeholder="请选择歌手"
+							fetchOptions={fetchAlbumList}
+							onChange={(newValue: LabeledValue) => {
+								setAlbum(newValue);
+							}}
+							style={{
+								width: '100%'
+							}}
+						/>
+						{/* <Select
+							showSearch
+							placeholder="select your gender"
+							onChange={albumChange}
+							onSearch={albumSearch}
+						>
+							<Select.Option value="male">Male</Select.Option>
+							<Select.Option value="female">Female</Select.Option>
+							<Select.Option value="other">Other</Select.Option>
 						</Select> */}
-					</Form.Item>
-					<Form.Item name="album" label="专辑">
-						<Input />
-					</Form.Item>
-					<Form.Item name="genre" label="流派">
-						<Input />
 					</Form.Item>
 					{formData?.musicId ? (
 						<Form.Item name="totalViews" label="浏览量">

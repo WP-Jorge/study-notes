@@ -42,6 +42,16 @@ export const PlaylistTable = () => {
 			)
 		},
 		{
+			title: '歌单描述',
+			dataIndex: 'playlistDescription',
+			ellipsis: true,
+			render: (str: string) => (
+				<Tooltip placement="topLeft" title={str}>
+					{str}
+				</Tooltip>
+			)
+		},
+		{
 			title: '创建者',
 			dataIndex: 'userName',
 			ellipsis: true,

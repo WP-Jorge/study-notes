@@ -19,11 +19,11 @@ public class FileConfig implements WebMvcConfigurer {
 	@Value("${userPicturePath}")
 	private String userPicturePath;
 	
-	@Value("${musicPicturePathRelative}")
-	private String musicPicturePathRelative;
+	@Value("${albumPicturePathRelative}")
+	private String albumPicturePathRelative;
 	
-	@Value("${musicPicturePath}")
-	private String musicPicturePath;
+	@Value("${albumPicturePath}")
+	private String albumPicturePath;
 	
 	@Value("${singerPicturePathRelative}")
 	private String singerPicturePathRelative;
@@ -61,8 +61,8 @@ public class FileConfig implements WebMvcConfigurer {
 				.addResourceLocations("file:/" + spiderPath);
 		registry.addResourceHandler(userPicturePathRelative)
 				.addResourceLocations("file:/" + userPicturePath);
-		registry.addResourceHandler(musicPicturePathRelative)
-				.addResourceLocations("file:/" + musicPicturePath);
+		registry.addResourceHandler(albumPicturePathRelative)
+				.addResourceLocations("file:/" + albumPicturePath);
 		registry.addResourceHandler(singerPicturePathRelative)
 				.addResourceLocations("file:/" + singerPicturePath);
 		registry.addResourceHandler(categoryPicturePathRelative)

@@ -2,14 +2,17 @@ import axios from '@/networks';
 
 import { BaseInterface } from '@/globals/globalTypes';
 import { PureUser } from './user';
+import { Category } from './category';
 
 export interface Playlist extends BaseInterface {
-	playlistId?: string;
+	playlistId: string;
 	playlistName: string;
+	playlistDescription: string;
 	totalViews: number;
 	user: PureUser;
 	opened: number;
-	playlistPic?: string;
+	playlistPic: string;
+	categories: Category[];
 }
 
 const baseUrl = '/playlist/';
@@ -28,16 +31,28 @@ export const getPlaylistsByPlaylistNamePageApi = (
 	});
 };
 
-export const deletePlaylistsByPlaylistIdsApi = (ids: Array<string>) => {
-	return axios.delete(baseUrl + 'deletePlaylistsByPlaylistIds', {
-		data: ids
+export const getPlaylistsByTotalViewsSortPageApi = (
+	currentPage?: number,
+	pageSize?: number
+) => {
+	return axios.get(baseUrl + 'getPlaylistsByTotalViewsSortPage', {
+		params: {
+			currentPage,
+			pageSize
+		}
 	});
 };
 
-export const addPlaylistApi = (data: FormData) => {
-	return axios.post(baseUrl + 'addPlaylist', data);
-};
-
-export const updatePlaylistApi = (data: FormData) => {
-	return axios.put(baseUrl + 'updatePlaylist', data);
+export const getPlaylistsByCategoryIdPageApi = (
+	currentPage?: number,
+	pageSize?: number,
+	categoryId?: string
+) => {
+	return axios.get(baseUrl + 'getPlaylistsByCategoryIdPage', {
+		params: {
+			currentPage,
+			pageSize,
+			categoryId
+		}
+	});
 };

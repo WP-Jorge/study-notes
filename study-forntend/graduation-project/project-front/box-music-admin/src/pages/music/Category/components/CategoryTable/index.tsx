@@ -1,6 +1,6 @@
 import React, { Key, useEffect, useState } from 'react';
 import './index.scss';
-import { Image, message, Popconfirm, Space, Table, Tooltip } from 'antd';
+import { message, Popconfirm, Space, Table, Tooltip } from 'antd';
 import { ResponseType } from '@/globals/responseType';
 import { ColumnsType } from 'antd/es/table';
 import { TableTop } from '@/components/content/TableTop';
@@ -42,23 +42,14 @@ export const CategoryTable = () => {
 			)
 		},
 		{
-			title: '分类图片',
-			dataIndex: 'categoryPic',
-			align: 'center',
-			width: 120,
-			render: (categoryPic: string) => {
-				categoryPic =
-					import.meta.env.VITE_BASE_URL +
-					import.meta.env.VITE_CATEGORY_PICTURES +
-					categoryPic;
-				return (
-					<Image
-						width={70}
-						src={categoryPic}
-						fallback="/src/assets/userImage.jfif"
-					/>
-				);
-			}
+			title: '分类类型',
+			dataIndex: 'categoryType',
+			ellipsis: true,
+			render: (str: string) => (
+				<Tooltip placement="topLeft" title={str}>
+					{str}
+				</Tooltip>
+			)
 		},
 		{
 			title: '操作',

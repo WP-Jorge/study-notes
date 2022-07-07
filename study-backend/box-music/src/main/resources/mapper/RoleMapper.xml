@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.boxmusic.mapper.RoleMapper">
 <!--    <cache-ref namespace="com.example.boxmusic.mapper.RoleMapper"/>-->
-    <cache-ref namespace="com.example.boxmusic.mapper.ApiMapper"/>
+<!--    <cache-ref namespace="com.example.boxmusic.mapper.ApiMapper"/>-->
+    <cache-ref namespace="com.example.boxmusic.mapper.UserMapper"/>
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.boxmusic.pojo.entity.Role">
@@ -10,7 +11,6 @@
         <result column="role_name" property="roleName" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
-        <result column="deleted" property="deleted" />
     </resultMap>
 
     <select id="getRolesWithUsername" resultType="com.example.boxmusic.pojo.vo.RoleVO">

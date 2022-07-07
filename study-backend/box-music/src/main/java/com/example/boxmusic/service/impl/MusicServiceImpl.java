@@ -53,9 +53,6 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 	@Value("${tempPath}")
 	private String tempPath;
 	
-	@Value("${musicPicturePath}")
-	private String musicPicturePath;
-	
 	@Value("${musicPath}")
 	private String musicPath;
 	
@@ -84,22 +81,17 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 	}
 	
 	@Override
-	public R addMusic(MultipartFile picture, MultipartFile song, AddMusicDTO addMusicDTO) {
+	public R addMusic(MultipartFile song, AddMusicDTO addMusicDTO) {
 		try {
-			if (picture == null) {
-				return R.error("添加失败，请上传图片");
-			}
 			if (song == null) {
 				return R.error("添加失败，请上传歌曲");
 			}
 			Music music = new Music();
 			BeanUtils.copyProperties(addMusicDTO, music);
 			long uid = cachedUidGenerator.getUID();
-			String pictureFileName = fileService.getFilename(picture, uid);
 			String musicFilename = null;
 			musicFilename = fileService.getFilename(song, uid);
 			music.setMusicId(uid);
-			music.setMusicPic(pictureFileName);
 			music.setMusicUrl(musicFilename);
 			Map musicInfo = ffmpegUtil.getMusicInfo(song, musicFilename);
 			Map format = (Map) musicInfo.get("format");
@@ -135,7 +127,6 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 			if (!musicCategoryFlag || !musicSingerFlag) {
 				throw new RuntimeException("添加歌曲失败，添加歌曲分类、歌曲歌手时发生错误");
 			}
-			fileService.uploadFile(picture, musicPicturePath, pictureFileName);
 			// ffmpegUtil.saveMusic(musicPath, musicFilename);
 			Boolean moveFile = fileService.moveFile(musicFilename, tempPath, musicPath);
 			if (!moveFile) {
@@ -150,18 +141,12 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 	}
 	
 	@Override
-	public R updateMusic(MultipartFile picture, MultipartFile song, UpdateMusicDTO updateMusicDTO) {
+	public R updateMusic(MultipartFile song, UpdateMusicDTO updateMusicDTO) {
 		try {
 			Music music = baseMapper.selectById(updateMusicDTO.getMusicId());
 			BeanUtils.copyProperties(updateMusicDTO, music);
-			String pictureName = music.getMusicPic();
 			String musicName = music.getMusicUrl();
-			String picturefilename = null;
 			String musicFilename = null;
-			if (picture != null) {
-				picturefilename = fileService.getFilename(picture, music.getMusicId());
-				music.setMusicPic(picturefilename);
-			}
 			if (song != null) {
 				musicFilename = fileService.getFilename(song, updateMusicDTO.getMusicId());
 				music.setMusicUrl(musicFilename);
@@ -213,13 +198,6 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 			if (!musicCategoryFlag || !musicSingerFlag) {
 				throw new RuntimeException("添加歌曲失败，添加歌曲分类、歌曲歌手时发生错误");
 			}
-			if (picture != null) {
-				Boolean deleteImage = fileService.deleteFile(musicPicturePath, pictureName);
-				if (!deleteImage) {
-					log.warn("本地图片不存在");
-				}
-				fileService.uploadFile(picture, musicPicturePath, picturefilename);
-			}
 			if (song != null) {
 				Boolean deleteImage = fileService.deleteFile(musicPath, musicName);
 				if (!deleteImage) {
@@ -235,5 +213,28 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
+	}
+	
+	@Override
+	public R getMusicsByTotalViewsSortPage(Page<Map<String, Object>> page) {
+		IPage<MusicVO> musicPages = baseMapper.getMusicsByTotalViewsSortPage(page);
+		return R.successPage("获取歌曲排行成功", musicPages);
+	}
+	
+	@Override
+	public R getMusicsByCreateTimeSortPage(Page<Map<String, Object>> page) {
+		IPage<MusicVO> musicPages = baseMapper.getMusicsByCreateTimeSortPage(page);
+		return R.successPage("获取最近音乐成功", musicPages);
+	}
+	
+	@Override
+	public R getMusicsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId) {
+		IPage<MusicVO> musicPages = baseMapper.getMusicsByCategoryIdPage(page, categoryId);
+		return R.successPage("获取歌曲成功", musicPages);
+	}
+	
+	@Override
+	public R getMusicsByPlaylistIdPage(Page<Map<String, Object>> page, Long playlistId) {
+		return R.successPage("获取音乐成功", baseMapper.getMusicsByPlaylistIdPage(page, playlistId));
 	}
 }

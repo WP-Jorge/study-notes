@@ -7,10 +7,8 @@
 	<resultMap id="BaseResultMap" type="com.example.boxmusic.pojo.entity.Music">
 		<id column="music_id" property="musicId"/>
 		<result column="music_title" property="musicTitle"/>
-		<result column="music_pic" property="musicPic"/>
 		<result column="lyric" property="lyric"/>
-		<result column="album" property="album"/>
-		<result column="genre" property="genre"/>
+		<result column="album_id" property="albumId"/>
 		<result column="duration" property="duration"/>
 		<result column="size" property="size"/>
 		<result column="level" property="level"/>
@@ -23,7 +21,7 @@
 		<result column="deleted" property="deleted"/>
 	</resultMap>
 	<select id="getMusicsByMusicTitlePage" resultType="com.example.boxmusic.pojo.vo.MusicVO"
-			resultMap="MusicWithCategoryAndSingerResultMap">
+			resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
 		select distinct *
 		from music
 		where deleted = 0
@@ -31,7 +29,10 @@
 			, '%')
 	</select>
 	
-	<resultMap id="MusicWithCategoryAndSingerResultMap" type="com.example.boxmusic.pojo.vo.MusicVO">
+	<resultMap id="MusicWithCategoryAndSingerAndAlbumResultMap" type="com.example.boxmusic.pojo.vo.MusicVO">
+		<association property="album" javaType="com.example.boxmusic.pojo.vo.AlbumVO" column="albumId=album_id"
+					 select="getAlbumWithAlbumId">
+		</association>
 		<collection property="categories" javaType="java.util.ArrayList" column="musicId=music_id"
 					select="getCategoriesWithMusicId">
 		</collection>
@@ -39,6 +40,12 @@
 					select="getSingersWithMusicId">
 		</collection>
 	</resultMap>
+	
+	<select id="getAlbumWithAlbumId" resultMap="com.example.boxmusic.mapper.AlbumMapper.AlbumVOResultMap">
+		select *
+		from album
+		where album_id = #{albumId}
+	</select>
 	
 	<select id="getCategoriesWithMusicId" resultMap="com.example.boxmusic.mapper.CategoryMapper.BaseResultMap">
 		select *
@@ -58,6 +65,42 @@
 		where music.music_id = music_singer.music_id
 		  and singer.singer_id = music_singer.singer_id
 		  and music.music_id = #{musicId}
+	</select>
+	
+	<select id="getMusicsByTotalViewsSortPage" resultType="com.example.boxmusic.pojo.vo.MusicVO"
+			resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
+		select distinct *
+		from music
+		where deleted = 0
+		order by total_views desc
+	</select>
+	<select id="getMusicsByCreateTimeSortPage" resultType="com.example.boxmusic.pojo.vo.MusicVO"
+			resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
+		select *
+		from music
+		order by create_time desc
+	</select>
+	
+	<select id="getMusicsByCategoryIdPage" resultType="com.example.boxmusic.pojo.vo.MusicVO"
+			resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
+		select *
+		from music,
+			 music_category,
+			 category
+		where music.music_id = music_category.music_id
+		  and music_category.category_id = category.category_id
+		  and category.category_id = #{categoryId}
+		  and music.deleted = 0
+	</select>
+	<select id="getMusicsByPlaylistIdPage" resultType="com.example.boxmusic.pojo.vo.MusicVO" resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
+		select *
+		from music,
+			 music_playlist,
+			 playlist
+		where music.music_id = music_playlist.music_id
+		  and music_playlist.playlist_id = playlist.playlist_id
+		  and playlist.playlist_id = #{playlistId}
+		  and music.deleted = 0
 	</select>
 
 </mapper>

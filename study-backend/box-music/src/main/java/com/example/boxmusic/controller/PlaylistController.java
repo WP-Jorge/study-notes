@@ -64,5 +64,24 @@ public class PlaylistController {
 	public R updatePlaylist(MultipartFile picture, @Valid UpdatePlaylistAdminDTO updatePlaylistAdminDTO) {
 		return playlistService.updatePlaylist(picture, updatePlaylistAdminDTO);
 	}
+	
+	@ApiOperation("获取歌单排行")
+	@GetMapping("/getPlaylistsByTotalViewsSortPage")
+	public R getPlaylistsByTotalViewsSortPage(@RequestParam(defaultValue = "1") Integer currentPage,
+											  @RequestParam(defaultValue = "10") Integer pageSize) {
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
+		return playlistService.getPlaylistsByTotalViewsSortPage(page);
+	}
+	
+	@ApiOperation("根据分类id查询歌单")
+	@GetMapping("/getPlaylistsByCategoryIdPage")
+	public R getPlaylistsByCategoryIdPage(@RequestParam(defaultValue = "1") Integer currentPage,
+											 @RequestParam(defaultValue = "10") Integer pageSize, Long categoryId) {
+		if (categoryId == null) {
+			return R.error("分类id不能为空");
+		}
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
+		return playlistService.getPlaylistsByCategoryIdPage(page, categoryId);
+	}
 }
 

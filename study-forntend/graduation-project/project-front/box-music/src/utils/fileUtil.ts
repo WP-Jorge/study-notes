@@ -1,3 +1,5 @@
+import { ResourceType } from '@/globals/GlobalValues';
+
 export const getAssetsImageUrl = (filename: string) => {
 	const path = `/src/assets/images/${filename}`;
 	const modules = import.meta.globEager('/src/assets/images/*');
@@ -17,4 +19,55 @@ export const getAssetsFileUrl = (dirname: string, filename: string) => {
 		case 'audios':
 			return getAssetsAudioUrl(filename);
 	}
+};
+
+export const getResourceUrl = (
+	resourceUrl: string,
+	resourceType = ResourceType.MUSIC
+) => {
+	switch (resourceType) {
+		case ResourceType.MUSIC:
+			return (
+				import.meta.env.VITE_BASE_URL +
+				import.meta.env.VITE_MUSICS +
+				resourceUrl
+			);
+		case ResourceType.ALBUM_PICTURE:
+			return (
+				import.meta.env.VITE_BASE_URL +
+				import.meta.env.VITE_ALBUM_PICTURES +
+				resourceUrl
+			);
+		case ResourceType.PLAYLIST_PICTURE:
+			return (
+				import.meta.env.VITE_BASE_URL +
+				import.meta.env.VITE_PLAYLIST_PICTURES +
+				resourceUrl
+			);
+		case ResourceType.SINGER_PICTURE:
+			return (
+				import.meta.env.VITE_BASE_URL +
+				import.meta.env.VITE_SINGER_PICTURES +
+				resourceUrl
+			);
+		case ResourceType.CATEGORY_PICTURE:
+			return (
+				import.meta.env.VITE_BASE_URL +
+				import.meta.env.VITE_CATEGORY_PICTURES +
+				resourceUrl
+			);
+		default:
+			return (
+				import.meta.env.VITE_BASE_URL +
+				import.meta.env.VITE_MUSICS +
+				resourceUrl
+			);
+	}
+};
+
+export const formatLyric = (lyric: string) => {
+	return lyric
+		.replace(/\r\n/g, '<rn>')
+		.replace(/\n/g, '<n>')
+		.replace(/\s/g, '<s>');
 };

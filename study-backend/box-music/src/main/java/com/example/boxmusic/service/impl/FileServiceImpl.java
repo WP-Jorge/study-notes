@@ -58,7 +58,7 @@ public class FileServiceImpl implements FileService {
 	
 	@Override
 	public String getFilename(MultipartFile file, Long id) {
-		String filename = file.getOriginalFilename();
+		String filename = file.getOriginalFilename().replaceAll(" ", "");
 		int lastIndex = filename.lastIndexOf(".");
 		String name = filename.substring(0, lastIndex);
 		String[] split = filename.split("\\.");

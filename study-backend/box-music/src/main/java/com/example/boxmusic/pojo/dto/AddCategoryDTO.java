@@ -21,7 +21,8 @@ public class AddCategoryDTO implements Serializable {
     @ApiModelProperty(value = "分类名")
     private String categoryName;
     
-    @ApiModelProperty(value = "分类图片")
-    private String categoryPic;
+    @NotBlank(message = "分类类型不能为空")
+    @ApiModelProperty(value = "分类类型")
+    private Integer categoryType;
     
 }

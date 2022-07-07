@@ -18,9 +18,10 @@ export const Category = seq.define(
 			allowNull: false,
 			comment: '分类名称'
 		},
-		category_pic: {
+		category_type: {
 			type: DataTypes.STRING,
-			comment: '分类图片'
+			allowNull: false,
+			comment: '分类类型'
 		},
 		create_time: {
 			type: DataTypes.DATE,

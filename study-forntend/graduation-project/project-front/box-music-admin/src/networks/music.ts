@@ -3,6 +3,7 @@ import axios from '@/networks';
 import { BaseInterface } from '@/globals/globalTypes';
 import { Category } from './category';
 import { Singer } from './singer';
+import { Album } from './album';
 
 export interface Music extends BaseInterface {
 	musicId: bigint;
@@ -10,8 +11,8 @@ export interface Music extends BaseInterface {
 	musicPic: string;
 	lyric?: string;
 	lyricUrl?: string;
-	album?: string;
-	genre?: string;
+	album?: Album;
+	albumId?: bigint;
 	duration?: number;
 	size?: number;
 	level?: string;

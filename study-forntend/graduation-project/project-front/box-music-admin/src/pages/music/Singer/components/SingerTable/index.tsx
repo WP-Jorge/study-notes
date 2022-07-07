@@ -42,6 +42,16 @@ export const SingerTable = () => {
 			)
 		},
 		{
+			title: '歌手描述',
+			dataIndex: 'singerDescription',
+			ellipsis: true,
+			render: (str: string) => (
+				<Tooltip placement="topLeft" title={str}>
+					{str}
+				</Tooltip>
+			)
+		},
+		{
 			title: '浏览量',
 			dataIndex: 'totalViews',
 			ellipsis: true,

@@ -1,0 +1,28 @@
+* {
+	padding: 0;
+	margin: 0;
+	outline: none;
+}
+
+html,
+body,
+#app {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	user-select: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+.el-popper {
+	padding: 1px 3px;
+}
+
+.el-popover.el-popper {
+	min-width: 10px;
+}

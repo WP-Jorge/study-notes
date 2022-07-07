@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+import path from 'path';
 
 import {
 	MYSQL_USERNAME,
@@ -7,9 +8,12 @@ import {
 	MYSQL_DATABASE_NAME,
 	DATABASE_NAME
 } from '../config/config.default';
+import { writeFile } from '../utils/fileUtil';
 
-const writeLog = () => {
-	1 === 1;
+const writeLog = (...args: any) => {
+	writeFile(path.join(__dirname, 'log'), 'log.txt', args[0] + '\r\n', {
+		flag: 'a+'
+	});
 };
 
 export const seq = new Sequelize(

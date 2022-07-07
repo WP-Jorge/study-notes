@@ -22,4 +22,8 @@ import java.util.Map;
 @CacheNamespace(implementation = RedisCache.class, eviction = RedisCache.class)
 public interface PlaylistMapper extends BaseMapper<Playlist> {
 	IPage<PlaylistVO> getPlaylistsByPlaylistNamePage(Page<Map<String, Object>> page, String playlistName);
+	
+	IPage<PlaylistVO>  getPlaylistsByTotalViewsSortPage(Page<Map<String, Object>> page);
+	
+	IPage<MusicVO> getPlaylistsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
 }

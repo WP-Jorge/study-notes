@@ -8,6 +8,7 @@ export interface Singer extends BaseInterface {
 	singerName: string;
 	totalViews: number;
 	singerPic?: string;
+	singerDescription?: string;
 }
 
 const baseUrl = '/singer/';

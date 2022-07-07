@@ -28,7 +28,15 @@ public interface MusicService extends IService<Music> {
 	
 	R deleteMusicsByMusicIds(List<Long> musicIds);
 	
-	R addMusic(MultipartFile picture, MultipartFile song, AddMusicDTO addMusicDTO);
+	R addMusic(MultipartFile song, AddMusicDTO addMusicDTO);
 	
-	R updateMusic(MultipartFile picture, MultipartFile song, UpdateMusicDTO updateMusicDTO);
+	R updateMusic(MultipartFile song, UpdateMusicDTO updateMusicDTO);
+	
+	R getMusicsByTotalViewsSortPage(Page<Map<String, Object>> page);
+	
+	R getMusicsByCreateTimeSortPage(Page<Map<String, Object>> page);
+	
+	R getMusicsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
+	
+	R getMusicsByPlaylistIdPage(Page<Map<String, Object>> page, Long playlistId);
 }

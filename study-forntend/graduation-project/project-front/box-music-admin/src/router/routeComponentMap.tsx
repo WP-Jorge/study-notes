@@ -10,6 +10,7 @@ const Home = lazy(() => import('@/pages/Home'));
 const User = lazy(() => import('@/pages/User'));
 const Music = lazy(() => import('@/pages/music/Music'));
 const Singer = lazy(() => import('@/pages/music/Singer'));
+const Album = lazy(() => import('@/pages/music/Album'));
 const Category = lazy(() => import('@/pages/music/Category'));
 const Playlist = lazy(() => import('@/pages/music/Playlist'));
 const Role = lazy(() => import('@/pages/auth/Role'));
@@ -62,5 +63,6 @@ export const routeComponentMap = {
 	'/music/music': lazyLoad(<Music />),
 	'/music/singer': lazyLoad(<Singer />),
 	'/music/category': lazyLoad(<Category />),
-	'/music/playlist': lazyLoad(<Playlist />)
+	'/music/playlist': lazyLoad(<Playlist />),
+	'/music/album': lazyLoad(<Album />)
 };

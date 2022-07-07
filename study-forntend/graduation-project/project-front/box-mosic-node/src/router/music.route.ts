@@ -11,6 +11,7 @@ const {
 	getSongUrlBySongId,
 	getSongLyricBySongId,
 	getSingerDetailBySingerId,
+	getAlbumDetailByAlbumId,
 	spiderMusic,
 	downloadMusicByUrl
 } = musicController;
@@ -27,6 +28,7 @@ router.get('/getSongDetailBySongId', getSongDetailBySongId);
 router.get('/getSongUrlBySongId', getSongUrlBySongId);
 router.get('/getSongLyricBySongId', getSongLyricBySongId);
 router.get('/getSingerDetailBySingerId', getSingerDetailBySingerId);
+router.get('/getAlbumDetailByAlbumId', getAlbumDetailByAlbumId);
 router.get('/spiderMusic', userLoginValidator, spiderMusic);
 router.post('/downloadMusicByUrl', downloadMusicByUrl, downloadMusicByUrl);
 

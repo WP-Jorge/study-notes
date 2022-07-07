@@ -25,7 +25,7 @@ public interface CategoryService extends IService<Category> {
 	
 	R deleteCategoriesByCategoryIds(List<Long> categoryIds);
 	
-	R addCategory(MultipartFile picture, AddCategoryDTO addCategoryDTO);
+	R addCategory(AddCategoryDTO addCategoryDTO);
 	
 	R updateCategory(MultipartFile picture, UpdateCategoryDTO updateCategoryDTO);
 }

@@ -111,11 +111,37 @@ class MusicController {
 		await next();
 	}
 
+	async getAlbumDetailByAlbumId(ctx: Context, next: Next) {
+		let { albumId, cookie } = ctx.query;
+		cookie = encodeURIComponent(cookie as string);
+		let res = await musicService.getAlbumDetailByAlbumId(
+			albumId as string,
+			cookie
+		);
+		console.log(res);
+		if (res) {
+			ctx.body = ResultType.success('获取专辑信息成功', res);
+			return await next();
+		}
+		ctx.body = ResultType.error('获取专辑信息失败');
+		await next();
+	}
+
 	async spiderMusic(ctx: Context, next: Next) {
-		let { cookie, pageSize, offset, category, targetOffset } = ctx.query;
+		let {
+			cookie,
+			pageSize,
+			offset,
+			category,
+			targetOffset,
+			playlistSize,
+			playlistOffset
+		} = ctx.query;
 		cookie = encodeURIComponent(cookie as string);
 		let res = await musicService.spiderMusic(
 			cookie,
+			parseInt(playlistSize as string),
+			parseInt(playlistOffset as string),
 			parseInt(pageSize as string),
 			parseInt(offset as string),
 			parseInt(targetOffset as string),

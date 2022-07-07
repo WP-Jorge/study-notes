@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { useMusicStore } from '@/store/music';
-import { storeToRefs } from 'pinia';
 const musicStore = useMusicStore();
-const { music, play } = storeToRefs(musicStore);
 </script>
 <template>
 	<div class="music-pic">
 		<div class="pic-container">
-			<div :class="{ outer: true, 'pause-rotate': !play }">
+			<div :class="{ outer: true, 'pause-rotate': !musicStore.playMusic.play }">
 				<div class="inner">
-					<el-image v-if="music.musicPic" :src="music.musicPic" />
+					<el-image
+						v-if="musicStore.playMusic.music.album?.albumPic"
+						:src="musicStore.playMusic.music.album?.albumPic" />
 				</div>
 			</div>
 		</div>

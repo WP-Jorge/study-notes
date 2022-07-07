@@ -7,7 +7,7 @@
     <resultMap id="BaseResultMap" type="com.example.boxmusic.pojo.entity.Category">
         <id column="category_id" property="categoryId" />
         <result column="category_name" property="categoryName" />
-        <result column="category_pic" property="categoryPic" />
+        <result column="category_type" property="categoryType" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
     </resultMap>

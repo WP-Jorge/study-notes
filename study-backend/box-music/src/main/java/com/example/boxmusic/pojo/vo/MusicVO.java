@@ -21,13 +21,9 @@ public class MusicVO implements Serializable {
 	
 	private String musicTitle;
 	
-	private String musicPic;
-	
 	private String lyric;
 	
-	private String album;
-	
-	private String genre;
+	private AlbumVO album;
 	
 	private Double duration;
 	

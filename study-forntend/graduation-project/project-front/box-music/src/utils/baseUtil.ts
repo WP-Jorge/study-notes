@@ -21,7 +21,11 @@ export const throttle = (fn: () => void, delay: number) => {
 	};
 };
 
-export const shuffle = (arr: any[]) => {
+export const shuffle = (length: number) => {
+	let arr = [] as number[];
+	for (let i = 0; i < length; i++) {
+		arr[i] = i;
+	}
 	for (let i = arr.length; i; i--) {
 		let j = Math.floor(Math.random() * i);
 		[arr[i - 1], arr[j]] = [arr[j], arr[i - 1]];

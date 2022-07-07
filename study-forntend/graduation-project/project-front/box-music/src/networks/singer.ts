@@ -5,7 +5,7 @@ export interface Singer extends BaseInterface {
 	singerId?: string;
 	singerName: string;
 	totalViews: number;
-	singerPic?: string;
+	singerPic: string;
 }
 
 const baseUrl = '/singer/';
@@ -24,16 +24,14 @@ export const getSingersBySingerNamePageApi = (
 	});
 };
 
-export const deleteSingersBySingerIdsApi = (ids: Array<string>) => {
-	return axios.delete(baseUrl + 'deleteSingersBySingerIds', {
-		data: ids
+export const getSingersByTotalViewsSortPageApi = (
+	currentPage?: number,
+	pageSize?: number
+) => {
+	return axios.get(baseUrl + 'getSingersByTotalViewsSortPage', {
+		params: {
+			currentPage,
+			pageSize
+		}
 	});
-};
-
-export const addSingerApi = (data: FormData) => {
-	return axios.post(baseUrl + 'addSinger', data);
-};
-
-export const updateSingerApi = (data: FormData) => {
-	return axios.put(baseUrl + 'updateSinger', data);
 };

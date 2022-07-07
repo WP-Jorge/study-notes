@@ -18,21 +18,13 @@ export const Music = seq.define(
 			allowNull: false,
 			comment: '音乐名称'
 		},
-		music_pic: {
-			type: DataTypes.STRING,
-			comment: '音乐封面'
-		},
 		lyric: {
 			type: DataTypes.TEXT,
 			comment: '歌词'
 		},
-		album: {
-			type: DataTypes.STRING,
+		album_id: {
+			type: DataTypes.BIGINT,
 			comment: '专辑'
-		},
-		genre: {
-			type: DataTypes.STRING,
-			comment: '流派'
 		},
 		duration: {
 			type: DataTypes.DOUBLE,

@@ -3,14 +3,17 @@ import axios from '@/networks';
 import { BaseInterface } from '@/globals/globalTypes';
 import { Key } from 'antd/es/table/interface';
 import { PureUser } from './user';
+import { Category } from './category';
 
 export interface Playlist extends BaseInterface {
 	playlistId?: bigint | Key | string;
 	playlistName: string;
+	playlistDescription: string;
 	totalViews: number;
 	user: PureUser;
 	opened: number;
 	playlistPic?: string;
+	categories?: Category[];
 }
 
 const baseUrl = '/playlist/';

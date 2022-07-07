@@ -3,6 +3,7 @@ package com.example.boxmusic.pojo.vo;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class PlaylistVO implements Serializable {
@@ -15,10 +16,14 @@ public class PlaylistVO implements Serializable {
     
     private String playlistPic;
     
+    private String playlistDescription;
+    
     private Integer totalViews;
     
     private Integer opened;
     
     private PureUserVO user;
-
+    
+    private List<CategoryVO> categories;
+    
 }

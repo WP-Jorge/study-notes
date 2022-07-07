@@ -6,6 +6,7 @@ import com.example.boxmusic.pojo.dto.AddMusicDTO;
 import com.example.boxmusic.pojo.dto.AddSingerDTO;
 import com.example.boxmusic.pojo.dto.UpdateMusicDTO;
 import com.example.boxmusic.pojo.dto.UpdateSingerDTO;
+import com.example.boxmusic.service.MusicCategoryService;
 import com.example.boxmusic.service.MusicService;
 import com.example.boxmusic.service.SingerService;
 import com.example.boxmusic.utils.R;
@@ -56,15 +57,53 @@ public class MusicController {
 	@Transactional(rollbackFor = Exception.class)
 	@ApiOperation("添加歌曲")
 	@PostMapping("/addMusic")
-	public R addMusic(MultipartFile picture, MultipartFile song, @Valid AddMusicDTO addMusicDTO) {
-		return musicService.addMusic(picture, song, addMusicDTO);
+	public R addMusic(MultipartFile song, @Valid AddMusicDTO addMusicDTO) {
+		return musicService.addMusic(song, addMusicDTO);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
 	@ApiOperation("更新歌曲")
 	@PutMapping("/updateMusic")
-	public R updateMusic(MultipartFile picture, MultipartFile song, @Valid UpdateMusicDTO updateMusicDTO) {
-		return musicService.updateMusic(picture, song, updateMusicDTO);
+	public R updateMusic(MultipartFile song, @Valid UpdateMusicDTO updateMusicDTO) {
+		return musicService.updateMusic(song, updateMusicDTO);
+	}
+	
+	@ApiOperation("获取音乐排行")
+	@GetMapping("/getMusicsByTotalViewsSortPage")
+	public R getMusicsByTotalViewsSortPage(@RequestParam(defaultValue = "1") Integer currentPage,
+											@RequestParam(defaultValue = "10") Integer pageSize) {
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
+		return musicService.getMusicsByTotalViewsSortPage(page);
+	}
+	
+	@ApiOperation("获取最近新增音乐")
+	@GetMapping("/getMusicsByCreateTimeSortPage")
+	public R getMusicsByCreateTimeSortPage(@RequestParam(defaultValue = "1") Integer currentPage,
+										   @RequestParam(defaultValue = "10") Integer pageSize) {
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
+		return musicService.getMusicsByCreateTimeSortPage(page);
+	}
+	
+	@ApiOperation("根据分类id查询音乐")
+	@GetMapping("/getMusicsByCategoryIdPage")
+	public R getMusicsByCategoryIdPage(@RequestParam(defaultValue = "1") Integer currentPage,
+											 @RequestParam(defaultValue = "10") Integer pageSize, Long categoryId) {
+		if (categoryId == null) {
+			return R.error("分类id不能为空");
+		}
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
+		return musicService.getMusicsByCategoryIdPage(page, categoryId);
+	}
+	
+	@ApiOperation("根据歌单id查询音乐")
+	@GetMapping("/getMusicsByPlaylistIdPage")
+	public R getMusicsByPlaylistIdPage(@RequestParam(defaultValue = "1") Integer currentPage,
+											 @RequestParam(defaultValue = "10") Integer pageSize, Long playlistId) {
+		if (playlistId == null) {
+			return R.error("歌单id不能为空");
+		}
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
+		return musicService.getMusicsByPlaylistIdPage(page, playlistId);
 	}
 	
 }

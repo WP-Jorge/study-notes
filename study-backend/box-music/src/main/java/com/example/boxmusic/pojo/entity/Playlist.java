@@ -38,6 +38,10 @@ public class Playlist implements Serializable {
     @TableField("playlist_pic")
     private String playlistPic;
     
+    @ApiModelProperty("歌单描述")
+    @TableField("playlist_description")
+    private String playlistDescription;
+    
     @ApiModelProperty("所属用户")
     @TableField("user_id")
     private Long userId;

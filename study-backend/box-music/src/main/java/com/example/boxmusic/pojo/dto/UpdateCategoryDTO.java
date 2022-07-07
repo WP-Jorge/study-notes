@@ -29,4 +29,8 @@ public class UpdateCategoryDTO implements Serializable {
     @ApiModelProperty(value = "分类名")
     private String categoryName;
     
+    @NotBlank(message = "分类类型不能为空")
+    @ApiModelProperty(value = "分类类型")
+    private Integer categoryType;
+    
 }

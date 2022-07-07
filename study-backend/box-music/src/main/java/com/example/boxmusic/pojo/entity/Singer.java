@@ -38,6 +38,10 @@ public class Singer implements Serializable {
     @ApiModelProperty("歌手图片")
     @TableField("singer_pic")
     private String singerPic;
+    
+    @ApiModelProperty("歌手描述")
+    @TableField("singer_description")
+    private String singerDescription;
 
     @ApiModelProperty("歌手歌曲总播放量")
     @TableField("total_views")

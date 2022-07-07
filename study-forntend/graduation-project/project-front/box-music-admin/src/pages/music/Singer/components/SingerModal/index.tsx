@@ -140,6 +140,9 @@ export const SingerModal = (props: SingerModalProps) => {
 					>
 						<Input />
 					</Form.Item>
+					<Form.Item name="singerDescription" label="歌手描述">
+						<Input />
+					</Form.Item>
 					{formData?.singerId ? (
 						<Form.Item name="totalViews" label="浏览量">
 							<Input disabled />

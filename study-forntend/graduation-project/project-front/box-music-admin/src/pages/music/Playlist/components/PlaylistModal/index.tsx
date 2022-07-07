@@ -1,4 +1,9 @@
+import { DebounceSelect } from '@/components/common/DebounceSelect';
 import { ResponseType } from '@/globals/responseType';
+import {
+	Category,
+	getCategoriesByCategoryNamePageApi
+} from '@/networks/category';
 import {
 	addPlaylistApi,
 	Playlist,
@@ -7,6 +12,7 @@ import {
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message, Modal, Switch, Upload } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
+import { LabeledValue } from 'antd/lib/select';
 import { UploadFile } from 'antd/lib/upload/interface';
 import React, { useEffect, useState } from 'react';
 import './index.scss';
@@ -21,6 +27,7 @@ export const PlaylistModal = (props: PlaylistModalProps) => {
 	const { formData, clickSubmit, clickCancel } = props;
 	const [title] = useState(formData?.playlistId ? '编辑歌单' : '添加歌单');
 	const [fileList, setFileList] = useState([] as UploadFile[]);
+	const [value, setValue] = useState([] as LabeledValue[]);
 	const [form] = useForm();
 	useEffect(() => {
 		if (formData?.playlistPic) {
@@ -104,6 +111,19 @@ export const PlaylistModal = (props: PlaylistModalProps) => {
 		return 0;
 	};
 
+	async function fetchCategoryList(categoryName: string) {
+		console.log('fetching category', categoryName);
+		let res = await getCategoriesByCategoryNamePageApi(1, 10, categoryName);
+		let categoryList = [];
+		if (res.data.type === ResponseType.SUCCESS) {
+			categoryList = res.data.pageList.map((item: Category) => ({
+				label: item.categoryName,
+				value: item.categoryId
+			}));
+		}
+		return categoryList;
+	}
+
 	return (
 		<div className="playlist-modal">
 			<Modal
@@ -152,11 +172,36 @@ export const PlaylistModal = (props: PlaylistModalProps) => {
 					>
 						<Input />
 					</Form.Item>
+					<Form.Item
+						name="playlistDescription"
+						label="歌单描述"
+						rules={[{ required: true, message: '歌单描述不能为空' }]}
+					>
+						<Input />
+					</Form.Item>
 					{formData?.playlistId ? (
 						<Form.Item label="创建者"> {formData.user.username}</Form.Item>
 					) : (
 						''
 					)}
+					<Form.Item
+						name="categoryList"
+						label="分类"
+						rules={[{ required: true, message: '分类不能为空' }]}
+					>
+						<DebounceSelect
+							mode="multiple"
+							value={value}
+							placeholder="请选择分类"
+							fetchOptions={fetchCategoryList}
+							onChange={(newValue: LabeledValue[]) => {
+								setValue(newValue);
+							}}
+							style={{
+								width: '100%'
+							}}
+						/>
+					</Form.Item>
 					<Form.Item
 						name="opened"
 						label="公开状态"

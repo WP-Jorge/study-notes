@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { GlobalValues } from '@/globals/GlobalValues';
+import { MessageType } from '@/globals/GlobalValues';
 import { useSystemStore } from '@/store/system';
 import { storeToRefs } from 'pinia';
 import { getAssetsFileUrl } from '@/utils/fileUtil';
@@ -54,22 +54,28 @@ const { isMax, isFullscreen } = storeToRefs(systemStore);
 					</div>
 				</div>
 				<div class="options">
-					<el-tooltip effect="light" content="全屏" placement="bottom">
+					<el-tooltip
+						v-if="!isFullscreen"
+						effect="light"
+						content="全屏"
+						placement="bottom">
 						<i-ic-round-fullscreen
-							v-show="!isFullscreen"
 							class="box-item"
 							tabindex="-1"
 							@click="
-								systemStore.optionChange(GlobalValues.WINDOW_FULLSCREEN)
+								systemStore.optionChange(MessageType.WINDOW_FULLSCREEN)
 							" />
 					</el-tooltip>
-					<el-tooltip effect="light" content="退出全屏" placement="bottom">
+					<el-tooltip
+						v-if="isFullscreen"
+						effect="light"
+						content="退出全屏"
+						placement="bottom">
 						<i-ic-round-fullscreen-exit
-							v-show="isFullscreen"
 							class="box-item fullscreen-exit"
 							tabindex="-1"
 							@click="
-								systemStore.optionChange(GlobalValues.WINDOW_FULLSCREEN_EXIT)
+								systemStore.optionChange(MessageType.WINDOW_FULLSCREEN_EXIT)
 							" />
 					</el-tooltip>
 					<el-tooltip effect="light" content="最小化" placement="bottom">
@@ -77,28 +83,28 @@ const { isMax, isFullscreen } = storeToRefs(systemStore);
 							v-show="!isFullscreen"
 							class="box-item"
 							tabindex="-1"
-							@click="systemStore.optionChange(GlobalValues.WINDOW_MIN)" />
+							@click="systemStore.optionChange(MessageType.WINDOW_MIN)" />
 					</el-tooltip>
 					<el-tooltip effect="light" content="最小窗口" placement="bottom">
 						<i-ant-design-shrink-outlined
 							v-show="isMax && !isFullscreen"
 							class="box-item"
 							tabindex="-1"
-							@click="systemStore.optionChange(GlobalValues.WINDOW_CHANGE)" />
+							@click="systemStore.optionChange(MessageType.WINDOW_CHANGE)" />
 					</el-tooltip>
 					<el-tooltip effect="light" content="最大窗口" placement="bottom">
 						<i-ant-design-arrows-alt-outlined
 							v-show="!isMax && !isFullscreen"
 							class="box-item"
 							tabindex="-1"
-							@click="systemStore.optionChange(GlobalValues.WINDOW_CHANGE)" />
+							@click="systemStore.optionChange(MessageType.WINDOW_CHANGE)" />
 					</el-tooltip>
 					<el-tooltip effect="light" content="关闭" placement="bottom">
 						<i-ant-design-close-outlined
 							v-show="!isFullscreen"
 							class="box-item"
 							tabindex="-1"
-							@click="systemStore.optionChange(GlobalValues.WINDOW_CLOSE)" />
+							@click="systemStore.optionChange(MessageType.WINDOW_CLOSE)" />
 					</el-tooltip>
 				</div>
 			</div>

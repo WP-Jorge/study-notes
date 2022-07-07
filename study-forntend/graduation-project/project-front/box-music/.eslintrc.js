@@ -29,6 +29,8 @@ module.exports = {
 		'@typescript-eslint/no-unused-vars': 2,
 		'no-unused-vars': 0,
 		'vue/multi-word-component-names': 0,
+		'vue/attribute-hyphenation': 0,
+		'vue/v-slot-style': 0,
 		'@typescript-eslint/no-explicit-any': 0,
 		'@typescript-eslint/explicit-module-boundary-types': 0,
 		'@typescript-eslint/no-non-null-assertion': 0,

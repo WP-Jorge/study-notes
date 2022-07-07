@@ -3,7 +3,8 @@
 <mapper namespace="com.example.boxmusic.mapper.UserMapper">
 <!--	<cache-ref namespace="com.example.boxmusic.mapper.UserMapper"/>-->
 <!--	<cache-ref namespace="com.example.boxmusic.mapper.RoleMapper"/>-->
-	<cache-ref namespace="com.example.boxmusic.mapper.ApiMapper"/>
+<!--	<cache-ref namespace="com.example.boxmusic.mapper.ApiMapper"/>-->
+	<cache-ref namespace="com.example.boxmusic.mapper.UserMapper"/>
 	
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.example.boxmusic.pojo.entity.User">

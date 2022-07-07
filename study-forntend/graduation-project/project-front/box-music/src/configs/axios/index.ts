@@ -1,3 +1,5 @@
+import JSONBig from 'json-bigint';
+const JSONbigString = JSONBig({ storeAsString: true });
 export const options = {
 	// 请求头
 	headers: {},
@@ -9,5 +11,6 @@ export const options = {
 			? import.meta.env.VITE_BASE_URL
 			: import.meta.env.VITE_BASE_URL,
 	// 跨域时是否使用凭证
-	withCredentials: false
+	withCredentials: false,
+	transformResponse: [(data: any) => JSONbigString.parse(data)]
 };
