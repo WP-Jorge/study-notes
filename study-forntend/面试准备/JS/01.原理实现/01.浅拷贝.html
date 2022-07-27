@@ -36,7 +36,7 @@
 			},
 			e: [1, 2]
 		}
-		let newObj2 = Object.assign(obj2);
+		let newObj2 = Object.assign({}, obj2);
 		console.log(newObj2); // {a: 1, b: {…}, e: Array(2)}
 		newObj2.e.push(3);
 		console.log(obj2); // {a: 1, b: {…}, e: Array(3)}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<script>
+			let nums = [2, 7, 11, 15];
+			let target = 9;
+			const sum = (nums, target) => {
+				const map = new Map();
+				for (let i = 0; i < nums.length; i++) {
+					let sub = target - nums[i];
+					if (map.has(sub)) {
+						return [map.get(sub), i];
+					}
+					map.set(nums[i], i);
+				}
+			};
+			console.log(sum(nums, target))
+		</script>
+	</body>
+</html>

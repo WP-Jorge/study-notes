@@ -17,12 +17,7 @@
 				}
 				content.fn = this;
 				// 3、执行函数，获取返回值
-				let res;
-				if (args.length) {
-					res = content.fn(args);
-				} else {
-					res = content.fn();
-				}
+				let res = content.fn(...args);
 				// 4、删除新增的 fn
 				delete content.fn;
 				return res;

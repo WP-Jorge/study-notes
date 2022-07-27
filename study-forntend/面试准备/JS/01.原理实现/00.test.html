@@ -8,34 +8,28 @@
 	</head>
 	<body>
 		<script>
-			function sleep(time) {
-				return new Promise((resolve, reject) => {
-					setTimeout(() => {
-						if (time === 2100) {
-							reject(time);
-						}
-						resolve(time);
-					}, time);
-				});
+			function Animal() {
+				this.name = 'animal';
+				this.food = ['草'];
 			}
-			Promise.myRace = function (asyncArr) {
-				return new Promise((resolve, reject) => {
-					if (!asyncArr || !Array.isArray(asyncArr)) {
-						throw new TypeError('参数必须是数组');
-					}
-					asyncArr.map((item, index) => {
-						Promise.resolve(item)
-							.then(res => {
-								resolve(res);
-							})
-							.catch(err => {
-								reject(err);
-							});
-					});
-				});
-			};
-			let asyncArr = [sleep(2500), sleep(2100), sleep(2500)];
-			Promise.myRace(asyncArr).then(res => console.log(res));
+			Animal.prototype.eat = function() {
+				console.log(this.food);
+			}
+			function Cat() {
+				 Animal.call(this);
+				 this.name = 'cat';
+			}
+			function inheritPrototype(Parent, Child) {
+				const prototype = Object.create(Parent.prototype);
+				prototype.constructor = Child;
+				Child.prototype = prototype;
+			}
+			inheritPrototype(Animal, Cat);
+			const cat1 = new Cat();
+			cat1.food.push('鱼');
+			cat1.eat();
+			const cat2 = new Cat();
+			cat2.eat();
 		</script>
 	</body>
 </html>

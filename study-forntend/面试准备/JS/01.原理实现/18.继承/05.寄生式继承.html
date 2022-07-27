@@ -28,17 +28,17 @@
 			return newObj;
 		}
 		let animal = {
-			name: 'annimal',
+			name: 'animal',
 			food: ['草']
 		}
 
 		let cat1 = getNewObj(animal);
 		cat1.food.push('鱼');
-		console.log(cat1.name); // annimal
+		console.log(cat1.name); // animal
 		console.log(cat1.food); // ['草', '鱼']
 		cat1.eat(); // eat
 		let cat2 = getNewObj(animal);
-		console.log(cat2.name); // annimal
+		console.log(cat2.name); // animal
 		console.log(cat2.food); // ['草', '鱼']
 		cat2.eat(); // eat
 	</script>

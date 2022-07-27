@@ -21,7 +21,7 @@
 								resolve(res);
 							})
 							.catch(err => {
-								result.push(err);
+								result[index] = err;
 								count++;
 								if (count === asyncArr.length) {
 									reject(new AggregateError(result));

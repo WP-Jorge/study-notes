@@ -8,27 +8,23 @@
 	</head>
 	<body>
 		<script>
-			Function.prototype.myApply = function(content) {
-				let args = [...arguments][1];
-				if (!Array.isArray(args)) {
-					throw new TypeError('第二个参数必须是数组')
+			function solution(nums) {
+				let res = 0;
+				function backtracking(start, path) {
+					if (path.length === 3) {
+						if (nums[path[0]] < nums[path[1]] && nums[path[2]] < nums[path[1]]) {
+							res++;
+							return;
+						}
+					}
+					for (let i = start; i < nums.length; i++) {
+						backtracking(i + 1, [...path, i]);
+					}
 				}
-				if (!content) {
-					content = window;
-				}
-				content.fn = this;
-				let res = content.fn(...args);
-				delete content.fn;
+				backtracking(0, []);
 				return res;
 			}
-			window.name = 'window';
-			let obj = {
-				name: 'obj',
-				speak(a, b) {
-					console.log(this.name + a + b);;
-				}
-			}
-			console.log(obj.speak.myApply(obj, [1, 2]));
+			console.log(solution([-1, 3, 2, 0]));
 		</script>
 	</body>
 </html>

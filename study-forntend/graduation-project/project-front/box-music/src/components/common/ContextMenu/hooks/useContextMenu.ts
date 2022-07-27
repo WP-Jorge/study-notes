@@ -123,62 +123,50 @@ export const useContextMenu = (options: ContextMenuOptions) => {
 			playPlaylist: {
 				type: 'li',
 				title: '播放歌单',
-				callback: () =>
-					menuFunctions.playPlaylist.callback.bind(null, payload as Music)
+				callback: () => menuFunctions.playPlaylist.callback
 			},
 			addToPlaylist: {
 				type: 'li',
 				title: '添加至播放列表',
-				callback: () =>
-					menuFunctions.addToPlaylist.callback.bind(null, payload as Music)
+				callback: () => menuFunctions.addToPlaylist.callback
 			},
 			downloadOne: {
 				type: 'li',
 				title: '下载',
 				disabled: !downloadStore.downloadable(payload as Music),
-				callback: () =>
-					menuFunctions.downloadOne.callback.bind(null, payload as Music)
+				callback: () => menuFunctions.downloadOne.callback
 			},
 			resumeOne: {
 				type: 'li',
 				title: '继续下载',
 				disabled: payload.downloadItemInfo?.state === 'progressing',
-				callback: () =>
-					menuFunctions.resumeOne.callback.bind(null, payload as Music)
+				callback: () => menuFunctions.resumeOne.callback
 			},
 			pauseOne: {
 				type: 'li',
 				title: '暂停',
 				disabled: payload.downloadItemInfo?.state === 'paused',
-				callback: () =>
-					menuFunctions.pauseOne.callback.bind(null, payload as Music)
+				callback: () => menuFunctions.pauseOne.callback
 			},
 			cancelOne: {
 				type: 'li',
 				title: '从下载列表中移除',
-				callback: () =>
-					menuFunctions.cancelOne.callback.bind(null, payload as Music)
+				callback: () => menuFunctions.cancelOne.callback
 			},
 			removeFromHistoryList: {
 				type: 'li',
 				title: '从完成列表中移除',
-				callback: () =>
-					menuFunctions.removeFromHistoryList.callback.bind(
-						null,
-						payload as Music
-					)
+				callback: () => menuFunctions.removeFromHistoryList.callback
 			},
 			removeFromComputer: {
 				type: 'li',
 				title: '从完成列表中移除并删除本地文件',
-				callback: () =>
-					menuFunctions.removeFromComputer.callback.bind(null, payload as Music)
+				callback: () => menuFunctions.removeFromComputer.callback
 			},
 			openfolder: {
 				type: 'li',
 				title: '打开文件所在文件夹',
-				callback: () =>
-					menuFunctions.openfolder.callback.bind(null, payload as Music)
+				callback: () => menuFunctions.openfolder.callback
 			}
 		} as MenuTemplates;
 		const contextMenuList = [];
