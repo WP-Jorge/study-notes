@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function fn(preStr, midStr) {
+				let res = [];
+				function dfs(pre, mid) {
+					if (!pre.length) {
+						return;
+					}
+					const node = pre[0];
+					res.unshift(node);
+					const index = mid.indexOf(node);
+					dfs(pre.slice(index + 1), mid.slice(index + 1));
+					dfs(pre.slice(1, index), mid.slice(0, index + 1));
+					return res;
+				}
+				dfs(preStr, midStr);
+				return res;
+			}
+			console.log(fn('ACDEFHGB', 'DECAHFBG'))
+
+			/*
+class TreeNode {
+        constructor(val, left, right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+    function getPostOrder(preStr, midStr) {
+        if (!preStr.length) {
+            return null;
+        }
+        const node = preStr[0];
+        const index = midStr.indexOf(node);
+        const treeNode = new TreeNode(node, getPostOrder(preStr.slice(1, index + 1), midStr.slice(0, index)), getPostOrder(preStr.slice(index + 1), midStr.slice(index + 1)));
+        return treeNode;
+    }
+    function getPost() {
+        const tree = getPostOrderOfTree('ACDEFHGB', 'DECAHFBG');
+        let res = '';
+        function dfs(node) {
+            if (!node) {
+                return;
+            }
+            dfs(node.left);
+            dfs(node.right);
+            res += node.val;
+        }
+        dfs(tree);
+        return res;
+    }
+    return getPost();
+			*/
+
+			// function fn1(str) {
+			// 	let res = '';
+			// 	function getStr(left, right) {
+			// 		while (left >= 0 && right < str.length) {
+			// 			if (str[left] === str[right]) {
+			// 				left--;
+			// 				right++;
+			// 				continue;
+			// 			}
+			// 			break
+			// 		}
+			// 		return str.slice(left + 1, right);
+			// 	}
+			// 	for (let i = 0; i < str.length - 1; i++) {
+			// 		let res1 = getStr(i, i);
+			// 		let res2 = getStr(i, i + 1);
+			// 		let temp = res1.length > res2.length ? res1 : res2;
+			// 		if (temp && temp.length > res.length) {
+			// 			res = temp;
+			// 		}
+			// 	}
+			// 	return res;
+			// }
+			// console.log(fn1('cbeaebd'));
+		</script>
+	</body>
+</html>

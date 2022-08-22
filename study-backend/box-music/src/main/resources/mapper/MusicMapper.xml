@@ -102,5 +102,11 @@
 		  and playlist.playlist_id = #{playlistId}
 		  and music.deleted = 0
 	</select>
+	<select id="getMusicsByAlbumIdPage" resultType="com.example.boxmusic.pojo.vo.MusicVO" resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
+		select *
+		from music
+		where music.album_id = #{albumId}
+		  and music.deleted = 0
+	</select>
 
 </mapper>

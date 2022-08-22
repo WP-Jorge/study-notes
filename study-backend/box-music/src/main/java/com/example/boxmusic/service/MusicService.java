@@ -39,4 +39,6 @@ public interface MusicService extends IService<Music> {
 	R getMusicsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
 	
 	R getMusicsByPlaylistIdPage(Page<Map<String, Object>> page, Long playlistId);
+	
+	R getMusicsByAlbumIdPage(Page<Map<String, Object>> page, Long albumId);
 }

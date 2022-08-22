@@ -25,5 +25,5 @@ public interface MusicMapper extends BaseMapper<Music> {
 	IPage<MusicVO> getMusicsByCreateTimeSortPage(Page<Map<String, Object>> page);
 	IPage<MusicVO> getMusicsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
 	IPage<MusicVO> getMusicsByPlaylistIdPage(Page<Map<String, Object>> page, Long playlistId);
-	
+	IPage<MusicVO> getMusicsByAlbumIdPage(Page<Map<String, Object>> page, Long albumId);
 }

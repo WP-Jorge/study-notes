@@ -106,5 +106,16 @@ public class MusicController {
 		return musicService.getMusicsByPlaylistIdPage(page, playlistId);
 	}
 	
+	@ApiOperation("根据专辑id查询音乐")
+	@GetMapping("/getMusicsByAlbumIdPage")
+	public R getMusicsByAlbumIdPage(@RequestParam(defaultValue = "1") Integer currentPage,
+									   @RequestParam(defaultValue = "10") Integer pageSize, Long albumId) {
+		if (albumId == null) {
+			return R.error("歌单id不能为空");
+		}
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
+		return musicService.getMusicsByAlbumIdPage(page, albumId);
+	}
+	
 }
 

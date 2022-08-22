@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script type="module">
+		import Dep from './Dep.js';
+		import Watcher from './Watcher.js';
+		import Observer from './Observer.js';
+
+		const dep1 = new Dep();
+		const dep2 = new Dep();
+		const observer1 = new Observer('observer1', dep1);
+		const observer2 = new Observer('observer2', dep2);
+		const watcher1 = new Watcher('watcher1', msg => console.log(msg));
+		const watcher2 = new Watcher('watcher2', msg => console.log(msg));
+		const watcher3 = new Watcher('watcher3', msg => console.log(msg));
+
+		dep1.addWatcher(watcher1);
+		dep1.addWatcher(watcher2);
+		dep1.addWatcher(watcher3);
+
+		dep2.addWatcher(watcher1);
+
+		observer1.publish('明天不上班');
+		observer2.publish('我明天要上班');
+	</script>
+</body>
+</html>

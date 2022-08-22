@@ -237,4 +237,9 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 	public R getMusicsByPlaylistIdPage(Page<Map<String, Object>> page, Long playlistId) {
 		return R.successPage("获取音乐成功", baseMapper.getMusicsByPlaylistIdPage(page, playlistId));
 	}
+	
+	@Override
+	public R getMusicsByAlbumIdPage(Page<Map<String, Object>> page, Long albumId) {
+		return R.successPage("获取音乐成功", baseMapper.getMusicsByAlbumIdPage(page, albumId));
+	}
 }
