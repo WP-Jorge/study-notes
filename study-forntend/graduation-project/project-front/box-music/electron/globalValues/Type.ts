@@ -1,7 +1,7 @@
 import { DownloadItemInfo } from '../main/downloadListener';
 
 export interface Music extends BaseInterface {
-	musicId: string;
+	musicId?: string;
 	musicTitle: string;
 	musicUrl: string;
 	lyric?: string;
@@ -19,7 +19,7 @@ export interface Music extends BaseInterface {
 }
 
 export interface Album extends BaseInterface {
-	albumId: string;
+	albumId?: string;
 	albumName: string;
 	albumDescription?: string;
 	totalViews?: number;
@@ -27,7 +27,7 @@ export interface Album extends BaseInterface {
 }
 
 export interface Category extends BaseInterface {
-	categoryId: string;
+	categoryId?: string;
 	categoryName: string;
 	categoryPic: string;
 }

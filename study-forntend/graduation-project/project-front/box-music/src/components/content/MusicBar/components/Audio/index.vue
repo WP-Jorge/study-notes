@@ -7,6 +7,9 @@ const nextHandle = useNextHandle();
 const isPlayOne = useIsPlayOne();
 const audio = ref(null);
 const timeUpdate = () => {
+	if (!musicStore.playMusic.audio) {
+		return;
+	}
 	musicStore.playMusic.currentTime = (
 		musicStore.playMusic.audio as unknown as HTMLAudioElement
 	).currentTime;

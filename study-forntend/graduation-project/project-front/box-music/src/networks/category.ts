@@ -3,7 +3,7 @@ import axios from '@/networks';
 import { BaseInterface } from '@/globals/globalTypes';
 
 export interface Category extends BaseInterface {
-	categoryId: string;
+	categoryId?: string;
 	categoryName: string;
 	categoryPic: string;
 }

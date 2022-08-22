@@ -34,6 +34,14 @@ const formatLyric = (lyric: string) => {
 			lyrics.push(lyric);
 		}
 	}
+	const noLyric = {
+		id: '0',
+		lyricRow: '暂无歌词',
+		timestamp: 0
+	};
+	if (!lyrics.length) {
+		lyrics.push(noLyric);
+	}
 	lyricList.value = lyrics;
 };
 
@@ -49,7 +57,7 @@ const lyricRowClick = (index: number) => {
 // });
 
 watchEffect(() => {
-	formatLyric(musicStore.playMusic.music.lyric as string);
+	formatLyric(musicStore.playMusic.music?.lyric as string);
 	currentIndex.value = 0;
 });
 

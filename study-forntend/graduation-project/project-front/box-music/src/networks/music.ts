@@ -7,7 +7,7 @@ import { Album } from './album';
 import { DownloadItemInfo } from '@/store/download';
 
 export interface Music extends BaseInterface {
-	musicId: string;
+	musicId?: string;
 	musicTitle: string;
 	musicUrl: string;
 	lyric?: string;
@@ -88,6 +88,20 @@ export const getMusicsByPlaylistIdPageApi = (
 			currentPage,
 			pageSize,
 			playlistId
+		}
+	});
+};
+
+export const getMusicsByAlbumIdPageApi = (
+	currentPage?: number,
+	pageSize?: number,
+	albumId?: string
+) => {
+	return axios.get(baseUrl + 'getMusicsByAlbumIdPage', {
+		params: {
+			currentPage,
+			pageSize,
+			albumId
 		}
 	});
 };

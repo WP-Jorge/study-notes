@@ -5,12 +5,8 @@ import { getResourceUrl } from '@/utils/fileUtil';
 import { Playlist } from '@/networks/playlist';
 import { getPlaylistsByCategoryIdPageApi } from '@/networks/playlist';
 import { usePlaylistStore } from '@/store/playlist';
-import { getMusicsByPlaylistIdPageApi } from '@/networks/music';
-import { useMusicStore } from '@/store/music';
-import { useContextMenuStore } from '@/store/contextMenu';
+import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 const playlistStore = usePlaylistStore();
-const musicStore = useMusicStore();
-const menuStore = useContextMenuStore();
 const playlists = ref([] as Playlist[]);
 const pageData = ref({
 	total: 0,
@@ -40,36 +36,12 @@ const getPlaylistsByCategoryIdPage = async (categoryId: string) => {
 	}
 };
 
-// const { nextBatch, showNextBatch } = useNextBatch(
-// 	() => getPlaylistsByCategoryIdPage(playlistStore.category.categoryId),
-// 	pageData.value
-// );
-const playPlaylist = async (playlist: Playlist) => {
-	let res = await getMusicsByPlaylistIdPageApi(1, -1, playlist.playlistId);
-	if (res && res.data.type === ResponseType.SUCCESS) {
-		musicStore.setMusicList(res.data.pageList);
-	}
-};
-const addToPlaylist = async (playlist: Playlist) => {
-	let res = await getMusicsByPlaylistIdPageApi(1, -1, playlist.playlistId);
-	if (res && res.data.type === ResponseType.SUCCESS) {
-		musicStore.setMusicList(res.data.pageList, true);
-	}
-};
-const openContextMenu = (e: PointerEvent, playlist: Playlist) => {
-	const contextMenuList = [
-		{
-			type: 'li',
-			title: '播放歌单',
-			callback: () => playPlaylist(playlist)
-		},
-		{
-			type: 'li',
-			title: '添加至播放列表',
-			callback: () => addToPlaylist(playlist)
-		}
-	];
-	menuStore.openContextMenu({ event: e, args: playlist, contextMenuList });
+const contextMenu = useContextMenu({
+	playPlaylist: true,
+	addPlaylistToPlaylist: true
+});
+const open = (e: PointerEvent, clickItem: Playlist) => {
+	contextMenu.openContextMenu(e, clickItem);
 };
 
 watch(
@@ -90,7 +62,7 @@ watch(
 			:title="`【${playlistStore.category.categoryName}】歌单`"
 			:pageData="pageData"
 			:nextBatchCallback="
-				() => getPlaylistsByCategoryIdPage(playlistStore.category.categoryId)
+				() => getPlaylistsByCategoryIdPage(playlistStore.category.categoryId as string)
 			">
 			<template #content>
 				<Card
@@ -98,8 +70,8 @@ watch(
 					:key="item.playlistId"
 					:picUrl="item.playlistPic"
 					:title="item.playlistName"
-					@contextmenu="(e: PointerEvent) => openContextMenu(e, item)"
-					@click="playPlaylist(item)" />
+					@contextmenu="(e: PointerEvent) => open(e, item)"
+					@click="contextMenu.menuFunctions.playPlaylist(item)" />
 			</template>
 		</CardContainer>
 	</div>

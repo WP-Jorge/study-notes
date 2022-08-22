@@ -39,6 +39,7 @@ module.exports = {
 		'prefer-const': 'off',
 		'jsx-a11y/no-noninteractive-element-interactions': 0,
 		'no-irregular-whitespace': 0,
+		'no-extra-boolean-cast': 0,
 		'prettier/prettier': [
 			'error',
 			{

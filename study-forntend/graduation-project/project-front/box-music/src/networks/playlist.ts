@@ -5,7 +5,7 @@ import { PureUser } from './user';
 import { Category } from './category';
 
 export interface Playlist extends BaseInterface {
-	playlistId: string;
+	playlistId?: string;
 	playlistName: string;
 	playlistDescription: string;
 	totalViews: number;

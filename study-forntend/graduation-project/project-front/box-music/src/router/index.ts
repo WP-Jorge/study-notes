@@ -42,14 +42,19 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@/pages/myMusic/Singer/index.vue')
 	},
 	{
+		path: '/localMusic',
+		name: 'LocalMusic',
+		component: () => import('@/pages/localMusic/LocalMusic/index.vue')
+	},
+	{
 		path: '/finished',
 		name: 'Finished',
-		component: () => import('@/pages/download/Finished/index.vue')
+		component: () => import('@/pages/localMusic/Finished/index.vue')
 	},
 	{
 		path: '/downloading',
 		name: 'Downloading',
-		component: () => import('@/pages/download/Downloading/index.vue')
+		component: () => import('@/pages/localMusic/Downloading/index.vue')
 	},
 	{
 		path: '/favorite',

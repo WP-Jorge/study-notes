@@ -64,6 +64,7 @@ onMounted(() => {
 		.item {
 			padding: 10px;
 			cursor: pointer;
+			font-size: 14px;
 			&:hover {
 				background-color: #eaeaea;
 			}

@@ -6,11 +6,7 @@ import {
 	Playlist
 } from '@/networks/playlist';
 import { getResourceUrl } from '@/utils/fileUtil';
-import { useContextMenuStore } from '@/store/contextMenu';
-import { getMusicsByPlaylistIdPageApi } from '@/networks/music';
-import { useMusicStore } from '@/store/music';
-const menuStore = useContextMenuStore();
-const musicStore = useMusicStore();
+import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 const playlists = ref([] as Playlist[]);
 const pageData = ref({
 	total: 0,
@@ -37,33 +33,12 @@ const getPlaylistsByTotalViewsSortPage = async () => {
 		pageData.value.total = res.data.total;
 	}
 };
-
-const playPlaylist = async (playlist: Playlist) => {
-	let res = await getMusicsByPlaylistIdPageApi(1, -1, playlist.playlistId);
-	if (res && res.data.type === ResponseType.SUCCESS) {
-		musicStore.setMusicList(res.data.pageList);
-	}
-};
-const addToPlaylist = async (playlist: Playlist) => {
-	let res = await getMusicsByPlaylistIdPageApi(1, -1, playlist.playlistId);
-	if (res && res.data.type === ResponseType.SUCCESS) {
-		musicStore.setMusicList(res.data.pageList, true);
-	}
-};
-const openContextMenu = (e: PointerEvent, playlist: Playlist) => {
-	const contextMenuList = [
-		{
-			type: 'li',
-			title: '播放歌单',
-			callback: () => playPlaylist(playlist)
-		},
-		{
-			type: 'li',
-			title: '添加至播放列表',
-			callback: () => addToPlaylist(playlist)
-		}
-	];
-	menuStore.openContextMenu({ event: e, args: playlist, contextMenuList });
+const contextMenu = useContextMenu({
+	playPlaylist: true,
+	addPlaylistToPlaylist: true
+});
+const open = (e: PointerEvent, clickItem: Playlist) => {
+	contextMenu.openContextMenu(e, clickItem);
 };
 
 getPlaylistsByTotalViewsSortPage();
@@ -80,8 +55,8 @@ getPlaylistsByTotalViewsSortPage();
 					:key="item.playlistId"
 					:picUrl="item.playlistPic"
 					:title="item.playlistDescription"
-					@contextmenu="(e: PointerEvent) => openContextMenu(e, item)"
-					@click="playPlaylist(item)" />
+					@contextmenu="(e: PointerEvent) => open(e, item)"
+					@click="contextMenu.menuFunctions.playPlaylis(item)" />
 			</template>
 		</CardContainer>
 	</div>

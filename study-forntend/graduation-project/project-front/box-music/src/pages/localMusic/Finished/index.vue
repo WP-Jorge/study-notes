@@ -2,46 +2,26 @@
 import { useDownloadStore } from '@/store/download';
 import { Music } from '@/networks/music';
 import { getFormatTime } from '@/utils/mathUtil';
-import { useContextMenuStore } from '@/store/contextMenu';
-const electronApis = window.electronApis;
-const menuStore = useContextMenuStore();
+import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 const downloadStore = useDownloadStore();
-
-const removeFromHistoryList = (music: Music) => {
-	downloadStore.removeFromHistoryList(music);
-};
-const removeFromComputer = (music: Music) => {
-	downloadStore.removeFromComputer(music);
-};
-const openfolder = (music: Music) => {
-	electronApis.openFolder(music.downloadItemInfo?.localPath);
-};
-const openContextMenu = (row: Music, cloumn: any, e: PointerEvent) => {
-	const contextMenuList = [
-		{
-			type: 'li',
-			title: '从完成列表中移除',
-			callback: () => removeFromHistoryList(row)
-		},
-		{
-			type: 'li',
-			title: '从完成列表中移除并删除本地文件',
-			callback: () => removeFromComputer(row)
-		},
-		{
-			type: 'li',
-			title: '打开文件所在文件夹',
-			callback: () => openfolder(row)
-		}
-	];
-	menuStore.openContextMenu({ event: e, args: row, contextMenuList });
-};
 
 const clearHistroyList = () => {
 	downloadStore.clearHistroyList();
 };
 const clearHistoryListAndComputerFiles = () => {
 	downloadStore.clearHistoryListAndComputerFiles();
+};
+
+const contextMneu = useContextMenu({
+	removeFromHistoryList: true,
+	removeFromComputer: true,
+	openfolder: true,
+	playMusic: true,
+	addMusicToPlaylist: true
+});
+
+const open = (row: Music, cloumn: any, e: PointerEvent) => {
+	contextMneu.openContextMenu(e, row);
 };
 </script>
 <template>
@@ -54,7 +34,8 @@ const clearHistoryListAndComputerFiles = () => {
 			<template #content>
 				<el-table
 					:data="downloadStore.downloadHistoryList"
-					@row-contextmenu="openContextMenu">
+					@row-contextmenu="open"
+					@row-dblclick="contextMneu.menuFunctions.playMusic">
 					<el-table-column #default="{ row: music }" label="封面" :width="80">
 						<div class="music-img">
 							<img :src="music.album.albumPic" :alt="music.musicTitle" />

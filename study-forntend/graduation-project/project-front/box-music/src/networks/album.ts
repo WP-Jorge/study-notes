@@ -2,7 +2,7 @@ import axios from '@/networks';
 
 import { BaseInterface } from '@/globals/globalTypes';
 export interface Album extends BaseInterface {
-	albumId: string;
+	albumId?: string;
 	albumName: string;
 	albumDescription?: string;
 	totalViews?: number;

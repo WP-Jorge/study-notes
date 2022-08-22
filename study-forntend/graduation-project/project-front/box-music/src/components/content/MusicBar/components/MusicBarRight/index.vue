@@ -51,6 +51,10 @@ const playlistClick = (item: Music) => {
 	// 	musicStore.play = true;
 	// });
 };
+
+const clearPlaylist = () => {
+	musicStore.setMusicList([]);
+};
 </script>
 <template>
 	<div class="music-bar-right">
@@ -99,6 +103,7 @@ const playlistClick = (item: Music) => {
 					<template #header>
 						<div class="card-header">
 							<span>播放列表</span>
+							<span class="clearPlatlist" @click="clearPlaylist">清空列表</span>
 						</div>
 					</template>
 					<div
@@ -137,6 +142,9 @@ const playlistClick = (item: Music) => {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			.clearPlatlist {
+				cursor: pointer;
+			}
 		}
 
 		.active {

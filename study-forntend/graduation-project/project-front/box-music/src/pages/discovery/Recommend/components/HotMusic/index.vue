@@ -3,10 +3,7 @@ import { ResourceType } from '@/globals/GlobalValues';
 import { ResponseType } from '@/globals/ResponseType';
 import { getMusicsByTotalViewsSortPageApi, Music } from '@/networks/music';
 import { getResourceUrl } from '@/utils/fileUtil';
-import { useMusicStore } from '@/store/music';
-import { usePlayOrderChange } from '@/components/content/MusicBar/components/MusicBarCenter/usePlayOrderChange';
-const musicStore = useMusicStore();
-const playOrderChange = usePlayOrderChange();
+import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 
 const musics = ref([] as Music[]);
 
@@ -37,12 +34,13 @@ const getSingersByTotalViewsSortPage = async () => {
 	}
 };
 
-const cardClick = (music: Music) => {
-	if (!musicStore.musicList.includes(music)) {
-		musicStore.musicList.push(music);
-	}
-	musicStore.setMusic(music);
-	playOrderChange();
+const contextMneu = useContextMenu({
+	playMusic: true,
+	addMusicToPlaylist: true
+});
+
+const open = (e: PointerEvent, row: Music) => {
+	contextMneu.openContextMenu(e, row);
 };
 
 getSingersByTotalViewsSortPage();
@@ -59,7 +57,8 @@ getSingersByTotalViewsSortPage();
 					:key="item.musicId"
 					:picUrl="item.album.albumPic"
 					:title="item.musicTitle"
-					@click="cardClick(item)" />
+					@contextmenu="(e: PointerEvent) => open(e, item)"
+					@click="contextMneu.menuFunctions.playMusic(item)" />
 			</template>
 		</CardContainer>
 	</div>

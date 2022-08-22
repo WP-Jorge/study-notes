@@ -1,4 +1,7 @@
+import path from 'path';
+import fs from 'fs';
 import { Music, Singer } from '../../globalValues/Type';
+import { GlobalURL } from '../../globalValues/GlobalURL';
 const ffmpeg = require('fluent-ffmpeg');
 
 const formatLyric = (lyric: string) => {
@@ -8,17 +11,44 @@ const formatLyric = (lyric: string) => {
 		.replace(/\s/g, '<s>');
 };
 
-export const getMusicInfo = (
+export const getMusicInfo = async (
 	musicPath: string,
 	fn: (musicInfo: any) => any
 ) => {
-	ffmpeg.ffprobe(musicPath, (err: Error, metadata: any) => {
-		if (err) {
-			console.error(err);
-		}
-		fn(metadata);
+	return new Promise((resolve, reject) => {
+		ffmpeg.ffprobe(musicPath, (err: Error, metadata: any) => {
+			if (err) {
+				console.error(err);
+				return reject(err);
+			}
+			let filename = path.parse(musicPath).name + '.jpg';
+			const musicUrl = `${GlobalURL.CLIENT_BASE}${GlobalURL.CLIENT_TEMP_PICTURES}${filename}`;
+			fs.access(musicUrl, fs.constants.F_OK, err => {
+				metadata.format.img = musicUrl;
+				if (err && metadata.streams.length >= 2) {
+					ffmpeg(musicPath)
+						.addOption('-y')
+						.addOption('-f')
+						.addOption('image2')
+						.save(musicUrl)
+						.on('end', () => {
+							fn && fn(metadata.format);
+							resolve(metadata.format);
+						});
+				}
+				if (metadata.streams.length <= 1) {
+					metadata.format.img = '';
+					resolve(metadata.format);
+				}
+				if (!err) {
+					fn && fn(metadata.format);
+					resolve(metadata.format);
+				}
+			});
+		});
 	});
 };
+
 export const writeinMusicInfo = (
 	musicPath: string,
 	targetPath: string,

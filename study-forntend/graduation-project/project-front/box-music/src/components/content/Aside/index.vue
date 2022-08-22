@@ -8,6 +8,7 @@ const systemStore = useSystemStore();
 const { menuList } = storeToRefs(systemStore);
 const menuClick = (index: number) => {
 	systemStore.parentMenuIndex = index;
+	localStorage.setItem('parentMenuIndex', JSON.stringify(index));
 };
 </script>
 <template>

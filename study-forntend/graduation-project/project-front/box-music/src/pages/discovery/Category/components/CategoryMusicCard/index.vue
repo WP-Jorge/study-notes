@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { usePlayOrderChange } from '@/components/content/MusicBar/components/MusicBarCenter/usePlayOrderChange';
+import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 import { ResourceType } from '@/globals/GlobalValues';
 import { ResponseType } from '@/globals/ResponseType';
 import { getMusicsByCategoryIdPageApi, Music } from '@/networks/music';
 import { useMusicStore } from '@/store/music';
 import { getResourceUrl } from '@/utils/fileUtil';
 const musicStore = useMusicStore();
-const playOrderChange = usePlayOrderChange();
 
 const musics = ref([] as Music[]);
 const pageData = ref({
@@ -37,12 +36,14 @@ const getMusicsByCategoryIdPage = async (categoryId: string) => {
 	}
 };
 
-const cardClick = (music: Music) => {
-	if (!musicStore.musicList.includes(music)) {
-		musicStore.musicList.push(music);
-	}
-	musicStore.setMusic(music);
-	playOrderChange();
+const contextMneu = useContextMenu({
+	playMusic: true,
+	addMusicToPlaylist: true,
+	downloadOne: true
+});
+
+const open = (e: PointerEvent, row: Music) => {
+	contextMneu.openContextMenu(e, row);
 };
 
 watch(
@@ -63,25 +64,16 @@ watch(
 			:title="`【${musicStore.category.categoryName}】单曲`"
 			:pageData="pageData"
 			:nextBatchCallback="
-				() => getMusicsByCategoryIdPage(musicStore.category.categoryId)
+				() => getMusicsByCategoryIdPage(musicStore.category.categoryId as string)
 			">
-			<!-- <template #title>
-				<div class="title-bar">
-					<div class="title">
-						{{ `【${musicStore.category.categoryName}】单曲` }}
-					</div>
-					<div v-show="showNextBatch" class="options">
-						<span class="text" @click="nextBatch">换一批</span>
-					</div>
-				</div>
-			</template> -->
 			<template #content>
 				<Card
 					v-for="item of musics"
 					:key="item.musicId"
 					:picUrl="item.album.albumPic"
 					:title="item.musicTitle"
-					@click="cardClick(item)" />
+					@contextmenu="(e: PointerEvent) => open(e, item)"
+					@click="contextMneu.menuFunctions.playMusic(item)" />
 			</template>
 		</CardContainer>
 	</div>

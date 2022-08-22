@@ -71,3 +71,25 @@ export const formatLyric = (lyric: string) => {
 		.replace(/\n/g, '<n>')
 		.replace(/\s/g, '<s>');
 };
+
+export const getMusicLevel = (br = 0) => {
+	if (br <= 64000) {
+		return '流畅';
+	}
+	if (br <= 128000) {
+		return '高品';
+	}
+	if (br <= 640000) {
+		return '超高品';
+	}
+	if (br > 640000) {
+		return '无损';
+	}
+};
+
+export const getRawLyric = (lyric = '') => {
+	return lyric
+		.replaceAll('<rn>', '\r\n')
+		.replaceAll('<n>', '\n')
+		.replaceAll('<s>', ' ');
+};

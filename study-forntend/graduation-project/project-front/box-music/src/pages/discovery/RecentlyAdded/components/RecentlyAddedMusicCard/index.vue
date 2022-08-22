@@ -4,11 +4,8 @@ import { ResponseType } from '@/globals/ResponseType';
 import { getMusicsByCreateTimeSortPageApi, Music } from '@/networks/music';
 import { getResourceUrl } from '@/utils/fileUtil';
 import SimpleContainer from '@/components/common/SimpleContainer/index.vue';
-import { useDownloadStore } from '@/store/download';
 import { getFormatTime } from '@/utils/mathUtil';
-import { useContextMenuStore } from '@/store/contextMenu';
-const menuStore = useContextMenuStore();
-const downloadStore = useDownloadStore();
+import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 
 const pageData = ref({
 	total: 0,
@@ -39,20 +36,13 @@ const getMusicsByCreateTimeSortPage = async () => {
 	}
 };
 
-const downloadOne = (music: Music) => {
-	downloadStore.startDownloadOne(music);
-};
-
+const contextMenu = useContextMenu({
+	downloadOne: true,
+	playMusic: true,
+	addMusicToPlaylist: true
+});
 const open = (row: Music, cloumn: any, e: PointerEvent) => {
-	const contextMenuList = [
-		{
-			type: 'li',
-			title: '下载',
-			disabled: !downloadStore.downloadable(row),
-			callback: () => downloadOne(row)
-		}
-	];
-	menuStore.openContextMenu({ event: e, args: row, contextMenuList });
+	contextMenu.openContextMenu(e, row);
 };
 
 getMusicsByCreateTimeSortPage();
@@ -64,7 +54,10 @@ getMusicsByCreateTimeSortPage();
 			:pageData="pageData"
 			:nextBatchCallback="getMusicsByCreateTimeSortPage">
 			<template #content>
-				<el-table :data="musics" @row-contextmenu="open">
+				<el-table
+					:data="musics"
+					@row-contextmenu="open"
+					@row-dblclick="contextMenu.menuFunctions.playMusic">
 					<el-table-column #default="{ row: music }" label="封面" :width="80">
 						<div class="music-img">
 							<img :src="music.album.albumPic" :alt="music.musicTitle" />

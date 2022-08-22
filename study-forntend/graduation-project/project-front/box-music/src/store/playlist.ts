@@ -1,5 +1,14 @@
+import { ResponseType } from '@/globals/ResponseType';
+import { Album } from '@/networks/album';
 import { Category } from '@/networks/category';
+import {
+	getMusicsByAlbumIdPageApi,
+	getMusicsByPlaylistIdPageApi,
+	Music
+} from '@/networks/music';
+import { Playlist } from '@/networks/playlist';
 import { defineStore } from 'pinia';
+import { useMusicStore } from './music';
 
 // 1.定义并导出容器
 /**
@@ -23,7 +32,40 @@ export const usePlaylistStore = defineStore('playlist', {
 	/**
 	 * 类似组件的 methods，封装业务逻辑，修改 state
 	 */
-	actions: {}
+	actions: {
+		async playPlaylist(playlist: Playlist) {
+			const musicStore = useMusicStore();
+			let res = await getMusicsByPlaylistIdPageApi(1, -1, playlist.playlistId);
+			if (res && res.data.type === ResponseType.SUCCESS) {
+				musicStore.setMusicList(res.data.pageList);
+			}
+		},
+		async addPlaylistToPlaylist(playlist: Playlist) {
+			const musicStore = useMusicStore();
+			let res = await getMusicsByPlaylistIdPageApi(1, -1, playlist.playlistId);
+			if (res && res.data.type === ResponseType.SUCCESS) {
+				musicStore.setMusicList(res.data.pageList, true);
+			}
+		},
+		async addMusicToPlaylist(music: Music) {
+			const musicStore = useMusicStore();
+			musicStore.setMusicList([music], true);
+		},
+		async playAlbum(album: Album) {
+			const musicStore = useMusicStore();
+			let res = await getMusicsByAlbumIdPageApi(1, -1, album.albumId);
+			if (res && res.data.type === ResponseType.SUCCESS) {
+				musicStore.setMusicList(res.data.pageList);
+			}
+		},
+		async addAlbumToPlaylist(album: Album) {
+			const musicStore = useMusicStore();
+			let res = await getMusicsByAlbumIdPageApi(1, -1, album.albumId);
+			if (res && res.data.type === ResponseType.SUCCESS) {
+				musicStore.setMusicList(res.data.pageList, true);
+			}
+		}
+	}
 });
 
 // 2.使用容器中的state

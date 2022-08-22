@@ -3,6 +3,8 @@ import { ResourceType } from '@/globals/GlobalValues';
 import { ResponseType } from '@/globals/ResponseType';
 import { getResourceUrl } from '@/utils/fileUtil';
 import { Album, getAlbumsByTotalViewsSortPageApi } from '@/networks/album';
+import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
+
 const pageData = reactive({
 	total: 0,
 	pageSize: 10,
@@ -43,6 +45,15 @@ const nextBatch = () => {
 	getAlbumsByTotalViewsSortPage();
 };
 
+const contextMneu = useContextMenu({
+	playAlbum: true,
+	addAlbumToPlaylist: true
+});
+
+const open = (e: PointerEvent, row: Album) => {
+	contextMneu.openContextMenu(e, row);
+};
+
 getAlbumsByTotalViewsSortPage();
 </script>
 <template>
@@ -61,7 +72,9 @@ getAlbumsByTotalViewsSortPage();
 					v-for="item of albums"
 					:key="item.albumId"
 					:picUrl="item.albumPic"
-					:title="item.albumName" />
+					:title="item.albumName"
+					@contextmenu="(e: PointerEvent) => open(e, item)"
+					@click="contextMneu.menuFunctions.playAlbum(item)" />
 			</template>
 		</CardContainer>
 	</div>

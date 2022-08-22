@@ -4,7 +4,7 @@ import { getAssetsFileUrl } from '@/utils/fileUtil';
 defineProps({
 	picUrl: {
 		type: String,
-		default: getAssetsFileUrl('images', '奉君书-481895137.jpg')
+		default: getAssetsFileUrl('images', '音符.jpg')
 	},
 	title: {
 		type: String,

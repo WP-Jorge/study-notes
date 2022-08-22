@@ -51,9 +51,13 @@ const menuList = [
 		]
 	},
 	{
-		title: '下载管理',
-		path: '/download',
+		title: '本地音乐',
+		path: '/localMusic',
 		children: [
+			{
+				label: '本地音乐',
+				path: '/localMusic'
+			},
 			{
 				label: '已完成',
 				path: '/finished'
@@ -99,7 +103,9 @@ export const useSystemStore = defineStore('system', {
 			showMain: true,
 			showMusicDetail: false,
 			menuList,
-			parentMenuIndex: 0
+			parentMenuIndex: JSON.parse(
+				localStorage.getItem('parentMenuIndex') ?? '0'
+			)
 		};
 	},
 	/**

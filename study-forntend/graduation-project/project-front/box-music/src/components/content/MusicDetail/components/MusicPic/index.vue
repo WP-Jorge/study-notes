@@ -8,8 +8,8 @@ const musicStore = useMusicStore();
 			<div :class="{ outer: true, 'pause-rotate': !musicStore.playMusic.play }">
 				<div class="inner">
 					<el-image
-						v-if="musicStore.playMusic.music.album?.albumPic"
-						:src="musicStore.playMusic.music.album?.albumPic" />
+						v-if="musicStore.playMusic.music?.album?.albumPic"
+						:src="musicStore.playMusic.music?.album?.albumPic" />
 				</div>
 			</div>
 		</div>

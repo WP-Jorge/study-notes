@@ -4,10 +4,18 @@ import { Singer } from '@/networks/singer';
 import { getResourceUrl } from '@/utils/fileUtil';
 import { IpcRenderer, IpcRendererEvent } from 'electron';
 import { defineStore } from 'pinia';
+import { GlobalURL } from '../../electron/globalValues/GlobalURL';
 const ipcRenderer = window.ipcRenderer as IpcRenderer;
 const electronApis = window.electronApis;
-const { writeinMusicInfo, getData, getStore, setData, clearStore, deleteFile } =
-	window.electronApis;
+const {
+	writeinMusicInfo,
+	getData,
+	getStore,
+	setData,
+	clearStore,
+	deleteFile,
+	downloadFile
+} = window.electronApis;
 export interface DownloadItemInfo {
 	state: string;
 	speed: number;
@@ -40,21 +48,6 @@ export const useDownloadStore = defineStore('download', {
 			)
 		};
 	},
-	// getters: {
-	// 	prohibitDownload(state) {
-	// 		return (
-	// 			// !!state.waitQueue.find(
-	// 			// 	item => item.musicId === state.downloadTempMusic.musicId
-	// 			// ) ||
-	// 			// !!state.downloadQueue.find(
-	// 			// 	item => item.musicId === state.downloadTempMusic.musicId
-	// 			// ) ||
-	// 			// !!state.downloadHistoryList.find(
-	// 			// 	item => item.musicId === state.downloadTempMusic.musicId
-	// 			// )
-	// 		);
-	// 	}
-	// },
 	/**
 	 * 类似组件的 methods，封装业务逻辑，修改 state
 	 */
@@ -181,9 +174,21 @@ export const useDownloadStore = defineStore('download', {
 		},
 		async removeFromComputer(music: Music, flag?: boolean) {
 			try {
-				let res = await deleteFile(music.downloadItemInfo?.localPath);
+				let isMusicDeleted = await deleteFile(
+					music.downloadItemInfo?.localPath
+				);
+				let isPictureDeleted = await deleteFile(music.album.albumPic);
 				!flag && this.removeFromHistoryList(music);
-				return res;
+				return isMusicDeleted && isPictureDeleted;
+			} catch (e) {
+				console.error('🦃🦃e', e);
+				return false;
+			}
+		},
+		async removeFile(filepath: string) {
+			try {
+				let isFileDeleted = await deleteFile(filepath);
+				return isFileDeleted;
 			} catch (e) {
 				console.error('🦃🦃e', e);
 				return false;
@@ -237,13 +242,11 @@ const startDownloadOne = (music: Music) => {
 	const downloadStore = useDownloadStore();
 	let formatMusic = downloadStore.getFormatMusic(music);
 	const musicSign = electronApis.getMd5(formatMusic.musicUrl);
-	console.log('🦃🦃musicSign', musicSign);
 	downloadStore.downloadQueue.push(formatMusic);
 	downloadStore.sendMsgToMain(MessageType.DOWNLOAD_START, formatMusic);
 	ipcRenderer.on(
 		`${MessageType.DOWNLOAD_UPDATE}-${musicSign}`,
 		(event: IpcRendererEvent, msg: any) => {
-			// console.log(msg);
 			const downloadMusic = downloadStore.downloadQueue.find(
 				item => item.musicId === msg.musicId
 			);
@@ -253,7 +256,6 @@ const startDownloadOne = (music: Music) => {
 	ipcRenderer.on(
 		`${MessageType.DOWNLOAD_FINISH}-${musicSign}`,
 		(event: IpcRendererEvent, msg: any) => {
-			// console.log(msg);
 			const music = downloadStore.downloadQueue.find(
 				item => item.musicId === msg.musicId
 			);
@@ -265,9 +267,6 @@ const startDownloadOne = (music: Music) => {
 			if (downloadMusic.downloadItemInfo?.state !== 'completed') {
 				return;
 			}
-			// downloadMusic.downloadItemInfo &&
-			// 	(downloadMusic.downloadItemInfo.state = 'writed');
-			// formatMusic.downloadItemInfostate = 'writed';
 
 			writeinMusicInfo(
 				downloadStore.downloadTempPath +
@@ -284,15 +283,24 @@ const startDownloadOne = (music: Music) => {
 					(downloadMusic.downloadItemInfo as DownloadItemInfo).state =
 						'writing';
 				},
-				() => {
+				async () => {
 					(downloadMusic.downloadItemInfo as DownloadItemInfo).state = 'writed';
 					const index = downloadStore.downloadQueue.findIndex(
 						item => item.musicId === msg.musicId
 					);
 					const deleteItems = downloadStore.downloadQueue.splice(index, 1);
+					for (const music of deleteItems) {
+						music.album.albumPic = await downloadFile(
+							music.album.albumPic,
+							GlobalURL.CLIENT_BASE + GlobalURL.CLIENT_DOWNLOAD_PICTURES,
+							music.musicTitle + '.jpg'
+						);
+					}
 					downloadStore.downloadHistoryList.unshift(...deleteItems);
 					removeListeners(musicSign);
-					downloadStore.removeFromComputer(downloadMusic, true);
+					downloadStore.removeFile(
+						downloadMusic.downloadItemInfo?.localPath as string
+					);
 					(downloadMusic.downloadItemInfo as DownloadItemInfo).localPath =
 						downloadStore.downloadPath +
 						downloadMusic.musicTitle +
@@ -304,132 +312,19 @@ const startDownloadOne = (music: Music) => {
 	);
 };
 
-// const registerListeners = () => {
-// 	const downloadStore = useDownloadStore();
-// 	ipcRenderer.on(
-// 		MessageType.DOWNLOAD_UPDATE,
-// 		(event: IpcMainEvent, msg: any) => {
-// 			console.log(msg);
-// 			const downloadStore = useDownloadStore();
-// 			downloadStore.downloadQueue.map(item => {
-// 				if (item.musicId === msg.musicId) {
-// 					item.downloadItemInfo = msg;
-// 				}
-// 			});
-// 			// (downloadStore.currentDownloadMusic
-// 			// 	.downloadItemInfo as DownloadItemInfo) = msg;
-// 		}
-// 	);
-// 	ipcRenderer.on(
-// 		MessageType.DOWNLOAD_PAUSE,
-// 		(event: IpcMainEvent, msg: any) => {
-// 			const downloadStore = useDownloadStore();
-// 			(downloadStore.currentDownloadMusic
-// 				.downloadItemInfo as DownloadItemInfo) = msg;
-// 		}
-// 	);
-// 	ipcRenderer.on(
-// 		MessageType.DOWNLOAD_FINISH + downloadStore.currentDownloadMusic.musicId,
-// 		(event: IpcMainEvent, msg: any) => {
-// 			console.log(msg);
-// 			const downloadStore = useDownloadStore();
-// 			(downloadStore.currentDownloadMusic
-// 				.downloadItemInfo as DownloadItemInfo) = msg;
-// 			if (
-// 				(
-// 					downloadStore.currentDownloadMusic
-// 						.downloadItemInfo as DownloadItemInfo
-// 				).state !== 'completed'
-// 			) {
-// 				return;
-// 			}
-// 			writeinMusicInfo(
-// 				'G:/Movies/暴力美学/大厂/杂/temp/' +
-// 					downloadStore.currentDownloadMusic.musicId +
-// 					'.' +
-// 					downloadStore.currentDownloadMusic.musicFormat,
-// 				downloadStore.downloadPath,
-// 				JSON.parse(JSON.stringify(downloadStore.currentDownloadMusic)),
-// 				() => {
-// 					(
-// 						downloadStore.currentDownloadMusic
-// 							.downloadItemInfo as DownloadItemInfo
-// 					).state = 'writing';
-// 				},
-// 				() => {
-// 					(
-// 						downloadStore.currentDownloadMusic
-// 							.downloadItemInfo as DownloadItemInfo
-// 					).state = 'writing';
-// 				},
-// 				() => {
-// 					(
-// 						downloadStore.currentDownloadMusic
-// 							.downloadItemInfo as DownloadItemInfo
-// 					).state = 'writed';
-// 					// const currentMusic = downloadStore.downloadQueue.shift();
-// 					// setData(
-// 					// 	'downloadQueue',
-// 					// 	JSON.parse(JSON.stringify(downloadStore.downloadQueue))
-// 					// );
-// 					downloadStore.currentDownloadMusic = {} as Music;
-// 					!downloadStore.isAllPaused && downloadStore.startDownoad();
-// 				}
-// 			);
-// 		}
-// 	);
-// };
-
 const watcher = () => {
-	// const currentDownloadChange = () => {
-	// 	const downloadStore = useDownloadStore();
-	// 	downloadStore.$subscribe(
-	// 		() => {
-	// 			setData(
-	// 				'currentDownloadMusic',
-	// 				JSON.parse(JSON.stringify(downloadStore.currentDownloadMusic))
-	// 			);
-	// 		},
-	// 		{ detached: true, deep: true }
-	// 	);
-	// };
 	const downloadStore = useDownloadStore();
-	// const waitQueueChange = () => {
-	// 	downloadStore.$subscribe(
-	// 		() => {
-	// 			setData(
-	// 				'waitQueue',
-	// 				JSON.parse(JSON.stringify(downloadStore.waitQueue))
-	// 			);
-	// 		},
-	// 		{ detached: true, deep: true }
-	// 	);
-	// };
-	// const pauseQueueChange = () => {
-	// 	downloadStore.$subscribe(
-	// 		() => {
-	// 			setData(
-	// 				'pauseQueue',
-	// 				JSON.parse(JSON.stringify(downloadStore.pauseQueue))
-	// 			);
-	// 		},
-	// 		{ detached: true, deep: true }
-	// 	);
-	// };
 	const downloadHistoryListChange = () => {
 		downloadStore.$subscribe(
-			() => {
-				setData(
-					'downloadHistoryList',
-					JSON.parse(JSON.stringify(downloadStore.downloadHistoryList))
+			async () => {
+				const tempMusics = JSON.parse(
+					JSON.stringify(downloadStore.downloadHistoryList)
 				);
+				setData('downloadHistoryList', JSON.parse(JSON.stringify(tempMusics)));
 			},
 			{ detached: true, deep: true }
 		);
 	};
-	// currentDownloadChange();
-	// waitQueueChange();
-	// pauseQueueChange();
 	downloadHistoryListChange();
 };
 

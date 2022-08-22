@@ -1,8 +1,7 @@
 <script setup lang="ts">
+import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 import { Music } from '@/networks/music';
-import { useContextMenuStore } from '@/store/contextMenu';
 import { useDownloadStore } from '@/store/download';
-const menuStore = useContextMenuStore();
 const downloadStore = useDownloadStore();
 
 const startAll = () => {
@@ -15,39 +14,14 @@ const cancelAll = () => {
 	downloadStore.cancelAll();
 };
 
-const pauseOne = (music: Music) => {
-	downloadStore.pauseOne(music);
-};
+const contextMneu = useContextMenu({
+	resumeOne: true,
+	pauseOne: true,
+	cancelOne: true
+});
 
-const resumeOne = (music: Music) => {
-	downloadStore.resumeOne(music);
-};
-
-const cancelOne = (music: Music) => {
-	downloadStore.cancelOne(music);
-};
-
-const openContextMenu = (row: Music, cloumn: any, e: PointerEvent) => {
-	const contextMenuList = [
-		{
-			type: 'li',
-			title: '继续下载',
-			disabled: row.downloadItemInfo?.state === 'progressing',
-			callback: () => resumeOne(row)
-		},
-		{
-			type: 'li',
-			title: '暂停',
-			disabled: row.downloadItemInfo?.state === 'paused',
-			callback: () => pauseOne(row)
-		},
-		{
-			type: 'li',
-			title: '从下载列表中移除',
-			callback: () => cancelOne(row)
-		}
-	];
-	menuStore.openContextMenu({ event: e, args: row, contextMenuList });
+const open = (row: Music, cloumn: any, e: PointerEvent) => {
+	contextMneu.openContextMenu(e, row);
 };
 </script>
 <template>
@@ -59,12 +33,8 @@ const openContextMenu = (row: Music, cloumn: any, e: PointerEvent) => {
 		<SimpleContainer title="正在下载">
 			<template #content>
 				<el-table
-					:data="[
-						...downloadStore.downloadQueue
-						// ...downloadStore.pauseQueue
-						// ...downloadStore.waitQueue
-					]"
-					@row-contextmenu="openContextMenu">
+					:data="[...downloadStore.downloadQueue]"
+					@row-contextmenu="open">
 					<el-table-column #default="{ row: music }" label="封面" :width="80">
 						<div class="music-img">
 							<img :src="music.album.albumPic" :alt="music.musicTitle" />

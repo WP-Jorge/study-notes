@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow, dialog, ipcMain } from 'electron';
 import path from 'path';
 
 export const registerSystemListener = (mainWindow: BrowserWindow) => {
@@ -42,5 +42,14 @@ export const registerSystemListener = (mainWindow: BrowserWindow) => {
 		});
 		modalWindow.loadURL('http://localhost:3000');
 		modalWindow.show();
+	});
+	ipcMain.on('open-dir', async () => {
+		const res = await dialog.showOpenDialog({
+			properties: ['openDirectory'],
+			title: '请选择保存目录',
+			buttonLabel: '选择'
+		});
+		console.log('🦃🦃res', res);
+		mainWindow.webContents.send('open-dir', res.filePaths[0] ?? '');
 	});
 };

@@ -17,5 +17,6 @@ export enum MessageType {
 	DOWNLOAD_EXIT_FORCE = 'download-exit-force',
 	WILL_DOWNLOAD = 'will-download',
 	WRITEIN_UPDATE = 'writein-update',
-	WRITEIN_FINISH = 'writein-finish'
+	WRITEIN_FINISH = 'writein-finish',
+	OPEN_DIR = 'open-dir'
 }
