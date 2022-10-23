@@ -12,12 +12,12 @@
 	<script>
 		let input = document.querySelector('input');
 		let p = document.querySelector('p');
-		input.addEventListener('keyup', throttle(e => {
+		input.addEventListener('keyup', throttle(function(e) {
 			p.innerText = e.target.value;
 		}, 1000));
 		function throttle(fn, delay) {
 			let timer = null;
-			return (...args) => {
+			return function(...args) {
 				if (timer) {
 					return;
 				}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			function DagPathNum(nodes) {
+				// write code here
+				let res = 0;
+				for (let i = 0; i < nodes[0].length; i++) {
+					fn(i);
+				}
+				function fn(start) {
+					let tag = nodes[start];
+					for (let i = 0; i < tag.length; i++) {
+						fn(tag[i]);
+					}
+					if (start === nodes.length - 1 && tag.length === 0) {
+						res++;
+					}
+				}
+				return res;
+			}
+			console.log(DagPathNum([[1, 2, 3], [3], [3], [4], []]));
+		</script>
+	</body>
+</html>

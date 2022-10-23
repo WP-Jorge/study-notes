@@ -3,19 +3,18 @@
 	<head></head>
 	<body>
 		<script>
-			let nums = [2, 7, 11, 15];
-			let target = 9;
-			const sum = (nums, target) => {
-				const map = new Map();
-				for (let i = 0; i < nums.length; i++) {
-					let sub = target - nums[i];
-					if (map.has(sub)) {
-						return [map.get(sub), i];
+			function fn() {
+				s: for (let i = 0; i < 2; i++) {
+					for (let j = i; j < 5; j++) {
+						if (j === 2) {
+							// continue s;
+							break;
+						}
+						console.log(j);
 					}
-					map.set(nums[i], i);
 				}
-			};
-			console.log(sum(nums, target))
+			}
+			fn()
 		</script>
 	</body>
 </html>

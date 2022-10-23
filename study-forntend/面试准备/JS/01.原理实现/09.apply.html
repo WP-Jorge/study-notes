@@ -21,12 +21,7 @@
 				// 3、设置 fn 为调用 myApply 的方法
 				content.fn = this;
 				// 4、执行函数
-				let res;
-				if (args.length) {
-					res = content.fn(args);
-				} else {
-					res = content.fn();
-				}
+				let res = content.fn(...args);
 				// 5、删除新增的 fn 方法属性
 				delete content.fn;
 				// 6、将返回值返回

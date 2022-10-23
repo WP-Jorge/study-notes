@@ -13,7 +13,7 @@ function createWindow() {
 
 	// 创建浏览器窗口
 	const mainWindow = new BrowserWindow({
-		minWidth: 980,
+		minWidth: 1080,
 		minHeight: 600,
 		show: false, // 不显示窗口
 		icon: path.join(

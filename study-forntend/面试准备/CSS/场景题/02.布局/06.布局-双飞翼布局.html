@@ -6,24 +6,27 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Document</title>
 	<style>
+		/* 三列布局，中间宽度自适应，两边定宽；中间栏要在浏览器中优先展示渲染 */
 		.container {
 			display: flex;
 		}
 		
 		.middle {
-			flex: 1 1 auto;
+			order: 2;
+			flex: 1;
 			height: 400px;
 			background-color: yellowgreen;
 		}
 		
 		.left {
-			order: -1;
+			order: 1;
 			flex: 0 0 200px;
 			height: 400px;
 			background-color: pink;
 		}
 		
 		.right {
+			order: 3;
 			flex: 0 0 200px;
 			height: 400px;
 			background-color: skyblue;

@@ -28,10 +28,11 @@ const homeSlice = createSlice({
 	}
 });
 
-export const setHomeInfoAsync = (homeInfo: HomeInfo) => async (dispatch: AppDispatch) => {
-	await sleep(500);
-	dispatch(setHomeInfo(homeInfo));
-};
+export const setHomeInfoAsync =
+	(homeInfo: HomeInfo) => async (dispatch: AppDispatch) => {
+		await sleep(500);
+		dispatch(setHomeInfo(homeInfo));
+	};
 
 export const { setHomeInfo } = homeSlice.actions;
 

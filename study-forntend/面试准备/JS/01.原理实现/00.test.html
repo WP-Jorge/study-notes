@@ -8,28 +8,27 @@
 	</head>
 	<body>
 		<script>
-			function Animal() {
-				this.name = 'animal';
-				this.food = ['草'];
+			function myNew(Fn, ...args) {
+				// 1、创建一个新的空对象 obj
+				let obj = {};
+				// 2、给这个 obj 绑定原型
+				obj.__proto__ = Fn.prototype;
+				// 3、给 obj 绑定 this
+				let res = Fn.apply(obj, args);
+				// 返回值如果是对象，就返回该对象，否则返回 obj
+				return res instanceof Object ? res : obj;
 			}
-			Animal.prototype.eat = function() {
-				console.log(this.food);
-			}
-			function Cat() {
-				 Animal.call(this);
-				 this.name = 'cat';
-			}
-			function inheritPrototype(Parent, Child) {
-				const prototype = Object.create(Parent.prototype);
-				prototype.constructor = Child;
-				Child.prototype = prototype;
-			}
-			inheritPrototype(Animal, Cat);
-			const cat1 = new Cat();
-			cat1.food.push('鱼');
-			cat1.eat();
-			const cat2 = new Cat();
-			cat2.eat();
+			function Fn() {}
+			let a = myNew(Fn);
+			console.log(a.__proto__, Fn.prototype);
+			Fn.prototype = {
+				a: 1,
+				b: 2
+			};
+			let b = new myNew(Fn);
+			console.log(b.__proto__, Fn.prototype);
+
+			console.log(a.a, a.b, b.a, b.b);
 		</script>
 	</body>
 </html>

@@ -46,7 +46,7 @@ export function getRoutesFromApiTrees(apiTrees: Array<Api>, parentApi = '') {
 		if (parentApi.startsWith('/')) {
 			parentApi = parentApi.slice(1);
 		}
-		// 添加重新向路由
+		// 添加重定向路由
 		if (item.children?.length && !item.children[0].apiType) {
 			let redirectObj = {} as any;
 			const redirectPath = item.children[0].apiPath as string;

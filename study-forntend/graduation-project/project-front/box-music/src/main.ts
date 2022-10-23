@@ -6,7 +6,7 @@ import { createPinia } from 'pinia';
 // const electronApis = window.electronApis;
 
 // electronApis.getMusicInfo(
-// 	'G:/Movies/暴力美学/大厂/杂/download/Moukhna Tsahan(Feat. Bavaush).mp3',
+// 	'G:/DownLoad/download/Moukhna Tsahan(Feat. Bavaush).mp3',
 // 	(musicInfo: any) => {
 // 		console.log('🦃🦃musicInfo', musicInfo);
 // 	}

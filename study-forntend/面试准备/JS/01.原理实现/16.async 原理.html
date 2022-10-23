@@ -8,8 +8,14 @@
 	</head>
 	<body>
 		<script>
+			/*
+				① yield语句没有返回值，或者总是返回undefined
+				② next方法如果带上一个参数，这个参数就是作为上一个yield语句的返回值。注意：因为next方法表示上一个yield语句的返回值，所以必须有上一个yield语句的存在，那么第一次调用next方法时就不能传参数。第一个next只是用来启动Generator函数内部的遍历器，传参没有多大意义
+			*/
 			function sleep(time) {
-				return new Promise(resolve => setTimeout(() => resolve(time), time));
+				return new Promise(resolve =>
+					setTimeout(() => resolve(time), time)
+				);
 			}
 			function* p() {
 				let res1 = yield sleep(1000);
@@ -20,7 +26,7 @@
 			function asyncFunction(generator) {
 				let gen = generator();
 				function next(data) {
-					let {value, done} = gen.next(data);
+					let { value, done } = gen.next(data);
 					if (done) {
 						return value;
 					} else if (!(value instanceof Promise)) {

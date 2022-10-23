@@ -11,6 +11,14 @@ import {
 } from '@/networks/category';
 import { CategoryModal } from '../CategoryModal';
 
+const categoryTypeMap = {
+	0: '语种',
+	1: '风格',
+	2: '场景',
+	3: '情感',
+	4: '主题'
+};
+
 export const CategoryTable = () => {
 	const [pageData, setPageData] = useState([] as Array<Category>);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -47,7 +55,7 @@ export const CategoryTable = () => {
 			ellipsis: true,
 			render: (str: string) => (
 				<Tooltip placement="topLeft" title={str}>
-					{str}
+					{categoryTypeMap[str]}
 				</Tooltip>
 			)
 		},

@@ -54,10 +54,7 @@ interface DownloadListenerType {
 store.onDidChange('downloadCacheList', newValue => {
 	console.log('🦃🦃downloadCacheList', newValue);
 });
-const downloadTempPath = store.get(
-	'downloadTempPath',
-	'G:\\Movies\\暴力美学\\大厂\\杂\\temp\\'
-);
+const downloadTempPath = store.get('downloadTempPath', 'G:\\DownLoad\\temp\\');
 const listeners = {} as DownloadListenerType;
 let downloadCacheList = store.get(
 	'downloadCacheList',
@@ -102,7 +99,7 @@ export const registerDownloadListener = (mainWindow: BrowserWindow) => {
 						getDownloadInfoItem(
 							item,
 							downloadItemInfo,
-							music.musicId,
+							music.musicId as string,
 							prevReceivedBytes
 						);
 						prevReceivedBytes = item.getReceivedBytes();
@@ -132,7 +129,7 @@ export const registerDownloadListener = (mainWindow: BrowserWindow) => {
 						getDownloadInfoItem(
 							item,
 							downloadItemInfo,
-							music.musicId,
+							music.musicId as string,
 							undefined,
 							path
 						);

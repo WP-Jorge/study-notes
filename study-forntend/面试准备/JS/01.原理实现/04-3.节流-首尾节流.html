@@ -7,38 +7,32 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<input type="text" />
-		<p></p>
+		<input type="text" id="input" />
+		<p id="p"></p>
 		<script>
 			const input = document.getElementById('input');
 			const p = document.getElementById('p');
 			input.addEventListener(
 				'keyup',
-				throttle(
-					function (e) {
-						p.innerText = e.target.value;
-					},
-					1000,
-					true,
-					true
-				)
+				throttle(function (e) {
+					p.innerText = e.target.value;
+				}, 1000)
 			);
-			function throttle(fn, delay, positive, last) {
-				let oldTime = positive ? 0 : +new Date();
+			function throttle(fn, delay) {
+				let oldTime = +new Date();
 				let timer;
 				return function (...args) {
 					clearTimeout(timer);
 					let nowTime = +new Date();
-					if (nowTime - oldTime >= delay) {
+					if (oldTime + delay <= nowTime) {
 						fn.apply(this, args);
 						oldTime = nowTime;
 						return;
 					}
-					last &&
-						(timer = setTimeout(() => {
-							fn.apply(this, args);
-							timer = null;
-						}, delay));
+					timer = setTimeout(() => {
+						fn.apply(this, args);
+						timer = null;
+					}, delay);
 				};
 			}
 		</script>

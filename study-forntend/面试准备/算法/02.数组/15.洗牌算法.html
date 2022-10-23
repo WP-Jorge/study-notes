@@ -8,11 +8,14 @@
 	</head>
 	<body>
 		<script>
-			function fn(arr) {
-				arr.sort();
-				return arr.reverse();
+			function suffle(arr) {
+				for (let i = 0; i < arr.length; i++) {
+					const index = Math.floor(Math.random() * (i + 1));
+					[arr[i], arr[index]] = [arr[index], arr[i]];
+				}
+				return arr;
 			}
-			console.log(fn(['301', '27', '28', '7', '1', '936']));
+			console.log(suffle([1, 2, 3, 4, 5, 6, 7, 8]));
 		</script>
 	</body>
 </html>

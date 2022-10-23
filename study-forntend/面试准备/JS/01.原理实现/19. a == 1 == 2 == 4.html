@@ -8,11 +8,9 @@
 	</head>
 	<body>
 		<script>
-			function fn(arr) {
-				arr.sort();
-				return arr.reverse();
-			}
-			console.log(fn(['301', '27', '28', '7', '1', '936']));
+			let a = [1, 2, 4];
+			Array.prototype.join = Array.prototype.shift;
+			console.log(a == 1 && a == 2 && a == 4); // true
 		</script>
 	</body>
 </html>

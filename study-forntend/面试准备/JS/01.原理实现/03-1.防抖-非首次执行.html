@@ -7,23 +7,19 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<input type="text" />
-		<p></p>
+		<input id="input" type="text" />
+		<p id="p"></p>
 		<script>
-			let input = document.querySelector('input');
-			let p = document.querySelector('p');
 			input.addEventListener(
 				'keyup',
-				debounce(e => {
+				debounce(function (e) {
 					p.innerText = e.target.value;
 				}, 1000)
 			);
 			function debounce(fn, delay) {
 				let timer = null;
-				return (...args) => {
-					if (timer) {
-						clearTimeout(timer);
-					}
+				return function (...args) {
+					timer && clearTimeout(timer);
 					timer = setTimeout(() => {
 						fn.apply(this, args);
 					}, delay);

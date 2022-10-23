@@ -7,24 +7,24 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<script src="HD.js"></script>
+		<script src="MyPromise.js"></script>
 		<script>
-			let promise = new HD((resolve, reject) => {
+			let promise = new MyPromise((resolve, reject) => {
 				resolve('解决')
 			})
 			let p = promise.then(value => {
 				return p
 			})
-			HD.resolve('后盾人').then(value => {
+			MyPromise.resolve('后盾人').then(value => {
 				console.log(value)
 			})
-			let p1 = new HD((resolve, reject) => {
+			let p1 = new MyPromise((resolve, reject) => {
 				resolve('成功')
 			})
-			HD.resolve(p1).then(value => {
+			MyPromise.resolve(p1).then(value => {
 				console.log(value)
 			})
-			HD.reject('失败').then(null, reason => {
+			MyPromise.reject('失败').then(null, reason => {
 				console.log(reason)
 			})
 		</script>

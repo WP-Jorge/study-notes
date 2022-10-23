@@ -41,11 +41,8 @@ export const useDownloadStore = defineStore('download', {
 			// pauseQueue: [] as Music[],
 			store: getStore(),
 			messageChannelTypes: {} as MessageChannelType,
-			downloadPath: 'G:\\Movies\\暴力美学\\大厂\\杂\\download\\',
-			downloadTempPath: getData(
-				'downloadTempPath',
-				'G:\\Movies\\暴力美学\\大厂\\杂\\temp\\'
-			)
+			downloadPath: 'G:\\DownLoad\\download\\',
+			downloadTempPath: getData('downloadTempPath', 'G:\\DownLoad\\temp\\')
 		};
 	},
 	/**
@@ -63,15 +60,6 @@ export const useDownloadStore = defineStore('download', {
 				music.musicUrl = getResourceUrl(music.musicUrl, ResourceType.MUSIC);
 			}
 			music.musicUrl = encodeURI(music.musicUrl);
-			// if (music.musicTitle === '下一站茶山刘') {
-			// 	music.musicUrl = encodeURI(
-			// 		'http://localhost:8081/musics/可爱的人music.mp4'
-			// 	);
-			// } else {
-			// 	music.musicUrl = encodeURI(
-			// 		'http://localhost:8081/album-pictures/可爱的人.mp4'
-			// 	);
-			// }
 			if (!music.album.albumPic.startsWith('http')) {
 				music.album.albumPic = getResourceUrl(
 					music.album.albumPic,

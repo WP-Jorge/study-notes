@@ -14,21 +14,17 @@
 			const p = document.getElementById('p');
 			input.addEventListener(
 				'keyup',
-				debounce(
-					function (e) {
-						p.innerText = e.target.value;
-					},
-					300,
-					true
-				)
+				debounce(function (e) {
+					p.innerText = e.target.value;
+				}, 300)
 			);
-			function debounce(fn, delay, positive) {
+			function debounce(fn, delay) {
 				let timer;
 				return function (...args) {
-					if (!timer && positive) {
+					if (!timer) {
 						fn.apply(this, args);
 					}
-					clearTimeout(timer);
+					timer && clearTimeout(timer);
 					timer = setTimeout(() => {
 						timer = null;
 						fn.apply(this, args);

@@ -16,13 +16,13 @@
 				'keyup',
 				throttle(function (e) {
 					p.innerText = e.target.value;
-				}, 2000, true)
+				}, 2000)
 			);
-			function throttle(fn, delay, positive) {
-				let oldTime = positive ? 0 : +new Date();
+			function throttle(fn, delay) {
+				let oldTime = +new Date();
 				return function(...args) {
 					let nowTime = +new Date();
-					if (nowTime - oldTime >= delay) {
+					if (oldTime + delay <= nowTime) {
 						fn.apply(this, args);
 						oldTime = nowTime;
 					}

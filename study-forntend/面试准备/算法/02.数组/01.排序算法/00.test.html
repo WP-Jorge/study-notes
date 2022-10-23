@@ -8,27 +8,19 @@
 	</head>
 	<body>
 		<script>
-			// 希尔排序
-			function quickSort(arr) {
-				let target = arr[0];
-				let left = [];
-				let right = [];
+			function insertSort(arr) {
 				for (let i = 1; i < arr.length; i++) {
-					if (arr[i] < target) {
-						left.push(arr[i]);
-						continue;
+					let pre = i - 1;
+					let cur = arr[i];
+					while (i && cur < arr[pre]) {
+						arr[pre + 1] = arr[pre];
+						pre--;
 					}
-					right.push(arr[i]);
+					arr[pre + 1] = cur;
 				}
-				if (left.length >= 2) {
-					left = quickSort(left);
-				}
-				if (right.length >= 2) {
-					right = quickSort(right);
-				}
-				return [...left, target, ...right];
+				return arr;
 			}
-			console.log(quickSort([5, 2, 3, 0, 9, 12, 41, 1, 2, 4]));
+			console.log(insertSort([5, 2, 3, 0, 9, 12, 41, 1, 2, 4]));
 		</script>
 	</body>
 </html>

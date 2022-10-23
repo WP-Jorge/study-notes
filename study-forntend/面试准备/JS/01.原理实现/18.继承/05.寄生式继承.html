@@ -15,13 +15,13 @@
 		 * 缺点：
 		 * 		① 同样存在多个实例应用数据类型属性指向相同的问题
 		 */ 
-		function getSuperObj(obj) {
+		function getSubObj(obj) {
 			function NewObj() {}
 			NewObj.prototype = obj;
 			return new NewObj();
 		}
 		function getNewObj(obj) {
-			let newObj = getSuperObj(obj);
+			let newObj = getSubObj(obj);
 			newObj.eat = function() {
 				console.log('eat');
 			}

@@ -30,6 +30,7 @@ export const PlaylistModal = (props: PlaylistModalProps) => {
 	const [value, setValue] = useState([] as LabeledValue[]);
 	const [form] = useForm();
 	useEffect(() => {
+		console.log('🦃🦃	', formData);
 		if (formData?.playlistPic) {
 			const files = [
 				{
@@ -42,6 +43,11 @@ export const PlaylistModal = (props: PlaylistModalProps) => {
 			setFileList(files);
 			formData.fileList = files;
 		}
+		formData &&
+			(formData.categoryList = formData?.categories?.map((item: Category) => ({
+				label: item.categoryName,
+				value: item.categoryId
+			})));
 		form.setFieldsValue({
 			...formData
 		});
