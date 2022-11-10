@@ -1,19 +1,12 @@
 import { Music } from '@/networks/music';
-import { Playlist } from '@/networks/playlist';
 import { usePlaylistStore } from '@/store/playlist';
 import { useContextMenuStore } from '@/store/contextMenu';
 import { useDownloadStore } from '@/store/download';
 // import { ContextMenuType } from '@/globals/GlobalValues';
 import { ContextMenuItem } from '@/store/contextMenu';
-import { Singer } from '@/networks/singer';
 import { useMusicStore } from '@/store/music';
 import { usePlayOrderChange } from '@/components/content/MusicBar/components/MusicBarCenter/usePlayOrderChange';
-import { Album } from '@/networks/album';
-const musicStore = useMusicStore();
-const playOrderChange = usePlayOrderChange();
-const playlistStore = usePlaylistStore();
-const menuStore = useContextMenuStore();
-const downloadStore = useDownloadStore();
+import router from '@/router';
 const electronApis = window.electronApis;
 
 export interface ContextMenuOptions {
@@ -27,10 +20,11 @@ export interface ContextMenuOptions {
 	removeFromHistoryList?: boolean;
 	removeFromComputer?: boolean;
 	openfolder?: boolean;
-	removeFormList?: boolean;
+	removeFromList?: boolean;
 	playMusic?: boolean;
 	playAlbum?: boolean;
 	addAlbumToPlaylist?: boolean;
+	go?: boolean;
 	[x: string]: any;
 }
 interface MenuTemplates {
@@ -52,21 +46,27 @@ interface menuFunctions {
 	removeFromHistoryList?: any;
 	removeFromComputer?: any;
 	openfolder?: any;
-	removeFormList?: any;
+	removeFromList?: any;
 	playMusic?: any;
 	playAlbum?: any;
 	addAlbumToPlaylist?: any;
-	[x: string]: (
-		payload: Music | Singer | Playlist | Album,
-		...args: any
-	) => any;
+	go?: (path: string, payload: any) => any;
+	// [x: string]: (
+	// 	payload?: Music | Singer | Playlist | Album,
+	// 	...args: any
+	// ) => any;
 }
 
 const contextMenuOptions = {
 	// contextMenuType: ContextMenuType.MUSIC
 };
 
-export const useContextMenu = (options: ContextMenuOptions) => {
+export const useContextMenu = (options = {} as ContextMenuOptions) => {
+	const musicStore = useMusicStore();
+	const playlistStore = usePlaylistStore();
+	const menuStore = useContextMenuStore();
+	const downloadStore = useDownloadStore();
+	const playOrderChange = usePlayOrderChange();
 	options = options
 		? { ...contextMenuOptions, ...options }
 		: contextMenuOptions;
@@ -95,9 +95,17 @@ export const useContextMenu = (options: ContextMenuOptions) => {
 		playMusic: (music: Music) => {
 			if (!musicStore.musicList.includes(music)) {
 				musicStore.musicList.push(music);
+				localStorage.setItem('musicList', JSON.stringify(musicStore.musicList));
 			}
 			musicStore.setMusic(music);
+			musicStore.recentPlayMusics.unshift(music);
 			playOrderChange();
+		},
+		go: (path: string, payload: any) => {
+			router.push({
+				path,
+				query: payload
+			});
 		}
 	} as menuFunctions;
 	const openContextMenu = (e: PointerEvent, ...payload: any) => {
@@ -174,6 +182,11 @@ export const useContextMenu = (options: ContextMenuOptions) => {
 				type: 'li',
 				title: '立即播放',
 				callback: () => menuFunctions.playMusic.apply(null, payload)
+			},
+			go: {
+				type: 'li',
+				title: '进入详情',
+				callback: () => menuFunctions.go?.apply(null, [payload[1], payload[0]])
 			}
 		} as MenuTemplates;
 		const contextMenuList = [];

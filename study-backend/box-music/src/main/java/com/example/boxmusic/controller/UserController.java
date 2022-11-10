@@ -46,7 +46,7 @@ public class UserController {
 	
 	@Transactional(rollbackFor = Exception.class)
 	@ApiOperation("用户注册")
-	@PostMapping("/user/adminRegister")
+	@PostMapping("/user/register")
 	public R adminRegister(MultipartFile picture, @Valid AddUserDTO addUserDTO) {
 		return userService.adminRegister(picture, addUserDTO);
 	}

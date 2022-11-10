@@ -32,13 +32,13 @@ const getMusicsByTotalViewsSortPage = async () => {
 	}
 };
 
-const contextMneu = useContextMenu({
+const contextMenu = useContextMenu({
 	playMusic: true,
 	addMusicToPlaylist: true
 });
 
 const open = (e: PointerEvent, row: Music) => {
-	contextMneu.openContextMenu(e, row);
+	contextMenu.openContextMenu(e, row);
 };
 
 const nextBatch = () => {
@@ -76,7 +76,7 @@ getMusicsByTotalViewsSortPage();
 					:picUrl="item.album.albumPic"
 					:title="item.musicTitle"
 					@contextmenu="(e: PointerEvent) => open(e, item)"
-					@click="contextMneu.menuFunctions.playMusic(item)" />
+					@click="contextMenu.menuFunctions.playMusic(item)" />
 			</template>
 		</CardContainer>
 	</div>

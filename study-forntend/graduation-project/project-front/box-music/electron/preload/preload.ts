@@ -1,7 +1,7 @@
 // 所有Node.js API都可以在预加载过程中使用。
 // 它拥有与Chrome扩展一样的沙盒。
-const ffmpegPath = require('ffmpeg-static-electron');
-const ffprobePath = require('ffprobe-static-electron');
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg');
+const ffprobePath = require('@ffprobe-installer/ffprobe');
 const ffmpeg = require('fluent-ffmpeg');
 
 import './apis';

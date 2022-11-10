@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 import { ResourceType } from '@/globals/GlobalValues';
 import { ResponseType } from '@/globals/ResponseType';
 import { Album, getAlbumsByTotalViewsSortPageApi } from '@/networks/album';
@@ -16,6 +17,10 @@ const getAlbumsByTotalViewsSortPage = async () => {
 	}
 };
 
+const contextMneu = useContextMenu();
+
+const go = contextMneu.menuFunctions.go as (path: string, payload: any) => any;
+
 getAlbumsByTotalViewsSortPage();
 </script>
 <template>
@@ -30,7 +35,8 @@ getAlbumsByTotalViewsSortPage();
 				<carousel-item
 					:picUrl="item.albumPic"
 					:title="item.albumName"
-					:content="item.albumDescription" />
+					:content="item.albumDescription"
+					@click="go('albumDescription', item)" />
 			</el-carousel-item>
 		</el-carousel>
 	</div>

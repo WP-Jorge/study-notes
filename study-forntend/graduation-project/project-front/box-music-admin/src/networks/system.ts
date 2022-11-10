@@ -3,7 +3,7 @@ import axios from '@/networks';
 import { BaseInterface } from '@/globals/globalTypes';
 
 export const registerApi = (formData: FormData) => {
-	return axios.post('/user/adminRegister', formData);
+	return axios.post('/user/register', formData);
 };
 
 export const loginApi = (data: UserLoginRequest) => {

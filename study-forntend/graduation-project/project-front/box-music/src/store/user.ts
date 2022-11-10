@@ -1,6 +1,13 @@
 import { defineStore } from 'pinia';
 
-import { UserInfo, Api, Role, UserLoginResponse } from '@/networks/user';
+import {
+	UserInfo,
+	Api,
+	Role,
+	UserLoginResponse,
+	getUserInfoApi
+} from '@/networks/user';
+import { ResponseType } from '@/globals/ResponseType';
 
 // 1.定义并导出容器
 /**
@@ -13,10 +20,13 @@ export const useUserStore = defineStore('user', {
 	 */
 	state: () => {
 		return {
-			userInfo: {} as UserInfo,
-			token: '',
-			apis: [] as Array<Api>,
-			roles: [] as Array<Role>
+			userInfo: (JSON.parse(localStorage.getItem('user') ?? '{}').userInfo ??
+				{}) as UserInfo,
+			token: JSON.parse(localStorage.getItem('user') ?? '{}').token ?? '',
+			apis: (JSON.parse(localStorage.getItem('user') ?? '{}').apis ??
+				[]) as Array<Api>,
+			roles: (JSON.parse(localStorage.getItem('user') ?? '{}').apis ??
+				[]) as Array<Role>
 		};
 	},
 	/**
@@ -51,7 +61,31 @@ export const useUserStore = defineStore('user', {
 				this.userInfo = {};
 				this.apis = [];
 			});
-			localStorage.clear();
+			localStorage.removeItem('user');
+		},
+		setUserInfo(userInfo: UserInfo) {
+			this.$patch(() => {
+				this.userInfo = userInfo;
+			});
+			localStorage.setItem(
+				'user',
+				JSON.stringify({
+					userInfo: this.userInfo,
+					apis: this.apis,
+					roles: this.roles,
+					token: this.token
+				})
+			);
+		},
+		async getUserInfo() {
+			const getUserInfo = async () => {
+				const res = await getUserInfoApi();
+				console.log('🦃🦃res', res);
+				if (res && res.data.type === ResponseType.SUCCESS) {
+					this.setUserInfo(res.data.userInfo);
+				}
+			};
+			getUserInfo();
 		}
 	}
 });

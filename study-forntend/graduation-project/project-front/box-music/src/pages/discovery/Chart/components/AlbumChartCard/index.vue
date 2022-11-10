@@ -47,11 +47,12 @@ const nextBatch = () => {
 
 const contextMneu = useContextMenu({
 	playAlbum: true,
-	addAlbumToPlaylist: true
+	addAlbumToPlaylist: true,
+	go: true
 });
 
 const open = (e: PointerEvent, row: Album) => {
-	contextMneu.openContextMenu(e, row);
+	contextMneu.openContextMenu(e, row, 'albumDescription');
 };
 
 getAlbumsByTotalViewsSortPage();

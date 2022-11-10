@@ -35,7 +35,10 @@ onMounted(() => {
 		ref="audio"
 		:muted="musicStore.playMusic.muted"
 		:loop="isPlayOne"
-		:src="musicStore.playMusic.music.musicUrl"
+		:src="
+			musicStore.playMusic.music.downloadItemInfo?.localPath ??
+			musicStore.playMusic.music.musicUrl
+		"
 		:controls="musicStore.playMusic.controls"
 		@ended="ended"
 		@timeupdate="timeUpdate" />

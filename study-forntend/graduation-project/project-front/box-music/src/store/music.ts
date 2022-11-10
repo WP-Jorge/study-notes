@@ -35,7 +35,10 @@ export const useMusicStore = defineStore('music', {
 				shouldChangeMusic: true
 			},
 			category: {} as Category,
-			chartType: {} as ChartType
+			chartType: {} as ChartType,
+			recentPlayMusics: JSON.parse(
+				localStorage.getItem('recentPlayMusicList') ?? '[]'
+			) as Music[]
 		};
 	},
 	getters: {
@@ -43,6 +46,19 @@ export const useMusicStore = defineStore('music', {
 			return (
 				PlayTypes[state.playMusic.playTypeIndex] === GlobalValues.PLAY_RANDOM
 			);
+		},
+		recentPalyMusicList: state => {
+			const map = {} as any;
+			const res = state.recentPlayMusics
+				.filter(item => {
+					if (item.musicId && !map[item.musicId as string]) {
+						map[item.musicId as string] = true;
+						return item;
+					}
+				})
+				.slice(0, 100);
+			localStorage.setItem('recentPlayMusicList', JSON.stringify(res));
+			return res;
 		}
 	},
 	actions: {
@@ -53,9 +69,9 @@ export const useMusicStore = defineStore('music', {
 			if (isEntity) {
 				this.playMusic.music = music;
 				localStorage.setItem('music', JSON.stringify(music));
-				localStorage.setItem('music', JSON.stringify(music));
 				return;
 			}
+			console.log('🦃🦃music', music);
 			if (!music.local) {
 				if (!music.musicUrl.startsWith('http')) {
 					music.musicUrl = getResourceUrl(music.musicUrl, ResourceType.MUSIC);

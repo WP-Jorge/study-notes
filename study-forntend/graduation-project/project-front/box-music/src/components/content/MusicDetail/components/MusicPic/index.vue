@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useMusicStore } from '@/store/music';
+import { useDownloadStore } from '@/store/download';
 const musicStore = useMusicStore();
+const downloadStore = useDownloadStore();
 </script>
 <template>
 	<div class="music-pic">
@@ -46,7 +48,11 @@ const musicStore = useMusicStore();
 					effect="light"
 					content="下载"
 					placement="bottom">
-					<i-ic-round-download class="item" />
+					<i-ic-round-download
+						:class="{
+							item: true,
+							hidden: !downloadStore.downloadable(musicStore.playMusic.music)
+						}" />
 				</el-tooltip>
 				<el-tooltip
 					:show-after="500"
@@ -57,7 +63,11 @@ const musicStore = useMusicStore();
 					effect="light"
 					content="已下载"
 					placement="bottom">
-					<i-ic-round-download-done class="item" />
+					<i-ic-round-download-done
+						:class="{
+							item: true,
+							hidden: downloadStore.downloadable(musicStore.playMusic.music)
+						}" />
 				</el-tooltip>
 			</div>
 		</div>
@@ -117,6 +127,10 @@ const musicStore = useMusicStore();
 				margin: 0 10px;
 				font-size: 24px;
 				cursor: pointer;
+			}
+
+			.hidden {
+				display: none;
 			}
 		}
 	}

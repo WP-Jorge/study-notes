@@ -3,9 +3,26 @@ import { useRouter } from 'vue-router';
 import { useSystemStore } from '@/store/system';
 const systemStore = useSystemStore();
 const router = useRouter();
+const paths = computed(() => {
+	return systemStore.parentMenu.children?.map(
+		item => item.path
+	) as unknown as string[];
+});
+// watchEffect(() => {
+// 	if (router.currentRoute.value.path === '/') {
+// 		// systemStore.parentMenuIndex = 0;
+// 	}
+// 	console.log('🦃🦃', router.currentRoute.value);
+// });
+// console.log(
+// 	paths.value,
+// 	router.currentRoute.value.path,
+// 	paths.value?.includes(router.currentRoute.value.path)
+// );
 </script>
 <template>
 	<el-menu
+		v-show="paths?.includes(router.currentRoute.value.path)"
 		class="menu"
 		mode="horizontal"
 		:default-active="router.currentRoute.value.path"

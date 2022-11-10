@@ -30,4 +30,6 @@ public interface AlbumService extends IService<Album> {
 	R updateAlbum(MultipartFile picture, UpdateAlbumDTO updateAlbumDTO);
 	
 	R getAlbumsByTotalViewsSortPage(Page<Map<String, Object>> page);
+	
+	R getAlbumsBySingerIdPage(Page<Map<String, Object>> page, Long singerId);
 }

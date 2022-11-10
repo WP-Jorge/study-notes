@@ -11,7 +11,6 @@ const {
 	writeinMusicInfo,
 	getData,
 	getStore,
-	setData,
 	clearStore,
 	deleteFile,
 	downloadFile
@@ -65,8 +64,9 @@ export const useDownloadStore = defineStore('download', {
 					music.album.albumPic,
 					ResourceType.ALBUM_PICTURE
 				);
+			} else {
+				music.album.albumPic = encodeURI(music.album.albumPic);
 			}
-			music.album.albumPic = encodeURI(music.album.albumPic);
 			music.singers.map((item: Singer) => {
 				if (!item.singerPic.startsWith('http')) {
 					item.singerPic = getResourceUrl(
@@ -252,6 +252,7 @@ const startDownloadOne = (music: Music) => {
 			}
 			const downloadMusic = music;
 			downloadMusic.downloadItemInfo = msg;
+			downloadMusic.local = true;
 			if (downloadMusic.downloadItemInfo?.state !== 'completed') {
 				return;
 			}
@@ -300,21 +301,21 @@ const startDownloadOne = (music: Music) => {
 	);
 };
 
-const watcher = () => {
-	const downloadStore = useDownloadStore();
-	const downloadHistoryListChange = () => {
-		downloadStore.$subscribe(
-			async () => {
-				const tempMusics = JSON.parse(
-					JSON.stringify(downloadStore.downloadHistoryList)
-				);
-				setData('downloadHistoryList', JSON.parse(JSON.stringify(tempMusics)));
-			},
-			{ detached: true, deep: true }
-		);
-	};
-	downloadHistoryListChange();
-};
+// const watcher = () => {
+// 	const downloadStore = useDownloadStore();
+// 	const downloadHistoryListChange = () => {
+// 		downloadStore.$subscribe(
+// 			async () => {
+// 				const tempMusics = JSON.parse(
+// 					JSON.stringify(downloadStore.downloadHistoryList)
+// 				);
+// 				setData('downloadHistoryList', JSON.parse(JSON.stringify(tempMusics)));
+// 			},
+// 			{ detached: true, deep: true }
+// 		);
+// 	};
+// 	downloadHistoryListChange();
+// };
 
 const removeListeners = (musicSign: string) => {
 	ipcRenderer.removeAllListeners(`${MessageType.DOWNLOAD_UPDATE}-${musicSign}`);
@@ -322,4 +323,4 @@ const removeListeners = (musicSign: string) => {
 };
 
 removeAllListeners();
-watcher();
+// watcher();

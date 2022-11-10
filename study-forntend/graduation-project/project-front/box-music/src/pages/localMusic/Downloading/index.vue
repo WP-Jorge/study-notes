@@ -2,6 +2,7 @@
 import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 import { Music } from '@/networks/music';
 import { useDownloadStore } from '@/store/download';
+const { setData } = window.electronApis;
 const downloadStore = useDownloadStore();
 
 const startAll = () => {
@@ -23,6 +24,23 @@ const contextMneu = useContextMenu({
 const open = (row: Music, cloumn: any, e: PointerEvent) => {
 	contextMneu.openContextMenu(e, row);
 };
+
+const watcher = () => {
+	const downloadStore = useDownloadStore();
+	const downloadHistoryListChange = () => {
+		downloadStore.$subscribe(
+			async () => {
+				const tempMusics = JSON.parse(
+					JSON.stringify(downloadStore.downloadHistoryList)
+				);
+				setData('downloadHistoryList', JSON.parse(JSON.stringify(tempMusics)));
+			},
+			{ detached: true, deep: true }
+		);
+	};
+	downloadHistoryListChange();
+};
+watcher();
 </script>
 <template>
 	<div class="downloading">

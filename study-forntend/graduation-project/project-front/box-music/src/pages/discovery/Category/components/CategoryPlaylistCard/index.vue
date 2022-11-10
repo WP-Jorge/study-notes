@@ -38,10 +38,15 @@ const getPlaylistsByCategoryIdPage = async (categoryId: string) => {
 
 const contextMenu = useContextMenu({
 	playPlaylist: true,
-	addPlaylistToPlaylist: true
+	addPlaylistToPlaylist: true,
+	go: true
 });
 const open = (e: PointerEvent, clickItem: Playlist) => {
-	contextMenu.openContextMenu(e, clickItem);
+	contextMenu.openContextMenu(
+		e,
+		JSON.parse(JSON.stringify(clickItem)),
+		'playlistDescription'
+	);
 };
 
 watch(

@@ -51,6 +51,7 @@ const getLocalMusic = async (dir: string) => {
 				musicPathsTemp.push(getMusicInfo(musicPath));
 			}
 			const rawLocalMusicList = [...(await Promise.all(musicPathsTemp))];
+			console.log('🦃🦃rawLocalMusicList', rawLocalMusicList);
 			const formatedLocalMusicList = formatMusics(rawLocalMusicList);
 			localMusicStore.localMusicList.push(...formatedLocalMusicList);
 			localStorage.setItem(

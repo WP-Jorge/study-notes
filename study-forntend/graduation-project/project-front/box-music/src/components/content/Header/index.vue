@@ -1,56 +1,91 @@
 <script setup lang="ts">
-import { MessageType } from '@/globals/GlobalValues';
+import { MessageType, ResourceType } from '@/globals/GlobalValues';
 import { useSystemStore } from '@/store/system';
 import { storeToRefs } from 'pinia';
-import { getAssetsFileUrl } from '@/utils/fileUtil';
+import { getAssetsFileUrl, getResourceUrl } from '@/utils/fileUtil';
+import { useUserStore } from '@/store/user';
+import { ElButton } from 'element-plus';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const systemStore = useSystemStore();
-const { isMax, isFullscreen } = storeToRefs(systemStore);
+const userStore = useUserStore();
+const { showMusicDetail } = storeToRefs(systemStore);
+const { isMax, isFullscreen, routerNum, routerPos } = storeToRefs(systemStore);
+const leftDisable = computed(() => routerPos.value === 0);
+const rightDisable = computed(() => routerPos.value === routerNum.value - 1);
+const go = (num: number) => {
+	history.go(num);
+};
+const open = (state: number) => {
+	systemStore.loginState.show = true;
+	systemStore.loginState.state = state;
+};
 </script>
 <template>
 	<div class="header">
 		<div class="container">
-			<router-link class="logo" to="/" tabindex="-1">
-				<img :src="getAssetsFileUrl('images', 'logo.png')" alt="logo" />
-				<span>盒子音乐</span>
-			</router-link>
+			<div class="left">
+				<router-link class="logo" to="/" tabindex="-1">
+					<img :src="getAssetsFileUrl('images', 'logo.png')" alt="logo" />
+					<span>盒子音乐</span>
+				</router-link>
+				<div :class="{ router: true, hidden: showMusicDetail }">
+					<i-system-uicons:arrow-left-circle
+						:class="{ item: true, disabled: leftDisable }"
+						@click="go(-1)" />
+					<i-system-uicons:arrow-right-circle
+						:class="{ item: true, disabled: rightDisable }"
+						@click="go(1)" />
+					<i-ion:reload-circle-outline class="item" @click="go(0)" />
+				</div>
+			</div>
 			<div class="right">
+				<div class="search">
+					<el-input placeholder="请输入关键字">
+						<template #suffix>
+							<i-akar-icons:search class="search-icon" />
+						</template>
+					</el-input>
+				</div>
 				<div class="info">
-					<div class="user-info">
+					<div
+						v-if="userStore.token"
+						class="user-info"
+						@click="router.push('/personalCenter')">
 						<el-popover
-							:width="300"
+							:width="250"
 							popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
 							<template #reference>
-								<el-avatar :src="getAssetsFileUrl('images', 'logo.png')" />
+								<el-avatar
+									:src="getResourceUrl(userStore.userInfo.userPic as string, ResourceType.USER_PICTURE)" />
 							</template>
 							<template #default>
-								<div
-									class="demo-rich-conent"
-									style="display: flex; gap: 16px; flex-direction: column">
-									<el-avatar :src="getAssetsFileUrl('images', 'logo.png')" />
-									<div>
-										<p
-											class="demo-rich-content__name"
-											style="margin: 0; font-weight: 500">
-											Element Plus
-										</p>
-										<p
-											class="demo-rich-content__mention"
-											style="
-												margin: 0;
-												font-size: 14px;
-												color: var(--el-color-info);
-											">
-											@element-plus
-										</p>
+								<div class="user-info-container">
+									<div class="title">
+										<h3>{{ userStore.userInfo.username }}</h3>
 									</div>
-
-									<p class="demo-rich-content__desc" style="margin: 0">
-										Element Plus, a Vue 3 based component library for
-										developers, designers and product managers
-									</p>
+									<div class="content">
+										<p>电话号码：{{ userStore.userInfo.tel }}</p>
+										<p>邮箱：{{ userStore.userInfo.email }}</p>
+										<p>性别：{{ userStore.userInfo.sex }}</p>
+										<p>年龄：{{ userStore.userInfo.age }}</p>
+									</div>
+									<div class="footer">
+										<el-button
+											type="danger"
+											size="small"
+											@click="userStore.logout">
+											退出登录
+										</el-button>
+									</div>
 								</div>
 							</template>
 						</el-popover>
+					</div>
+					<div v-else class="login">
+						<span @click="open(0)">登录</span>
+						/
+						<span @click="open(1)">注册</span>
 					</div>
 				</div>
 				<div class="options">
@@ -124,28 +159,82 @@ const { isMax, isFullscreen } = storeToRefs(systemStore);
 		height: 100%;
 		margin: 0 10px 0 40px;
 
-		.logo {
+		.left {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			width: 110px;
-			height: 100%;
+			width: 260px;
+			height: 60px;
 			-webkit-app-region: no-drag;
 
-			img {
-				width: 40px;
+			.logo {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				width: 110px;
+				height: 100%;
+				-webkit-app-region: no-drag;
+
+				img {
+					width: 40px;
+				}
+
+				span {
+					color: #444444;
+					font-weight: bold;
+					font-size: 14px;
+				}
 			}
 
-			span {
-				color: #444444;
-				font-weight: bold;
-				font-size: 14px;
+			.router {
+				display: flex;
+				justify-content: space-between;
+				width: 100px;
+				.item {
+					font-size: 22px;
+					color: #949494;
+				}
+				.item:hover {
+					color: #545454;
+					cursor: pointer;
+				}
+				.disabled {
+					color: #d4d4d4;
+					cursor: not-allowed;
+				}
+				.disabled:hover {
+					color: #d4d4d4;
+					cursor: not-allowed;
+				}
+			}
+
+			.hidden {
+				visibility: hidden;
 			}
 		}
 		.right {
 			display: flex;
 			justify-content: space-between;
-			width: 200px;
+			width: 350px;
+
+			.search {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-right: 20px;
+				-webkit-app-region: no-drag;
+				.el-input {
+					width: 150px;
+					.search-icon {
+						cursor: pointer;
+					}
+					:deep(.el-input__wrapper) {
+						border-radius: 50px;
+						background-color: transparent;
+						font-size: 12px;
+					}
+				}
+			}
 			.info {
 				display: flex;
 				justify-content: space-between;
@@ -159,6 +248,24 @@ const { isMax, isFullscreen } = storeToRefs(systemStore);
 					cursor: pointer;
 					border-radius: 50%;
 					overflow: hidden;
+
+					.demo-rich-conent {
+						display: flex;
+						flex-direction: column;
+
+						.user-info-top {
+							margin-bottom: 10px;
+							border-bottom: 1px solid #f0f0f0;
+						}
+					}
+				}
+				.login {
+					font-size: 12px;
+					color: #949494;
+					-webkit-app-region: no-drag;
+					span {
+						cursor: pointer;
+					}
 				}
 			}
 			.options {

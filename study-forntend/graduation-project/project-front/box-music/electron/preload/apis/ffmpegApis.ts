@@ -63,7 +63,9 @@ export const writeinMusicInfo = (
 		.map((item: Singer) => item.singerName)
 		.join(',');
 	if (music.musicFormat?.toLowerCase() === 'flac') {
+		console.log('🦃🦃flac', 'flac', music);
 		ffmpeg(musicPath)
+			// .addOption('-i', `G:/DownLoad/template/1.jpg`)
 			.addOption('-i', `${music.album.albumPic}`)
 			.addOption('-map', `0:a`)
 			.addOption('-map', `1`)
@@ -71,12 +73,13 @@ export const writeinMusicInfo = (
 			.addOption('-metadata:s:v', `title="Album cover"`)
 			.addOption('-metadata:s:v', `comment="Cover (front)"`)
 			.addOption('-disposition:v', `attached_pic`)
-			.addOption('-metadata', `album=${music.album.albumName}`)
-			.addOption('-metadata', `artist=${artists}`)
-			.addOption('-metadata', `genre=box-music`)
-			.addOption('-metadata', `title=${music.musicTitle}`)
-			.addOption('-metadata', `lyric=${formatLyric(music.lyric as string)}`)
+			.addOption('-metadata', `album="${music.album.albumName}"`)
+			.addOption('-metadata', `artist="${artists}"`)
+			.addOption('-metadata', `genre="box-music"`)
+			.addOption('-metadata', `title="${music.musicTitle}"`)
+			.addOption('-metadata', `lyric="${formatLyric(music.lyric as string)}"`)
 			.on('start', (commandLine: string) => {
+				console.log('🦃🦃commandLine', commandLine);
 				onStart('开始下载：' + commandLine);
 			})
 			.on('end', () => {
@@ -86,7 +89,33 @@ export const writeinMusicInfo = (
 				onProgress(progress);
 			})
 			.save(targetPath);
+		// ffmpeg(musicPath)
+		// 	.addOption('-i', `${music.album.albumPic}`)
+		// 	.addOption('-map', `0:a`)
+		// 	.addOption('-map', `1`)
+		// 	.addOption('-codec', `copy`)
+		// 	.addOption('-metadata:s:v', `title="Album cover"`)
+		// 	.addOption('-metadata:s:v', `comment="Cover (front)"`)
+		// 	.addOption('-disposition:v', `attached_pic`)
+		// 	.addOption('-metadata', `album="${music.album.albumName}"`)
+		// 	.addOption('-metadata', `artist="${artists}"`)
+		// 	.addOption('-metadata', `genre="box-music"`)
+		// 	.addOption('-metadata', `title="${music.musicTitle}"`)
+		// 	.addOption('-metadata', `lyric="${formatLyric(music.lyric as string)}"`)
+		// 	.on('start', (commandLine: string) => {
+		// 		console.log('🦃🦃commandLine', commandLine);
+		// 		onStart('开始下载：' + commandLine);
+		// 	})
+		// 	.on('end', () => {
+		// 		onEnd('下载完成');
+		// 	})
+		// 	.on('progress', (progress: any) => {
+		// 		onProgress(progress);
+		// 	})
+		// 	.save(targetPath);
 	} else {
+		console.log('🦃🦃flac', '其他');
+
 		ffmpeg(musicPath)
 			.addOption('-i', `${music.album.albumPic}`)
 			.addOption('-map', `0:0`)
@@ -99,8 +128,9 @@ export const writeinMusicInfo = (
 			.addOption('-metadata', `artist=${artists}`)
 			.addOption('-metadata', `genre=box-music`)
 			.addOption('-metadata', `title=${music.musicTitle}`)
-			.addOption('-metadata', `lyric=${formatLyric(music.lyric as string)}`)
+			.addOption('-metadata', `lyric="${formatLyric(music.lyric as string)}"`)
 			.on('start', (commandLine: string) => {
+				console.log('🦃🦃commandLine', commandLine);
 				onStart('开始下载：' + commandLine);
 			})
 			.on('end', () => {

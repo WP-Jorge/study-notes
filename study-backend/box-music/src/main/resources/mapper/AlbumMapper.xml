@@ -21,5 +21,9 @@
         <result column="album_description" property="albumDescription" />
         <result column="total_views" property="totalViews" />
     </resultMap>
+    <select id="getAlbumsBySingerIdPage" resultType="com.example.boxmusic.pojo.vo.AlbumVO">
+        select * from music, album, singer, music_singer
+        where music.music_id = music_singer.music_id and music_singer.singer_id = singer.singer_id and music.album_id = album.album_id and singer.singer_id = #{singerId}
+    </select>
 
 </mapper>

@@ -7,6 +7,7 @@ import Menu from '@/components/content/Menu/index.vue';
 import MusicBar from '@/components/content/MusicBar/index.vue';
 import MusicDetail from '@/components/content/MusicDetail/index.vue';
 import ContentMexu from './components/common/ContextMenu/index.vue';
+import Login from '@/components/content/Login/index.vue';
 
 const systemStore = useSystemStore();
 const { showSiderMenu, showMain, showMusicDetail } = storeToRefs(systemStore);
@@ -52,6 +53,7 @@ const { showSiderMenu, showMain, showMusicDetail } = storeToRefs(systemStore);
 		</el-container>
 		<el-footer><MusicBar /></el-footer>
 	</el-container>
+	<Login />
 </template>
 <style lang="scss">
 @use './assets/global.scss';
@@ -81,6 +83,7 @@ const { showSiderMenu, showMain, showMusicDetail } = storeToRefs(systemStore);
 	.el-main {
 		padding: 0;
 		height: calc(100vh - 60px - 71px);
+		min-width: 780px;
 		overflow: hidden;
 		& > .content {
 			padding: 10px;
@@ -105,6 +108,42 @@ const { showSiderMenu, showMain, showMusicDetail } = storeToRefs(systemStore);
 		padding: 0;
 		height: 71px;
 		border-top: 1px solid var(--el-border-color);
+	}
+}
+
+.el-popper {
+	.user-info-container {
+		.title,
+		.content {
+			border-bottom: 1px solid #e0e0e0;
+			padding-bottom: 5px;
+			margin-bottom: 5px;
+			p {
+				position: relative;
+				margin-top: 5px;
+				font-weight: 500;
+				.edit {
+					display: none;
+					position: absolute;
+					right: 0;
+					padding: 0 5px;
+					cursor: pointer;
+					color: var(--el-color-primary);
+					font-size: 12px;
+					line-height: 19.6px;
+				}
+			}
+			p:hover {
+				.edit {
+					display: inline-block;
+				}
+			}
+		}
+		.footer {
+			display: flex;
+			justify-content: end;
+			margin-top: 10px;
+		}
 	}
 }
 </style>

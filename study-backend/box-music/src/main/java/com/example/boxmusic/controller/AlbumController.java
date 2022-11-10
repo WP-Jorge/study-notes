@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author Jorge
@@ -40,8 +40,8 @@ public class AlbumController {
 	@ApiOperation("根据专辑名模糊查询专辑")
 	@GetMapping("/getAlbumsByAlbumNamePage")
 	public R getAlbumsByAlbumNamePage(@RequestParam(defaultValue = "1") Integer currentPage,
-											 @RequestParam(defaultValue = "10") Integer pageSize,
-											 @RequestParam(defaultValue = "") String albumName) {
+									  @RequestParam(defaultValue = "10") Integer pageSize,
+									  @RequestParam(defaultValue = "") String albumName) {
 		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
 		return albumService.getAlbumsByAlbumNamePage(page, albumName);
 	}
@@ -85,6 +85,18 @@ public class AlbumController {
 										   @RequestParam(defaultValue = "10") Integer pageSize) {
 		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
 		return albumService.getAlbumsByTotalViewsSortPage(page);
+	}
+	
+	@ApiOperation("根据歌手 id 获取专辑")
+	@GetMapping("/getAlbumsBySingerIdPage")
+	public R getAlbumsBySingerIdPage(@RequestParam(defaultValue = "1") Integer currentPage,
+									 @RequestParam(defaultValue = "10") Integer pageSize,
+									 @RequestParam() Long singerId) {
+		if (singerId == null) {
+			return R.error("歌手id不能为空");
+		}
+		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
+		return albumService.getAlbumsBySingerIdPage(page, singerId);
 	}
 }
 

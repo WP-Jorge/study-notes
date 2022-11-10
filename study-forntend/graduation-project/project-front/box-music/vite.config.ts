@@ -43,7 +43,16 @@ export default defineConfig({
 				ElementPlusResolver(),
 				// 自动注册图标组件
 				IconsResolver({
-					enabledCollections: ['ep', 'el', 'ant-design', 'ic', 'la']
+					enabledCollections: [
+						'ep',
+						'el',
+						'ant-design',
+						'ic',
+						'la',
+						'akar-icons',
+						'ion',
+						'system-uicons'
+					]
 				})
 			]
 		}),

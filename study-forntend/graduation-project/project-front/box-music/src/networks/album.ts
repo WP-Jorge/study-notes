@@ -36,3 +36,17 @@ export const getAlbumsByTotalViewsSortPageApi = (
 		}
 	});
 };
+
+export const getAlbumsBySingerIdPageApi = (
+	currentPage?: number,
+	pageSize?: number,
+	singerId?: string
+) => {
+	return axios.get(baseUrl + 'getAlbumsBySingerIdPage', {
+		params: {
+			currentPage,
+			pageSize,
+			singerId
+		}
+	});
+};

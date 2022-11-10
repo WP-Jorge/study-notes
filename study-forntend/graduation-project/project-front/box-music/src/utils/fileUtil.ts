@@ -56,6 +56,12 @@ export const getResourceUrl = (
 				import.meta.env.VITE_CATEGORY_PICTURES +
 				resourceUrl
 			);
+		case ResourceType.USER_PICTURE:
+			return (
+				import.meta.env.VITE_BASE_URL +
+				import.meta.env.VITE_USER_PICTURES +
+				resourceUrl
+			);
 		default:
 			return (
 				import.meta.env.VITE_BASE_URL +
@@ -92,4 +98,48 @@ export const getRawLyric = (lyric = '') => {
 		.replaceAll('<rn>', '\r\n')
 		.replaceAll('<n>', '\n')
 		.replaceAll('<s>', ' ');
+};
+
+export const getFileFromUrl = (
+	url: string,
+	imgElement: HTMLImageElement,
+	cb: (file: File) => any
+) => {
+	function getBase64Image(img: HTMLImageElement) {
+		let canvas = document.createElement('canvas');
+		canvas.width = img.width;
+		canvas.height = img.height;
+		let ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+		ctx.drawImage(img, 0, 0, img.width, img.height);
+		let ext = img.src.substring(img.src.lastIndexOf('.') + 1).toLowerCase();
+		let dataURL = canvas.toDataURL('image/' + ext);
+
+		return dataURL;
+	}
+
+	let image = new Image();
+	image.src = url;
+	image.setAttribute('crossOrigin', 'Anonymous');
+	image.onload = function () {
+		let base64 = getBase64Image(image);
+		imgElement.src = base64;
+		//转换base64到file
+		let file = btof(base64, 'userAvator');
+		cb(file);
+	};
+
+	function btof(data: string, fileName: string) {
+		const dataArr = data.split(',');
+		const byteString = atob(dataArr[1]);
+
+		const options: FilePropertyBag = {
+			type: 'image/jpeg',
+			endings: 'native'
+		};
+		const u8Arr = new Uint8Array(byteString.length);
+		for (let i = 0; i < byteString.length; i++) {
+			u8Arr[i] = byteString.charCodeAt(i);
+		}
+		return new File([u8Arr], fileName + '.jpg', options);
+	}
 };

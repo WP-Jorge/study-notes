@@ -1,6 +1,7 @@
 package com.example.boxmusic.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.boxmusic.mapper.AlbumMapper;
@@ -139,5 +140,11 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
 		Page<Map<String, Object>> albumPages = baseMapper.selectMapsPage(page, queryWrapper);
 		albumPages.setRecords(jsonUtil.transformPages(albumPages, AlbumVO.class));
 		return R.successPage("获取专辑排行成功", albumPages);
+	}
+	
+	@Override
+	public R getAlbumsBySingerIdPage(Page<Map<String, Object>> page, Long singerId) {
+		IPage<AlbumVO> albumPages = baseMapper.getAlbumsBySingerIdPage(page, singerId);
+		return R.successPage("获取歌手专辑成功", albumPages);
 	}
 }

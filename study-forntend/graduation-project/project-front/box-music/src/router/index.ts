@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import { checkAuth } from './routerGuards';
+import { setRouter } from './routerHooks';
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -32,14 +33,14 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@/pages/myMusic/RecentlyPlay/index.vue')
 	},
 	{
-		path: '/music',
-		name: 'Music',
-		component: () => import('@/pages/myMusic/Music/index.vue')
+		path: '/favorite',
+		name: 'Favorite',
+		component: () => import('@/pages/myMusic/Favorite/index.vue')
 	},
 	{
-		path: '/singer',
-		name: 'Singer',
-		component: () => import('@/pages/myMusic/Singer/index.vue')
+		path: '/myPlaylist',
+		name: 'MyPlaylist',
+		component: () => import('@/pages/myMusic/MyPlaylist/index.vue')
 	},
 	{
 		path: '/localMusic',
@@ -57,14 +58,24 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@/pages/localMusic/Downloading/index.vue')
 	},
 	{
-		path: '/favorite',
-		name: 'Favorite',
-		component: () => import('@/pages/playlist/Favorite/index.vue')
+		path: '/singerDescription',
+		name: 'SingerDescription',
+		component: () => import('@/pages/common/SingerDescription/index.vue')
 	},
 	{
-		path: '/myPlaylist',
-		name: 'MyPlaylist',
-		component: () => import('@/pages/playlist/MyPlaylist/index.vue')
+		path: '/albumDescription',
+		name: 'AlbumDescription',
+		component: () => import('@/pages/common/AlbumDescription/index.vue')
+	},
+	{
+		path: '/playlistDescription',
+		name: 'PlaylistDescription',
+		component: () => import('@/pages/common/PlaylistDescription/index.vue')
+	},
+	{
+		path: '/personalCenter',
+		name: 'PersonalCenter',
+		component: () => import('@/pages/personalCenter/PersonalCenter/index.vue')
 	}
 ];
 
@@ -74,5 +85,6 @@ const router = createRouter({
 });
 
 router.beforeEach(checkAuth);
+router.afterEach(setRouter);
 
 export default router;

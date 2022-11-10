@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { Music } from '@/networks/music';
+import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 import { useMusicStore } from '@/store/music';
 import { getFormatTime } from '@/utils/mathUtil';
 import { storeToRefs } from 'pinia';
 const musicStore = useMusicStore();
 const { musicList } = storeToRefs(musicStore);
+const contextMenu = useContextMenu();
 
 // const getMusicsByMusicTitlePage = async () => {
 // 	let res = await getMusicsByMusicTitlePageApi(1, 200, '');
@@ -44,13 +45,13 @@ const volumeChange = (volume: number) => {
 	localStorage.setItem('muted', JSON.stringify(volume === 0));
 };
 
-const playlistClick = (item: Music) => {
-	musicStore.setMusic(item);
-	// nextTick(() => {
-	// 	(musicStore.audio as unknown as HTMLAudioElement).play();
-	// 	musicStore.play = true;
-	// });
-};
+// const playlistClick = (item: Music) => {
+// 	musicStore.setMusic(item);
+// 	// nextTick(() => {
+// 	// 	(musicStore.audio as unknown as HTMLAudioElement).play();
+// 	// 	musicStore.play = true;
+// 	// });
+// };
 
 const clearPlaylist = () => {
 	musicStore.setMusicList([]);
@@ -114,7 +115,7 @@ const clearPlaylist = () => {
 							item: true,
 							active: item.musicId === musicStore.playMusic.music.musicId
 						}"
-						@click="playlistClick(item)">
+						@click="contextMenu.menuFunctions.playMusic(item)">
 						<p class="music-title">
 							{{ item.musicTitle }}
 						</p>

@@ -58,9 +58,10 @@ const preHandle = () => {
 		preHandle();
 		return;
 	}
-	nextTick(() =>
-		(musicStore.playMusic.audio as unknown as HTMLAudioElement).play()
-	);
+	nextTick(() => {
+		musicStore.recentPlayMusics.unshift(musicStore.playMusic.music);
+		(musicStore.playMusic.audio as unknown as HTMLAudioElement).play();
+	});
 };
 
 const progressChange = debounce(() => {

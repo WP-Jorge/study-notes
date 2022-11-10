@@ -3,6 +3,7 @@ import { ResourceType } from '@/globals/GlobalValues';
 import { ResponseType } from '@/globals/ResponseType';
 import { getResourceUrl } from '@/utils/fileUtil';
 import { getSingersByTotalViewsSortPageApi, Singer } from '@/networks/singer';
+import router from '@/router';
 const pageData = reactive({
 	total: 0,
 	pageSize: 10,
@@ -46,6 +47,13 @@ const nextBatch = () => {
 	getSingersByTotalViewsSortPage();
 };
 
+function toDes(singer: Singer) {
+	router.push({
+		path: 'singerDescription',
+		query: singer
+	});
+}
+
 getSingersByTotalViewsSortPage();
 </script>
 <template>
@@ -64,7 +72,8 @@ getSingersByTotalViewsSortPage();
 					v-for="item of singers"
 					:key="item.singerId"
 					:picUrl="item.singerPic"
-					:title="item.singerName" />
+					:title="item.singerName"
+					@click="toDes(item)" />
 			</template>
 		</CardContainer>
 	</div>

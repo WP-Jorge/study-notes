@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import router from '@/router';
 const ipcRenderer = window.ipcRenderer;
 export interface Menu {
+	index?: number;
 	title?: string;
 	label?: string;
 	path?: string;
@@ -41,12 +42,12 @@ const menuList = [
 				path: '/recentlyPlay'
 			},
 			{
-				label: '歌曲',
-				path: '/music'
+				label: '我的喜欢',
+				path: '/favorite'
 			},
 			{
-				label: '歌手',
-				path: '/singer'
+				label: '我的歌单',
+				path: '/myPlaylist'
 			}
 		]
 	},
@@ -69,16 +70,12 @@ const menuList = [
 		]
 	},
 	{
-		title: '歌单',
-		path: '/playlist',
+		title: '个人中心',
+		path: '/personalCenter',
 		children: [
 			{
-				label: '我的喜欢',
-				path: '/favorite'
-			},
-			{
-				label: '我的歌单',
-				path: '/myPlaylist'
+				label: '个人中心',
+				path: '/personalCenter'
 			}
 		]
 	}
@@ -102,10 +99,14 @@ export const useSystemStore = defineStore('system', {
 			showSiderMenu: true,
 			showMain: true,
 			showMusicDetail: false,
+			loginState: { show: false, state: 0 },
 			menuList,
 			parentMenuIndex: JSON.parse(
 				localStorage.getItem('parentMenuIndex') ?? '0'
-			)
+			),
+			routerNum: history.length,
+			routerPos: history.state.position,
+			isEdit: false
 		};
 	},
 	/**

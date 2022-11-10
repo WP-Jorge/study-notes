@@ -12,7 +12,4 @@ import HotMusic from './components/HotMusic/index.vue';
 		<HotMusic />
 	</div>
 </template>
-<style lang="scss" scoped>
-.recommend {
-}
-</style>
+<style lang="scss" scoped></style>

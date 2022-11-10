@@ -2,6 +2,7 @@
 import { ResourceType } from '@/globals/GlobalValues';
 import { ResponseType } from '@/globals/ResponseType';
 import { getSingersByTotalViewsSortPageApi, Singer } from '@/networks/singer';
+import router from '@/router';
 import { getResourceUrl } from '@/utils/fileUtil';
 const singers = ref([] as Singer[]);
 const pageData = ref({
@@ -29,6 +30,14 @@ const getSingersByTotalViewsSortPage = async () => {
 		pageData.value.total = res.data.total;
 	}
 };
+
+function toDes(singer: Singer) {
+	router.push({
+		path: 'singerDescription',
+		query: singer
+	});
+}
+
 getSingersByTotalViewsSortPage();
 </script>
 <template>
@@ -42,7 +51,8 @@ getSingersByTotalViewsSortPage();
 					v-for="item of singers"
 					:key="item.singerId"
 					:picUrl="item.singerPic"
-					:title="item.singerName" />
+					:title="item.singerName"
+					@click="toDes(item)" />
 			</template>
 		</CardContainer>
 	</div>

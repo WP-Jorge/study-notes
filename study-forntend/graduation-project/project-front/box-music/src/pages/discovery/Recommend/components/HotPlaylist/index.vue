@@ -35,10 +35,15 @@ const getPlaylistsByTotalViewsSortPage = async () => {
 };
 const contextMenu = useContextMenu({
 	playPlaylist: true,
-	addPlaylistToPlaylist: true
+	addPlaylistToPlaylist: true,
+	go: true
 });
 const open = (e: PointerEvent, clickItem: Playlist) => {
-	contextMenu.openContextMenu(e, clickItem);
+	contextMenu.openContextMenu(
+		e,
+		JSON.parse(JSON.stringify(clickItem)),
+		'playlistDescription'
+	);
 };
 
 getPlaylistsByTotalViewsSortPage();
@@ -56,7 +61,7 @@ getPlaylistsByTotalViewsSortPage();
 					:picUrl="item.playlistPic"
 					:title="item.playlistDescription"
 					@contextmenu="(e: PointerEvent) => open(e, item)"
-					@click="contextMenu.menuFunctions.playPlaylis(item)" />
+					@click="contextMenu.menuFunctions.playPlaylist(item)" />
 			</template>
 		</CardContainer>
 	</div>

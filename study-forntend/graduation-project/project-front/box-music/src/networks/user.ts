@@ -17,11 +17,34 @@ export const getVerificationCodeApi = (codeId: string) => {
 	});
 };
 
+export const registerApi = (formData: FormData) => {
+	return axios.post('/user/register', formData);
+};
+
+export const updateUserApi = (formData: FormData) => {
+	return axios.put('/user/updateUser', formData);
+};
+
+export const getUserInfoApi = () => {
+	return axios.get('/user/getUserInfo');
+};
+
 export interface UserLoginRequest extends BaseInterface {
 	username: string;
 	password: string;
 	verificationCode?: string;
 	codeId?: string;
+}
+
+export interface RegisterParams extends BaseInterface {
+	picture: File;
+	username: string;
+	password: string;
+	confirmPassword: string;
+	sex: string;
+	age: number;
+	tel: string;
+	email: string;
 }
 
 export interface UserLoginResponse extends BaseInterface {
@@ -54,6 +77,7 @@ export interface UserInfo {
 	tel?: string | null;
 	email?: string | null;
 	status?: number;
+	userPic?: string;
 }
 
 export interface ApiTree {

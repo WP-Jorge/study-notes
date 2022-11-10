@@ -1,7 +1,7 @@
 .register-form-conatiner {
 	padding: 30px;
 	width: 375px;
-	height: 550px;
+	height: 600px;
 	border-radius: 10px;
 	box-shadow: 2px 2px 20px rgba($color: #000000, $alpha: 0.2);
 	background-color: #fff;
@@ -20,6 +20,13 @@
 			.ant-upload-list-picture-card-container {
 				height: 70px;
 				width: 70px;
+			}
+		}
+
+		.ant-form-item-explain {
+			min-height: 20px;
+			.ant-form-item-explain-error {
+				height: 20px;
 			}
 		}
 
