@@ -7,9 +7,10 @@
 	background-color: #D6EAF8 ;
 
 	.login-register-container {
+		display: flex;
 		position: relative;
-		width: 850px;
-		height: 400px;
+		width: 910px;
+		height: 460px;
 		border-radius: 10px;
 		box-shadow: 2px 2px 20px rgba($color: #000000, $alpha: 0.3);
 		background-color: #f6f6f6;
@@ -28,12 +29,14 @@
 		.login-container,
 		.register-container {
 			// flex: 1;
+			box-sizing: border-box;
 			display: inline-block;
 			width: 50%;
 			height: 100%;
 			padding: 30px;
 
 			.title {
+				margin: 20px;
 				text-align: center;
 			}
 
