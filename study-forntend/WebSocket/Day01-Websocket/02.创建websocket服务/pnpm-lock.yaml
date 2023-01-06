@@ -1,0 +1,14 @@
+lockfileVersion: 5.4
+
+specifiers:
+  nodejs-websocket: ^1.7.2
+
+dependencies:
+  nodejs-websocket: 1.7.2
+
+packages:
+
+  /nodejs-websocket/1.7.2:
+    resolution: {integrity: sha1-lKvR4kj1fU0cZj3sODEBXG2tmKY=}
+    engines: {node: '>=4'}
+    dev: false

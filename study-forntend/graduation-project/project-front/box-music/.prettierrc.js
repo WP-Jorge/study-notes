@@ -5,9 +5,9 @@ module.exports = {
 	semi: true, // 是否在语句末尾打印分号
 	trailingComma: 'none', // 去除对象最末尾元素跟随的逗号
 	printWidth: 80, // 单行长度
-	enforceForArrowConditionals: false,
-	endOfLine: 'auto',
-	arrowParens: 'avoid',
+	enforceForArrowConditionals: false, // 允许围绕作为箭头函数主体的三元表达式的附加括号
+	endOfLine: 'auto', // 自动添加结束行
+	arrowParens: 'avoid', // 箭头函数去除非必需圆括号
 	bracketSameLine: true, // 开始标签的右尖括号是否跟随在最后一行属性末尾
 	htmlWhitespaceSensitivity: 'ignore' // 空格敏感
 };
