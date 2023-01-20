@@ -8,8 +8,11 @@ import MusicBar from '@/components/content/MusicBar/index.vue';
 import MusicDetail from '@/components/content/MusicDetail/index.vue';
 import ContentMexu from './components/common/ContextMenu/index.vue';
 import Login from '@/components/content/Login/index.vue';
+import { useRoute } from 'vue-router';
 
 const systemStore = useSystemStore();
+const route = useRoute();
+console.log('🦃🦃route.name', route.name);
 const { showSiderMenu, showMain, showMusicDetail } = storeToRefs(systemStore);
 // const electronAPI = window.electronAPI;
 // electronAPI.getMusicInfo(
@@ -45,7 +48,9 @@ const { showSiderMenu, showMain, showMusicDetail } = storeToRefs(systemStore);
 			</el-aside>
 			<el-main v-show="showMain && !showMusicDetail">
 				<Menu />
-				<div class="content">
+				<div
+					class="content"
+					:class="{ 'search-des-main': route.name === 'SearchDes' }">
 					<router-view />
 				</div>
 			</el-main>
@@ -88,7 +93,7 @@ const { showSiderMenu, showMain, showMusicDetail } = storeToRefs(systemStore);
 		& > .content {
 			padding: 10px;
 			overflow: overlay;
-			height: calc(100vh - 60px - 71px - 40px);
+			height: calc(100% - 60px);
 			&::-webkit-scrollbar {
 				width: 5px;
 				height: 8px;
@@ -103,6 +108,9 @@ const { showSiderMenu, showMain, showMusicDetail } = storeToRefs(systemStore);
 				background-color: var(--el-color-primary-light-5);
 			}
 		}
+	}
+	.search-des-main {
+		height: calc(100vh - 60px - 91px) !important;
 	}
 	.el-footer {
 		padding: 0;

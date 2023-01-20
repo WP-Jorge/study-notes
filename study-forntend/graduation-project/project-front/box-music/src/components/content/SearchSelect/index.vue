@@ -1,8 +1,21 @@
 <script setup lang="ts">
 import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 import { Music } from '@/networks/music';
-import { getFormatTime } from '@/utils/mathUtil';
-
+import { useSearchStore } from '@/store/search';
+import { debounce } from '@/utils/baseUtil';
+import { useRouter } from 'vue-router';
+interface ListItem {
+	value: string;
+	label: string;
+}
+const router = useRouter();
+const searchStore = useSearchStore();
+const list = ref<ListItem[]>([]);
+const loading = ref(false);
+const options = ref<ListItem[]>([]);
+const searchPop = ref();
+const keyword = ref('');
+const musicData = ref([] as Music[]);
 const tempMusicList = [
 	{
 		musicId: '671171',
@@ -94,75 +107,122 @@ const tempMusicList = [
 		]
 	}
 ];
-const myFavotiteMusicList = ref([] as Music[]);
-
 const contextMenu = useContextMenu({
 	downloadOne: true,
 	playMusic: true,
 	addMusicToPlaylist: true
 });
-const getMusicList = () => {
-	myFavotiteMusicList.value = tempMusicList as unknown as Music[];
+const remoteMethod = debounce(() => {
+	console.log('🦃🦃query', keyword.value);
+	if (keyword.value) {
+		loading.value = true;
+		setTimeout(() => {
+			loading.value = false;
+			options.value = list.value.filter(item => {
+				return item.label.toLowerCase().includes(keyword.value.toLowerCase());
+			});
+		}, 200);
+	} else {
+		options.value = [];
+	}
+});
+const search = () => {
+	searchStore.keyword = keyword.value;
+	router.push({ name: 'SearchDes' });
 };
-const open = (row: Music, cloumn: any, e: PointerEvent) => {
-	contextMenu.openContextMenu(e, row);
+const select = (music: Music) => {
+	console.log('🦃🦃item', music);
+	contextMenu.menuFunctions.playMusic(music);
+	searchPop.value.hide();
 };
-getMusicList();
+const getData = () => {
+	musicData.value = tempMusicList as never as Music[];
+};
+getData();
 </script>
 <template>
-	<div class="favorite">
-		<SimpleContainer title="我的喜欢">
-			<template #content>
-				<el-table
-					:data="myFavotiteMusicList"
-					@row-contextmenu="open"
-					@row-dblclick="contextMenu.menuFunctions.playMusic">
-					<el-table-column #default="{ row: music }" label="封面" :width="80">
-						<div class="music-img">
-							<img :src="music.album?.albumPic" :alt="music.musicTitle" />
-						</div>
-					</el-table-column>
-					<el-table-column
-						#default="{ row: music }"
-						label="音乐标题"
-						:width="220">
-						<div class="music-title ellipse">
-							{{ music.musicTitle }}
-						</div>
-					</el-table-column>
-					<el-table-column #default="{ row: music }" label="歌手">
-						<div class="ellipse">
-							{{ (music as Music).singers?.map(singer => singer.singerName).join(' / ') }}
-						</div>
-					</el-table-column>
-					<el-table-column #default="{ row: music }" label="专辑">
-						<div class="ellipse">
-							{{ music.album.albumName }}
-						</div>
-					</el-table-column>
-					<el-table-column #default="{ row: music }" label="时长">
-						<div class="ellipse">
-							{{ getFormatTime(music.duration) }}
-						</div>
-					</el-table-column>
-				</el-table>
+	<div class="search-select">
+		<el-popover
+			ref="searchPop"
+			placement="bottom"
+			trigger="click"
+			:teleported="false"
+			:width="300"
+			:hide-after="0"
+			:show-arrow="false">
+			<template #reference>
+				<el-input
+					v-model="keyword"
+					placeholder="请输入关键字"
+					clearable
+					@keyup="remoteMethod"
+					@keyup.enter="search">
+					<template #suffix>
+						<i-akar-icons:search class="search-icon" @click="search" />
+					</template>
+				</el-input>
 			</template>
-		</SimpleContainer>
+			<div class="search-content">
+				<div
+					v-for="item of musicData"
+					:key="item.musicId"
+					:class="{ 'seatch-item': true }"
+					:title="item.musicTitle"
+					@click="select(item)">
+					{{ item.musicTitle }}
+				</div>
+			</div>
+		</el-popover>
 	</div>
 </template>
 <style lang="scss" scoped>
-.favorite {
-	.el-table {
-		.music-img {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			height: 100%;
-			img {
-				width: 50px;
-				height: 50px;
-				border-radius: 5px;
-			}
+.search-select {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 20px;
+	-webkit-app-region: no-drag;
+	.el-input {
+		width: 150px;
+		.search-icon {
+			cursor: pointer;
+		}
+		:deep(.el-input__wrapper) {
+			border-radius: 50px;
+			background-color: transparent;
+			font-size: 12px;
+		}
+		:deep(.el-select__input) {
+			padding-left: 20px;
+		}
+	}
+	.search-content {
+		max-height: 500px;
+		overflow: overlay;
+		&::-webkit-scrollbar {
+			width: 5px;
+			height: 8px;
+			// background-color: var(--el-color-info-light-9);
+			background-color: transparent;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: transparent;
+		}
+		.seatch-item {
+			padding: 5px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			transition: all 0.1s ease;
+			cursor: pointer;
+		}
+		.seatch-item:hover {
+			background-color: rgb(233, 233, 233);
+		}
+	}
+	.search-content:hover {
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--el-color-primary-light-5);
 		}
 	}
 }

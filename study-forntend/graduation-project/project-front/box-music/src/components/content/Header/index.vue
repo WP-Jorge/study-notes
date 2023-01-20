@@ -6,6 +6,10 @@ import { getAssetsFileUrl, getResourceUrl } from '@/utils/fileUtil';
 import { useUserStore } from '@/store/user';
 import { ElButton } from 'element-plus';
 import { useRouter } from 'vue-router';
+interface ListItem {
+	value: string;
+	label: string;
+}
 const router = useRouter();
 const systemStore = useSystemStore();
 const userStore = useUserStore();
@@ -13,6 +17,59 @@ const { showMusicDetail } = storeToRefs(systemStore);
 const { isMax, isFullscreen, routerNum, routerPos } = storeToRefs(systemStore);
 const leftDisable = computed(() => routerPos.value === 0);
 const rightDisable = computed(() => routerPos.value === routerNum.value - 1);
+const list = ref<ListItem[]>([]);
+const states = [
+	'Alabama',
+	'Alaska',
+	'Arizona',
+	'Arkansas',
+	'California',
+	'Colorado',
+	'Connecticut',
+	'Delaware',
+	'Florida',
+	'Georgia',
+	'Hawaii',
+	'Idaho',
+	'Illinois',
+	'Indiana',
+	'Iowa',
+	'Kansas',
+	'Kentucky',
+	'Louisiana',
+	'Maine',
+	'Maryland',
+	'Massachusetts',
+	'Michigan',
+	'Minnesota',
+	'Mississippi',
+	'Missouri',
+	'Montana',
+	'Nebraska',
+	'Nevada',
+	'New Hampshire',
+	'New Jersey',
+	'New Mexico',
+	'New York',
+	'North Carolina',
+	'North Dakota',
+	'Ohio',
+	'Oklahoma',
+	'Oregon',
+	'Pennsylvania',
+	'Rhode Island',
+	'South Carolina',
+	'South Dakota',
+	'Tennessee',
+	'Texas',
+	'Utah',
+	'Vermont',
+	'Virginia',
+	'Washington',
+	'West Virginia',
+	'Wisconsin',
+	'Wyoming'
+];
 const go = (num: number) => {
 	history.go(num);
 };
@@ -20,6 +77,11 @@ const open = (state: number) => {
 	systemStore.loginState.show = true;
 	systemStore.loginState.state = state;
 };
+onMounted(() => {
+	list.value = states.map(item => {
+		return { value: `value:${item}`, label: `label:${item}` };
+	});
+});
 </script>
 <template>
 	<div class="header">
@@ -41,11 +103,7 @@ const open = (state: number) => {
 			</div>
 			<div class="right">
 				<div class="search">
-					<el-input placeholder="请输入关键字">
-						<template #suffix>
-							<i-akar-icons:search class="search-icon" />
-						</template>
-					</el-input>
+					<SearchSelect />
 				</div>
 				<div class="info">
 					<div
@@ -232,6 +290,26 @@ const open = (state: number) => {
 						border-radius: 50px;
 						background-color: transparent;
 						font-size: 12px;
+					}
+					:deep(.el-select__input) {
+						padding-left: 20px;
+					}
+				}
+				.search-content {
+					max-height: 500px;
+					overflow: overlay;
+					&::-webkit-scrollbar {
+						width: 5px;
+						height: 8px;
+						background-color: var(--el-color-info-light-9);
+					}
+					&::-webkit-scrollbar-thumb {
+						background-color: transparent;
+					}
+				}
+				.search-content:hover {
+					&::-webkit-scrollbar-thumb {
+						background-color: var(--el-color-primary-light-5);
 					}
 				}
 			}

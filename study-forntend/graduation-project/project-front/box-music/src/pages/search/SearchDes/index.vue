@@ -1,9 +1,138 @@
 <script setup lang="ts">
 import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 import { Music } from '@/networks/music';
+import { useSearchStore } from '@/store/search';
 import { getFormatTime } from '@/utils/mathUtil';
-
+const searchStore = useSearchStore();
 const tempMusicList = [
+	{
+		musicId: '671171',
+		album: {
+			albumName: '拾贰',
+			albumPic: 'G:/box-music/temp-pictures/下一站茶山刘.jpg'
+		},
+		bitrate: 820338,
+		duration: 205.573787,
+		level: '无损',
+		lyric: '',
+		musicTitle: '下一站茶山刘',
+		local: true,
+		singers: [{ singerName: '房东的猫' }],
+		musicUrl: 'G:\\DownLoad\\template/下一站茶山刘.flac',
+		downloadItemInfo: { localPath: 'G:\\DownLoad\\template/下一站茶山刘.flac' }
+	},
+	{
+		musicId: '671171',
+		album: {
+			albumName: '拾贰',
+			albumPic: 'G:/box-music/temp-pictures/下一站茶山刘.jpg'
+		},
+		bitrate: 820338,
+		duration: 205.573787,
+		level: '无损',
+		lyric: '',
+		musicTitle: '下一站茶山刘',
+		local: true,
+		singers: [{ singerName: '房东的猫' }],
+		musicUrl: 'G:\\DownLoad\\template/下一站茶山刘.flac',
+		downloadItemInfo: { localPath: 'G:\\DownLoad\\template/下一站茶山刘.flac' }
+	},
+	{
+		musicId: '671171',
+		album: {
+			albumName: '拾贰',
+			albumPic: 'G:/box-music/temp-pictures/下一站茶山刘.jpg'
+		},
+		bitrate: 820338,
+		duration: 205.573787,
+		level: '无损',
+		lyric: '',
+		musicTitle: '下一站茶山刘',
+		local: true,
+		singers: [{ singerName: '房东的猫' }],
+		musicUrl: 'G:\\DownLoad\\template/下一站茶山刘.flac',
+		downloadItemInfo: { localPath: 'G:\\DownLoad\\template/下一站茶山刘.flac' }
+	},
+	{
+		musicId: '671171',
+		album: {
+			albumName: '拾贰',
+			albumPic: 'G:/box-music/temp-pictures/下一站茶山刘.jpg'
+		},
+		bitrate: 820338,
+		duration: 205.573787,
+		level: '无损',
+		lyric: '',
+		musicTitle: '下一站茶山刘',
+		local: true,
+		singers: [{ singerName: '房东的猫' }],
+		musicUrl: 'G:\\DownLoad\\template/下一站茶山刘.flac',
+		downloadItemInfo: { localPath: 'G:\\DownLoad\\template/下一站茶山刘.flac' }
+	},
+	{
+		musicId: '671171',
+		album: {
+			albumName: '拾贰',
+			albumPic: 'G:/box-music/temp-pictures/下一站茶山刘.jpg'
+		},
+		bitrate: 820338,
+		duration: 205.573787,
+		level: '无损',
+		lyric: '',
+		musicTitle: '下一站茶山刘',
+		local: true,
+		singers: [{ singerName: '房东的猫' }],
+		musicUrl: 'G:\\DownLoad\\template/下一站茶山刘.flac',
+		downloadItemInfo: { localPath: 'G:\\DownLoad\\template/下一站茶山刘.flac' }
+	},
+	{
+		musicId: '671171',
+		album: {
+			albumName: '拾贰',
+			albumPic: 'G:/box-music/temp-pictures/下一站茶山刘.jpg'
+		},
+		bitrate: 820338,
+		duration: 205.573787,
+		level: '无损',
+		lyric: '',
+		musicTitle: '下一站茶山刘',
+		local: true,
+		singers: [{ singerName: '房东的猫' }],
+		musicUrl: 'G:\\DownLoad\\template/下一站茶山刘.flac',
+		downloadItemInfo: { localPath: 'G:\\DownLoad\\template/下一站茶山刘.flac' }
+	},
+	{
+		musicId: '671171',
+		album: {
+			albumName: '拾贰',
+			albumPic: 'G:/box-music/temp-pictures/下一站茶山刘.jpg'
+		},
+		bitrate: 820338,
+		duration: 205.573787,
+		level: '无损',
+		lyric: '',
+		musicTitle: '下一站茶山刘',
+		local: true,
+		singers: [{ singerName: '房东的猫' }],
+		musicUrl: 'G:\\DownLoad\\template/下一站茶山刘.flac',
+		downloadItemInfo: { localPath: 'G:\\DownLoad\\template/下一站茶山刘.flac' }
+	},
+	{
+		musicId: '671171',
+		album: {
+			albumName: '拾贰',
+			albumPic: 'G:/box-music/temp-pictures/下一站茶山刘.jpg'
+		},
+		bitrate: 820338,
+		duration: 205.573787,
+		level: '无损',
+		lyric: '',
+		musicTitle: '下一站茶山刘',
+		local: true,
+		singers: [{ singerName: '房东的猫' }],
+		musicUrl: 'G:\\DownLoad\\template/下一站茶山刘.flac',
+		downloadItemInfo: { localPath: 'G:\\DownLoad\\template/下一站茶山刘.flac' }
+	},
 	{
 		musicId: '671171',
 		album: {
@@ -94,7 +223,7 @@ const tempMusicList = [
 		]
 	}
 ];
-const myFavotiteMusicList = ref([] as Music[]);
+const searchMusicList = ref([] as Music[]);
 
 const contextMenu = useContextMenu({
 	downloadOne: true,
@@ -102,7 +231,7 @@ const contextMenu = useContextMenu({
 	addMusicToPlaylist: true
 });
 const getMusicList = () => {
-	myFavotiteMusicList.value = tempMusicList as unknown as Music[];
+	searchMusicList.value = tempMusicList as unknown as Music[];
 };
 const open = (row: Music, cloumn: any, e: PointerEvent) => {
 	contextMenu.openContextMenu(e, row);
@@ -110,11 +239,11 @@ const open = (row: Music, cloumn: any, e: PointerEvent) => {
 getMusicList();
 </script>
 <template>
-	<div class="favorite">
-		<SimpleContainer title="我的喜欢">
+	<div class="search-des">
+		<SimpleContainer :title="`搜索 ${searchStore.keyword}`">
 			<template #content>
 				<el-table
-					:data="myFavotiteMusicList"
+					:data="searchMusicList"
 					@row-contextmenu="open"
 					@row-dblclick="contextMenu.menuFunctions.playMusic">
 					<el-table-column #default="{ row: music }" label="封面" :width="80">
@@ -151,7 +280,7 @@ getMusicList();
 	</div>
 </template>
 <style lang="scss" scoped>
-.favorite {
+.search-des {
 	.el-table {
 		.music-img {
 			display: flex;

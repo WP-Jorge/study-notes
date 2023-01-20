@@ -7,6 +7,7 @@ export interface Menu {
 	title?: string;
 	label?: string;
 	path?: string;
+	hide?: boolean;
 	children?: Menu[];
 }
 

@@ -51,7 +51,8 @@ export default defineConfig({
 						'la',
 						'akar-icons',
 						'ion',
-						'system-uicons'
+						'system-uicons',
+						'material-symbols'
 					]
 				})
 			]

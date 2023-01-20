@@ -76,6 +76,11 @@ const routes: Array<RouteRecordRaw> = [
 		path: '/personalCenter',
 		name: 'PersonalCenter',
 		component: () => import('@/pages/personalCenter/PersonalCenter/index.vue')
+	},
+	{
+		path: '/searchDes',
+		name: 'SearchDes',
+		component: () => import('@/pages/search/SearchDes/index.vue')
 	}
 ];
 
