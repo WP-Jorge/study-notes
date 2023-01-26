@@ -24,6 +24,29 @@ export interface Music extends BaseInterface {
 	downloadItemInfo?: DownloadItemInfo;
 }
 
+export interface DesMusic extends BaseInterface {
+	musicId: string;
+	musicTitle: string;
+	musicUrl: string;
+	lyric: string;
+	albumId: string;
+	albumName: string;
+	albumPic: string;
+	albumDescription?: string;
+	duration: number;
+	size: number;
+	level: string;
+	musicFormat: string;
+	bitrate: number;
+	categoryId?: string;
+	categoryName?: string;
+	categoryType?: string;
+	singerId: string;
+	singerName: string;
+	singerPic: string;
+	downloadItemInfo?: DownloadItemInfo;
+}
+
 const baseUrl = '/music/';
 
 export const getMusicsByMusicTitlePageApi = (
@@ -102,6 +125,14 @@ export const getMusicsByAlbumIdPageApi = (
 			currentPage,
 			pageSize,
 			albumId
+		}
+	});
+};
+
+export const getMusicsByKeywordApi = (keyword: string) => {
+	return axios.get(baseUrl + 'getMusicsByKeyword', {
+		params: {
+			keyword
 		}
 	});
 };
