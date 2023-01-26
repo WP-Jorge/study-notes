@@ -136,7 +136,7 @@ input {
                 # last_run_metadata_path => "/usr/share/logstash/pipeline/logs/logstash_default_last_time.log"
                 # clean_run => false
                 # lowercase_column_names => true
-                statement => "select music.music_id, music_title, lyric, album.album_id, duration, size, `level`, music_format, bitrate, music_url, album_name, album_pic, album_description, category.category_id, category_name, category_type, playlist.playlist_id, playlist_name, playlist_pic, playlist_description, singer.singer_id, singer_name, singer_pic, singer_description from music, album, category, playlist, singer, music_singer, music_playlist, music_category where music.album_id = album.album_id and music_category.music_id = music.music_id and music_category.category_id = category.category_id and music_playlist.music_id = music.music_id and music_playlist.playlist_id = playlist.playlist_id and music_singer.music_id = music.music_id and music_singer.singer_id = singer.singer_id group by music.music_id"
+                statement => "select distinct music.music_id, music_title, lyric, album.album_id, duration, size, `level`, music_format, bitrate, music_url, album_name, album_pic, album_description, group_concat(distinct category.category_id) category_id, group_concat(distinct category_name) category_name, category_type, group_concat(distinct singer.singer_id) singer_id, group_concat(distinct singer_name) singer_name, group_concat(distinct singer_pic) singer_pic from music, album, category, singer, music_singer, music_category where music.album_id = album.album_id and music_category.music_id = music.music_id and music_category.category_id = category.category_id and music_singer.music_id = music.music_id and music_singer.singer_id = singer.singer_id group by music.music_id"
         }
 }
 
@@ -150,9 +150,9 @@ output {
         if[type] == "musicInfo" {
                 elasticsearch {
                         hosts => ["192.168.61.130:9200"]
-                        # 不能使用大写字母
+                        # 涓嶈兘浣跨敤澶у啓瀛楁瘝
                         index => "music_info"
-                        document_id => "%{music_singer_id}"
+                        document_id => "%{music_id}"
                         template_overwrite => true
                         manage_template => false
                         template_name => "iktemplate"
