@@ -43,7 +43,7 @@ export const RoleApiModal = (props: RoleApiModalProps) => {
 			<Modal
 				getContainer={false}
 				title="编辑角色权限"
-				visible={true}
+				open={true}
 				onCancel={clickCancel}
 				footer={[
 					<Button key="back" onClick={clickCancel}>

@@ -98,7 +98,7 @@ export const AlbumModal = (props: AlbumModalProps) => {
 			<Modal
 				getContainer={false}
 				title={title}
-				visible={true}
+				open={true}
 				onCancel={clickCancel}
 				footer={[
 					<Button key="back" onClick={clickCancel}>

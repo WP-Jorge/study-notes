@@ -28,7 +28,7 @@
     ```
     docker run -d -p 3307:3306 -e MYSQL_ROOT_PASSWORD=111111 --name mysql -v mysqldata:/var/lib/mysql mysql:8.0.23
     
-     docker run -d --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=111111 -v mysqldata:/var/lib/mysql mysql:8.0.25 (使用这个)
+    docker run -d --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=111111 -v mysqldata:/var/lib/mysql -v mysqlconfig:/etc/mysql mysql:8.0.28 (使用这个)
     ```
 
   - 启动一个mysql服务，指定root用户，密码111111，指定容器名称，使用数据卷，将数据持久化到宿主机系统，指定名称，以修改之后的配置文件启动

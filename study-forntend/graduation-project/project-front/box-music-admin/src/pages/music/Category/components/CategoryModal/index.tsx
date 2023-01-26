@@ -60,7 +60,7 @@ export const CategoryModal = (props: CategoryModalProps) => {
 			<Modal
 				getContainer={false}
 				title={title}
-				visible={true}
+				open={true}
 				onCancel={clickCancel}
 				footer={[
 					<Button key="back" onClick={clickCancel}>

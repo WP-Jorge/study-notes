@@ -1,5 +1,6 @@
 package com.example.boxmusic.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -7,6 +8,7 @@ import com.example.boxmusic.pojo.dto.AddMusicDTO;
 import com.example.boxmusic.pojo.dto.UpdateMusicDTO;
 import com.example.boxmusic.pojo.entity.*;
 import com.example.boxmusic.mapper.MusicMapper;
+import com.example.boxmusic.pojo.vo.DesMusicVO;
 import com.example.boxmusic.pojo.vo.MusicVO;
 import com.example.boxmusic.service.FileService;
 import com.example.boxmusic.service.MusicCategoryService;
@@ -17,6 +19,16 @@ import com.example.boxmusic.utils.FfmpegUtil;
 import com.example.boxmusic.utils.JsonUtil;
 import com.example.boxmusic.utils.R;
 import com.github.wujun234.uid.impl.CachedUidGenerator;
+import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
+import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +36,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +52,9 @@ import java.util.Map;
  */
 @Service
 public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements MusicService {
+	@Autowired
+	private RestHighLevelClient client;
+	
 	@Autowired
 	private JsonUtil jsonUtil;
 	
@@ -241,5 +258,31 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 	@Override
 	public R getMusicsByAlbumIdPage(Page<Map<String, Object>> page, Long albumId) {
 		return R.successPage("获取音乐成功", baseMapper.getMusicsByAlbumIdPage(page, albumId));
+	}
+	
+	@Override
+	public R getMusicsByKeyword(String keyword) throws IOException {
+		// 创建请求
+		SearchSourceBuilder builder = new SearchSourceBuilder()
+				.query(QueryBuilders.multiMatchQuery(keyword, "music_title", "singer_name", "lyric", "category_name"));
+		
+		//搜索
+		SearchRequest searchRequest = new SearchRequest();
+		searchRequest.indices("music_info");
+		searchRequest.types("_doc");
+		searchRequest.source(builder);
+		// 执行请求
+		SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
+		// 解析查询结果
+		SearchHit[] res = response.getHits().getHits();
+		List<Object> musics = new ArrayList<>();
+		for (SearchHit hit : res) {
+			//获取到结果的map集合
+			Map<String, Object> map = hit.getSourceAsMap();
+			DesMusicVO music = JSON.parseObject(JSON.toJSONString(map), DesMusicVO.class);
+			musics.add(music);
+		}
+		
+		return R.success("musics", musics);
 	}
 }

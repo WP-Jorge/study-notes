@@ -20,12 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author Jorge
@@ -41,8 +42,8 @@ public class MusicController {
 	@ApiOperation("根据音乐名模糊查询音乐")
 	@GetMapping("/getMusicsByMusicTitlePage")
 	public R getMusicsByMusicTitlePage(@RequestParam(defaultValue = "1") Integer currentPage,
-										@RequestParam(defaultValue = "10") Integer pageSize,
-										@RequestParam(defaultValue = "") String musicTitle) {
+									   @RequestParam(defaultValue = "10") Integer pageSize,
+									   @RequestParam(defaultValue = "") String musicTitle) {
 		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
 		return musicService.getMusicsByMusicTitlePage(page, musicTitle);
 	}
@@ -71,7 +72,7 @@ public class MusicController {
 	@ApiOperation("获取音乐排行")
 	@GetMapping("/getMusicsByTotalViewsSortPage")
 	public R getMusicsByTotalViewsSortPage(@RequestParam(defaultValue = "1") Integer currentPage,
-											@RequestParam(defaultValue = "10") Integer pageSize) {
+										   @RequestParam(defaultValue = "10") Integer pageSize) {
 		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
 		return musicService.getMusicsByTotalViewsSortPage(page);
 	}
@@ -87,7 +88,7 @@ public class MusicController {
 	@ApiOperation("根据分类id查询音乐")
 	@GetMapping("/getMusicsByCategoryIdPage")
 	public R getMusicsByCategoryIdPage(@RequestParam(defaultValue = "1") Integer currentPage,
-											 @RequestParam(defaultValue = "10") Integer pageSize, Long categoryId) {
+									   @RequestParam(defaultValue = "10") Integer pageSize, Long categoryId) {
 		if (categoryId == null) {
 			return R.error("分类id不能为空");
 		}
@@ -98,7 +99,7 @@ public class MusicController {
 	@ApiOperation("根据歌单id查询音乐")
 	@GetMapping("/getMusicsByPlaylistIdPage")
 	public R getMusicsByPlaylistIdPage(@RequestParam(defaultValue = "1") Integer currentPage,
-											 @RequestParam(defaultValue = "10") Integer pageSize, Long playlistId) {
+									   @RequestParam(defaultValue = "10") Integer pageSize, Long playlistId) {
 		if (playlistId == null) {
 			return R.error("歌单id不能为空");
 		}
@@ -109,12 +110,19 @@ public class MusicController {
 	@ApiOperation("根据专辑id查询音乐")
 	@GetMapping("/getMusicsByAlbumIdPage")
 	public R getMusicsByAlbumIdPage(@RequestParam(defaultValue = "1") Integer currentPage,
-									   @RequestParam(defaultValue = "10") Integer pageSize, Long albumId) {
+									@RequestParam(defaultValue = "10") Integer pageSize, Long albumId) {
 		if (albumId == null) {
 			return R.error("歌单id不能为空");
 		}
 		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
 		return musicService.getMusicsByAlbumIdPage(page, albumId);
+	}
+	
+	@ApiOperation("根据音乐名模糊查询音乐")
+	@GetMapping("/getMusicsByKeyword")
+	public R getMusicsByKeyword(
+			@RequestParam(defaultValue = "") String keyword) throws IOException {
+		return musicService.getMusicsByKeyword(keyword);
 	}
 	
 }

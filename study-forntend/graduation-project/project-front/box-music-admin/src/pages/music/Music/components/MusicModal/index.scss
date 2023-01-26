@@ -1,13 +1,8 @@
 .user-modal {
-	.ant-upload-picture-card-wrapper {
-		height: 70px;
-
-		.ant-upload,
-		.ant-upload-list,
-		.ant-upload-list-picture-card-container {
-			height: 70px;
-			width: 70px;
-		}
+	.ant-upload,
+	.ant-upload-list-item-container {
+		height: 70px !important;
+		width: 70px !important;
 	}
 
 	.ant-upload-list {

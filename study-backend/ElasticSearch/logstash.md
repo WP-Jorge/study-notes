@@ -116,6 +116,55 @@ output {
 	}
 }
 ```
+新：
+```conf
+input {
+        jdbc {
+                type => "musicInfo"
+                jdbc_connection_string => "jdbc:mysql://192.168.61.130:3306/box-music?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8"
+                jdbc_default_timezone => "Asia/Shanghai"
+                jdbc_user => "root"
+
+                jdbc_password => "111111"
+                jdbc_driver_library => "/usr/share/logstash/pipeline/mysql-connector-java-8.0.28.jar"
+                jdbc_driver_class => "com.mysql.cj.jdbc.Driver"
+                schedule => "* * * * *"
+                # use_column_value => false
+                # tracking_column => "update_time"
+                # tracking_column_type => "numeric"
+                # record_last_run => true
+                # last_run_metadata_path => "/usr/share/logstash/pipeline/logs/logstash_default_last_time.log"
+                # clean_run => false
+                # lowercase_column_names => true
+                statement => "select music.music_id, music_title, lyric, album.album_id, duration, size, `level`, music_format, bitrate, music_url, album_name, album_pic, album_description, category.category_id, category_name, category_type, playlist.playlist_id, playlist_name, playlist_pic, playlist_description, singer.singer_id, singer_name, singer_pic, singer_description from music, album, category, playlist, singer, music_singer, music_playlist, music_category where music.album_id = album.album_id and music_category.music_id = music.music_id and music_category.category_id = category.category_id and music_playlist.music_id = music.music_id and music_playlist.playlist_id = playlist.playlist_id and music_singer.music_id = music.music_id and music_singer.singer_id = singer.singer_id group by music.music_id"
+        }
+}
+
+filter {
+        mutate {
+                remove_field => ["@version", "@timestamp"]
+        }
+}
+
+output {
+        if[type] == "musicInfo" {
+                elasticsearch {
+                        hosts => ["192.168.61.130:9200"]
+                        # 不能使用大写字母
+                        index => "music_info"
+                        document_id => "%{music_singer_id}"
+                        template_overwrite => true
+                        manage_template => false
+                        template_name => "iktemplate"
+                        template => "/usr/share/logstash/pipeline/logstash-ik.json"
+                }
+        }
+        stdout {
+                codec => json_lines
+        }
+}
+
+```
 
 - 在目录下创建 logs 文件夹 并在 logs 文件夹中创建文件 logstash_default_last_time.log，并给 logs 文件夹赋予读写权限（如果不实现增量更新，可以不进行这不操作）
 
@@ -126,11 +175,14 @@ touch logstash_default_last_time.log
 cd ../
 chmod 777 -R logs
 ```
+
 - 在目录下创建 logstash.json 文件，用来替换默认的创建模板，使用 ik 分词器
+
 ```shell
 mkdir logstash.json
 vim logstash.json
 ```
+
 ```json
 {
 	"order": 0,

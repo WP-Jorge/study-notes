@@ -1,46 +1,34 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import './index.scss';
 
-import { setHomeInfo, setHomeInfoAsync } from '@/redux/reducers/homeSlice';
-import { AppDispatch, RootState } from '@/redux/store';
-import { Button } from 'antd';
-
+import EchardsCard, { MyChartOption } from '@/components/content/EchartsCard';
 export default function Home() {
-	const homeStore = useSelector((state: RootState) => state.home);
-	const dispatch = useDispatch<AppDispatch>();
-	const { name, address } = homeStore.homeInfo;
-	const changeHomeInfo = () => {
-		dispatch(
-			setHomeInfo({
-				name: '老王家',
-				address: '隔壁'
-			})
-		);
-	};
-	const changeHomeInfoAsync = () => {
-		dispatch(
-			setHomeInfoAsync({
-				name: '老王家族',
-				address: '隔壁村'
-			})
-		);
-	};
+	const option = {
+		title: {
+			text: '折线图',
+			subtext: '折线图-单条'
+		},
+		xAxis: {
+			type: 'category',
+			data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+		},
+		yAxis: {
+			type: 'value'
+		},
+		series: [
+			{
+				data: [150, 230, 224, 218, 135, 147, 260],
+				type: 'line'
+			}
+		]
+	} as MyChartOption;
 	return (
-		<>
-			<div>Home 页面</div>
-			页面信息
-			<br />
-			name：{name}
-			<br />
-			address：{address}
-			<br />
-			<Button type="primary" onClick={() => changeHomeInfo()}>
-				点击我修改Home信息
-			</Button>
-			<br />
-			<Button type="primary" danger onClick={() => changeHomeInfoAsync()}>
-				点击我异步修改Home信息
-			</Button>
-		</>
+		<div className="home">
+			<EchardsCard option={option} width="350px" height="300px" />
+			<EchardsCard option={option} width="350px" height="300px" />
+			<EchardsCard option={option} width="350px" height="300px" />
+			<EchardsCard option={option} width="350px" height="300px" />
+			<EchardsCard option={option} width="350px" height="300px" />
+		</div>
 	);
 }

@@ -53,6 +53,11 @@ spring:
     database: 0
 #    password: 111111
 
+elasticsearch:
+  host: 192.168.61.130:9200
+  connection-timeout: 100000
+  read-timeout: 100000
+
 # 开启 mybatis plus 缓存 不加也可以
 mybatis-plus:
   configuration:

@@ -291,7 +291,7 @@ export const UserInfo = () => {
 			</Form>
 			<Modal
 				title="编辑密码"
-				visible={isEditPassword}
+				open={isEditPassword}
 				okText="确定"
 				cancelText="取消"
 				onOk={handleOk}

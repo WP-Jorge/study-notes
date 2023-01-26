@@ -23,17 +23,19 @@ export function getApiTrees(): Array<Api> {
 
 	const res = [] as Array<Api>;
 	for (let parent of apis) {
+		if (!parent.parentApiId) {
+			if (parent.apiPath === '/home') {
+				res.unshift(parent);
+			} else {
+				res.push(parent);
+			}
+		}
 		for (let child of apis) {
 			if (child.parentApiId === parent.apiId && child.apiType !== 1) {
 				parent.children
 					? parent.children.push(child)
 					: (parent.children = [child]);
 			}
-		}
-	}
-	for (const api of apis) {
-		if (!api.parentApiId) {
-			res.push(api);
 		}
 	}
 	return res;

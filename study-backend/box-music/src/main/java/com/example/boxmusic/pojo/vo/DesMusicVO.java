@@ -1,11 +1,5 @@
 package com.example.boxmusic.pojo.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.example.boxmusic.pojo.entity.Singer;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class MusicVO implements Serializable {
+public class DesMusicVO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -23,7 +17,7 @@ public class MusicVO implements Serializable {
 	
 	private String lyric;
 	
-	private AlbumVO album;
+	private Long albumId;
 	
 	private Double duration;
 	
@@ -35,18 +29,23 @@ public class MusicVO implements Serializable {
 	
 	private Integer bitrate;
 	
-	private Integer totalViews;
-	
 	private String musicUrl;
 	
-	private Date createTime;
+	private String albumName;
 	
-	private Date updateTime;
+	private String albumPic;
 	
-	private Integer deleted;
+	private String albumDescription;
 	
-	private List<CategoryVO> categories;
+	private String categoryId;
 	
-	private List<SingerVO> singers;
+	private String categoryName;
 	
+	private String categoryType;
+	
+	private String singerId;
+	
+	private String singerName;
+	
+	private String singerPic;
 }

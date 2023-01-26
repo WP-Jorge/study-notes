@@ -25,7 +25,7 @@ export interface MusicModalProps {
 
 export const UserModal = (props: MusicModalProps) => {
 	const { formData, clickSubmit, clickCancel } = props;
-	const [title] = useState(formData?.userId ? '编辑音乐' : '添加音乐');
+	const [title] = useState(formData?.musicId ? '编辑音乐' : '添加音乐');
 	const [form] = useForm();
 
 	const [value, setValue] = useState([] as LabeledValue[]);
@@ -185,7 +185,7 @@ export const UserModal = (props: MusicModalProps) => {
 			<Modal
 				getContainer={false}
 				title={title}
-				visible={true}
+				open={true}
 				onCancel={clickCancel}
 				footer={[
 					<Button key="back" onClick={clickCancel}>

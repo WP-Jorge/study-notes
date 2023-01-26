@@ -97,7 +97,7 @@ export const SingerModal = (props: SingerModalProps) => {
 			<Modal
 				getContainer={false}
 				title={title}
-				visible={true}
+				open={true}
 				onCancel={clickCancel}
 				footer={[
 					<Button key="back" onClick={clickCancel}>
