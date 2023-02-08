@@ -9,11 +9,16 @@ import MusicDetail from '@/components/content/MusicDetail/index.vue';
 import ContentMexu from './components/common/ContextMenu/index.vue';
 import Login from '@/components/content/Login/index.vue';
 import { useRoute } from 'vue-router';
+import { useMusicStore } from './store/music';
 
 const systemStore = useSystemStore();
+const musicStore = useMusicStore();
 const route = useRoute();
 console.log('🦃🦃route.name', route.name);
 const { showSiderMenu, showMain, showMusicDetail } = storeToRefs(systemStore);
+
+// 初始化数据
+musicStore.getCollection();
 // const electronAPI = window.electronAPI;
 // electronAPI.getMusicInfo(
 // 	'D:/CloudMusic/双笙.flac',

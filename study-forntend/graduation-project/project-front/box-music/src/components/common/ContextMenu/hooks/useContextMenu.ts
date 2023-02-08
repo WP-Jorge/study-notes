@@ -25,6 +25,8 @@ export interface ContextMenuOptions {
 	playAlbum?: boolean;
 	addAlbumToPlaylist?: boolean;
 	go?: boolean;
+	deleteCollection?: boolean;
+	addCollection?: boolean;
 	[x: string]: any;
 }
 interface MenuTemplates {
@@ -51,6 +53,8 @@ interface menuFunctions {
 	playAlbum?: any;
 	addAlbumToPlaylist?: any;
 	go?: (path: string, payload: any) => any;
+	deleteCollection?: any;
+	addCollection?: any;
 	// [x: string]: (
 	// 	payload?: Music | Singer | Playlist | Album,
 	// 	...args: any
@@ -106,7 +110,9 @@ export const useContextMenu = (options = {} as ContextMenuOptions) => {
 				path,
 				query: payload
 			});
-		}
+		},
+		addCollection: musicStore.addCollection,
+		deleteCollection: musicStore.deleteCollection
 	} as menuFunctions;
 	const openContextMenu = (e: PointerEvent, ...payload: any) => {
 		const menuTemplates = {
@@ -187,6 +193,22 @@ export const useContextMenu = (options = {} as ContextMenuOptions) => {
 				type: 'li',
 				title: '进入详情',
 				callback: () => menuFunctions.go?.apply(null, [payload[1], payload[0]])
+			},
+			addCollection: {
+				type: 'li',
+				title: '添加至我的喜欢',
+				hide: !!musicStore.favoriteMusics.find(
+					item => item.musicId == payload?.[0].musicId
+				),
+				callback: () => menuFunctions.addCollection?.apply(null, [payload])
+			},
+			deleteCollection: {
+				type: 'li',
+				title: '从我的喜欢中移除',
+				hide: !musicStore.favoriteMusics.find(
+					item => item.musicId == payload?.[0].musicId
+				),
+				callback: () => menuFunctions.deleteCollection?.apply(null, [payload])
 			}
 		} as MenuTemplates;
 		const contextMenuList = [];

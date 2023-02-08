@@ -64,12 +64,12 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 	@Autowired
 	private FfmpegUtil ffmpegUtil;
 	
-	@Value("${spiderPath}")
-	private String spiderPath;
-	
 	@Value("${tempPath}")
 	private String tempPath;
-	
+
+	@Value("${basePath}")
+	private String basePath;
+
 	@Value("${musicPath}")
 	private String musicPath;
 	
@@ -145,7 +145,7 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 				throw new RuntimeException("添加歌曲失败，添加歌曲分类、歌曲歌手时发生错误");
 			}
 			// ffmpegUtil.saveMusic(musicPath, musicFilename);
-			Boolean moveFile = fileService.moveFile(musicFilename, tempPath, musicPath);
+			Boolean moveFile = fileService.moveFile(musicFilename, basePath + tempPath, basePath + musicPath);
 			if (!moveFile) {
 				return R.error("添加歌曲失败");
 			}
@@ -216,12 +216,12 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 				throw new RuntimeException("添加歌曲失败，添加歌曲分类、歌曲歌手时发生错误");
 			}
 			if (song != null) {
-				Boolean deleteImage = fileService.deleteFile(musicPath, musicName);
+				Boolean deleteImage = fileService.deleteFile(basePath + musicPath, musicName);
 				if (!deleteImage) {
 					log.warn("本地歌曲不存在");
 				}
 				// ffmpegUtil.saveMusic(musicPath, musicFilename);
-				Boolean moveFile = fileService.moveFile(musicFilename, tempPath, musicPath);
+				Boolean moveFile = fileService.moveFile(musicFilename, basePath + tempPath, basePath + musicPath);
 				if (!moveFile) {
 					return R.error("添加歌曲失败");
 				}

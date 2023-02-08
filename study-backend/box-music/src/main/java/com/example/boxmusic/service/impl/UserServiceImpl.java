@@ -56,6 +56,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	
 	@Autowired
 	JsonUtil jsonUtil;
+
+	@org.springframework.beans.factory.annotation.Value("${basePath}")
+	private String basePath;
 	
 	@org.springframework.beans.factory.annotation.Value("${userPicturePath}")
 	private String userPicturePath;
@@ -146,7 +149,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 			if (!aBoolean) {
 				throw new RuntimeException("注册失败");
 			}
-			fileService.uploadFile(picture, userPicturePath, pictureName);
+			fileService.uploadFile(picture, basePath + userPicturePath, pictureName);
 			return R.success("注册成功");
 		} catch (DuplicateKeyException e) {
 			throw new DuplicateKeyException("注册失败，用户名已存在");
@@ -258,11 +261,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 				throw new RuntimeException("更新失败");
 			}
 			if (picture != null) {
-				Boolean deleteImage = fileService.deleteFile(userPicturePath, pictrueName);
+				Boolean deleteImage = fileService.deleteFile(basePath + userPicturePath, pictrueName);
 				if (!deleteImage) {
 					log.warn("本地图片不存在");
 				}
-				fileService.uploadFile(picture, userPicturePath, picturefilename);
+				fileService.uploadFile(picture, basePath + userPicturePath, picturefilename);
 			}
 			return R.success("更新成功");
 		} catch (DuplicateKeyException e) {
@@ -295,7 +298,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 			if (!aBoolean) {
 				throw new RuntimeException("添加失败");
 			}
-			fileService.uploadFile(picture, userPicturePath, pictureName);
+			fileService.uploadFile(picture, basePath + userPicturePath, pictureName);
 			return R.success("添加成功");
 		} catch (DuplicateKeyException e) {
 			throw new DuplicateKeyException("添加失败，用户名已存在");
@@ -328,11 +331,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 				throw new RuntimeException("更新失败");
 			}
 			if (picture != null) {
-				Boolean deleteImage = fileService.deleteFile(userPicturePath, pictrueName);
+				Boolean deleteImage = fileService.deleteFile(basePath + userPicturePath, pictrueName);
 				if (!deleteImage) {
 					log.warn("本地图片不存在");
 				}
-				fileService.uploadFile(picture, userPicturePath, picturefilename);
+				fileService.uploadFile(picture, basePath + userPicturePath, picturefilename);
 			}
 			return R.success("更新成功");
 		} catch (Exception e) {

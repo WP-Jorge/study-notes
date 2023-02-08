@@ -54,5 +54,9 @@ filterMenu();
 <style lang="scss" scoped>
 .aside {
 	width: 100%;
+	height: 100%;
+	.el-menu-vertical-demo {
+		height: 100%;
+	}
 }
 </style>

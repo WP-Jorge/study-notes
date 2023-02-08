@@ -12,17 +12,7 @@ import java.io.IOException;
 
 @Service
 public class FileServiceImpl implements FileService {
-	
-	@Value("${spiderPath}")
-	private String spiderPath;
-	
-	@Value("${userPicturePath}")
-	private String userPicturePath;
-	
-	@Value("${otherUploadPath}")
-	private String otherUploadPath;
-	
-	
+
 	@Override
 	public String uploadFile(String targetPath, MultipartFile file) {
 		targetPath = getTargetPath(targetPath);

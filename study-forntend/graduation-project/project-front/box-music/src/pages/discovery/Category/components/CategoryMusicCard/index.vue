@@ -39,7 +39,9 @@ const getMusicsByCategoryIdPage = async (categoryId: string) => {
 const contextMneu = useContextMenu({
 	playMusic: true,
 	addMusicToPlaylist: true,
-	downloadOne: true
+	downloadOne: true,
+	addCollection: true,
+	deleteCollection: true
 });
 
 const open = (e: PointerEvent, row: Music) => {

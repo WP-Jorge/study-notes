@@ -5,6 +5,7 @@ export interface ContextMenuItem {
 	title?: string;
 	class?: string;
 	disabled?: boolean | ((...args: any) => boolean);
+	hide?: boolean | ((...args: any) => boolean);
 	callback?: (...args: any) => any;
 	children?: ContextMenuItem[];
 }

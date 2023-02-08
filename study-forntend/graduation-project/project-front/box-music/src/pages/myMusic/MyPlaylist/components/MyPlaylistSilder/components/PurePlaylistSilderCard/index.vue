@@ -13,8 +13,8 @@ withDefaults(defineProps<PropType>(), {
 <template>
 	<div :class="{ 'pure-playlist-silder-card': true, active: false }">
 		<div class="card-content">
-			<div class="title">{{ cardData.playlistName }}1111111111111</div>
-			<div class="count">歌曲数：{{ 100 }}</div>
+			<div class="title">{{ cardData.playlistName }}</div>
+			<div class="count">歌曲数：{{ cardData.musics?.length }}</div>
 		</div>
 	</div>
 </template>

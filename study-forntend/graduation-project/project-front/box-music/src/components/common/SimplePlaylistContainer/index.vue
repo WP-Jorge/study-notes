@@ -39,6 +39,7 @@ const isClosed = ref(false);
 </template>
 <style lang="scss" scoped>
 .simple-playlist-container {
+	margin: 0 10px;
 	// height: 100%;
 	.title {
 		display: flex;
@@ -78,7 +79,7 @@ const isClosed = ref(false);
 		max-height: 0;
 	}
 	.open {
-		max-height: 400px;
+		// max-height: calc(100vh - 600px);
 	}
 }
 </style>

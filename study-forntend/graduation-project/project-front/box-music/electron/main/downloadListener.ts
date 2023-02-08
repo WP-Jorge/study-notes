@@ -12,6 +12,7 @@ import {
 import Store from 'electron-store';
 import { Music } from '../globalValues/Type';
 import { getMd5 } from '../preload/apis/utilApis';
+import { GlobalURL } from '../globalValues/GlobalURL';
 
 interface InterruptedDownloadOptions extends CreateInterruptedDownloadOptions {
 	music: Music;
@@ -54,7 +55,10 @@ interface DownloadListenerType {
 store.onDidChange('downloadCacheList', newValue => {
 	console.log('🦃🦃downloadCacheList', newValue);
 });
-const downloadTempPath = store.get('downloadTempPath', 'G:\\DownLoad\\temp\\');
+const downloadTempPath = store.get(
+	'downloadTempPath',
+	GlobalURL.CLIENT_DOWNLOAD_PATH
+);
 const listeners = {} as DownloadListenerType;
 let downloadCacheList = store.get(
 	'downloadCacheList',

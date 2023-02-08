@@ -31,12 +31,6 @@ public class FfmpegUtil {
 	@Value("${tempPath}")
 	private String tempPath;
 	
-	@Value("${musicPath}")
-	private String musicPath;
-	
-	@Autowired
-	private DefaultUidGenerator defaultUidGenerator;
-	
 	private String getTargetSrc(String target, String fileName) {
 		return target.endsWith("/") ? target + fileName : target + '/' + fileName;
 	}

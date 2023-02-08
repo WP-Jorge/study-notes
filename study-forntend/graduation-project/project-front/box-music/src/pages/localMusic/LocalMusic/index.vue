@@ -74,12 +74,12 @@ const getLocalMusic = async (dir: string) => {
 			music.bitrate = item.bit_rate;
 			music.duration = item.duration;
 			music.level = getMusicLevel(item.bit_rate);
-			music.lyric = getRawLyric(item.tags.lyric);
+			music.lyric = getRawLyric(item.tags?.lyric ?? '');
 			music.musicTitle = item.tags?.title ?? parsePath(item.filename).name;
 			music.local = true;
 
 			music.singers = [] as Singer[];
-			const singerNames = item.tags.artist?.split(',') ?? [];
+			const singerNames = item.tags?.artist?.split(',') ?? [];
 			for (const singerName of singerNames) {
 				const singer = {} as Singer;
 				singer.singerName = singerName;

@@ -39,7 +39,9 @@ const getMusicsByCreateTimeSortPage = async () => {
 const contextMenu = useContextMenu({
 	downloadOne: true,
 	playMusic: true,
-	addMusicToPlaylist: true
+	addMusicToPlaylist: true,
+	addCollection: true,
+	deleteCollection: true
 });
 const open = (row: Music, cloumn: any, e: PointerEvent) => {
 	contextMenu.openContextMenu(e, row);

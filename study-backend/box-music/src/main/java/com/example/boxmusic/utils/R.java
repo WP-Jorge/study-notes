@@ -63,7 +63,7 @@ public class R extends HashMap<String, Object> {
 		return r;
 	}
 	
-	public static R success(String key, List<Object> listValue) {
+	public static <T> R success(String key, List<T> listValue) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put(key, listValue);
 		R r = new R();

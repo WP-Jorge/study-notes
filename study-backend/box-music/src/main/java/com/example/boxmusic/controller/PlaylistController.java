@@ -3,6 +3,7 @@ package com.example.boxmusic.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.boxmusic.pojo.dto.AddPlaylistDTO;
+import com.example.boxmusic.pojo.dto.AddSimplePlaylistDTO;
 import com.example.boxmusic.pojo.dto.UpdatePlaylistAdminDTO;
 import com.example.boxmusic.service.PlaylistService;
 import com.example.boxmusic.utils.R;
@@ -82,6 +83,26 @@ public class PlaylistController {
 		}
 		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
 		return playlistService.getPlaylistsByCategoryIdPage(page, categoryId);
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	@ApiOperation("添加歌单")
+	@PostMapping("/addSimplePlaylist")
+	public R addSimplePlaylist(HttpServletRequest httpServletRequest, @RequestBody @Valid AddSimplePlaylistDTO addSimplePlaylistDTO) {
+		return playlistService.addSimplePlaylist(httpServletRequest.getHeader(Value.HEADER), addSimplePlaylistDTO);
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	@ApiOperation("根据歌单id批量删除歌单")
+	@DeleteMapping("/deleteSimplePlaylistsByPlaylistIds")
+	public R deleteSimplePlaylistsByPlaylistIds(@RequestBody @NotEmpty(message = "歌单id不能为空") List<Long> playlistIds) {
+		return playlistService.deleteSimplePlaylistsByPlaylistIds(playlistIds);
+	}
+
+	@ApiOperation("获取个人歌单")
+	@GetMapping("/getSimplePlaylistsWithMusics")
+	public R getSimplePlaylistsWithMusics(HttpServletRequest httpServletRequest) {
+		return playlistService.getSimplePlaylistsWithMusics(httpServletRequest.getHeader(Value.HEADER));
 	}
 }
 

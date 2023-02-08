@@ -35,8 +35,11 @@ const getSingersByTotalViewsSortPage = async () => {
 };
 
 const contextMneu = useContextMenu({
+	downloadOne: true,
 	playMusic: true,
-	addMusicToPlaylist: true
+	addMusicToPlaylist: true,
+	addCollection: true,
+	deleteCollection: true
 });
 
 const open = (e: PointerEvent, row: Music) => {

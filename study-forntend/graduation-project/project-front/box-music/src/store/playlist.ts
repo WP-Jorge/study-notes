@@ -22,7 +22,9 @@ export const usePlaylistStore = defineStore('playlist', {
 	 */
 	state: () => {
 		return {
-			category: {} as Category
+			category: {} as Category,
+			playlists: [] as Playlist[],
+			currentPlaylist: {} as Playlist
 		};
 	},
 	/**

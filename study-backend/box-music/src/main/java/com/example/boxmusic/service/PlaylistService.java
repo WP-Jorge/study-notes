@@ -2,6 +2,7 @@ package com.example.boxmusic.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.boxmusic.pojo.dto.AddPlaylistDTO;
+import com.example.boxmusic.pojo.dto.AddSimplePlaylistDTO;
 import com.example.boxmusic.pojo.dto.UpdatePlaylistAdminDTO;
 import com.example.boxmusic.pojo.entity.Playlist;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -32,4 +33,10 @@ public interface PlaylistService extends IService<Playlist> {
 	R getPlaylistsByTotalViewsSortPage(Page<Map<String, Object>> page);
 	
 	R getPlaylistsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
+
+	R addSimplePlaylist(String headerToken, AddSimplePlaylistDTO addSimplePlaylistDTO);
+
+	R deleteSimplePlaylistsByPlaylistIds(List<Long> playlistIds);
+
+	R getSimplePlaylistsWithMusics(String headerToken);
 }

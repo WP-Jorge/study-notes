@@ -34,7 +34,9 @@ const getMusicsByTotalViewsSortPage = async () => {
 
 const contextMenu = useContextMenu({
 	playMusic: true,
-	addMusicToPlaylist: true
+	addMusicToPlaylist: true,
+	addCollection: true,
+	deleteCollection: true
 });
 
 const open = (e: PointerEvent, row: Music) => {

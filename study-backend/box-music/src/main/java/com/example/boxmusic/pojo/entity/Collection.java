@@ -33,9 +33,9 @@ public class Collection implements Serializable {
     @TableField("user_id")
     private Long userId;
     
-    @ApiModelProperty("专辑id")
-    @TableField("album_id")
-    private Long albumId;
+    @ApiModelProperty("音乐id")
+    @TableField("music_id")
+    private Long musicId;
 
     @ApiModelProperty("创建时间")
     @TableField("create_time")

@@ -6,6 +6,13 @@ import { Singer } from '@/networks/singer';
 import { Category } from '@/networks/category';
 import { ChartType } from '@/pages/discovery/Chart/components/ChartSelectorCard/index.vue';
 import { usePlayOrderChange } from '@/components/content/MusicBar/components/MusicBarCenter/usePlayOrderChange';
+import {
+	addMusicToCollectionApi,
+	deleteCollectionApi,
+	getCollectionApi
+} from '@/networks/collection';
+import { ResponseType } from '@/globals/ResponseType';
+import { ElMessage } from 'element-plus';
 
 export const useMusicStore = defineStore('music', {
 	state: () => {
@@ -24,11 +31,7 @@ export const useMusicStore = defineStore('music', {
 				currentIndex: JSON.parse(localStorage.getItem('currentIndex') ?? '0'),
 				isDragging: false,
 				muted: localStorage.getItem('muted') === 'true' ? true : false,
-				volume: parseFloat(
-					localStorage.getItem('volume') ??
-						localStorage.getItem('volume') ??
-						'0.1'
-				),
+				volume: parseFloat(localStorage.getItem('volume') ?? '0.1'),
 				tempVolume: parseFloat(localStorage.getItem('tempVolume') ?? '0.1'),
 				playTypeIndex: parseInt(localStorage.getItem('playTypeIndex') ?? '0'),
 				playOrders: [] as number[],
@@ -38,7 +41,8 @@ export const useMusicStore = defineStore('music', {
 			chartType: {} as ChartType,
 			recentPlayMusics: JSON.parse(
 				localStorage.getItem('recentPlayMusicList') ?? '[]'
-			) as Music[]
+			) as Music[],
+			favoriteMusics: [] as Music[]
 		};
 	},
 	getters: {
@@ -104,9 +108,9 @@ export const useMusicStore = defineStore('music', {
 				}
 			});
 		},
-		setMusicList(musicList: Music[], flag?: boolean) {
+		setMusicList(musicList: Music[], playNow?: boolean) {
 			const playOrderChange = usePlayOrderChange();
-			if (!flag) {
+			if (!playNow) {
 				this.musicList = musicList;
 				if (musicList.length) {
 					this.setMusic(musicList[0]);
@@ -128,6 +132,60 @@ export const useMusicStore = defineStore('music', {
 				localStorage.setItem('musicList', JSON.stringify(this.musicList));
 			});
 			playOrderChange();
+		},
+		async getCollection() {
+			const res = await getCollectionApi();
+			console.log('🦃🦃res', res);
+			if (res.data && res.data.type === ResponseType.SUCCESS) {
+				res.data.pageList.map((item: Music) => {
+					item.album.albumPic = getResourceUrl(
+						item.album.albumPic,
+						ResourceType.ALBUM_PICTURE
+					);
+					return item;
+				});
+				this.favoriteMusics = res.data.pageList;
+			}
+		},
+		async addCollection(musics?: Music[]) {
+			console.log('🦃🦃musics', musics);
+			let requestParam = [this.playMusic.music.musicId] as string[];
+			if (musics) {
+				requestParam =
+					(musics.map(item => {
+						if (item.musicId) {
+							return item.musicId;
+						}
+					}) as string[]) ?? [];
+			}
+			const res = await addMusicToCollectionApi(requestParam);
+			// console.log('🦃🦃res', res);
+			if (res.data && res.data.type === ResponseType.SUCCESS) {
+				ElMessage.success(res.data.msg);
+				this.getCollection();
+			} else {
+				ElMessage.error(res.data.msg);
+			}
+		},
+		async deleteCollection(musics?: Music[]) {
+			console.log('🦃🦃musics', musics);
+			let requestParam = [this.playMusic.music.musicId] as string[];
+			if (musics) {
+				requestParam =
+					(musics.map(item => {
+						if (item.musicId) {
+							return item.musicId;
+						}
+					}) as string[]) ?? [];
+			}
+			const res = await deleteCollectionApi(requestParam);
+			// console.log('🦃🦃res', res);
+			if (res.data && res.data.type === ResponseType.SUCCESS) {
+				ElMessage.success(res.data.msg);
+				this.getCollection();
+			} else {
+				ElMessage.error(res.data.msg);
+			}
 		}
 	}
 });

@@ -7,8 +7,10 @@ import com.example.boxmusic.pojo.entity.Playlist;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.boxmusic.pojo.vo.MusicVO;
 import com.example.boxmusic.pojo.vo.PlaylistVO;
+import com.example.boxmusic.pojo.vo.PlaylistWithMusicVO;
 import org.apache.ibatis.annotations.CacheNamespace;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,4 +28,6 @@ public interface PlaylistMapper extends BaseMapper<Playlist> {
 	IPage<PlaylistVO>  getPlaylistsByTotalViewsSortPage(Page<Map<String, Object>> page);
 	
 	IPage<MusicVO> getPlaylistsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
+
+	List<PlaylistWithMusicVO> getSimplePlaylistsWithMusics(Long userId);
 }

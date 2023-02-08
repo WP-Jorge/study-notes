@@ -37,15 +37,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 	@Autowired
 	JsonUtil jsonUtil;
 	
-	@Autowired
-	FileService fileService;
-	
-	@Value("${categoryPicturePath}")
-	private String categoryPicturePath;
-	
-	@Autowired
-	private CachedUidGenerator cachedUidGenerator;
-	
 	@Override
 	public R getCategoriesByCategoryNamePage(Page<Map<String, Object>> page, String categoryName) {
 		QueryWrapper<Category> queryWrapper = new QueryWrapper<>();

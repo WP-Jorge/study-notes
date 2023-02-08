@@ -46,6 +46,9 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
 	
 	@Autowired
 	FileService fileService;
+
+	@Value("${basePath}")
+	private String basePath;
 	
 	@Value("${albumPicturePath}")
 	private String albumPicturePath;
@@ -80,7 +83,7 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
 			if (i <= 0) {
 				throw new RuntimeException("添加专辑失败");
 			}
-			fileService.uploadFile(picture, albumPicturePath, pictureName);
+			fileService.uploadFile(picture, basePath + albumPicturePath, pictureName);
 			return R.success("添加专辑成功");
 		} catch (DuplicateKeyException e) {
 			throw new DuplicateKeyException("添加失败，专辑名已存在");
@@ -97,7 +100,7 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
 			return R.error("删除专辑失败");
 		}
 		for (Album category : albums) {
-			Boolean aBoolean = fileService.deleteFile(albumPicturePath, category.getAlbumPic());
+			Boolean aBoolean = fileService.deleteFile(basePath + albumPicturePath, category.getAlbumPic());
 			if (!aBoolean) {
 				log.warn("删除本地专辑图片失败");
 			}
@@ -121,11 +124,11 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
 				throw new RuntimeException("更新失败");
 			}
 			if (picture != null) {
-				Boolean deleteImage = fileService.deleteFile(albumPicturePath, pictrueName);
+				Boolean deleteImage = fileService.deleteFile(basePath + albumPicturePath, pictrueName);
 				if (!deleteImage) {
 					log.warn("本地图片不存在");
 				}
-				fileService.uploadFile(picture, albumPicturePath, picturefilename);
+				fileService.uploadFile(picture, basePath + albumPicturePath, picturefilename);
 			}
 			return R.success("更新成功");
 		} catch (Exception e) {

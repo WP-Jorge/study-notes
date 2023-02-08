@@ -6,7 +6,6 @@ import { registerSystemListener } from './systemListener';
 import { registerDownloadListener } from './downloadListener';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
-
 function createWindow() {
 	// 关闭安全策略提示
 	process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';

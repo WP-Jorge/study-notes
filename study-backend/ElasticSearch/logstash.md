@@ -59,7 +59,7 @@ vim logstash.yml
 
 ```yml
 http.host: "0.0.0.0"
-xpack.monitoring.elasticsearch.hosts: [ "http://192.168.94.128:9200" ] # 注意：只要是 logstash 中，都只能使用具体的地址，不能使用 localhost 等
+xpack.monitoring.elasticsearch.hosts: [ "http://192.168.61.130:9200" ] # 注意：只要是 logstash 中，都只能使用具体的地址，不能使用 localhost 等
 ```
 
 - 进入 logstash_pipeline 文件夹并创建 jdbc.conf 文件，编辑内容

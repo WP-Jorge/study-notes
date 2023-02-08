@@ -43,9 +43,9 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
 	
 	@Autowired
 	FileService fileService;
-	
-	@Value("${spiderPath}")
-	private String spiderPath;
+
+	@Value("${basePath}")
+	private String basePath;
 	
 	@Value("${singerPicturePath}")
 	private String singerPicturePath;
@@ -80,7 +80,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
 			if (i <= 0) {
 				throw new RuntimeException("添加歌手失败");
 			}
-			fileService.uploadFile(picture, singerPicturePath, pictureName);
+			fileService.uploadFile(picture, basePath + singerPicturePath, pictureName);
 			return R.success("添加歌手成功");
 		} catch (DuplicateKeyException e) {
 			throw new DuplicateKeyException("添加失败，歌手名已存在");
@@ -114,11 +114,11 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
 				throw new RuntimeException("更新失败");
 			}
 			if (picture != null) {
-				Boolean deleteImage = fileService.deleteFile(singerPicturePath, pictrueName);
+				Boolean deleteImage = fileService.deleteFile(basePath + singerPicturePath, pictrueName);
 				if (!deleteImage) {
 					log.warn("本地图片不存在");
 				}
-				fileService.uploadFile(picture, singerPicturePath, picturefilename);
+				fileService.uploadFile(picture, basePath + singerPicturePath, picturefilename);
 			}
 			return R.success("更新成功");
 		} catch (Exception e) {

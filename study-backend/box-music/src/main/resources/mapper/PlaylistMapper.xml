@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.boxmusic.mapper.PlaylistMapper">
-<!--		<cache-ref namespace="com.example.boxmusic.mapper.UserMapper"/>-->
-<!--		<cache-ref namespace="com.example.boxmusic.mapper.PlaylistMapper"/>-->
+	<!--		<cache-ref namespace="com.example.boxmusic.mapper.UserMapper"/>-->
+	<!--		<cache-ref namespace="com.example.boxmusic.mapper.PlaylistMapper"/>-->
 	<cache-ref namespace="com.example.boxmusic.mapper.MusicMapper"/>
-	
+
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.example.boxmusic.pojo.entity.Playlist">
 		<id column="playlist_id" property="playlistId"/>
@@ -25,29 +25,43 @@
 					select="getCategoriesWithPlaylistId">
 		</collection>
 	</resultMap>
-	
-	<select id="getPlaylistsByPlaylistNamePage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO" resultMap="PlaylistWithUserAndCategoryResultMap">
+
+	<select id="getPlaylistsByPlaylistNamePage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO"
+			resultMap="PlaylistWithUserAndCategoryResultMap">
 		select distinct *
 		from playlist
 		where playlist_name like concat('%', #{playlistName}
 			, '%')
 	</select>
-	
+
 	<resultMap id="PlaylistWithUserAndCategoryResultMap" type="com.example.boxmusic.pojo.vo.PlaylistVO">
 		<association property="user" javaType="com.example.boxmusic.pojo.vo.PureUserVO" column="userId=user_id"
-					select="getUserWithUserId">
+					 select="getUserWithUserId">
 		</association>
 		<collection property="categories" javaType="java.util.ArrayList" column="playlistId=playlist_id"
 					select="getCategoriesWithPlaylistId">
 		</collection>
 	</resultMap>
-	
+
+	<resultMap id="PlaylistWithUserAndCategoryAndMusicResultMap"
+			   type="com.example.boxmusic.pojo.vo.PlaylistWithMusicVO">
+		<association property="user" javaType="com.example.boxmusic.pojo.vo.PureUserVO" column="userId=user_id"
+					 select="getUserWithUserId">
+		</association>
+		<collection property="categories" javaType="java.util.ArrayList" column="playlistId=playlist_id"
+					select="getCategoriesWithPlaylistId">
+		</collection>
+		<collection property="musics" javaType="java.util.ArrayList" column="playlistId=playlist_id"
+					select="getMusicsWithPlaylistId">
+		</collection>
+	</resultMap>
+
 	<select id="getUserWithUserId" resultMap="com.example.boxmusic.mapper.UserMapper.PureUserVOResultMap">
 		select *
 		from user
 		where user.user_id = #{userId}
 	</select>
-	
+
 	<select id="getCategoriesWithPlaylistId" resultMap="com.example.boxmusic.mapper.CategoryMapper.BaseResultMap">
 		select *
 		from playlist,
@@ -57,14 +71,23 @@
 		  and category.category_id = playlist_category.category_id
 		  and playlist.playlist_id = #{playlistId}
 	</select>
-	
-	<select id="getPlaylistsByTotalViewsSortPage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO" resultMap="PlaylistWithUserAndCategoryResultMap">
+	<select id="getMusicsWithPlaylistId" resultMap="com.example.boxmusic.mapper.MusicMapper.BaseResultMap">
+		select *
+		from music,
+			 music_playlist
+		where music.music_id = music_playlist.music_id
+		  and playlist_id = #{playlistId}
+	</select>
+
+	<select id="getPlaylistsByTotalViewsSortPage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO"
+			resultMap="PlaylistWithUserAndCategoryResultMap">
 		select distinct *
 		from playlist
 		where opened = 1
 		order by total_views desc
 	</select>
-	<select id="getPlaylistsByCategoryIdPage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO" resultMap="PlaylistWithUserAndCategoryResultMap">
+	<select id="getPlaylistsByCategoryIdPage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO"
+			resultMap="PlaylistWithUserAndCategoryResultMap">
 		select *
 		from playlist,
 			 playlist_category,
@@ -73,6 +96,15 @@
 		  and playlist_category.category_id = category.category_id
 		  and category.category_id = #{categoryId}
 		  and playlist.opened = 1
+	</select>
+	<select id="getSimplePlaylistsWithMusics" resultType="com.example.boxmusic.pojo.vo.PlaylistWithMusicVO"
+			resultMap="PlaylistWithUserAndCategoryAndMusicResultMap">
+		select *
+		from playlist,
+			 music_playlist
+		where playlist.playlist_id = music_playlist.playlist_id
+		  and user_id = #{userId}
+		  and opened = 0
 	</select>
 
 </mapper>

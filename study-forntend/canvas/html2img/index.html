@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.card {
+				display: none;
+				background-color: white;
+				margin: 2em;
+				box-shadow: 0 0 1em rgba(0, 0, 0, 0.2);
+				border-radius: 0.5em;
+				width: 400px;
+			}
+
+			.cover {
+				width: 180px;
+			}
+
+			.cover img {
+				display: block;
+				max-width: 100%;
+				height: 100%;
+				border-radius: 0.5em 0 0 0.5em;
+			}
+
+			.text {
+				flex: 1;
+				text-align: center;
+				padding-top: 2em;
+			}
+
+			.text h1 {
+				font-size: 1em;
+			}
+		</style>
+	</head>
+	<body>
+		<svg width="0" height="0" viewBox="0 0 470 320">
+			<!-- <svg width="470" height="320" viewBox="0 0 470 320"> -->
+			<foreignObject width="100%" height="100%">
+				<div xmlns="http://www.w3.org/1999/xhtml">
+					<div class="card">
+						<div class="cover">
+							<img src="./libai.jpeg" />
+						</div>
+						<div class="text">
+							<h1>静夜思</h1>
+							<p>床前看月光</p>
+							<p>疑是地上霜</p>
+							<p>抬头望山月</p>
+							<p>低头思故乡</p>
+						</div>
+					</div>
+				</div>
+			</foreignObject>
+		</svg>
+		<button>生成图片</button>
+		<script>
+			const displayStr = `.card {display: flex;}`;
+
+			// 将 url 异步转换成 base64 格式
+			function getImgBase64(url) {
+				return new Promise(resolve => {
+					const img = new Image();
+					img.crossOrigin = 'Anonymous';
+					img.src = url;
+					img.onload = function () {
+						resolve(image2Base64(img));
+					};
+				});
+			}
+
+			// 将 img 转换成 base64 格式
+			function image2Base64(img) {
+				const canvas = document.createElement('canvas');
+				const ctx = canvas.getContext('2d');
+				canvas.width = img.width;
+				canvas.height = img.height;
+				ctx.drawImage(img, 0, 0);
+				return (dataURL = canvas.toDataURL());
+			}
+
+			// 将 svg 中的 img 转换成 base64 格式
+			async function sImg2tImg(sImgs, tImgs) {
+				for (let i = 0; i < tImgs.length; i++) {
+					const base64Url = await getImgBase64(sImgs[i].src);
+					sImgs[i].src = base64Url;
+				}
+			}
+
+			// 下载图片
+			async function download() {
+				const img = new Image();
+				const svg = document.querySelector('svg').cloneNode(true);
+				svg.setAttribute('width', 470);
+				svg.setAttribute('height', 320);
+				console.dir(svg);
+
+				console.dir(document.querySelector('style'));
+
+				// 把 style 标签中的 CSS 代码引入 SVG 图片中
+				const styleNode = document
+					.querySelector('style')
+					.cloneNode(true);
+				styleNode.textContent += displayStr;
+				svg.querySelector('foreignObject').before(styleNode);
+
+				// 转换 HTML 代码中的图片地址
+				const sImgs = svg.querySelectorAll('img');
+				const tImgs = document.querySelectorAll('svg img');
+				await sImg2tImg(sImgs, tImgs);
+
+				// 设置 HTML 转 SVG 后的图片内容格式
+				img.src =
+					'data:image/svg+xml;charset=utf-8,' +
+					new XMLSerializer().serializeToString(svg);
+
+				console.log('🦃🦃img.src', img.src);
+
+				// 等待 img 对象完成图片的渲染加载后执行下载
+				img.onload = function () {
+					const a = document.createElement('a');
+					a.download = 'image.png';
+					a.href = image2Base64(img);
+					a.click();
+				};
+			}
+
+			// 点击按钮时生成图片并下载
+			document
+				.querySelector('button')
+				.addEventListener('click', download);
+		</script>
+	</body>
+</html>

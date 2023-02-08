@@ -3,6 +3,7 @@ import axios from '@/networks';
 import { BaseInterface } from '@/globals/globalTypes';
 import { PureUser } from './user';
 import { Category } from './category';
+import { Music } from './music';
 
 export interface Playlist extends BaseInterface {
 	playlistId?: string;
@@ -13,6 +14,7 @@ export interface Playlist extends BaseInterface {
 	opened: number;
 	playlistPic: string;
 	categories: Category[];
+	musics?: Music[];
 }
 
 const baseUrl = '/playlist/';
@@ -55,4 +57,8 @@ export const getPlaylistsByCategoryIdPageApi = (
 			categoryId
 		}
 	});
+};
+
+export const getSimplePlaylistsWithMusicsApi = () => {
+	return axios.get(baseUrl + 'getSimplePlaylistsWithMusics');
 };

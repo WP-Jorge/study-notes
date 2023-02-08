@@ -7,10 +7,14 @@ import SimplePlaylistContainer from '@/components/common/SimplePlaylistContainer
 import { debounce } from '@/utils/baseUtil';
 import { ElMessage, ElMessageBox } from 'element-plus';
 interface PropType {
-	tableData: Playlist[];
+	myCreated: Playlist[];
+	myCollected: Playlist[];
 }
 withDefaults(defineProps<PropType>(), {
-	tableData() {
+	myCreated() {
+		return [];
+	},
+	myCollected() {
 		return [];
 	}
 });
@@ -50,7 +54,7 @@ const openAddPlaylist = () => {
 			<SimplePlaylistContainer title="我创建的">
 				<template #content>
 					<PurePlaylistSilderCard
-						v-for="item of tableData"
+						v-for="item of myCreated"
 						:key="item.playlistId"
 						:card-data="item"
 						:show-img="false" />
@@ -59,7 +63,7 @@ const openAddPlaylist = () => {
 			<SimplePlaylistContainer title="我收藏的">
 				<template #content>
 					<PlayListSilderCard
-						v-for="item of tableData"
+						v-for="item of myCollected"
 						:key="item.playlistId"
 						:card-data="item" />
 				</template>
@@ -80,6 +84,25 @@ const openAddPlaylist = () => {
 	}
 	.playlist-container {
 		height: calc(100% - 35px);
+		overflow: auto;
+		&::-webkit-scrollbar {
+			width: 5px;
+			height: 8px;
+			background-color: var(--el-color-info-light-9);
+			// background-color: transparent;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: transparent;
+		}
+		.entity {
+			font-size: 12px;
+			color: rgb(158, 158, 158);
+		}
+	}
+	.playlist-container:hover {
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--el-color-primary-light-5);
+		}
 	}
 }
 </style>

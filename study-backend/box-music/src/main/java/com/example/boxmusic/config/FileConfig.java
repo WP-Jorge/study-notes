@@ -7,9 +7,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class FileConfig implements WebMvcConfigurer {
-	
+
+	@Value("${basePath}")
+	private String basePath;
+
 	@Value("${spiderPath}")
 	private String spiderPath;
+
 	@Value("${spiderPathRelative}")
 	private String spiderPathRelative;
 	
@@ -58,20 +62,20 @@ public class FileConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler(spiderPathRelative)
-				.addResourceLocations("file:/" + spiderPath);
+				.addResourceLocations("file:/" + basePath + spiderPath);
 		registry.addResourceHandler(userPicturePathRelative)
-				.addResourceLocations("file:/" + userPicturePath);
+				.addResourceLocations("file:/" + basePath + userPicturePath);
 		registry.addResourceHandler(albumPicturePathRelative)
-				.addResourceLocations("file:/" + albumPicturePath);
+				.addResourceLocations("file:/" + basePath + albumPicturePath);
 		registry.addResourceHandler(singerPicturePathRelative)
-				.addResourceLocations("file:/" + singerPicturePath);
+				.addResourceLocations("file:/" + basePath + singerPicturePath);
 		registry.addResourceHandler(categoryPicturePathRelative)
-				.addResourceLocations("file:/" + categoryPicturePath);
+				.addResourceLocations("file:/" + basePath + categoryPicturePath);
 		registry.addResourceHandler(playlistPicturePathRelative)
-				.addResourceLocations("file:/" + playlistPicturePath);
+				.addResourceLocations("file:/" + basePath + playlistPicturePath);
 		registry.addResourceHandler(musicPathRelative)
-				.addResourceLocations("file:/" + musicPath);
+				.addResourceLocations("file:/" + basePath + musicPath);
 		registry.addResourceHandler(otherUploadPathRelative)
-				.addResourceLocations("file:/" + otherUploadPath);
+				.addResourceLocations("file:/" + basePath + otherUploadPath);
 	}
 }

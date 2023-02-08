@@ -3,6 +3,11 @@ import { useMusicStore } from '@/store/music';
 import { useDownloadStore } from '@/store/download';
 const musicStore = useMusicStore();
 const downloadStore = useDownloadStore();
+const isFavorite = computed(() => {
+	return musicStore.favoriteMusics.find(
+		item => item.musicId == musicStore.playMusic.music.musicId
+	);
+});
 </script>
 <template>
 	<div class="music-pic">
@@ -24,9 +29,12 @@ const downloadStore = useDownloadStore();
 					:show-arrow="false"
 					tabindex="-1"
 					effect="light"
-					content="添加喜欢"
+					content="移除喜欢"
 					placement="bottom">
-					<i-ic-round-favorite class="item" />
+					<i-ic-round-favorite
+						v-show="isFavorite"
+						class="item favorite"
+						@click="() => musicStore.deleteCollection()" />
 				</el-tooltip>
 				<el-tooltip
 					:show-after="500"
@@ -35,9 +43,12 @@ const downloadStore = useDownloadStore();
 					:show-arrow="false"
 					tabindex="-1"
 					effect="light"
-					content="移除喜欢"
+					content="添加喜欢"
 					placement="bottom">
-					<i-ic-round-favorite-border class="item" />
+					<i-ic-round-favorite-border
+						v-show="!isFavorite"
+						class="item"
+						@click="() => musicStore.addCollection()" />
 				</el-tooltip>
 				<el-tooltip
 					:show-after="500"
@@ -52,7 +63,10 @@ const downloadStore = useDownloadStore();
 						:class="{
 							item: true,
 							hidden: !downloadStore.downloadable(musicStore.playMusic.music)
-						}" />
+						}"
+						@click="
+							downloadStore.startDownloadOne(musicStore.playMusic.music)
+						" />
 				</el-tooltip>
 				<el-tooltip
 					:show-after="500"
@@ -127,6 +141,10 @@ const downloadStore = useDownloadStore();
 				margin: 0 10px;
 				font-size: 24px;
 				cursor: pointer;
+			}
+
+			.favorite {
+				color: rgba($color: #ff5f5f, $alpha: 1);
 			}
 
 			.hidden {

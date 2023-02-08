@@ -32,7 +32,7 @@ onMounted(() => {
 				<li
 					v-for="(item, index) of menuStore.contextMenuList"
 					:key="index"
-					:class="{ item: true, disable: !!item.disabled }"
+					:class="{ item: true, disable: !!item.disabled, hide: !!item.hide }"
 					@click="
 						item.callback && item.callback();
 						menuStore.options.visible = false;
@@ -68,6 +68,12 @@ onMounted(() => {
 			&:hover {
 				background-color: #eaeaea;
 			}
+		}
+		.disable {
+			cursor: not-allowed;
+		}
+		.hide {
+			display: none;
 		}
 	}
 }

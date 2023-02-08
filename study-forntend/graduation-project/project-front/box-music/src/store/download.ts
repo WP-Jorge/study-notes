@@ -40,8 +40,11 @@ export const useDownloadStore = defineStore('download', {
 			// pauseQueue: [] as Music[],
 			store: getStore(),
 			messageChannelTypes: {} as MessageChannelType,
-			downloadPath: 'G:\\DownLoad\\download\\',
-			downloadTempPath: getData('downloadTempPath', 'G:\\DownLoad\\temp\\')
+			downloadPath: GlobalURL.CLIENT_DOWNLOAD_PATH,
+			downloadTempPath: getData(
+				'downloadTempPath',
+				GlobalURL.CLIENT_DOWNLOAD_TEMP_PATH
+			)
 		};
 	},
 	/**

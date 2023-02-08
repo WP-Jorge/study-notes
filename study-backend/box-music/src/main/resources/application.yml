@@ -5,7 +5,8 @@ spring:
   datasource:
     #    url: jdbc:mysql://remotemysql.com:3306/umHddtxzhZ?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
 
-    url: jdbc:mysql://192.168.61.130:3306/box-music?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    #    url: jdbc:mysql://192.168.61.130:3306/box-music?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://172.16.63.130:3306/box-music?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
     username: root
     password: 111111
     #    username: umHddtxzhZ
@@ -48,13 +49,15 @@ spring:
 #    password: 123456
 
   redis:
-    host: 192.168.61.130
+    #    host: 192.168.61.130
+    host: 172.16.63.130
     port: 6379
     database: 0
 #    password: 111111
 
 elasticsearch:
-  host: 192.168.61.130:9200
+  #  host: 192.168.61.130:9200
+  host: 172.16.63.130:9200
   connection-timeout: 100000
   read-timeout: 100000
 
@@ -75,30 +78,41 @@ uid:
     boostPower: 3          # RingBuffer size扩容参数, 可提高UID生成的吞吐量, 默认:3
     paddingFactor: 50      # 指定何时向RingBuffer中填充UID, 取值为百分比(0, 100), 默认为50
     #scheduleInterval: 60    # 默认:不配置此项, 即不使用Schedule线程. 如需使用, 请指定Schedule线程时间间隔, 单位:秒
-    
+
+#basePath: G:/
+basePath: //volumes/Seagate%20Basic/
+
 userPicturePathRelative: /user-pictures/**
-userPicturePath: G:/box-music/user-pictures/
+#userPicturePath: G:/box-music/user-pictures/
+userPicturePath: box-music/user-pictures/
 
 albumPicturePathRelative: /album-pictures/**
-albumPicturePath: G:/box-music/album-pictures/
+#albumPicturePath: G:/box-music/album-pictures/
+albumPicturePath: box-music/album-pictures/
 
 singerPicturePathRelative: /singer-pictures/**
-singerPicturePath: G:/box-music/singer-pictures/
+#singerPicturePath: G:/box-music/singer-pictures/
+singerPicturePath: box-music/singer-pictures/
 
 categoryPicturePathRelative: /category-pictures/**
-categoryPicturePath: G:/box-music/category-pictures/
+#categoryPicturePath: G:/box-music/category-pictures/
+categoryPicturePath: box-music/category-pictures/
 
 playlistPicturePathRelative: /playlist-pictures/**
-playlistPicturePath: G:/box-music/playlist-pictures/
+#playlistPicturePath: G:/box-music/playlist-pictures/
+playlistPicturePath: box-music/playlist-pictures/
 
 musicPathRelative: /musics/**
-musicPath: G:/box-music/musics/
+#musicPath: G:/box-music/musics/
+musicPath: box-music/musics/
 
 otherUploadPathRelative: /others/**
-otherUploadPath: G:/Files/Others/
+#otherUploadPath: G:/Files/Others/
+otherUploadPath: Files/Others/
 
 spiderPathRelative: /spider/**
 #spiderPath: G:/box_music/
-spiderPath: G:/box-music/
+spiderPath: box-music/
 
-tempPath: G:/box-music/temp/
+#tempPath: G:/box-music/temp/
+tempPath: box-music/temp/
