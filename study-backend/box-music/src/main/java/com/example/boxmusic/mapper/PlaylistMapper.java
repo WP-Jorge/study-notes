@@ -30,4 +30,8 @@ public interface PlaylistMapper extends BaseMapper<Playlist> {
 	IPage<MusicVO> getPlaylistsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
 
 	List<PlaylistWithMusicVO> getSimplePlaylistsWithMusics(Long userId);
+	
+	IPage getPlaylistsByPlaylistNameAndUserIdPage(Page<Map<String, Object>> page, Long userId, String playlistName);
+	
+	Integer deleteUserPlaylists(Long userId, List<Long> playlistIds);
 }

@@ -49,6 +49,9 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
 			// postMan测试时，自动假如的前缀，要去掉。
 			String token = headerToken.replace(Value.POSTMAN_TOKEN_PREFIX, Value.ENTITY).trim();
 			String username = jwtTokenUtil.getUsernameFromToken(token);
+			if (username == null) {
+				return R.error("token异常 请重新登录");
+			}
 			UserVO userInfo = userService.getUserInfoWithUsername(username);
 			ArrayList<UpdateCollectionDTO> collections = new ArrayList<>();
 			for (Long musicId : musicIds) {

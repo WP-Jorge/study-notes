@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.boxmusic.pojo.dto.AddPlaylistDTO;
 import com.example.boxmusic.pojo.dto.AddSimplePlaylistDTO;
 import com.example.boxmusic.pojo.dto.UpdatePlaylistAdminDTO;
+import com.example.boxmusic.pojo.dto.UpdateSimplePlaylistDTO;
 import com.example.boxmusic.pojo.entity.*;
 import com.example.boxmusic.mapper.PlaylistMapper;
 import com.example.boxmusic.pojo.vo.*;
@@ -61,10 +62,10 @@ public class PlaylistServiceImpl extends ServiceImpl<PlaylistMapper, Playlist> i
 	
 	@Autowired
 	private PlaylistCategoryService playlistCategoryService;
-
+	
 	@org.springframework.beans.factory.annotation.Value("${basePath}")
 	private String basePath;
-
+	
 	@org.springframework.beans.factory.annotation.Value("${playlistPicturePath}")
 	private String playlistPicturePath;
 	
@@ -203,7 +204,7 @@ public class PlaylistServiceImpl extends ServiceImpl<PlaylistMapper, Playlist> i
 		IPage<MusicVO> musicPages = baseMapper.getPlaylistsByCategoryIdPage(page, categoryId);
 		return R.successPage("获取歌曲分类成功", musicPages);
 	}
-
+	
 	@Override
 	public R addSimplePlaylist(String headerToken, AddSimplePlaylistDTO addSimplePlaylistDTO) {
 		if ("".equals(headerToken) || headerToken == null) {
@@ -218,13 +219,13 @@ public class PlaylistServiceImpl extends ServiceImpl<PlaylistMapper, Playlist> i
 			Playlist playlist = new Playlist();
 			BeanUtils.copyProperties(addSimplePlaylistDTO, playlist);
 			playlist.setUserId(userInfo.getUserId());
-//			playlist.setPlaylistId(uid);
+			//			playlist.setPlaylistId(uid);
 			playlist.setOpened(0);
 			boolean save = this.save(playlist);
 			if (!save) {
 				throw new RuntimeException("添加失败");
 			}
-//			redisTemplate.delete("com.example.boxmusic.mapper.UserMapper");
+			redisTemplate.delete("com.example.boxmusic.mapper.MusicMapper");
 			return R.success("添加成功");
 		} catch (DuplicateKeyException e) {
 			throw new DuplicateKeyException("添加失败，歌单已存在");
@@ -232,16 +233,17 @@ public class PlaylistServiceImpl extends ServiceImpl<PlaylistMapper, Playlist> i
 			throw new RuntimeException(e.getMessage());
 		}
 	}
-
+	
 	@Override
 	public R deleteSimplePlaylistsByPlaylistIds(List<Long> playlistIds) {
 		int i = baseMapper.deleteBatchIds(playlistIds);
 		if (i > 0) {
+			redisTemplate.delete("com.example.boxmusic.mapper.MusicMapper");
 			return R.success("删除成功");
 		}
 		return R.error("删除失败");
 	}
-
+	
 	@Override
 	public R getSimplePlaylistsWithMusics(String headerToken) {
 		if ("".equals(headerToken) || headerToken == null) {
@@ -250,13 +252,73 @@ public class PlaylistServiceImpl extends ServiceImpl<PlaylistMapper, Playlist> i
 		String token = headerToken.replace(Value.POSTMAN_TOKEN_PREFIX, Value.ENTITY).trim();
 		String username = jwtTokenUtil.getUsernameFromToken(token);
 		UserVO userInfo = userService.getUserInfoWithUsername(username);
-//		QueryWrapper<Playlist> queryWrapper = new QueryWrapper<>();
-//		queryWrapper.eq("user_id", userInfo.getUserId());
-//		queryWrapper.eq("opened", 0);
-//		List<Playlist> list = this.list(queryWrapper);
+		//		QueryWrapper<Playlist> queryWrapper = new QueryWrapper<>();
+		//		queryWrapper.eq("user_id", userInfo.getUserId());
+		//		queryWrapper.eq("opened", 0);
+		//		List<Playlist> list = this.list(queryWrapper);
 		List<PlaylistWithMusicVO> playlists = baseMapper.getSimplePlaylistsWithMusics(userInfo.getUserId());
 		return R.success("pageList", playlists);
 	}
-
-
+	
+	@Override
+	public R getPlaylistsByPlaylistNameAndUserIdPage(Page<Map<String, Object>> page, String headerToken, String playlistName) {
+		if ("".equals(headerToken) || headerToken == null) {
+			return R.error("token异常");
+		}
+		String token = headerToken.replace(Value.POSTMAN_TOKEN_PREFIX, Value.ENTITY).trim();
+		String username = jwtTokenUtil.getUsernameFromToken(token);
+		UserVO userInfo = userService.getUserInfoWithUsername(username);
+		return R.successPage("获取歌单成功", baseMapper.getPlaylistsByPlaylistNameAndUserIdPage(page, userInfo.getUserId(), playlistName));
+	}
+	
+	@Override
+	public R updateSimplePlaylist(String headerToken, UpdateSimplePlaylistDTO updateSimplePlaylistDTO) {
+		if ("".equals(headerToken) || headerToken == null) {
+			return R.error("token异常");
+		}
+		// postMan测试时，自动假如的前缀，要去掉。
+		String token = headerToken.replace(Value.POSTMAN_TOKEN_PREFIX, Value.ENTITY).trim();
+		String username = jwtTokenUtil.getUsernameFromToken(token);
+		UserVO userInfo = userService.getUserInfoWithUsername(username);
+		try {
+			Playlist playlist = new Playlist();
+			BeanUtils.copyProperties(updateSimplePlaylistDTO, playlist);
+			playlist.setUserId(userInfo.getUserId());
+			boolean save = this.updateById(playlist);
+			if (!save) {
+				throw new RuntimeException("更新失败");
+			}
+			redisTemplate.delete("com.example.boxmusic.mapper.MusicMapper");
+			return R.success("更新成功");
+		} catch (DuplicateKeyException e) {
+			throw new DuplicateKeyException("更新失败，歌单名已存在");
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public R deleteUserPlaylists(String headerToken, List<Long> playlistIds) {
+		if ("".equals(headerToken) || headerToken == null) {
+			return R.error("token异常");
+		}
+		// postMan测试时，自动假如的前缀，要去掉。
+		String token = headerToken.replace(Value.POSTMAN_TOKEN_PREFIX, Value.ENTITY).trim();
+		String username = jwtTokenUtil.getUsernameFromToken(token);
+		UserVO userInfo = userService.getUserInfoWithUsername(username);
+		try {
+			Integer integer = baseMapper.deleteUserPlaylists(userInfo.getUserId(), playlistIds);
+			if (integer > 0) {
+				return R.success("删除成功");
+			}
+			return R.error("删除失败");
+			// redisTemplate.delete("com.example.boxmusic.mapper.MusicMapper");
+		} catch (DuplicateKeyException e) {
+			throw new DuplicateKeyException("更新失败，歌单名已存在");
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	
 }

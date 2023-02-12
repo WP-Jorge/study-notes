@@ -4,7 +4,7 @@
 	<!--		<cache-ref namespace="com.example.boxmusic.mapper.UserMapper"/>-->
 	<!--		<cache-ref namespace="com.example.boxmusic.mapper.PlaylistMapper"/>-->
 	<cache-ref namespace="com.example.boxmusic.mapper.MusicMapper"/>
-
+	
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.example.boxmusic.pojo.entity.Playlist">
 		<id column="playlist_id" property="playlistId"/>
@@ -25,7 +25,14 @@
 					select="getCategoriesWithPlaylistId">
 		</collection>
 	</resultMap>
-
+	<delete id="deleteUserPlaylists">
+		delete from user_playlist where user_id = #{userId} and playlist_id in (
+		<foreach collection="playlistIds" item="item" index="index" separator=",">
+			#{item}
+		</foreach>
+		)
+	</delete>
+	
 	<select id="getPlaylistsByPlaylistNamePage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO"
 			resultMap="PlaylistWithUserAndCategoryResultMap">
 		select distinct *
@@ -33,7 +40,7 @@
 		where playlist_name like concat('%', #{playlistName}
 			, '%')
 	</select>
-
+	
 	<resultMap id="PlaylistWithUserAndCategoryResultMap" type="com.example.boxmusic.pojo.vo.PlaylistVO">
 		<association property="user" javaType="com.example.boxmusic.pojo.vo.PureUserVO" column="userId=user_id"
 					 select="getUserWithUserId">
@@ -42,7 +49,7 @@
 					select="getCategoriesWithPlaylistId">
 		</collection>
 	</resultMap>
-
+	
 	<resultMap id="PlaylistWithUserAndCategoryAndMusicResultMap"
 			   type="com.example.boxmusic.pojo.vo.PlaylistWithMusicVO">
 		<association property="user" javaType="com.example.boxmusic.pojo.vo.PureUserVO" column="userId=user_id"
@@ -55,13 +62,13 @@
 					select="getMusicsWithPlaylistId">
 		</collection>
 	</resultMap>
-
+	
 	<select id="getUserWithUserId" resultMap="com.example.boxmusic.mapper.UserMapper.PureUserVOResultMap">
 		select *
 		from user
 		where user.user_id = #{userId}
 	</select>
-
+	
 	<select id="getCategoriesWithPlaylistId" resultMap="com.example.boxmusic.mapper.CategoryMapper.BaseResultMap">
 		select *
 		from playlist,
@@ -71,14 +78,15 @@
 		  and category.category_id = playlist_category.category_id
 		  and playlist.playlist_id = #{playlistId}
 	</select>
-	<select id="getMusicsWithPlaylistId" resultMap="com.example.boxmusic.mapper.MusicMapper.BaseResultMap">
+	<select id="getMusicsWithPlaylistId"
+			resultMap="com.example.boxmusic.mapper.MusicMapper.MusicWithCategoryAndSingerAndAlbumResultMap">
 		select *
 		from music,
 			 music_playlist
 		where music.music_id = music_playlist.music_id
 		  and playlist_id = #{playlistId}
 	</select>
-
+	
 	<select id="getPlaylistsByTotalViewsSortPage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO"
 			resultMap="PlaylistWithUserAndCategoryResultMap">
 		select distinct *
@@ -100,11 +108,26 @@
 	<select id="getSimplePlaylistsWithMusics" resultType="com.example.boxmusic.pojo.vo.PlaylistWithMusicVO"
 			resultMap="PlaylistWithUserAndCategoryAndMusicResultMap">
 		select *
-		from playlist,
-			 music_playlist
-		where playlist.playlist_id = music_playlist.playlist_id
-		  and user_id = #{userId}
+		from playlist
+		where user_id = #{userId}
 		  and opened = 0
+	</select>
+	<select id="getPlaylistsByPlaylistNameAndUserIdPage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO"
+			resultMap="PlaylistWithUserAndCategoryAndMusicResultMap">
+		select distinct user_playlist_id,
+						playlist.playlist_id,
+						playlist_name,
+						playlist_pic,
+						playlist_description,
+						playlist.user_id,
+						opened,
+						total_views,
+						user_playlist_id
+		from playlist,
+			 user_playlist
+		where playlist.playlist_id = user_playlist.playlist_id
+		  and playlist_name like concat('%', #{playlistName}, '%')
+		  and user_playlist.user_id = #{userId}
 	</select>
 
 </mapper>

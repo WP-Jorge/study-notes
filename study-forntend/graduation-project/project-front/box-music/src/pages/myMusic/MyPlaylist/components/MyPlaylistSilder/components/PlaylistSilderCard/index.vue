@@ -1,14 +1,38 @@
 <script setup lang="ts">
-import { Playlist } from '@/networks/playlist';
+import { ResponseType } from '@/globals/ResponseType';
+import { Playlist, deleteUserPlaylistsApi } from '@/networks/playlist';
+import { usePlaylistStore } from '@/store/playlist';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 interface PropType {
 	cardData: Playlist;
 }
-withDefaults(defineProps<PropType>(), {
+const props = withDefaults(defineProps<PropType>(), {
 	cardData() {
 		return {} as Playlist;
 	}
 });
+const playlistStore = usePlaylistStore();
+const deleteUserPlaylist = () => {
+	ElMessageBox.confirm('确定要删除该歌单？', '提示', {
+		confirmButtonText: '确定',
+		cancelButtonText: '取消',
+		type: 'warning'
+	})
+		.then(async () => {
+			const res = await deleteUserPlaylistsApi([
+				props.cardData.playlistId as string
+			]);
+			console.log('🦃🦃res', res);
+			if (res.data && res.data.type === ResponseType.SUCCESS) {
+				ElMessage.success('删除成功');
+				playlistStore.getPlaylistsByPlaylistNameAndUserIdPage();
+			} else {
+				ElMessage.error('删除失败');
+			}
+		})
+		.catch(e => e);
+};
 </script>
 <template>
 	<div :class="{ 'playlist-silder-card': true, active: false }">
@@ -16,6 +40,22 @@ withDefaults(defineProps<PropType>(), {
 		<div class="card-content">
 			<div class="title">{{ cardData.playlistName }}</div>
 			<div class="desc">{{ cardData.playlistDescription }}</div>
+			<div class="count">歌曲数：{{ cardData.musics?.length }}</div>
+		</div>
+		<div class="options">
+			<el-tooltip
+				:show-after="500"
+				:hide-after="0"
+				:offset="0"
+				:show-arrow="false"
+				tabindex="-1"
+				effect="light"
+				content="删除"
+				placement="bottom">
+				<i-material-symbols:delete-rounded
+					class="delete-option"
+					@click.stop="deleteUserPlaylist" />
+			</el-tooltip>
 		</div>
 	</div>
 </template>
@@ -24,19 +64,20 @@ withDefaults(defineProps<PropType>(), {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	position: relative;
 	box-sizing: border-box;
 	margin: 10px;
 	padding: 10px;
-	height: 100px;
+	height: 110px;
 	cursor: pointer;
 	border-radius: 5px;
 	box-shadow: 1px 1px 5px rgba($color: #000000, $alpha: 0.1);
 	.img {
-		height: 80px;
-		width: 80px;
+		height: 85px;
+		width: 85px;
 		img {
-			width: 80px;
-			height: 80px;
+			width: 85px;
+			height: 85px;
 			border-radius: 5px;
 		}
 	}
@@ -46,7 +87,7 @@ withDefaults(defineProps<PropType>(), {
 		justify-content: space-evenly;
 		margin-left: 10px;
 		width: calc(100% - 90px);
-		height: 70px;
+		height: 80px;
 		.title {
 			width: 100%;
 			font-size: 14px;
@@ -64,6 +105,32 @@ withDefaults(defineProps<PropType>(), {
 			-webkit-line-clamp: 2;
 			-webkit-box-orient: vertical;
 		}
+		.count {
+			font-size: 12px;
+			color: rgb(106, 106, 106);
+		}
+	}
+	.options {
+		display: none;
+		align-items: center;
+		justify-content: space-around;
+		position: absolute;
+		right: 3px;
+		top: 3px;
+		padding: 0 10px;
+		border-radius: 50px;
+		background-color: #eaeaea;
+		.edit-option {
+			color: #575757;
+		}
+		.delete-option {
+			color: rgb(225, 0, 0);
+		}
+	}
+}
+.playlist-silder-card:hover {
+	.options {
+		display: flex;
 	}
 }
 .active {

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ResourceType } from '@/globals/GlobalValues';
 import { ResponseType } from '@/globals/ResponseType';
+import { Music } from '@/networks/music';
 import {
-	getPlaylistsByPlaylistNamePageApi,
+	getPlaylistsByPlaylistNameAndUserIdPageApi,
 	getSimplePlaylistsWithMusicsApi,
 	Playlist
 } from '@/networks/playlist';
@@ -112,8 +113,8 @@ const myCollected = ref([] as Playlist[]);
 // const getMusicList = () => {
 // 	myFavotiteMusicList.value = tempMusicList as unknown as Music[];
 // };
-const getPlaylistsByPlaylistNamePage = async (keyword = '') => {
-	let res = await getPlaylistsByPlaylistNamePageApi(1, 10, keyword);
+const getPlaylistsByPlaylistNameAndUserIdPage = async (keyword = '') => {
+	let res = await getPlaylistsByPlaylistNameAndUserIdPageApi(1, -1, keyword);
 	console.log('🦃🦃res', res);
 	if (res.data && res.data.type === ResponseType.SUCCESS) {
 		res.data.pageList.map((item: Playlist) => {
@@ -121,7 +122,12 @@ const getPlaylistsByPlaylistNamePage = async (keyword = '') => {
 				item.playlistPic,
 				ResourceType.PLAYLIST_PICTURE
 			);
-			return item;
+			item.musics?.map((music: Music) => {
+				music.album.albumPic = getResourceUrl(
+					music.album.albumPic,
+					ResourceType.ALBUM_PICTURE
+				);
+			});
 		});
 		console.log('🦃🦃res.data.pageList', res.data.pageList);
 		playlistData.value = res.data.pageList;
@@ -130,19 +136,37 @@ const getPlaylistsByPlaylistNamePage = async (keyword = '') => {
 };
 
 const search = (keyword: string) => {
-	getPlaylistsByPlaylistNamePage(keyword);
+	getPlaylistsByPlaylistNameAndUserIdPage(keyword);
 };
 const getSimplePlaylists = async () => {
 	const res = await getSimplePlaylistsWithMusicsApi();
 	console.log('🦃🦃res', res);
 	if (res.data && res.data.type === ResponseType.SUCCESS) {
+		res.data.pageList.map((playlist: Playlist) => {
+			playlist.musics?.map((music: Music) => {
+				music.album.albumPic = getResourceUrl(
+					music.album.albumPic,
+					ResourceType.ALBUM_PICTURE
+				);
+			});
+		});
+		// res.data.pageList.map((item: Music) => {
+		// 	item.album.albumPic = getResourceUrl(
+		// 		item.album.albumPic,
+		// 		ResourceType.ALBUM_PICTURE
+		// 	);
+		// 	return item;
+		// });
 		myCreated.value = res.data.pageList;
 		playlistStore.playlists = myCreated.value ?? [];
 		playlistStore.currentPlaylist = playlistStore.playlists?.[0] ?? {};
 	}
 };
 // getMusicList();
-getPlaylistsByPlaylistNamePage();
+playlistStore.getPlaylistsByPlaylistNameAndUserIdPage =
+	getPlaylistsByPlaylistNameAndUserIdPage;
+playlistStore.getSimplePlaylists = getSimplePlaylists;
+getPlaylistsByPlaylistNameAndUserIdPage();
 getSimplePlaylists();
 </script>
 <template>
@@ -153,7 +177,8 @@ getSimplePlaylists();
 					<MyPlaylistSilder
 						:my-collected="myCollected"
 						:my-created="myCreated"
-						@search="search" />
+						@search="search"
+						@reflash-table="getSimplePlaylists" />
 					<MyPlaylistTable :table-data="playlistStore.currentPlaylist.musics" />
 				</div>
 			</template>

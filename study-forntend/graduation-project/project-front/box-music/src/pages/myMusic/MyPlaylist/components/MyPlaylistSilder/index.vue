@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { Playlist } from '@/networks/playlist';
+import { addSimplePlaylistApi, Playlist } from '@/networks/playlist';
 import { Search } from '@element-plus/icons-vue';
 import PlayListSilderCard from './components/PlaylistSilderCard/index.vue';
 import PurePlaylistSilderCard from './components/PurePlaylistSilderCard/index.vue';
 import SimplePlaylistContainer from '@/components/common/SimplePlaylistContainer/index.vue';
 import { debounce } from '@/utils/baseUtil';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { usePlaylistStore } from '@/store/playlist';
+import { ResponseType } from '@/globals/ResponseType';
 interface PropType {
 	myCreated: Playlist[];
 	myCollected: Playlist[];
@@ -18,7 +20,8 @@ withDefaults(defineProps<PropType>(), {
 		return [];
 	}
 });
-const emits = defineEmits(['search']);
+const emits = defineEmits(['search', 'reflashTable']);
+const playlistStore = usePlaylistStore();
 const searchWord = ref('');
 
 const search = debounce(() => {
@@ -30,13 +33,23 @@ const openAddPlaylist = () => {
 		confirmButtonText: '确定',
 		cancelButtonText: '取消'
 	})
-		.then(({ value }) => {
-			ElMessage({
-				type: 'success',
-				message: `成功${value}`
-			});
+		.then(async ({ value }) => {
+			const res = await addSimplePlaylistApi({ playlistName: value });
+			console.log('🦃🦃res', res);
+			if (res.data && res.data.type === ResponseType.SUCCESS) {
+				ElMessage({
+					type: 'success',
+					message: `创建歌单成功`
+				});
+				emits('reflashTable');
+			} else {
+				ElMessage.error('创建歌单失败');
+			}
 		})
 		.catch(() => ({}));
+};
+const playlistCardClick = (playlist: Playlist) => {
+	playlistStore.currentPlaylist = playlist;
 };
 </script>
 <template>
@@ -47,8 +60,9 @@ const openAddPlaylist = () => {
 				placeholder="请输入歌单名称"
 				clearable
 				:suffix-icon="Search"
+				@clear="search"
 				@keyup="search" />
-			<el-button type="primary" @click="openAddPlaylist">添加歌单</el-button>
+			<el-button type="primary" @click="openAddPlaylist">创建歌单</el-button>
 		</div>
 		<div class="playlist-container">
 			<SimplePlaylistContainer title="我创建的">
@@ -57,7 +71,8 @@ const openAddPlaylist = () => {
 						v-for="item of myCreated"
 						:key="item.playlistId"
 						:card-data="item"
-						:show-img="false" />
+						:show-img="false"
+						@click="playlistCardClick(item)" />
 				</template>
 			</SimplePlaylistContainer>
 			<SimplePlaylistContainer title="我收藏的">
@@ -65,7 +80,8 @@ const openAddPlaylist = () => {
 					<PlayListSilderCard
 						v-for="item of myCollected"
 						:key="item.playlistId"
-						:card-data="item" />
+						:card-data="item"
+						@click="playlistCardClick(item)" />
 				</template>
 			</SimplePlaylistContainer>
 		</div>
@@ -78,6 +94,9 @@ const openAddPlaylist = () => {
 	.search-bar {
 		display: flex;
 		margin: 0 10px;
+		.el-input {
+			width: 182px;
+		}
 		.el-button {
 			margin-left: 10px;
 		}

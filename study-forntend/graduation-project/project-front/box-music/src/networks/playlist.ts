@@ -62,3 +62,37 @@ export const getPlaylistsByCategoryIdPageApi = (
 export const getSimplePlaylistsWithMusicsApi = () => {
 	return axios.get(baseUrl + 'getSimplePlaylistsWithMusics');
 };
+
+export const getPlaylistsByPlaylistNameAndUserIdPageApi = (
+	currentPage?: number,
+	pageSize?: number,
+	playlistName?: string
+) => {
+	return axios.get(baseUrl + 'getPlaylistsByPlaylistNameAndUserIdPage', {
+		params: {
+			currentPage,
+			pageSize,
+			playlistName
+		}
+	});
+};
+
+export const addSimplePlaylistApi = (data: any) => {
+	return axios.post(baseUrl + 'addSimplePlaylist', data);
+};
+
+export const deleteSimplePlaylistsByPlaylistIdsApi = (ids: string[]) => {
+	return axios.delete(baseUrl + 'deleteSimplePlaylistsByPlaylistIds', {
+		data: ids
+	});
+};
+
+export const updateSimplePlaylistApi = (data: any) => {
+	return axios.put(baseUrl + 'updateSimplePlaylist', data);
+};
+
+export const deleteUserPlaylistsApi = (ids: string[]) => {
+	return axios.delete(baseUrl + 'deleteUserPlaylists', {
+		data: ids
+	});
+};

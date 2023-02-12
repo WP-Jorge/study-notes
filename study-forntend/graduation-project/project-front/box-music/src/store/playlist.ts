@@ -24,7 +24,9 @@ export const usePlaylistStore = defineStore('playlist', {
 		return {
 			category: {} as Category,
 			playlists: [] as Playlist[],
-			currentPlaylist: {} as Playlist
+			currentPlaylist: {} as Playlist,
+			getPlaylistsByPlaylistNameAndUserIdPage: Function as any,
+			getSimplePlaylists: Function as any
 		};
 	},
 	/**
