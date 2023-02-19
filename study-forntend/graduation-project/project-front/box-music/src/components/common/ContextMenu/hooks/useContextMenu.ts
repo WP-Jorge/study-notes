@@ -55,6 +55,10 @@ interface menuFunctions {
 	go?: (path: string, payload: any) => any;
 	deleteCollection?: any;
 	addCollection?: any;
+	addPlaylistToCollection?: any;
+	deletePlaylistCollection?: any;
+	addMusicToMyPlaylist?: any;
+	deleteMusicFromPlaylist?: any;
 	// [x: string]: (
 	// 	payload?: Music | Singer | Playlist | Album,
 	// 	...args: any
@@ -112,7 +116,11 @@ export const useContextMenu = (options = {} as ContextMenuOptions) => {
 			});
 		},
 		addCollection: musicStore.addCollection,
-		deleteCollection: musicStore.deleteCollection
+		deleteCollection: musicStore.deleteCollection,
+		addPlaylistToCollection: playlistStore.addPlaylistToCollection,
+		deletePlaylistCollection: playlistStore.deletePlaylistCollection,
+		addMusicToMyPlaylist: playlistStore.addMusicToPlaylist,
+		deleteMusicFromPlaylist: playlistStore.deleteMusicFromPlaylist
 	} as menuFunctions;
 	const openContextMenu = (e: PointerEvent, ...payload: any) => {
 		const menuTemplates = {
@@ -209,6 +217,39 @@ export const useContextMenu = (options = {} as ContextMenuOptions) => {
 					item => item.musicId == payload?.[0].musicId
 				),
 				callback: () => menuFunctions.deleteCollection?.apply(null, [payload])
+			},
+			addPlaylistToCollection: {
+				type: 'li',
+				title: '添加至我的歌单',
+				hide: !!playlistStore.collectionPlaylist.find(
+					item => item.playlistId == payload?.[0].playlistId
+				),
+				callback: () => {
+					menuFunctions.addPlaylistToCollection?.call(
+						null,
+						payload[0]?.playlistId
+					);
+				}
+			},
+			deletePlaylistCollection: {
+				type: 'li',
+				title: '从我的歌单中移除',
+				hide: !playlistStore.collectionPlaylist.find(
+					item => item.playlistId == payload?.[0].playlistId
+				),
+				callback: () =>
+					menuFunctions.deletePlaylistCollection?.call(null, [
+						payload[0]?.playlistId
+					])
+			},
+			// musicId 和 playlistId
+			deleteMusicFromPlaylist: {
+				type: 'li',
+				title: '从当前歌单中移除歌曲',
+				callback: () =>
+					menuFunctions.deleteMusicFromPlaylist?.call(null, [
+						payload[0]?.playlistId
+					])
 			}
 		} as MenuTemplates;
 		const contextMenuList = [];

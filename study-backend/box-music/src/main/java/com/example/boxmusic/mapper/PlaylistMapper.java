@@ -3,6 +3,7 @@ package com.example.boxmusic.mapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.boxmusic.cache.RedisCache;
+import com.example.boxmusic.pojo.dto.AddMusicPlaylistDTO;
 import com.example.boxmusic.pojo.entity.Playlist;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.boxmusic.pojo.vo.MusicVO;
@@ -34,4 +35,11 @@ public interface PlaylistMapper extends BaseMapper<Playlist> {
 	IPage getPlaylistsByPlaylistNameAndUserIdPage(Page<Map<String, Object>> page, Long userId, String playlistName);
 	
 	Integer deleteUserPlaylists(Long userId, List<Long> playlistIds);
+	
+	Integer addPlaylistToCollection(Long userId, Long playlistId);
+	
+	Integer addMusicToPlaylist(AddMusicPlaylistDTO addMusicPlaylistDTO);
+	
+	Integer deleteMusicFromPlaylist(AddMusicPlaylistDTO addMusicPlaylistDTO);
+	
 }

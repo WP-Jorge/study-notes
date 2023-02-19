@@ -6,7 +6,12 @@ import {
 	getMusicsByPlaylistIdPageApi,
 	Music
 } from '@/networks/music';
-import { Playlist } from '@/networks/playlist';
+import {
+	addPlaylistToCollectionApi,
+	deleteUserPlaylistsApi,
+	Playlist
+} from '@/networks/playlist';
+import { ElMessage } from 'element-plus';
 import { defineStore } from 'pinia';
 import { useMusicStore } from './music';
 
@@ -26,7 +31,10 @@ export const usePlaylistStore = defineStore('playlist', {
 			playlists: [] as Playlist[],
 			currentPlaylist: {} as Playlist,
 			getPlaylistsByPlaylistNameAndUserIdPage: Function as any,
-			getSimplePlaylists: Function as any
+			getSimplePlaylists: Function as any,
+			collectionPlaylist: [] as Playlist[],
+			addMusicToPlaylist: Function as any,
+			deleteMusicFromPlaylist: Function as any
 		};
 	},
 	/**
@@ -67,6 +75,26 @@ export const usePlaylistStore = defineStore('playlist', {
 			let res = await getMusicsByAlbumIdPageApi(1, -1, album.albumId);
 			if (res && res.data.type === ResponseType.SUCCESS) {
 				musicStore.setMusicList(res.data.pageList, true);
+			}
+		},
+		async addPlaylistToCollection(id: string) {
+			const res = await addPlaylistToCollectionApi(id);
+			if (res && res.data.type === ResponseType.SUCCESS) {
+				ElMessage.success(res.data.msg);
+				console.log('🦃🦃1', 1);
+				this.getPlaylistsByPlaylistNameAndUserIdPage();
+			} else {
+				ElMessage.error(res.data.msg);
+			}
+		},
+		async deletePlaylistCollection(ids: string[]) {
+			const res = await deleteUserPlaylistsApi(ids);
+			console.log('🦃🦃res', res);
+			if (res.data && res.data.type === ResponseType.SUCCESS) {
+				ElMessage.success('删除成功');
+				this.getPlaylistsByPlaylistNameAndUserIdPage();
+			} else {
+				ElMessage.error('删除失败');
 			}
 		}
 	}

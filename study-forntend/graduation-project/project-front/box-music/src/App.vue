@@ -10,15 +10,88 @@ import ContentMexu from './components/common/ContextMenu/index.vue';
 import Login from '@/components/content/Login/index.vue';
 import { useRoute } from 'vue-router';
 import { useMusicStore } from './store/music';
+import {
+	addMusicToPlaylistApi,
+	deleteMusicFromPlaylistApi,
+	getPlaylistsByPlaylistNameAndUserIdPageApi,
+	getSimplePlaylistsWithMusicsApi,
+	Playlist
+} from './networks/playlist';
+import { ResponseType } from './globals/ResponseType';
+import { getResourceUrl } from './utils/fileUtil';
+import { ResourceType } from './globals/GlobalValues';
+import { Music } from './networks/music';
+import { usePlaylistStore } from './store/playlist';
+import { ElMessage } from 'element-plus';
 
 const systemStore = useSystemStore();
 const musicStore = useMusicStore();
+const playlistStore = usePlaylistStore();
 const route = useRoute();
 console.log('🦃🦃route.name', route.name);
 const { showSiderMenu, showMain, showMusicDetail } = storeToRefs(systemStore);
 
 // 初始化数据
+const getPlaylistsByPlaylistNameAndUserIdPage = async (keyword = '') => {
+	let res = await getPlaylistsByPlaylistNameAndUserIdPageApi(1, -1, keyword);
+	console.log('🦃🦃res', res);
+	if (res.data && res.data.type === ResponseType.SUCCESS) {
+		res.data.pageList.map((item: Playlist) => {
+			item.playlistPic = getResourceUrl(
+				item.playlistPic,
+				ResourceType.PLAYLIST_PICTURE
+			);
+			item.musics?.map((music: Music) => {
+				music.album.albumPic = getResourceUrl(
+					music.album.albumPic,
+					ResourceType.ALBUM_PICTURE
+				);
+			});
+		});
+		console.log('🦃🦃res.data.pageList', res.data.pageList);
+		playlistStore.collectionPlaylist = res.data.pageList;
+	}
+};
+const getSimplePlaylists = async () => {
+	const res = await getSimplePlaylistsWithMusicsApi();
+	console.log('🦃🦃res', res);
+	if (res.data && res.data.type === ResponseType.SUCCESS) {
+		res.data.pageList.map((playlist: Playlist) => {
+			playlist.musics?.map((music: Music) => {
+				music.album.albumPic = getResourceUrl(
+					music.album.albumPic,
+					ResourceType.ALBUM_PICTURE
+				);
+			});
+		});
+		playlistStore.playlists = res.data.pageList ?? [];
+		playlistStore.currentPlaylist = playlistStore.playlists?.[0] ?? {};
+	}
+};
+const addMusicToPlaylist = async (data: any) => {
+	const res = await addMusicToPlaylistApi(data);
+	if (res.data && res.data.type === ResponseType.SUCCESS) {
+		return ElMessage.success(res.data.msg);
+	}
+	ElMessage.error(res.data.type);
+};
+const deleteMusicFromPlaylist = async (data: any) => {
+	const res = await deleteMusicFromPlaylistApi(data);
+	console.log('🦃🦃res', res);
+	if (res.data && res.data.type === ResponseType.SUCCESS) {
+		return ElMessage.success(res.data.msg);
+	}
+	ElMessage.error(res.data.type);
+};
+playlistStore.getPlaylistsByPlaylistNameAndUserIdPage =
+	getPlaylistsByPlaylistNameAndUserIdPage;
+playlistStore.getSimplePlaylists = getSimplePlaylists;
+playlistStore.addMusicToPlaylist = addMusicToPlaylist;
+playlistStore.deleteMusicFromPlaylist = deleteMusicFromPlaylist;
+
 musicStore.getCollection();
+getSimplePlaylists();
+getPlaylistsByPlaylistNameAndUserIdPage();
 // const electronAPI = window.electronAPI;
 // electronAPI.getMusicInfo(
 // 	'D:/CloudMusic/双笙.flac',

@@ -2,10 +2,7 @@ package com.example.boxmusic.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.boxmusic.pojo.dto.AddPlaylistDTO;
-import com.example.boxmusic.pojo.dto.AddSimplePlaylistDTO;
-import com.example.boxmusic.pojo.dto.UpdatePlaylistAdminDTO;
-import com.example.boxmusic.pojo.dto.UpdateSimplePlaylistDTO;
+import com.example.boxmusic.pojo.dto.*;
 import com.example.boxmusic.service.PlaylistService;
 import com.example.boxmusic.utils.R;
 import com.example.boxmusic.utils.Value;
@@ -127,5 +124,26 @@ public class PlaylistController {
 	@DeleteMapping("/deleteUserPlaylists")
 	public R deleteUserPlaylists(HttpServletRequest httpServletRequest, @RequestBody @NotEmpty(message = "歌单id不能为空") List<Long> playlistIds) {
 		return playlistService.deleteUserPlaylists(httpServletRequest.getHeader(Value.HEADER), playlistIds);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@ApiOperation("收藏歌单")
+	@PostMapping("/addPlaylistToCollection")
+	public R addPlaylistToCollection(HttpServletRequest httpServletRequest, @RequestBody AddSimpleUserPlaylistDTO simpleUserPlaylistDTO) {
+		return playlistService.addPlaylistToCollection(httpServletRequest.getHeader(Value.HEADER), simpleUserPlaylistDTO.getPlaylistId());
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@ApiOperation("添加歌曲至对应歌单")
+	@PostMapping("/addMusicToPlaylist")
+	public R addMusicToPlaylist(@RequestBody AddMusicPlaylistDTO addMusicPlaylistDTO) {
+		return playlistService.addMusicToPlaylist(addMusicPlaylistDTO);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@ApiOperation("从对应歌单中删除歌曲")
+	@DeleteMapping("/deleteMusicFromPlaylist")
+	public R deleteMusicFromPlaylist(@RequestBody AddMusicPlaylistDTO addMusicPlaylistDTO) {
+		return playlistService.deleteMusicFromPlaylist(addMusicPlaylistDTO);
 	}
 }

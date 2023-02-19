@@ -96,3 +96,19 @@ export const deleteUserPlaylistsApi = (ids: string[]) => {
 		data: ids
 	});
 };
+
+export const addPlaylistToCollectionApi = (id: string) => {
+	return axios.post(baseUrl + 'addPlaylistToCollection', {
+		playlistId: id
+	});
+};
+
+export const deleteMusicFromPlaylistApi = (data: any) => {
+	return axios.delete(baseUrl + 'deleteMusicFromPlaylist', {
+		data
+	});
+};
+
+export const addMusicToPlaylistApi = (data: any) => {
+	return axios.post(baseUrl + 'addMusicToPlaylist', data);
+};

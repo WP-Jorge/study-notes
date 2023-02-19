@@ -25,12 +25,26 @@
 					select="getCategoriesWithPlaylistId">
 		</collection>
 	</resultMap>
+	<insert id="addPlaylistToCollection">
+		insert into user_playlist (user_id, playlist_id)
+		values (#{userId}, #{playlistId})
+	</insert>
+	<insert id="addMusicToPlaylist">
+		insert into music_playlist (music_id, playlist_id)
+		values (#{musicId}, #{playlistId})
+	</insert>
 	<delete id="deleteUserPlaylists">
 		delete from user_playlist where user_id = #{userId} and playlist_id in (
 		<foreach collection="playlistIds" item="item" index="index" separator=",">
 			#{item}
 		</foreach>
 		)
+	</delete>
+	<delete id="deleteMusicFromPlaylist">
+		delete
+		from music_playlist
+		where music_id = #{musicId}
+		  and playlist_id = #{playlistId}
 	</delete>
 	
 	<select id="getPlaylistsByPlaylistNamePage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO"

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ResponseType } from '@/globals/ResponseType';
-import { Playlist, deleteUserPlaylistsApi } from '@/networks/playlist';
+import { Playlist } from '@/networks/playlist';
 import { usePlaylistStore } from '@/store/playlist';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessageBox } from 'element-plus';
 
 interface PropType {
 	cardData: Playlist;
@@ -19,17 +18,10 @@ const deleteUserPlaylist = () => {
 		cancelButtonText: '取消',
 		type: 'warning'
 	})
-		.then(async () => {
-			const res = await deleteUserPlaylistsApi([
+		.then(() => {
+			playlistStore.deletePlaylistCollection([
 				props.cardData.playlistId as string
 			]);
-			console.log('🦃🦃res', res);
-			if (res.data && res.data.type === ResponseType.SUCCESS) {
-				ElMessage.success('删除成功');
-				playlistStore.getPlaylistsByPlaylistNameAndUserIdPage();
-			} else {
-				ElMessage.error('删除失败');
-			}
 		})
 		.catch(e => e);
 };
