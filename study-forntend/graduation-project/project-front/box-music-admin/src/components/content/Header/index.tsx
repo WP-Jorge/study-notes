@@ -52,7 +52,6 @@ export default function Header() {
 					<span>盒子音乐</span>
 				</Link>
 				<div className="info">
-					<div className="message">消息</div>
 					<div className="userInfo">
 						<Popover
 							content={getHoverContent()}

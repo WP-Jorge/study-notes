@@ -28,7 +28,8 @@ import {
 	BarChart,
 	BarSeriesOption,
 	LineChart,
-	LineSeriesOption
+	LineSeriesOption,
+	PieChart
 } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { SVGRenderer } from 'echarts/renderers';
@@ -43,6 +44,7 @@ echarts.use([
 	TooltipComponent,
 	LineChart,
 	BarChart,
+	PieChart,
 	UniversalTransition,
 	SVGRenderer
 ]);
