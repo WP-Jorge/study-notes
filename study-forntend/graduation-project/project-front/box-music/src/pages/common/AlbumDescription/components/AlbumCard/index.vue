@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { Album } from '@/networks/album';
+import { Music } from '@/networks/music';
 interface Props {
 	albumDes: Album;
+	musics: Music[];
 }
 defineProps<Props>();
 </script>
@@ -13,7 +15,7 @@ defineProps<Props>();
 		<div class="album-des">
 			<div class="album-des-top">
 				<h2 class="album-name">{{ albumDes.albumName }}</h2>
-				<span class="album-music-count">播放量：{{ albumDes.totalViews }}</span>
+				<span class="album-music-count">歌曲数：{{ musics?.length }}</span>
 			</div>
 			<p class="album-description" :title="albumDes.albumDescription">
 				专辑简介：

@@ -48,8 +48,9 @@ const openAddPlaylist = () => {
 		})
 		.catch(() => ({}));
 };
-const playlistCardClick = (playlist: Playlist) => {
+const playlistCardClick = (playlist: Playlist, flag: string) => {
 	playlistStore.currentPlaylist = playlist;
+	playlistStore.isMyCreated = flag === 'myCreated';
 };
 </script>
 <template>
@@ -72,7 +73,7 @@ const playlistCardClick = (playlist: Playlist) => {
 						:key="item.playlistId"
 						:card-data="item"
 						:show-img="false"
-						@click="playlistCardClick(item)" />
+						@click="playlistCardClick(item, 'myCreated')" />
 				</template>
 			</SimplePlaylistContainer>
 			<SimplePlaylistContainer title="我收藏的">
@@ -81,7 +82,7 @@ const playlistCardClick = (playlist: Playlist) => {
 						v-for="item of myCollected"
 						:key="item.playlistId"
 						:card-data="item"
-						@click="playlistCardClick(item)" />
+						@click="playlistCardClick(item, 'myCollected')" />
 				</template>
 			</SimplePlaylistContainer>
 		</div>

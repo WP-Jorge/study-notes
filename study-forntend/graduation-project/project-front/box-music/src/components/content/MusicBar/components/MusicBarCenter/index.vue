@@ -38,6 +38,11 @@ const playHandle = () => {
 };
 
 const preHandle = () => {
+	if (
+		musicStore.playMusic?.playOrders.length !== musicStore.musicList?.length
+	) {
+		playOrderChange();
+	}
 	musicStore.playMusic.shouldChangeMusic = true;
 	const tempMusic =
 		musicStore.musicList[
@@ -53,7 +58,7 @@ const preHandle = () => {
 		tempMusic.musicId ===
 			musicStore.musicList[
 				musicStore.playMusic.playOrders[musicStore.playMusic.currentIndex]
-			].musicId
+			]?.musicId
 	) {
 		preHandle();
 		return;

@@ -33,8 +33,9 @@ export const usePlaylistStore = defineStore('playlist', {
 			getPlaylistsByPlaylistNameAndUserIdPage: Function as any,
 			getSimplePlaylists: Function as any,
 			collectionPlaylist: [] as Playlist[],
-			addMusicToPlaylist: Function as any,
-			deleteMusicFromPlaylist: Function as any
+			addMusicToMyPlaylist: Function as any,
+			deleteMusicFromPlaylist: Function as any,
+			isMyCreated: true
 		};
 	},
 	/**

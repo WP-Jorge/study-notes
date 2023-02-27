@@ -49,7 +49,7 @@ getAlbumsBySingerIdPage();
 </script>
 <template>
 	<div class="singer-description">
-		<SingerCard :singerDes="singerDes" />
+		<SingerCard :singerDes="singerDes" :albums="albums" />
 		<CardContainer>
 			<template #title>
 				<div class="title-bar">

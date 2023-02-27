@@ -9,6 +9,7 @@ import com.example.boxmusic.pojo.entity.Category;
 import com.example.boxmusic.pojo.entity.Singer;
 import com.example.boxmusic.pojo.entity.User;
 import com.example.boxmusic.mapper.UserMapper;
+import com.example.boxmusic.pojo.vo.UserCountsVO;
 import com.example.boxmusic.pojo.vo.UserVO;
 import com.example.boxmusic.service.FileService;
 import com.example.boxmusic.service.UserRoleService;
@@ -362,5 +363,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
+	}
+	
+	@Override
+	public R getRecentlyUserCounts() {
+		List<UserCountsVO> recentlyUserCounts = baseMapper.getRecentlyUserCounts();
+		return R.success("userCountList", recentlyUserCounts);
 	}
 }

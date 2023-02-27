@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
+import { Music } from '@/networks/music';
 import { useMusicStore } from '@/store/music';
 import { getFormatTime } from '@/utils/mathUtil';
 import { storeToRefs } from 'pinia';
@@ -55,6 +56,13 @@ const volumeChange = (volume: number) => {
 
 const clearPlaylist = () => {
 	musicStore.setMusicList([]);
+};
+const deleteFromMusicList = (music: Music) => {
+	musicStore.setMusicList(
+		musicStore.musicList.filter(item => {
+			return item.musicId !== music.musicId;
+		})
+	);
 };
 </script>
 <template>
@@ -125,6 +133,11 @@ const clearPlaylist = () => {
 						<p class="duration">
 							{{ getFormatTime(item.duration as number) }}
 						</p>
+						<div class="options">
+							<div class="delete" @click.stop="deleteFromMusicList(item)">
+								移除
+							</div>
+						</div>
 					</div>
 				</el-card>
 			</template>
@@ -159,6 +172,7 @@ const clearPlaylist = () => {
 		.item {
 			display: flex;
 			justify-content: space-between;
+			position: relative;
 			padding: 10px;
 			border-radius: 5px;
 			.music-title {
@@ -178,6 +192,17 @@ const clearPlaylist = () => {
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
+			}
+			.options {
+				display: none;
+				position: absolute;
+				right: 10px;
+				color: red;
+			}
+		}
+		.item:hover {
+			.options {
+				display: block;
 			}
 		}
 

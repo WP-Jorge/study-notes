@@ -8,7 +8,9 @@ import com.example.boxmusic.pojo.dto.AddMusicDTO;
 import com.example.boxmusic.pojo.dto.UpdateMusicDTO;
 import com.example.boxmusic.pojo.entity.*;
 import com.example.boxmusic.mapper.MusicMapper;
+import com.example.boxmusic.pojo.vo.CategoryMusicCountsVO;
 import com.example.boxmusic.pojo.vo.DesMusicVO;
+import com.example.boxmusic.pojo.vo.MusicLevelCountsVO;
 import com.example.boxmusic.pojo.vo.MusicVO;
 import com.example.boxmusic.service.FileService;
 import com.example.boxmusic.service.MusicCategoryService;
@@ -284,5 +286,17 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 		}
 		
 		return R.success("musics", musics);
+	}
+	
+	@Override
+	public R getMusicLevelCounts() {
+		List<MusicLevelCountsVO> musicLevelCounts = baseMapper.getMusicLevelCounts();
+		return R.success("musicLevelCounts", musicLevelCounts);
+	}
+	
+	@Override
+	public R getCategoryMusicCounts() {
+		List<CategoryMusicCountsVO> categoryMusicCounts = baseMapper.getCategoryMusicCounts();
+		return R.success("categoryMusicCounts", categoryMusicCounts);
 	}
 }

@@ -3,6 +3,7 @@ import { Music } from '@/networks/music';
 import { Singer } from '@/networks/singer';
 import { getResourceUrl } from '@/utils/fileUtil';
 import { IpcRenderer, IpcRendererEvent } from 'electron';
+import { ElMessage } from 'element-plus';
 import { defineStore } from 'pinia';
 import { GlobalURL } from '../../electron/globalValues/GlobalURL';
 const ipcRenderer = window.ipcRenderer as IpcRenderer;
@@ -128,8 +129,9 @@ export const useDownloadStore = defineStore('download', {
 		startDownloadOne(music: Music) {
 			// this.downloadTempMusic = music;
 			if (!this.downloadable(music)) {
-				return console.log('添加失败，音乐已下载');
+				return ElMessage.warning('添加失败，音乐已下载');
 			}
+			ElMessage.success('已添加至下载列表');
 			startDownloadOne(music);
 		},
 		pauseOne(music: Music) {
@@ -241,6 +243,7 @@ const startDownloadOne = (music: Music) => {
 			const downloadMusic = downloadStore.downloadQueue.find(
 				item => item.musicId === msg.musicId
 			);
+			console.log('🦃🦃msg', msg);
 			downloadMusic && (downloadMusic.downloadItemInfo = msg);
 		}
 	);

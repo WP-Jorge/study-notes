@@ -101,8 +101,8 @@
 		  and playlist_id = #{playlistId}
 	</select>
 	
-	<select id="getPlaylistsByTotalViewsSortPage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO"
-			resultMap="PlaylistWithUserAndCategoryResultMap">
+	<select id="getPlaylistsByTotalViewsSortPage" resultType="com.example.boxmusic.pojo.vo.PlaylistWithMusicVO"
+			resultMap="PlaylistWithUserAndCategoryAndMusicResultMap">
 		select distinct *
 		from playlist
 		where opened = 1

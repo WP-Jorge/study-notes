@@ -1,8 +1,15 @@
 import { useMusicStore } from '@/store/music';
+import { usePlayOrderChange } from './usePlayOrderChange';
 
 export const useNextHandle = () => {
+	const playOrderChange = usePlayOrderChange();
 	const musicStore = useMusicStore();
 	const nextHandle = () => {
+		if (
+			musicStore.playMusic?.playOrders.length !== musicStore.musicList?.length
+		) {
+			playOrderChange();
+		}
 		musicStore.playMusic.shouldChangeMusic = true;
 		const tempMusic = musicStore.playMusic.music;
 		musicStore.playMusic.play = true;

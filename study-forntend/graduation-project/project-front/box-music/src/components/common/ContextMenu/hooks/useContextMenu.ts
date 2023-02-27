@@ -119,7 +119,7 @@ export const useContextMenu = (options = {} as ContextMenuOptions) => {
 		deleteCollection: musicStore.deleteCollection,
 		addPlaylistToCollection: playlistStore.addPlaylistToCollection,
 		deletePlaylistCollection: playlistStore.deletePlaylistCollection,
-		addMusicToMyPlaylist: playlistStore.addMusicToPlaylist,
+		addMusicToMyPlaylist: playlistStore.addMusicToMyPlaylist,
 		deleteMusicFromPlaylist: playlistStore.deleteMusicFromPlaylist
 	} as menuFunctions;
 	const openContextMenu = (e: PointerEvent, ...payload: any) => {
@@ -147,7 +147,9 @@ export const useContextMenu = (options = {} as ContextMenuOptions) => {
 			addMusicToPlaylist: {
 				type: 'li',
 				title: '添加歌曲至播放列表',
-				callback: () => menuFunctions.addMusicToPlaylist.apply(null, payload)
+				callback: () => {
+					menuFunctions.addMusicToPlaylist.apply(null, payload);
+				}
 			},
 			downloadOne: {
 				type: 'li',
@@ -246,10 +248,22 @@ export const useContextMenu = (options = {} as ContextMenuOptions) => {
 			deleteMusicFromPlaylist: {
 				type: 'li',
 				title: '从当前歌单中移除歌曲',
-				callback: () =>
-					menuFunctions.deleteMusicFromPlaylist?.call(null, [
-						payload[0]?.playlistId
-					])
+				callback: () => {
+					console.log('🦃🦃payload', payload);
+					menuFunctions.deleteMusicFromPlaylist?.call(null, {
+						musicId: payload[0]?.musicId,
+						playlistId: payload[1]?.playlistId
+					});
+				}
+			},
+			addMusicToMyPlaylist: {
+				type: 'li',
+				title: '添加至我的歌单',
+				callback: () => {
+					console.log('🦃🦃payload', payload);
+					menuStore.requestData.musicId = payload[0].musicId;
+					menuStore.showSelectPlaylist = true;
+				}
 			}
 		} as MenuTemplates;
 		const contextMenuList = [];

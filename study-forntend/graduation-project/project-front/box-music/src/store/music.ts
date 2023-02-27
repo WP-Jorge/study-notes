@@ -75,7 +75,6 @@ export const useMusicStore = defineStore('music', {
 				localStorage.setItem('music', JSON.stringify(music));
 				return;
 			}
-			console.log('🦃🦃music', music);
 			if (!music.local) {
 				if (!music.musicUrl.startsWith('http')) {
 					music.musicUrl = getResourceUrl(music.musicUrl, ResourceType.MUSIC);

@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.boxmusic.cache.RedisCache;
 import com.example.boxmusic.pojo.entity.Music;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.boxmusic.pojo.vo.CategoryMusicCountsVO;
+import com.example.boxmusic.pojo.vo.MusicLevelCountsVO;
 import com.example.boxmusic.pojo.vo.MusicVO;
 import org.apache.ibatis.annotations.CacheNamespace;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,4 +29,8 @@ public interface MusicMapper extends BaseMapper<Music> {
 	IPage<MusicVO> getMusicsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
 	IPage<MusicVO> getMusicsByPlaylistIdPage(Page<Map<String, Object>> page, Long playlistId);
 	IPage<MusicVO> getMusicsByAlbumIdPage(Page<Map<String, Object>> page, Long albumId);
+	
+	List<MusicLevelCountsVO> getMusicLevelCounts();
+	
+	List<CategoryMusicCountsVO> getCategoryMusicCounts();
 }

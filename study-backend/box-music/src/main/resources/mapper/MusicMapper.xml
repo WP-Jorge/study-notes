@@ -92,7 +92,8 @@
 		  and category.category_id = #{categoryId}
 		  and music.deleted = 0
 	</select>
-	<select id="getMusicsByPlaylistIdPage" resultType="com.example.boxmusic.pojo.vo.MusicVO" resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
+	<select id="getMusicsByPlaylistIdPage" resultType="com.example.boxmusic.pojo.vo.MusicVO"
+			resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
 		select *
 		from music,
 			 music_playlist,
@@ -102,11 +103,26 @@
 		  and playlist.playlist_id = #{playlistId}
 		  and music.deleted = 0
 	</select>
-	<select id="getMusicsByAlbumIdPage" resultType="com.example.boxmusic.pojo.vo.MusicVO" resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
+	<select id="getMusicsByAlbumIdPage" resultType="com.example.boxmusic.pojo.vo.MusicVO"
+			resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
 		select *
 		from music
 		where music.album_id = #{albumId}
 		  and music.deleted = 0
+	</select>
+	<select id="getMusicLevelCounts" resultType="com.example.boxmusic.pojo.vo.MusicLevelCountsVO">
+		select level, count(*) as num
+		from music
+		group by level
+	</select>
+	<select id="getCategoryMusicCounts" resultType="com.example.boxmusic.pojo.vo.CategoryMusicCountsVO">
+		select category_name, count(*) as num
+		from music,
+			 music_category,
+			 category
+		where music.music_id = music_category.music_id
+		  and music_category.category_id = category.category_id
+		group by category_name
 	</select>
 
 </mapper>

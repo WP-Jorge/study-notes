@@ -66,6 +66,7 @@ export const useMusicBar = () => {
 	};
 
 	const nextHandle = () => {
+		console.log('🦃🦃1', 1);
 		const tempMusic =
 			musicStore.musicList[musicOptions.playOrders[musicOptions.currentIndex]];
 		playOrdersChange();

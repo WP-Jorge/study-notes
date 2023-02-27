@@ -41,7 +41,8 @@ const contextMneu = useContextMenu({
 	addMusicToPlaylist: true,
 	downloadOne: true,
 	addCollection: true,
-	deleteCollection: true
+	deleteCollection: true,
+	addMusicToMyPlaylist: true
 });
 
 const open = (e: PointerEvent, row: Music) => {

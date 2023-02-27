@@ -22,7 +22,10 @@ const musics = ref([] as Music[]);
 const contextMenu = useContextMenu({
 	downloadOne: true,
 	playMusic: true,
-	addMusicToPlaylist: true
+	addMusicToPlaylist: true,
+	addCollection: true,
+	deleteCollection: true,
+	addMusicToMyPlaylist: true
 });
 
 const open = (row: Music, cloumn: any, e: PointerEvent) => {
@@ -52,7 +55,7 @@ getMusicsByPlaylistIdPage();
 </script>
 <template>
 	<div class="playlist-description">
-		<PlaylistCard :playlistDes="playlistDes" />
+		<PlaylistCard :playlistDes="playlistDes" :musics="musics" />
 		<SimpleContainer title="歌曲" :pageData="pageData">
 			<template #title>
 				<div class="title-bar">

@@ -6,9 +6,12 @@ import com.example.boxmusic.cache.RedisCache;
 import com.example.boxmusic.pojo.dto.AddUserDTO;
 import com.example.boxmusic.pojo.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.boxmusic.pojo.vo.UserCountsVO;
 import com.example.boxmusic.pojo.vo.UserVO;
+import com.example.boxmusic.utils.R;
 import org.apache.ibatis.annotations.CacheNamespace;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,6 +32,8 @@ public interface UserMapper extends BaseMapper<User> {
 	int addUser(AddUserDTO addUserDTO);
 	
 	IPage<UserVO> getAllUsersPage(Page<Map<String, Object>> page);
+	
+	List<UserCountsVO> getRecentlyUserCounts();
 	
 	// IPage<UserVO> getRolesByRoleNamePage(Page<Map<String, Object>> page, String username);
 	

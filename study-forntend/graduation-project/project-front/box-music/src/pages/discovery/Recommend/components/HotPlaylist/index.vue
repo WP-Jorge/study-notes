@@ -36,7 +36,9 @@ const getPlaylistsByTotalViewsSortPage = async () => {
 const contextMenu = useContextMenu({
 	playPlaylist: true,
 	addPlaylistToPlaylist: true,
-	go: true
+	go: true,
+	deletePlaylistCollection: true,
+	addPlaylistToCollection: true
 });
 const open = (e: PointerEvent, clickItem: Playlist) => {
 	contextMenu.openContextMenu(

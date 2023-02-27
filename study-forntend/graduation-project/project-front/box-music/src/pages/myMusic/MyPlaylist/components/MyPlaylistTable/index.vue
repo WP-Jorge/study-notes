@@ -1,33 +1,45 @@
 <script setup lang="ts">
 import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
 import { Music } from '@/networks/music';
+import { Playlist } from '@/networks/playlist';
+import { usePlaylistStore } from '@/store/playlist';
 import { getFormatTime } from '@/utils/mathUtil';
 interface PropType {
-	tableData: Music[];
+	playlist: Playlist;
 }
 withDefaults(defineProps<PropType>(), {
-	tableData() {
-		return [];
+	playlist() {
+		return {} as Playlist;
 	}
 });
-
-const contextMenu = useContextMenu({
-	downloadOne: true,
-	playMusic: true,
-	addMusicToPlaylist: true,
-	addCollection: true,
-	deleteCollection: true
-});
+const playlistStore = usePlaylistStore();
+let contextMenu: any;
+watch(
+	[() => playlistStore.isMyCreated],
+	() => {
+		contextMenu = useContextMenu({
+			downloadOne: true,
+			playMusic: true,
+			addMusicToPlaylist: true,
+			addCollection: true,
+			deleteCollection: true,
+			deleteMusicFromPlaylist: playlistStore.isMyCreated
+		});
+	},
+	{
+		immediate: true
+	}
+);
 const open = (row: Music, cloumn: any, e: PointerEvent) => {
-	contextMenu.openContextMenu(e, row);
+	contextMenu.openContextMenu(e, row, playlistStore.currentPlaylist);
 };
 </script>
 <template>
 	<el-table
 		class="my-playlist-table"
-		:data="tableData"
+		:data="playlist.musics"
 		@row-contextmenu="open"
-		@row-dblclick="contextMenu.menuFunctions.playMusic">
+		@row-dblclick="contextMenu?.menuFunctions.playMusic">
 		<el-table-column #default="{ row: music }" label="封面" :width="80">
 			<div class="music-img">
 				<img :src="music.album?.albumPic" :alt="music.musicTitle" />

@@ -41,7 +41,8 @@ const contextMenu = useContextMenu({
 	playMusic: true,
 	addMusicToPlaylist: true,
 	addCollection: true,
-	deleteCollection: true
+	deleteCollection: true,
+	addMusicToMyPlaylist: true
 });
 const open = (row: Music, cloumn: any, e: PointerEvent) => {
 	contextMenu.openContextMenu(e, row);

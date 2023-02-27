@@ -1,4 +1,8 @@
+import { ResponseType } from '@/globals/ResponseType';
+import { addMusicToPlaylistApi } from '@/networks/playlist';
+import { ElMessage } from 'element-plus';
 import { defineStore } from 'pinia';
+import { usePlaylistStore } from './playlist';
 
 export interface ContextMenuItem {
 	type: string;
@@ -45,7 +49,9 @@ export const useContextMenuStore = defineStore('contextMenu', {
 		return {
 			contextMenu: {} as HTMLElement,
 			contextMenuList: baseContextMenuList,
-			options: {} as ContextMenuOptions
+			options: {} as ContextMenuOptions,
+			showSelectPlaylist: false,
+			requestData: {} as any
 		};
 	},
 	getters: {},
@@ -75,6 +81,20 @@ export const useContextMenuStore = defineStore('contextMenu', {
 			}
 			props.contextMenuList && (this.contextMenuList = props.contextMenuList);
 			this.options.visible = true;
+		},
+		async addMusicToPlaylist() {
+			if (!this.requestData.playlistId) {
+				return ElMessage.warning('请选择歌单');
+			}
+			const res = await addMusicToPlaylistApi(this.requestData);
+			if (res.data && res.data.type === ResponseType.SUCCESS) {
+				const playlistStore = usePlaylistStore();
+				this.showSelectPlaylist = false;
+				this.requestData.playlistId = null;
+				playlistStore.getSimplePlaylists();
+				return ElMessage.success(res.data.msg);
+			}
+			ElMessage.error(res.data?.msg);
 		}
 	}
 });

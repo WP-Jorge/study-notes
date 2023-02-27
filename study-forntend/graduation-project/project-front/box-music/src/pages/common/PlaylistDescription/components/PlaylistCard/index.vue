@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { Music } from '@/networks/music';
 import { Playlist } from '@/networks/playlist';
 interface Props {
 	playlistDes: Playlist;
+	musics: Music[];
 }
 defineProps<Props>();
 </script>
@@ -15,9 +17,7 @@ defineProps<Props>();
 		<div class="playlist-des">
 			<div class="playlist-des-top">
 				<h2 class="playlist-name">{{ playlistDes.playlistName }}</h2>
-				<span class="playlist-music-count">
-					播放量：{{ playlistDes.totalViews }}
-				</span>
+				<span class="playlist-music-count">歌曲数：{{ musics?.length }}</span>
 			</div>
 			<p class="playlist-description" :title="playlistDes.playlistDescription">
 				歌单简介：

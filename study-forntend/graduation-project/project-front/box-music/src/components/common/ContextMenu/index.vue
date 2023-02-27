@@ -5,7 +5,7 @@ const contextMenu = ref(null);
 onMounted(() => {
 	document.addEventListener('click', e => {
 		if (
-			!(contextMenu.value as unknown as HTMLElement).contains(
+			!(contextMenu.value as unknown as HTMLElement)?.contains(
 				e.target as unknown as Node
 			)
 		)

@@ -103,6 +103,7 @@ const getLocalMusic = async (dir: string) => {
 const contextMneu = useContextMenu({
 	playMusic: true,
 	openfolder: true,
+	addMusicToPlaylist: true,
 	removeFromList: true
 });
 

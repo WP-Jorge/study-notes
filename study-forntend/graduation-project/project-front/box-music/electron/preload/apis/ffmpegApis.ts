@@ -73,11 +73,11 @@ export const writeinMusicInfo = (
 			.addOption('-metadata:s:v', `title="Album cover"`)
 			.addOption('-metadata:s:v', `comment="Cover (front)"`)
 			.addOption('-disposition:v', `attached_pic`)
-			.addOption('-metadata', `album="${music.album.albumName}"`)
-			.addOption('-metadata', `artist="${artists}"`)
-			.addOption('-metadata', `genre="box-music"`)
-			.addOption('-metadata', `title="${music.musicTitle}"`)
-			.addOption('-metadata', `lyric="${formatLyric(music.lyric as string)}"`)
+			.addOption('-metadata', `album=${music.album.albumName}`)
+			.addOption('-metadata', `artist=${artists}`)
+			.addOption('-metadata', `genre=box-music`)
+			.addOption('-metadata', `title=${music.musicTitle}`)
+			.addOption('-metadata', `lyric=${formatLyric(music.lyric as string)}`)
 			.on('start', (commandLine: string) => {
 				console.log('🦃🦃commandLine', commandLine);
 				onStart('开始下载：' + commandLine);
@@ -128,7 +128,7 @@ export const writeinMusicInfo = (
 			.addOption('-metadata', `artist=${artists}`)
 			.addOption('-metadata', `genre=box-music`)
 			.addOption('-metadata', `title=${music.musicTitle}`)
-			.addOption('-metadata', `lyric="${formatLyric(music.lyric as string)}"`)
+			.addOption('-metadata', `lyric=${formatLyric(music.lyric as string)}`)
 			.on('start', (commandLine: string) => {
 				console.log('🦃🦃commandLine', commandLine);
 				onStart('开始下载：' + commandLine);

@@ -23,10 +23,12 @@ import { ResourceType } from './globals/GlobalValues';
 import { Music } from './networks/music';
 import { usePlaylistStore } from './store/playlist';
 import { ElMessage } from 'element-plus';
+import { useContextMenuStore } from './store/contextMenu';
 
 const systemStore = useSystemStore();
 const musicStore = useMusicStore();
 const playlistStore = usePlaylistStore();
+const menuStore = useContextMenuStore();
 const route = useRoute();
 console.log('🦃🦃route.name', route.name);
 const { showSiderMenu, showMain, showMusicDetail } = storeToRefs(systemStore);
@@ -79,6 +81,7 @@ const deleteMusicFromPlaylist = async (data: any) => {
 	const res = await deleteMusicFromPlaylistApi(data);
 	console.log('🦃🦃res', res);
 	if (res.data && res.data.type === ResponseType.SUCCESS) {
+		getSimplePlaylists();
 		return ElMessage.success(res.data.msg);
 	}
 	ElMessage.error(res.data.type);
@@ -86,12 +89,25 @@ const deleteMusicFromPlaylist = async (data: any) => {
 playlistStore.getPlaylistsByPlaylistNameAndUserIdPage =
 	getPlaylistsByPlaylistNameAndUserIdPage;
 playlistStore.getSimplePlaylists = getSimplePlaylists;
-playlistStore.addMusicToPlaylist = addMusicToPlaylist;
+playlistStore.addMusicToMyPlaylist = addMusicToPlaylist;
 playlistStore.deleteMusicFromPlaylist = deleteMusicFromPlaylist;
 
 musicStore.getCollection();
 getSimplePlaylists();
 getPlaylistsByPlaylistNameAndUserIdPage();
+
+// const disableOption = computed(() => {
+// 	return !!playlistStore.playlists.find(playlist => {
+// 		return playlist?.musics?.find(music => {
+// 			return menuStore.requestData.musicId === music.musicId;
+// 		});
+// 	});
+// });
+const disableOption = (currentPlaylist: Playlist) => {
+	return !!currentPlaylist?.musics?.find((music: Music) => {
+		return menuStore.requestData.musicId === music.musicId;
+	});
+};
 // const electronAPI = window.electronAPI;
 // electronAPI.getMusicInfo(
 // 	'D:/CloudMusic/双笙.flac',
@@ -137,6 +153,31 @@ getPlaylistsByPlaylistNameAndUserIdPage();
 		<el-footer><MusicBar /></el-footer>
 	</el-container>
 	<Login />
+	<el-dialog
+		v-model="menuStore.showSelectPlaylist"
+		title="选择歌单"
+		width="50%">
+		<el-select
+			v-model="menuStore.requestData.playlistId"
+			placeholder="请选择歌单">
+			<el-option
+				v-for="item in playlistStore.playlists"
+				:key="item.playlistId"
+				:label="item.playlistName"
+				:value="item.playlistId"
+				:disabled="disableOption(item)" />
+		</el-select>
+		<template #footer>
+			<span class="dialog-footer">
+				<el-button @click="menuStore.showSelectPlaylist = false">
+					取消
+				</el-button>
+				<el-button type="primary" @click="menuStore.addMusicToPlaylist">
+					确定
+				</el-button>
+			</span>
+		</template>
+	</el-dialog>
 </template>
 <style lang="scss">
 @use './assets/global.scss';

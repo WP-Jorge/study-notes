@@ -57,4 +57,6 @@ public interface UserService extends IService<User> {
 	R updateUser(String headerToken, MultipartFile picture, UpdateUserDTO updateUserDTO);
 	
 	R updatePassword(String headerToken, PasswordDTO passwordDTO);
+	
+	R getRecentlyUserCounts();
 }

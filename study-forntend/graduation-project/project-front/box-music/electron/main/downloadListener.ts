@@ -12,7 +12,6 @@ import {
 import Store from 'electron-store';
 import { Music } from '../globalValues/Type';
 import { getMd5 } from '../preload/apis/utilApis';
-import { GlobalURL } from '../globalValues/GlobalURL';
 
 interface InterruptedDownloadOptions extends CreateInterruptedDownloadOptions {
 	music: Music;
@@ -55,10 +54,7 @@ interface DownloadListenerType {
 store.onDidChange('downloadCacheList', newValue => {
 	console.log('🦃🦃downloadCacheList', newValue);
 });
-const downloadTempPath = store.get(
-	'downloadTempPath',
-	GlobalURL.CLIENT_DOWNLOAD_PATH
-);
+const downloadTempPath = store.get('downloadTempPath', 'G:\\DownLoad\\temp\\');
 const listeners = {} as DownloadListenerType;
 let downloadCacheList = store.get(
 	'downloadCacheList',
@@ -93,6 +89,7 @@ export const registerDownloadListener = (mainWindow: BrowserWindow) => {
 				// 记录上一次下载的字节数据
 				let prevReceivedBytes = 0;
 				const updateListener = (e: Event, state: string) => {
+					console.log('🦃🦃state', state);
 					if (state === 'interrupted') {
 						console.log('下载已经中断，可以恢复');
 						item.resume();

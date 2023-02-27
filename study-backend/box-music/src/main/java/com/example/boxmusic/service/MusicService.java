@@ -44,4 +44,8 @@ public interface MusicService extends IService<Music> {
 	R getMusicsByAlbumIdPage(Page<Map<String, Object>> page, Long albumId);
 	
 	R getMusicsByKeyword(String keyword) throws IOException;
+	
+	R getMusicLevelCounts();
+	
+	R getCategoryMusicCounts();
 }

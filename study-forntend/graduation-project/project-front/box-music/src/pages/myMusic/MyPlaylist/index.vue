@@ -25,7 +25,7 @@ playlistStore.getSimplePlaylists();
 						:my-created="playlistStore.playlists"
 						@search="search"
 						@reflash-table="playlistStore.getSimplePlaylists" />
-					<MyPlaylistTable :table-data="playlistStore.currentPlaylist.musics" />
+					<MyPlaylistTable :playlist="playlistStore.currentPlaylist" />
 				</div>
 			</template>
 		</SimpleContainer>
