@@ -69,10 +69,52 @@
 	
 	<select id="getMusicsByTotalViewsSortPage" resultType="com.example.boxmusic.pojo.vo.MusicVO"
 			resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
+		-- 		select distinct *
+-- 		from music
+-- 		where deleted = 0
+-- 		order by total_views desc
+		select distinct music.music_id,
+						music.music_title,
+						music.lyric,
+						music.album_id,
+						music.duration,
+						music.size,
+						music.level,
+						music.music_format,
+						music.bitrate,
+						music.total_views,
+						music.music_url,
+						music.deleted,
+						collection.collection_id,
+						category.category_id,
+						category.category_type
+		from music,
+			 collection,
+			 category,
+			 music_category
+		where deleted = 0
+		  and category.category_id = music_category.category_id
+		  and music.music_id = music_category.music_id
+		  and music_category.category_id in (select category.category_id
+											 from category,
+												  user,
+												  music,
+												  music_category,
+												  collection
+											 where collection.music_id = music.music_id
+											   and music_category.music_id = music.music_id
+											   and music_category.category_id = category.category_id
+											   and user.user_id = collection.user_id
+											   and user.user_id = #{userId})
+		group by music.music_id
+		order by rand() limit 8
+	</select>
+	<select id="getMusicsByTotalViewsSortPage2" resultType="com.example.boxmusic.pojo.vo.MusicVO"
+			resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">
 		select distinct *
 		from music
 		where deleted = 0
-		order by total_views desc
+		order by rand() limit 10
 	</select>
 	<select id="getMusicsByCreateTimeSortPage" resultType="com.example.boxmusic.pojo.vo.MusicVO"
 			resultMap="MusicWithCategoryAndSingerAndAlbumResultMap">

@@ -66,10 +66,8 @@ public class PlaylistController {
 	
 	@ApiOperation("获取歌单排行")
 	@GetMapping("/getPlaylistsByTotalViewsSortPage")
-	public R getPlaylistsByTotalViewsSortPage(@RequestParam(defaultValue = "1") Integer currentPage,
-											  @RequestParam(defaultValue = "10") Integer pageSize) {
-		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
-		return playlistService.getPlaylistsByTotalViewsSortPage(page);
+	public R getPlaylistsByTotalViewsSortPage(HttpServletRequest httpServletRequest) {
+		return playlistService.getPlaylistsByTotalViewsSortPage(httpServletRequest.getHeader(Value.HEADER));
 	}
 	
 	@ApiOperation("根据分类id查询歌单")

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public interface MusicService extends IService<Music> {
 	
 	R updateMusic(MultipartFile song, UpdateMusicDTO updateMusicDTO);
 	
-	R getMusicsByTotalViewsSortPage(Page<Map<String, Object>> page);
+	R getMusicsByTotalViewsSortPage(String token);
 	
 	R getMusicsByCreateTimeSortPage(Page<Map<String, Object>> page);
 	

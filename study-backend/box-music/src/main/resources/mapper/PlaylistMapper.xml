@@ -102,11 +102,34 @@
 	</select>
 	
 	<select id="getPlaylistsByTotalViewsSortPage" resultType="com.example.boxmusic.pojo.vo.PlaylistWithMusicVO"
-			resultMap="PlaylistWithUserAndCategoryAndMusicResultMap">
+			resultMap="BaseResultMap">
+		select distinct playlist.playlist_id,
+						playlist.playlist_description,
+						playlist.playlist_pic,
+						category.category_name
+		from category,
+			 playlist,
+			 playlist_category
+		where playlist.playlist_id = playlist_category.playlist_id
+		  and playlist_category.category_id = category.category_id
+		  and category.category_id in (select category.category_id
+									   from playlist_category,
+											category
+									   where playlist_category.category_id = category.category_id
+										 and playlist_category.playlist_id in (select playlist.playlist_id
+																			   from user_playlist,
+																					playlist
+																			   where user_playlist.playlist_id = playlist.playlist_id
+																				 and user_playlist.user_id = #{userId}))
+		group by playlist.playlist_id
+		order by rand() limit 8
+	</select>
+	<select id="getPlaylistsByTotalViewsSortPage2" resultType="com.example.boxmusic.pojo.vo.PlaylistWithMusicVO"
+			resultMap="BaseResultMap">
 		select distinct *
 		from playlist
 		where opened = 1
-		order by total_views desc
+		order by rand() limit 10
 	</select>
 	<select id="getPlaylistsByCategoryIdPage" resultType="com.example.boxmusic.pojo.vo.PlaylistVO"
 			resultMap="PlaylistWithUserAndCategoryResultMap">

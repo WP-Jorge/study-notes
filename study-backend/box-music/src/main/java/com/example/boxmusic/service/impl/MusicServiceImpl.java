@@ -8,26 +8,18 @@ import com.example.boxmusic.pojo.dto.AddMusicDTO;
 import com.example.boxmusic.pojo.dto.UpdateMusicDTO;
 import com.example.boxmusic.pojo.entity.*;
 import com.example.boxmusic.mapper.MusicMapper;
-import com.example.boxmusic.pojo.vo.CategoryMusicCountsVO;
-import com.example.boxmusic.pojo.vo.DesMusicVO;
-import com.example.boxmusic.pojo.vo.MusicLevelCountsVO;
-import com.example.boxmusic.pojo.vo.MusicVO;
-import com.example.boxmusic.service.FileService;
-import com.example.boxmusic.service.MusicCategoryService;
-import com.example.boxmusic.service.MusicService;
+import com.example.boxmusic.pojo.vo.*;
+import com.example.boxmusic.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.boxmusic.service.MusicSingerService;
 import com.example.boxmusic.utils.FfmpegUtil;
 import com.example.boxmusic.utils.JsonUtil;
+import com.example.boxmusic.utils.JwtTokenUtil;
 import com.example.boxmusic.utils.R;
 import com.github.wujun234.uid.impl.CachedUidGenerator;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
-import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -35,12 +27,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -76,6 +68,9 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 	private String musicPath;
 	
 	@Autowired
+	JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
 	private MusicCategoryService musicCategoryService;
 	
 	@Autowired
@@ -83,6 +78,12 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 	
 	@Autowired
 	private CachedUidGenerator cachedUidGenerator;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private RedisTemplate redisTemplate;
 	
 	@Override
 	public R getMusicsByMusicTitlePage(Page<Map<String, Object>> page, String musicTitle) {
@@ -235,9 +236,23 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements
 	}
 	
 	@Override
-	public R getMusicsByTotalViewsSortPage(Page<Map<String, Object>> page) {
-		IPage<MusicVO> musicPages = baseMapper.getMusicsByTotalViewsSortPage(page);
-		return R.successPage("获取歌曲排行成功", musicPages);
+	public R getMusicsByTotalViewsSortPage(String headerToken) {
+		Long userId = null;
+		if (!("".equals(headerToken) || headerToken == null)) {
+			// postMan测试时，自动假如的前缀，要去掉。
+			String token = headerToken.replace(com.example.boxmusic.utils.Value.POSTMAN_TOKEN_PREFIX, com.example.boxmusic.utils.Value.ENTITY).trim();
+			String username = jwtTokenUtil.getUsernameFromToken(token);
+			UserVO userInfo = userService.getUserInfoWithUsername(username);
+			userId = userInfo.getUserId();
+		}
+		if (userId == null) {
+			return R.error("获取歌曲排行失败");
+		}
+		List<MusicVO> list1 = baseMapper.getMusicsByTotalViewsSortPage(userId);
+		List<MusicVO> list2 = baseMapper.getMusicsByTotalViewsSortPage2();
+		list1.addAll(list2);
+		redisTemplate.delete("com.example.boxmusic.mapper.MusicMapper");
+		return R.success("musicList", list1.subList(0, 10));
 	}
 	
 	@Override

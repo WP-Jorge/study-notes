@@ -10,6 +10,7 @@ import com.example.boxmusic.service.MusicCategoryService;
 import com.example.boxmusic.service.MusicService;
 import com.example.boxmusic.service.SingerService;
 import com.example.boxmusic.utils.R;
+import com.example.boxmusic.utils.Value;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.io.IOException;
@@ -71,10 +73,8 @@ public class MusicController {
 	
 	@ApiOperation("获取音乐排行")
 	@GetMapping("/getMusicsByTotalViewsSortPage")
-	public R getMusicsByTotalViewsSortPage(@RequestParam(defaultValue = "1") Integer currentPage,
-										   @RequestParam(defaultValue = "10") Integer pageSize) {
-		Page<Map<String, Object>> page = new Page<Map<String, Object>>(currentPage, pageSize);
-		return musicService.getMusicsByTotalViewsSortPage(page);
+	public R getMusicsByTotalViewsSortPage(HttpServletRequest httpServletRequest) {
+		return musicService.getMusicsByTotalViewsSortPage(httpServletRequest.getHeader(Value.HEADER));
 	}
 	
 	@ApiOperation("获取最近新增音乐")

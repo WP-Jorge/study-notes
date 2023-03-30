@@ -26,7 +26,8 @@ import java.util.Map;
 public interface PlaylistMapper extends BaseMapper<Playlist> {
 	IPage<PlaylistVO> getPlaylistsByPlaylistNamePage(Page<Map<String, Object>> page, String playlistName);
 	
-	IPage  getPlaylistsByTotalViewsSortPage(Page<Map<String, Object>> page);
+	List<PlaylistWithMusicVO>  getPlaylistsByTotalViewsSortPage(Long userId);
+	List<PlaylistWithMusicVO>  getPlaylistsByTotalViewsSortPage2();
 	
 	IPage<MusicVO> getPlaylistsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
 

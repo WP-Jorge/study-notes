@@ -193,8 +193,24 @@ public class PlaylistServiceImpl extends ServiceImpl<PlaylistMapper, Playlist> i
 	}
 	
 	@Override
-	public R getPlaylistsByTotalViewsSortPage(Page<Map<String, Object>> page) {
-		return R.successPage("获取歌单排行成功", baseMapper.getPlaylistsByTotalViewsSortPage(page));
+	public R getPlaylistsByTotalViewsSortPage(String headerToken) {
+		Long userId = null;
+		if (!("".equals(headerToken) || headerToken == null)) {
+			// postMan测试时，自动假如的前缀，要去掉。
+			String token = headerToken.replace(com.example.boxmusic.utils.Value.POSTMAN_TOKEN_PREFIX, com.example.boxmusic.utils.Value.ENTITY).trim();
+			String username = jwtTokenUtil.getUsernameFromToken(token);
+			UserVO userInfo = userService.getUserInfoWithUsername(username);
+			userId = userInfo.getUserId();
+		}
+		if (userId == null) {
+			return R.error("获取歌单排行失败");
+		}
+		List<PlaylistWithMusicVO> list1 = baseMapper.getPlaylistsByTotalViewsSortPage(userId);
+		List<PlaylistWithMusicVO> list2 = baseMapper.getPlaylistsByTotalViewsSortPage2();
+		list1.addAll(list2);
+		redisTemplate.delete("com.example.boxmusic.mapper.MusicMapper");
+		return R.success("playlistList", list1.subList(0, 10));
+		// return R.successPage("获取歌单排行成功", baseMapper.getPlaylistsByTotalViewsSortPage());
 	}
 	
 	@Override

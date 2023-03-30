@@ -28,7 +28,7 @@ public interface PlaylistService extends IService<Playlist> {
 	
 	R updatePlaylist(MultipartFile picture, UpdatePlaylistAdminDTO updatePlaylistAdminDTO);
 	
-	R getPlaylistsByTotalViewsSortPage(Page<Map<String, Object>> page);
+	R getPlaylistsByTotalViewsSortPage(String token);
 	
 	R getPlaylistsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
 

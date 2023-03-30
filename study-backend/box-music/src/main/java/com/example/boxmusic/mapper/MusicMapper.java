@@ -24,7 +24,8 @@ import java.util.Map;
 @CacheNamespace(implementation = RedisCache.class, eviction = RedisCache.class)
 public interface MusicMapper extends BaseMapper<Music> {
 	IPage<MusicVO> getMusicsByMusicTitlePage(Page<Map<String, Object>> page, String musicTitle);
-	IPage<MusicVO> getMusicsByTotalViewsSortPage(Page<Map<String, Object>> page);
+	List<MusicVO> getMusicsByTotalViewsSortPage(Long userId);
+	List<MusicVO> getMusicsByTotalViewsSortPage2();
 	IPage<MusicVO> getMusicsByCreateTimeSortPage(Page<Map<String, Object>> page);
 	IPage<MusicVO> getMusicsByCategoryIdPage(Page<Map<String, Object>> page, Long categoryId);
 	IPage<MusicVO> getMusicsByPlaylistIdPage(Page<Map<String, Object>> page, Long playlistId);
