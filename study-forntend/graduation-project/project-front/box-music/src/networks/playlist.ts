@@ -33,16 +33,8 @@ export const getPlaylistsByPlaylistNamePageApi = (
 	});
 };
 
-export const getPlaylistsByTotalViewsSortPageApi = (
-	currentPage?: number,
-	pageSize?: number
-) => {
-	return axios.get(baseUrl + 'getPlaylistsByTotalViewsSortPage', {
-		params: {
-			currentPage,
-			pageSize
-		}
-	});
+export const getPlaylistsByTotalViewsSortPageApi = () => {
+	return axios.get(baseUrl + 'getPlaylistsByTotalViewsSortPage');
 };
 
 export const getPlaylistsByCategoryIdPageApi = (

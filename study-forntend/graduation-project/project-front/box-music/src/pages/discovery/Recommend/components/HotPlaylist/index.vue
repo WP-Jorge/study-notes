@@ -16,21 +16,16 @@ const pageData = ref({
 	nextBatchSize: 5
 });
 const getPlaylistsByTotalViewsSortPage = async () => {
-	let res = await getPlaylistsByTotalViewsSortPageApi(
-		pageData.value.currentPage,
-		pageData.value.pageSize
-	);
+	let res = await getPlaylistsByTotalViewsSortPageApi();
 	if (res && res.data.type === ResponseType.SUCCESS) {
-		res.data.pageList.map((item: Playlist) => {
+		res.data.playlistList.map((item: Playlist) => {
 			item.playlistPic = getResourceUrl(
 				item.playlistPic,
 				ResourceType.PLAYLIST_PICTURE
 			);
 			return item;
 		});
-		playlists.value = res.data.pageList;
-		pageData.value.totalPages = res.data.totalPages;
-		pageData.value.total = res.data.total;
+		playlists.value = res.data.playlistList;
 	}
 };
 const contextMenu = useContextMenu({
@@ -53,9 +48,10 @@ getPlaylistsByTotalViewsSortPage();
 <template>
 	<div class="hot-playlist">
 		<CardContainer
-			title="今日歌单"
+			title="歌单-猜你喜欢"
 			:pageData="pageData"
-			:nextBatchCallback="getPlaylistsByTotalViewsSortPage">
+			:nextBatchCallback="getPlaylistsByTotalViewsSortPage"
+			alwaysShowNextBatch>
 			<template #content>
 				<Card
 					v-for="item of playlists"

@@ -7,9 +7,9 @@ import HotMusic from './components/HotMusic/index.vue';
 <template>
 	<div class="recommend">
 		<Carousel />
+		<HotMusic />
 		<HotPlaylist />
 		<HotSinger />
-		<HotMusic />
 	</div>
 </template>
 <style lang="scss" scoped></style>

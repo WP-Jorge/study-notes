@@ -4,31 +4,19 @@ import { ResponseType } from '@/globals/ResponseType';
 import { getMusicsByTotalViewsSortPageApi, Music } from '@/networks/music';
 import { getResourceUrl } from '@/utils/fileUtil';
 import { useContextMenu } from '@/components/common/ContextMenu/hooks/useContextMenu';
-const pageData = reactive({
-	total: 0,
-	pageSize: 10,
-	currentPage: 1,
-	totalPages: 0,
-	maxPage: 5
-});
 const musics = ref([] as Music[]);
 
 const getMusicsByTotalViewsSortPage = async () => {
-	let res = await getMusicsByTotalViewsSortPageApi(
-		pageData.currentPage,
-		pageData.pageSize
-	);
+	let res = await getMusicsByTotalViewsSortPageApi();
 	if (res && res.data.type === ResponseType.SUCCESS) {
-		res.data.pageList.map((item: Music) => {
+		res.data.musicList.map((item: Music) => {
 			item.album.albumPic = getResourceUrl(
 				item.album.albumPic,
 				ResourceType.ALBUM_PICTURE
 			);
 			return item;
 		});
-		musics.value = res.data.pageList;
-		pageData.totalPages = res.data.totalPages;
-		pageData.total = res.data.total;
+		musics.value = res.data.musicList;
 	}
 };
 
@@ -46,17 +34,6 @@ const open = (e: PointerEvent, row: Music) => {
 };
 
 const nextBatch = () => {
-	if (
-		pageData.currentPage < pageData.totalPages &&
-		pageData.currentPage < pageData.maxPage
-	) {
-		pageData.currentPage++;
-	} else if (
-		pageData.currentPage === pageData.totalPages ||
-		pageData.currentPage === pageData.maxPage
-	) {
-		pageData.currentPage = 1;
-	}
 	getMusicsByTotalViewsSortPage();
 };
 

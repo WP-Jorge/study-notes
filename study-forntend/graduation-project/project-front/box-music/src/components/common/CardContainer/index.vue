@@ -6,6 +6,11 @@ const props = defineProps({
 		required: false,
 		default: '标题'
 	},
+	alwaysShowNextBatch: {
+		type: Boolean,
+		required: false,
+		default: false
+	},
 	pageData: {
 		type: Object,
 		required: false,
@@ -39,7 +44,7 @@ const { nextBatch, showNextBatch } = useNextBatch(
 					<div class="title">
 						{{ title }}
 					</div>
-					<div v-show="showNextBatch" class="options">
+					<div v-show="showNextBatch || alwaysShowNextBatch" class="options">
 						<span class="text" @click="() => nextBatch()">换一批</span>
 					</div>
 				</div>

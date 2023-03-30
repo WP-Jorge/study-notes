@@ -63,16 +63,8 @@ export const getMusicsByMusicTitlePageApi = (
 	});
 };
 
-export const getMusicsByTotalViewsSortPageApi = (
-	currentPage?: number,
-	pageSize?: number
-) => {
-	return axios.get(baseUrl + 'getMusicsByTotalViewsSortPage', {
-		params: {
-			currentPage,
-			pageSize
-		}
-	});
+export const getMusicsByTotalViewsSortPageApi = () => {
+	return axios.get(baseUrl + 'getMusicsByTotalViewsSortPage');
 };
 
 export const getMusicsByCreateTimeSortPageApi = (

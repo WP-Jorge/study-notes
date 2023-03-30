@@ -16,21 +16,16 @@ const pageData = ref({
 });
 
 const getSingersByTotalViewsSortPage = async () => {
-	let res = await getMusicsByTotalViewsSortPageApi(
-		pageData.value.currentPage,
-		pageData.value.pageSize
-	);
+	let res = await getMusicsByTotalViewsSortPageApi();
 	if (res && res.data.type === ResponseType.SUCCESS) {
-		res.data.pageList.map((item: Music) => {
+		res.data.musicList.map((item: Music) => {
 			item.album.albumPic = getResourceUrl(
 				item.album.albumPic,
 				ResourceType.ALBUM_PICTURE
 			);
 			return item;
 		});
-		musics.value = res.data.pageList;
-		pageData.value.totalPages = res.data.totalPages;
-		pageData.value.total = res.data.total;
+		musics.value = res.data.musicList;
 	}
 };
 
@@ -52,9 +47,10 @@ getSingersByTotalViewsSortPage();
 <template>
 	<div class="hot-music">
 		<CardContainer
-			title="大家在听"
+			title="歌曲-猜你喜欢"
 			:pageData="pageData"
-			:nextBatchCallback="getSingersByTotalViewsSortPage">
+			:nextBatchCallback="getSingersByTotalViewsSortPage"
+			alwaysShowNextBatch>
 			<template #content>
 				<Card
 					v-for="item of musics"
