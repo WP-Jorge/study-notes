@@ -269,7 +269,7 @@ export const UserModal = (props: MusicModalProps) => {
 							showSearch
 							mode="combobox"
 							value={album}
-							placeholder="请选择歌手"
+							placeholder="请选择专辑"
 							fetchOptions={fetchAlbumList}
 							onChange={(newValue: LabeledValue) => {
 								setAlbum(newValue);
